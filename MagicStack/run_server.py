@@ -304,6 +304,7 @@ class WebTerminalHandler(tornado.websocket.WebSocketHandler):
         self.user = None
         self.ssh = None
         self.channel = None
+        self.termlog = TermLogRecorder()
         super(WebTerminalHandler, self).__init__(*args, **kwargs)
 
     def check_origin(self, origin):
@@ -316,7 +317,7 @@ class WebTerminalHandler(tornado.websocket.WebSocketHandler):
         role_name = self.get_argument('role', 'sb')
         asset_id = self.get_argument('id', 9999)
         asset = get_object(Asset, id=asset_id)
-        self.termlog = TermLogRecorder(User.objects.get(id=self.user_id))
+        self.termlog = TermLogRecorder(self.user)
         if asset:
             roles = user_have_perm(self.user, asset)
             logger.debug(roles)
@@ -338,7 +339,6 @@ class WebTerminalHandler(tornado.websocket.WebSocketHandler):
         logger.debug('Websocket: request web terminal Host: %s User: %s Role: %s' % (asset.hostname, self.user.username,
                                                                                      login_role.name))
         self.term = WebTty(self.user, asset, login_role, login_type='web')
-        # self.term.remote_ip = self.request.remote_ip
         self.term.remote_ip = self.request.headers.get("X-Real-IP")
         if not self.term.remote_ip:
             self.term.remote_ip = self.request.remote_ip
@@ -419,7 +419,7 @@ class WebTerminalHandler(tornado.websocket.WebSocketHandler):
                 if self.channel in r:
                     recv = self.channel.recv(1024)
                     if not len(recv):
-                        return
+                        break
                     data += recv
                     if self.term.vim_flag:
                         self.term.vim_data += recv

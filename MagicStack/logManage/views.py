@@ -243,10 +243,7 @@ class TermLogRecorder(object):
                 self._screen.reset()
             else:
                 self._command()
-        try:
-            self.write_message(msg)
-        except:
-            pass
+
         self.log[str(time.time() - self.recoderStartTime)] = msg.decode('utf-8', 'replace')
 
     def save(self, path=LOG_DIR):

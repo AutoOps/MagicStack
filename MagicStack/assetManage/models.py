@@ -102,10 +102,4 @@ class AssetRecord(models.Model):
     comment = models.TextField(null=True, blank=True)
 
 
-class AssetAlias(models.Model):
-    user = models.ForeignKey(User)
-    asset = models.ForeignKey(Asset)
-    alias = models.CharField(max_length=100, blank=True, null=True)
 
-    def __unicode__(self):
-        return self.alias

@@ -22,7 +22,7 @@ from MagicStack.api import BASE_DIR, logger
 from logManage.models import Log
 
 
-DEFAULT_TEMPLATE = join(BASE_DIR, 'templates', 'jlog', 'static.jinja2')
+DEFAULT_TEMPLATE = join(BASE_DIR, 'templates', 'logManage', 'static.jinja2')
 rz_pat = re.compile(r'\x18B\w+\r\x8a(\x11)?')
 
 

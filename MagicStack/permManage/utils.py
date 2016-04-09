@@ -63,7 +63,7 @@ def gen_keys(key="", key_path_dir=""):
         for data in [key.get_name(),
                      " ",
                      key.get_base64(),
-                     " %s@%s" % ("jumpserver", os.uname()[1])]:
+                     " %s@%s" % ("magicstack", os.uname()[1])]:
             content_file.write(data)
     return key_path_dir
 

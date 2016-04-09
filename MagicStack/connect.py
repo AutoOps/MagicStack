@@ -22,7 +22,7 @@ import struct, fcntl, signal, socket, select
 from io import open as copen
 import uuid
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'jumpserver.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'MagicStack.settings'
 if not django.get_version().startswith('1.6'):
     setup = django.setup()
 from django.contrib.sessions.models import Session

@@ -116,7 +116,7 @@ def index(request):
         inactive_asset_month = len(hosts) - active_asset_month if len(hosts) > active_asset_month else 0
 
         # 一周top10用户和主机
-        week_data = Log.objects.filter(start_time__range=[from_week, datetime.datetime.now()])
+        week_data = Log.objects.filter(start_time__range=(from_week, datetime.datetime.now()))
         user_top_ten = week_data.values('user').annotate(times=Count('user')).order_by('-times')[:10]
         host_top_ten = week_data.values('host').annotate(times=Count('host')).order_by('-times')[:10]
 
@@ -162,7 +162,6 @@ def is_latest():
 @defend_attack
 def Login(request):
     """登录界面"""
-
     if request.user.is_authenticated():
         return HttpResponseRedirect(reverse('index'))
     if request.method == 'GET':
@@ -252,7 +251,6 @@ def upload(request):
         upload_files = request.FILES.getlist('file[]', None)
         date_now = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
         upload_dir = get_tmp_dir()
-        # file_dict = {}
         for asset_id in asset_ids:
             asset_select.append(get_object(Asset, id=asset_id))
 

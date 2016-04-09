@@ -387,7 +387,7 @@ class MyTask(MyRunner):
         for role in role_list:
             sudo_user[role.name] = ','.join(sudo_alias.keys())
 
-        sudo_j2 = get_template('jperm/role_sudo.j2')
+        sudo_j2 = get_template('permManage/role_sudo.j2')
         sudo_content = sudo_j2.render(Context({"sudo_alias": sudo_alias, "sudo_user": sudo_user}))
         sudo_file = NamedTemporaryFile(delete=False)
         sudo_file.write(sudo_content)

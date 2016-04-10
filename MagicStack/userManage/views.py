@@ -41,7 +41,7 @@ def group_add(request):
         else:
             msg = u'添加组 %s 成功' % group_name
 
-    return my_render('juser/group_add.html', locals(), request)
+    return my_render('userManage/group_add.html', locals(), request)
 
 
 @require_role(role='super')
@@ -62,7 +62,7 @@ def group_list(request):
         user_group_list = user_group_list.filter(id=int(group_id))
 
     user_group_list, p, user_groups, page_range, current_page, show_first, show_end = pages(user_group_list, request)
-    return my_render('juser/group_list.html', locals(), request)
+    return my_render('userManage/group_list.html', locals(), request)
 
 
 @require_role(role='super')
@@ -125,7 +125,7 @@ def group_edit(request):
             users_selected = User.objects.filter(group=user_group)
             users_remain = User.objects.filter(~Q(group=user_group))
 
-    return my_render('juser/group_edit.html', locals(), request)
+    return my_render('userManage/group_edit.html', locals(), request)
 
 
 @require_role(role='super')
@@ -231,7 +231,7 @@ def user_detail(request):
     user_log_last = Log.objects.filter(user=user.username).order_by('id')[0:50]
     user_log_last_num = len(user_log_last)
 
-    return my_render('juser/user_detail.html', locals(), request)
+    return my_render('userManage/user_detail.html', locals(), request)
 
 
 @require_role(role='admin')
@@ -261,7 +261,7 @@ def send_mail_retry(request):
     msg = u"""
     跳板机地址： %s
     用户名：%s
-    重设密码：%s/juser/password/forget/
+    重设密码：%s/userManage/password/forget/
     请登录web点击个人信息页面重新生成ssh密钥
     """ % (URL, user.username, URL)
 
@@ -285,7 +285,7 @@ def forget_password(request):
             hash_encode = PyCrypt.md5_crypt(str(user.uuid) + str(timestamp) + KEY)
             msg = u"""
             Hi %s, 请点击下面链接重设密码！
-            %s/juser/password/reset/?uuid=%s&timestamp=%s&hash=%s
+            %s/userManage/password/reset/?uuid=%s&timestamp=%s&hash=%s
             """ % (user.name, URL, user.uuid, timestamp, hash_encode)
             send_mail('忘记跳板机密码', msg, MAIL_FROM, [email], fail_silently=False)
             msg = u'请登陆邮箱，点击邮件重设密码'
@@ -293,7 +293,7 @@ def forget_password(request):
         else:
             error = u'用户不存在或邮件地址错误'
 
-    return render_to_response('juser/forget_password.html', locals())
+    return render_to_response('userManage/forget_password.html', locals())
 
 
 @defend_attack
@@ -301,7 +301,7 @@ def reset_password(request):
     uuid_r = request.GET.get('uuid', '')
     timestamp = request.GET.get('timestamp', '')
     hash_encode = request.GET.get('hash', '')
-    action = '/juser/password/reset/?uuid=%s&timestamp=%s&hash=%s' % (uuid_r, timestamp, hash_encode)
+    action = '/userManage/password/reset/?uuid=%s&timestamp=%s&hash=%s' % (uuid_r, timestamp, hash_encode)
 
     if hash_encode == PyCrypt.md5_crypt(uuid_r + timestamp + KEY):
         if int(time.time()) - int(timestamp) > 600:
@@ -325,7 +325,7 @@ def reset_password(request):
                 return HttpResponse('用户不存在')
 
     elif request.method == 'GET':
-        return render_to_response('juser/reset_password.html', locals())
+        return render_to_response('userManage/reset_password.html', locals())
     else:
         return http_error(request, u'错误请求')
 
@@ -385,7 +385,7 @@ def user_edit(request):
             send_mail('您的信息已修改', msg, MAIL_FROM, [email], fail_silently=False)
 
         return HttpResponseRedirect(reverse('user_list'))
-    return my_render('juser/user_edit.html', locals(), request)
+    return my_render('userManage/user_edit.html', locals(), request)
 
 
 @require_role('user')
@@ -394,7 +394,7 @@ def profile(request):
     if not user_id:
         return HttpResponseRedirect(reverse('index'))
     user = User.objects.get(id=user_id)
-    return my_render('juser/profile.html', locals(), request)
+    return my_render('userManage/profile.html', locals(), request)
 
 
 def change_info(request):
@@ -420,7 +420,7 @@ def change_info(request):
                 user.save()
             msg = '修改成功'
 
-    return my_render('juser/change_info.html', locals(), request)
+    return my_render('userManage/change_info.html', locals(), request)
 
 
 @require_role(role='user')

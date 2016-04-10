@@ -188,7 +188,7 @@
                 success: function(data){
                     var dataArray = data.split(',');
                     if (dataArray.length == 1 && data != 'error'){
-                        var title = 'Jumpserver Exec Terminal';
+                        var title = 'MagicStack Exec Terminal';
                         layer.open({
                             type: 2,
                             title: title,
@@ -281,7 +281,7 @@
     function windowOpen(a){
         var new_url = $(a).attr('href');
         var hostname = $(a).attr('value');
-        var title = 'Jumpserver Web Terminal - ' + '<span class="text-info"> '+ hostname +'</span>';
+        var title = 'MagicStack Web Terminal - ' + '<span class="text-info"> '+ hostname +'</span>';
         if (navigator.platform == 'Win32'){
             /*
             layer.open({
@@ -314,7 +314,7 @@
 
      function windowOpenExec(a){
          var new_url = $(a).attr('href');
-         var title = 'Jumpserver Exec Terminal';
+         var title = 'MagicStack Exec Terminal';
          layer.open({
              type: 2,
              title: title,
@@ -335,7 +335,7 @@
         var url= $(this).attr("value") + '?asset_id_all=' + asset_id_all;
         parent.layer.open({
             type: 2,
-            title: 'JumpServer - 批量修改主机',
+            title: 'MagicStack - 批量修改主机',
             maxmin: true,
             shift: 'top',
             border: [2, 0.3, '#1AB394'],

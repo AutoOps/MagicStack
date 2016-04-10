@@ -3,7 +3,6 @@ __author__ = 'majing'
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-import time
 
 
 class UserGroup(models.Model):
@@ -42,11 +41,4 @@ class AdminGroup(models.Model):
     def __unicode__(self):
         return '%s: %s' % (self.user.username, self.group.name)
 
-
-class Document(models.Model):
-    def upload_to(self, filename):
-        return 'upload/'+str(self.user.id)+time.strftime('/%Y/%m/%d/', time.localtime())+filename
-
-    docfile = models.FileField(upload_to=upload_to)
-    user = models.ForeignKey(User)
 

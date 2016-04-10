@@ -310,7 +310,7 @@
             $(".gradeX input[name='asset_no_push_id']:checked").each(function() {
                 check_array.push($(this).attr("value"))
             });
-            var url = '/jperm/role/push/?id={{ role.id }}&asset_id=' + check_array.join(',');
+            var url = '/permManage/role/push/?id={{ role.id }}&asset_id=' + check_array.join(',');
             $(this).attr('href', url)
         });
 
@@ -319,7 +319,7 @@
             $(".gradeX input[name='asset_id']:checked").each(function() {
                 check_array.push($(this).attr("value"))
             });
-            var url = '/jperm/role/push/?id={{ role.id }}&asset_id=' + check_array.join(',');
+            var url = '/permManage/role/push/?id={{ role.id }}&asset_id=' + check_array.join(',');
             $(this).attr('href', url)
         });
 

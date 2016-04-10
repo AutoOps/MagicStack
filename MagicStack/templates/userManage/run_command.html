@@ -108,7 +108,7 @@
                 $(".gradeX input:checked").each(function() {
                     check_array.push($(this).attr("value"))
                 });
-                $.post("/juser/user_del/",
+                $.post("/userManage/user_del/",
                         {id: check_array.join(",")},
                         function(data){
                             $(".gradeX input:checked").closest("tr").remove();
@@ -120,7 +120,7 @@
         });
 
         $('.email').click(function(){
-            $.get('/juser/send_mail_retry/?uuid=' + $(this).attr('value'),
+            $.get('/userManage/send_mail_retry/?uuid=' + $(this).attr('value'),
                     {},
                     function(data){
                         alert(data)

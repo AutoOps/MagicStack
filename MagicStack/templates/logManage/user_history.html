@@ -78,7 +78,6 @@
                                     <th class="text-center"> 所属部门 </th>
                                     <th class="text-center"> 登录主机 </th>
                                     <th class="text-center"> 来源IP </th>
-                                    <!--<th class="text-center"> 命令统计 </th>-->
                                     <th class="text-center"> 登录时间 </th>
                                     <th class="text-center"> 结束时间 </th>
 
@@ -91,7 +90,6 @@
                                     <td class="text-center" id="dept"> {{ post.dept_name }} </td>
                                     <td class="text-center" id="ip"> {{ post.host }} </td>
                                     <td class="text-center" id="remote_ip"> {{ post.remote_ip }} </td>
-                                    <!--<td class="text-center"><a href="/jlog/history/?id={{ post.id }}" class="log_command"> 命令统计 </td>-->
                                     <td class="text-center" id="start_time"> {{ post.start_time|date:"Y-m-d H:i:s"}} </td>
                                     <td class="text-center" id="end_time"> {{ post.end_time|date:"Y-m-d H:i:s" }} </td>
                                 </tr>
@@ -111,7 +109,7 @@
 </div>
 
 
-{#<script src="http://{{ web_socket_host }}/socket.io/socket.io.js"></script>#}
+
 <script>
    $('.log_command').on('click',function(){
        var url = $(this).attr('href');
@@ -122,7 +120,7 @@
        var div_username = ' 登录用户名: '+'<span class="text-info">'+username+'' + '</span>';
        var div_ip = ' 登录主机: '+'<span class="text-info">' + ip + '</span>';
        var div_time = ' 开始时间: ' + '<span class="text-info">'+start_time +'</span>' + ' 结束时间: ' +'<span class="text-info">' + end_time + '</span'
-       var title = 'JumpServer命令统计 '+ div_username + div_ip + div_time
+       var title = 'MagicStack命令统计 '+ div_username + div_ip + div_time
         $.ajax({url:url,success:function(data){
         BootstrapDialog.show({title: title, message:data});
         }});
@@ -133,19 +131,19 @@
     }
 
    function cut(num){
-      var g_url = "/jlog/log_kill/"+num;
+      var g_url = "/logManage/log_kill/"+num;
        console.log(g_url);
        $.ajax({
            type: "GET",
            url: g_url,
-           success: window.open("/jlog/","_self")
+           success: window.open("/log/","_self")
        });
    }
 
     function log_search(){
         $.ajax({
             type: "GET",
-            url: "/jlog/search/?env=offline",
+            url: "/logManage/search/?env=offline",
             data: $("#search_form").serialize(),
             success: function (data) {
                 $(".tab-content").html(data);

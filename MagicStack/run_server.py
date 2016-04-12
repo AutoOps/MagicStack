@@ -442,24 +442,6 @@ class WebTerminalHandler(tornado.websocket.WebSocketHandler):
             pass
 
 
-# class MonitorHandler(WebTerminalHandler):
-#     @django_request_support
-#     @require_auth('user')
-#     def open(self):
-#         try:
-#             self.returnlog = TermLogRecorder.loglist[self.get_argument('id')]
-#             self.returnlog.write_message = self.write_message
-#         except:
-#             self.write_message('Log is None')
-#             self.close()
-#
-#     def on_message(self, message):
-#         pass
-#
-#     def on_close(self):
-#         self.close()
-
-
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [

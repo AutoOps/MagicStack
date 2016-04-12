@@ -197,7 +197,6 @@
                             area: ['725px', '600px'],
                             content: new_url+data+'&check_assets='+check_assets
                         });
-                        //window.open(new_url + data, '', 'location=no, resizeable=no, height=410, width=625, top=89px, left=99px,toolbar=no,menubar=no,scrollbars=auto,status=no');
                     } else if (dataArray.length == '1' && data == 'error'){
                         layer.alert('没有授权系统用户')
                     } else {
@@ -233,30 +232,9 @@
                         layer.alert('没有授权系统用户')
                     }
                     else if (dataArray.length == 1 && data != 'error' && navigator.platform == 'Win32'){
-                        /*
-                        var title = 'Jumpserver Web Terminal' + '<span class="text-info"> '+ hostname +'</span>';
-                        layer.open({
-                            type: 2,
-                            title: title,
-                            maxmin: true,
-                            shade: false,
-                            area: ['628px', '420px'],
-                            content: new_url+data
-                        });
-                        window.open(new_url+data, '_blank', 'toolbar=yes, location=yes, scrollbars=yes, resizable=yes, copyhistory=yes, width=628, height=400')
-                        */
-                        window.open(new_url+data, '', 'width=628px, height=380px');
+                        window.open(encodeURI(new_url+data), '', 'width=628px, height=380px');
                     }  else if (dataArray.length == 1 && data != 'error'){
-                       /*layer.open({
-                            type: 2,
-                            title: title,
-                            maxmin: true,
-                            shade: false,
-                            area: ['628px', '452px'],
-                            content: new_url+data
-                        });
-                        */
-                        window.open(new_url+data, '_blank', 'toolbar=yes, location=yes, copyhistory=yes, scrollbars=yes, width=628, height=410');
+                        window.open(encodeURI(new_url+data), '_blank', 'toolbar=yes, location=yes, copyhistory=yes, scrollbars=yes, width=628, height=410');
 
                     }
                     else {
@@ -283,30 +261,10 @@
         var hostname = $(a).attr('value');
         var title = 'MagicStack Web Terminal - ' + '<span class="text-info"> '+ hostname +'</span>';
         if (navigator.platform == 'Win32'){
-            /*
-            layer.open({
-            type: 2,
-            title: title,
-            maxmin: true,
-            area: ['628px', '420px'],
-            shade: false,
-            content: new_url
-            });
-            */
-            window.open(new_url, '_blank', 'toolbar=yes, location=yes, copyhistory=yes, scrollbars=yes, width=628, height=400')
+            window.open(encodeURI(new_url), '_blank', 'toolbar=yes, location=yes, copyhistory=yes, scrollbars=yes, width=628, height=400')
 
         } else {
-            /*
-            layer.open({
-            type: 2,
-            title: title,
-            maxmin: true,
-            area: ['628px', '452px'],
-            shade: false,
-            content: new_url
-            });
-            */
-            window.open(new_url, '_blank', 'toolbar=yes, location=yes, copyhistory=yes, scrollbars=yes, width=628, height=410');
+            window.open(encodeURI(new_url), '_blank', 'toolbar=yes, location=yes, copyhistory=yes, scrollbars=yes, width=628, height=410');
         }
 
         return false
@@ -407,16 +365,6 @@
         }
     });
 
-{#    $('#asset_update_all').click(function () {#}
-{#        layer.msg('玩命更新中...', {time: 200000});#}
-{#        $.ajax({#}
-{#            type: "post",#}
-{#            url: "/jasset/asset_update_batch/?arg=all",#}
-{#            success: function () {#}
-{#                parent.location.reload();#}
-{#            }#}
-{#        });#}
-{#    });#}
 
     function change_info(){
         var args = $("#asset_form").serialize();

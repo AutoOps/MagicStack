@@ -1,10 +1,9 @@
-# coding: utf-8
-import uuid
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
+# -*- coding:utf-8 -*-
+import time
 from django.db.models import Q
 from userManage.user_api import *
 from permManage.perm_api import get_group_user_perm
+
 
 MAIL_FROM = EMAIL_HOST_USER
 
@@ -18,6 +17,7 @@ def group_add(request):
     error = ''
     msg = ''
     header_title, path1, path2 = '添加用户组', '用户管理', '添加用户组'
+    res = gen_record_info(request, path2)
     user_all = User.objects.all()
 
     if request.method == 'POST':
@@ -27,19 +27,26 @@ def group_add(request):
 
         try:
             if not group_name:
-                error = u'组名 不能为空'
+                error = '组名 不能为空'
                 raise ServerError(error)
 
             if UserGroup.objects.filter(name=group_name):
-                error = u'组名已存在'
+                error = '组名已存在'
                 raise ServerError(error)
             db_add_group(name=group_name, users_id=users_selected, comment=comment)
         except ServerError:
-            pass
+            res['flag'] = 'false'
+            res['content'] = error
+            user_operator_record(res)
         except TypeError:
-            error = u'添加小组失败'
+            error = '添加小组失败'
+            res['flag'] = 'false'
+            res['content'] = error
+            user_operator_record(res)
         else:
-            msg = u'添加组 %s 成功' % group_name
+            msg = '添加用户组 %s ' % group_name
+            res['content'] = msg
+            user_operator_record(res)
 
     return my_render('userManage/group_add.html', locals(), request)
 
@@ -71,11 +78,16 @@ def group_del(request):
     del a group
     删除用户组
     """
+    res = gen_record_info(request, '删除用户组')
     group_ids = request.GET.get('id', '')
     group_id_list = group_ids.split(',')
     for group_id in group_id_list:
-        UserGroup.objects.filter(id=group_id).delete()
+        group = UserGroup.objects.get(id=group_id)
+        error = "删除用户组%s" % group.name
+        res['content'] = error + ' '
+        group.delete()
 
+    user_operator_record(res)
     return HttpResponse('删除成功')
 
 
@@ -84,11 +96,10 @@ def group_edit(request):
     error = ''
     msg = ''
     header_title, path1, path2 = '编辑用户组', '用户管理', '编辑用户组'
-
+    res = gen_record_info(request, path2)
     if request.method == 'GET':
         group_id = request.GET.get('id', '')
         user_group = get_object(UserGroup, id=group_id)
-        # user_group = UserGroup.objects.get(id=group_id)
         users_selected = User.objects.filter(group=user_group)
         users_remain = User.objects.filter(~Q(group=user_group))
         users_all = User.objects.all()
@@ -104,9 +115,9 @@ def group_edit(request):
                 raise ServerError('组名不能为空')
 
             if len(UserGroup.objects.filter(name=group_name)) > 1:
-                raise ServerError(u'%s 用户组已存在' % group_name)
-            # add user group
-            user_group = get_object_or_404(UserGroup, id=group_id)
+                raise ServerError('%s 用户组已存在' % group_name)
+
+            user_group = get_object(UserGroup, id=group_id)
             user_group.user_set.clear()
 
             for user in User.objects.filter(id__in=users_selected):
@@ -117,8 +128,13 @@ def group_edit(request):
             user_group.save()
         except ServerError, e:
             error = e
+            res['flag'] = 'false'
+            res['comment'] = e
+            user_operator_record(res)
 
         if not error:
+            res['content'] = '添加用户组%s' % group_name
+            user_operator_record(res)
             return HttpResponseRedirect(reverse('user_group_list'))
         else:
             users_all = User.objects.all()
@@ -133,7 +149,8 @@ def user_add(request):
     error = ''
     msg = ''
     header_title, path1, path2 = '添加用户', '用户管理', '添加用户'
-    user_role = {'SU': u'超级管理员', 'CU': u'普通用户'}
+    res = gen_record_info(request, path2)
+    user_role = {'SU': '超级管理员', 'CU': '普通用户'}
     group_all = UserGroup.objects.all()
 
     if request.method == 'POST':
@@ -152,15 +169,16 @@ def user_add(request):
 
         try:
             if '' in [username, password, ssh_key_pwd, name, role]:
-                error = u'带*内容不能为空'
+                error = '带*内容不能为空'
                 raise ServerError
             check_user_is_exist = User.objects.filter(username=username)
             if check_user_is_exist:
-                error = u'用户 %s 已存在' % username
+                error = '用户 %s 已存在' % username
                 raise ServerError
-
         except ServerError:
-            pass
+                res['flag'] = 'false'
+                res['content'] = error
+                user_operator_record(res)
         else:
             try:
                 user = db_add_user(username=username, name=name,
@@ -178,7 +196,10 @@ def user_add(request):
                         user_groups.extend(UserGroup.objects.filter(id=user_group_id))
 
             except IndexError, e:
-                error = u'添加用户 %s 失败 %s ' % (username, e)
+                error = '添加用户 %s 失败 %s ' % (username, e)
+                res['flag'] = 'false'
+                res['content'] = error
+                user_operator_record(res)
                 try:
                     db_del_user(username)
                     server_del_user(username)
@@ -188,12 +209,15 @@ def user_add(request):
                 if MAIL_ENABLE and send_mail_need:
                     user_add_mail(user, kwargs=locals())
                 msg = get_display_msg(user, password=password, ssh_key_pwd=ssh_key_pwd, send_mail_need=send_mail_need)
+                error = '添加用户 %s' % username
+                res['content'] = error
+                user_operator_record(res)
     return my_render('userManage/user_add.html', locals(), request)
 
 
 @require_role(role='super')
 def user_list(request):
-    user_role = {'SU': u'超级管理员', 'GA': u'组管理员', 'CU': u'普通用户'}
+    user_role = {'SU': '超级管理员', 'GA': '组管理员', 'CU': '普通用户'}
     header_title, path1, path2 = '查看用户', '用户管理', '用户列表'
     keyword = request.GET.get('keyword', '')
     gid = request.GET.get('gid', '')
@@ -236,6 +260,7 @@ def user_detail(request):
 
 @require_role(role='admin')
 def user_del(request):
+    res = gen_record_info(request, '删除用户')
     if request.method == "GET":
         user_ids = request.GET.get('id', '')
         user_id_list = user_ids.split(',')
@@ -243,23 +268,35 @@ def user_del(request):
         user_ids = request.POST.get('id', '')
         user_id_list = user_ids.split(',')
     else:
+        res['flag'] = 'false'
+        res['content'] = '错误请求'
+        user_operator_record(res)
         return HttpResponse('错误请求')
 
     for user_id in user_id_list:
-        user = get_object(User, id=user_id)
-        if user and user.username != 'admin':
-            logger.debug(u"删除用户 %s " % user.username)
-            bash('userdel -r %s' % user.username)
-            user.delete()
+        try:
+            user = get_object(User, id=user_id)
+            if user and user.username != 'admin':
+                logger.debug("删除用户 %s " % user.username)
+                bash('userdel -r %s' % user.username)
+                res['content'] = "删除用户 %s " % user.username + ' '
+                user.delete()
+        except Exception, e:
+            res['flag'] = 'false'
+            res['content'] = e
+            user_operator_record(res)
+            logger.debug(e)
+    user_operator_record(res)
     return HttpResponse('删除成功')
 
 
 @require_role('admin')
 def send_mail_retry(request):
+    res = gen_record_info(request, '发送邮件')
     uuid_r = request.GET.get('uuid', '1')
     user = get_object(User, uuid=uuid_r)
     msg = u"""
-    跳板机地址： %s
+    MagicStack地址： %s
     用户名：%s
     重设密码：%s/userManage/password/forget/
     请登录web点击个人信息页面重新生成ssh密钥
@@ -267,8 +304,14 @@ def send_mail_retry(request):
 
     try:
         send_mail(u'邮件重发', msg, MAIL_FROM, [user.email], fail_silently=False)
-    except IndexError:
+    except IndexError,e:
+        res['flag'] = 'false'
+        res['comment'].append(e)
+        user_operator_record(res)
         return Http404
+
+    res['comment'].append('发送邮件成功')
+    user_operator_record(res)
     return HttpResponse('发送成功')
 
 
@@ -287,7 +330,7 @@ def forget_password(request):
             Hi %s, 请点击下面链接重设密码！
             %s/userManage/password/reset/?uuid=%s&timestamp=%s&hash=%s
             """ % (user.name, URL, user.uuid, timestamp, hash_encode)
-            send_mail('忘记跳板机密码', msg, MAIL_FROM, [email], fail_silently=False)
+            send_mail('忘记登录密码', msg, MAIL_FROM, [email], fail_silently=False)
             msg = u'请登陆邮箱，点击邮件重设密码'
             return http_success(request, msg)
         else:
@@ -333,12 +376,13 @@ def reset_password(request):
 @require_role(role='super')
 def user_edit(request):
     header_title, path1, path2 = '编辑用户', '用户管理', '编辑用户'
+    res = gen_record_info(request, path2)
     if request.method == 'GET':
         user_id = request.GET.get('id', '')
         if not user_id:
             return HttpResponseRedirect(reverse('index'))
 
-        user_role = {'SU': u'超级管理员', 'CU': u'普通用户'}
+        user_role = {'SU': '超级管理员', 'CU': '普通用户'}
         user = get_object(User, id=user_id)
         group_all = UserGroup.objects.all()
         if user:
@@ -356,11 +400,14 @@ def user_edit(request):
         extra = request.POST.getlist('extra', [])
         is_active = True if '0' in extra else False
         email_need = True if '1' in extra else False
-        user_role = {'SU': u'超级管理员', 'GA': u'部门管理员', 'CU': u'普通用户'}
+        user_role = {'SU': '超级管理员', 'GA': '部门管理员', 'CU': '普通用户'}
 
         if user_id:
             user = get_object(User, id=user_id)
         else:
+            res['flag'] = 'false'
+            res['content'] = '用户不存在!'
+            user_operator_record(res)
             return HttpResponseRedirect(reverse('user_list'))
 
         db_update_user(user_id=user_id,
@@ -372,10 +419,13 @@ def user_edit(request):
                        role=role_post,
                        is_active=is_active)
 
+        res['content'] = '编辑用户%s' % user.username
+        user_operator_record(res)
+
         if email_need:
             msg = u"""
             Hi %s:
-                您的信息已修改，请登录跳板机查看详细信息
+                您的信息已修改，请登录MagicStack查看详细信息
                 地址：%s
                 用户名： %s
                 密码：%s (如果密码为None代表密码为原密码)

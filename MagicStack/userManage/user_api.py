@@ -1,7 +1,4 @@
-# coding: utf-8
-
-from Crypto.PublicKey import RSA
-from subprocess import call
+# -*- coding:utf-8 -*-
 
 from userManage.models import AdminGroup
 from MagicStack.api import *
@@ -177,7 +174,6 @@ def user_add_mail(user, kwargs):
 
 def server_del_user(username):
     """
-    delete a user from jumpserver linux system
     删除系统上的某用户
     """
     bash('userdel -r -f %s' % username)
@@ -196,4 +192,32 @@ def get_display_msg(user, password='', ssh_key_pwd='', send_mail_need=False):
         该账号密码可以登陆web和跳板机。
         """ % (URL, user.username, password, ssh_key_pwd, URL, user.uuid)
     return msg
+
+
+def gen_record_info(request, oper='编辑'):
+    """
+    获取记录信息
+    :param request:
+    :return:
+    """
+    start_time = datetime.datetime.now()
+    res = dict(username=request.user.username, flag='success', operator=oper, content='', op_time=start_time)
+    return res
+
+
+def user_operator_record(res):
+    """
+    获取用户操作记录， flag用来标识操作成功或者失败
+    :param operator:
+    :param flag:
+    :return:
+    """
+    logger.debug('用户操作记录:')
+    user_record = UserOperatorRecord()
+    user_record.username = res['username']
+    user_record.operator = res['operator']
+    user_record.op_time = res['op_time']
+    user_record.content = str(res['content'])
+    user_record.result = res['flag']
+    user_record.save()
 

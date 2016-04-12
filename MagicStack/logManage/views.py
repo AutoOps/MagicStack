@@ -1,4 +1,4 @@
-# coding:utf-8
+# -*- coding:utf-8 -*-
 from django.db.models import Q
 from django.template import RequestContext
 from django.shortcuts import render_to_response, render
@@ -6,9 +6,9 @@ from MagicStack.api import *
 from permManage.perm_api import user_have_perm
 from django.http import HttpResponseNotFound
 from logManage.log_api import renderJSON
-
 from logManage.models import Log, ExecLog, FileLog, TermLog
 from MagicStack.settings import LOG_DIR
+from userManage.models import UserOperatorRecord
 import zipfile
 import json
 import pyte
@@ -43,7 +43,7 @@ def log_list(request, offset):
             posts = posts.filter(
                 Q(user__icontains=keyword) | Q(host__icontains=keyword) | Q(filename__icontains=keyword))
     elif offset == 'user_record':
-        posts = UserOperatorRecord.objects.all()
+        posts = UserOperatorRecord.objects.all().order_by('-op_time')
         if date_seven_day and date_now_str:
             datetime_start = datetime.datetime.strptime(date_seven_day + ' 00:00:01', '%m/%d/%Y %H:%M:%S')
             datetime_end = datetime.datetime.strptime(date_now_str + ' 23:59:59', '%m/%d/%Y %H:%M:%S')

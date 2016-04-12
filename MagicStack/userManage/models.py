@@ -29,6 +29,16 @@ class User(AbstractUser):
         return self.username
 
 
+class UserOperatorRecord(models.Model):
+    username = models.CharField(max_length=50, help_text='用户名')
+    operator = models.CharField(max_length=50, help_text='操作')
+    content = models.TextField()
+    op_time = models.DateTimeField()
+    result = models.CharField(max_length=20, help_text='执行结果')
+
+
+
+
 class AdminGroup(models.Model):
     """
     under the user control group

@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
 
-import os, sys, time, re
 from Crypto.Cipher import AES
 import crypt
 import pwd
@@ -17,7 +16,7 @@ from settings import *
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.http import HttpResponse, Http404
 from django.template import RequestContext
-from userManage.models import User, UserGroup
+from userManage.models import User, UserGroup, UserOperatorRecord
 from logManage.models import Log, TtyLog
 from assetManage.models import Asset, AssetGroup
 from permManage.models import PermRule, PermRole
@@ -250,12 +249,12 @@ def get_object(model, **kwargs):
     for value in kwargs.values():
         if not value:
             return None
-
-    the_object = model.objects.filter(**kwargs)
-    if len(the_object) == 1:
-        the_object = the_object[0]
-    else:
+    try:
+        the_object = model.objects.get(**kwargs)
+    except model.DoesNotExist:
         the_object = None
+    except model.MultipleObjectsReturned:
+        the_object = model.objects.get(**kwargs)[0]
     return the_object
 
 
@@ -300,13 +299,6 @@ def get_session_user_dept(request):
     get department of the user in session
     获取session中用户的部门
     """
-    # user_id = request.session.get('user_id', 0)
-    # print '#' * 20
-    # print user_id
-    # user = User.objects.filter(id=user_id)
-    # if user:
-    #     user = user[0]
-    #     return user, None
     return request.user, None
 
 
@@ -316,10 +308,7 @@ def get_session_user_info(request):
     get the user info of the user in session, for example id, username etc.
     获取用户的信息
     """
-    # user_id = request.session.get('user_id', 0)
-    # user = get_object(User, id=user_id)
-    # if user:
-    #     return [user.id, user.username, user]
+
     return [request.user.id, request.user.username, request.user]
 
 

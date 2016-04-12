@@ -16,7 +16,7 @@ from settings import *
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.http import HttpResponse, Http404
 from django.template import RequestContext
-from userManage.models import User, UserGroup, UserOperatorRecord
+from userManage.models import User, UserGroup
 from logManage.models import Log, TtyLog
 from assetManage.models import Asset, AssetGroup
 from permManage.models import PermRule, PermRole

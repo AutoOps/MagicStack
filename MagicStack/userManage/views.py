@@ -9,7 +9,8 @@ MAIL_FROM = EMAIL_HOST_USER
 
 
 @require_role(role='super')
-def group_add(request):
+@user_operator_record
+def group_add(request,res, *args):
     """
     group add view for route
     添加用户组的视图
@@ -17,7 +18,7 @@ def group_add(request):
     error = ''
     msg = ''
     header_title, path1, path2 = '添加用户组', '用户管理', '添加用户组'
-    res = gen_record_info(request, path2)
+    res['operator'] = path2
     user_all = User.objects.all()
 
     if request.method == 'POST':
@@ -37,16 +38,14 @@ def group_add(request):
         except ServerError:
             res['flag'] = 'false'
             res['content'] = error
-            user_operator_record(res)
         except TypeError:
             error = '添加小组失败'
             res['flag'] = 'false'
             res['content'] = error
-            user_operator_record(res)
         else:
             msg = '添加用户组 %s ' % group_name
             res['content'] = msg
-            user_operator_record(res)
+            print "msg:",msg
 
     return my_render('userManage/group_add.html', locals(), request)
 
@@ -73,30 +72,31 @@ def group_list(request):
 
 
 @require_role(role='super')
-def group_del(request):
+@user_operator_record
+def group_del(request,res, *args):
     """
     del a group
     删除用户组
     """
-    res = gen_record_info(request, '删除用户组')
+    res['operator'] = '删除用户组'
+    res['content'] = '删除用户组'
     group_ids = request.GET.get('id', '')
     group_id_list = group_ids.split(',')
     for group_id in group_id_list:
         group = UserGroup.objects.get(id=group_id)
-        error = "删除用户组%s" % group.name
-        res['content'] = error + ' '
+        res['content'] += "%s   "%group.name
         group.delete()
 
-    user_operator_record(res)
     return HttpResponse('删除成功')
 
 
 @require_role(role='super')
-def group_edit(request):
+@user_operator_record
+def group_edit(request, res, *args):
     error = ''
     msg = ''
     header_title, path1, path2 = '编辑用户组', '用户管理', '编辑用户组'
-    res = gen_record_info(request, path2)
+    res['operator'] = path2
     if request.method == 'GET':
         group_id = request.GET.get('id', '')
         user_group = get_object(UserGroup, id=group_id)
@@ -130,11 +130,10 @@ def group_edit(request):
             error = e
             res['flag'] = 'false'
             res['comment'] = e
-            user_operator_record(res)
 
         if not error:
             res['content'] = '添加用户组%s' % group_name
-            user_operator_record(res)
+
             return HttpResponseRedirect(reverse('user_group_list'))
         else:
             users_all = User.objects.all()
@@ -145,11 +144,12 @@ def group_edit(request):
 
 
 @require_role(role='super')
-def user_add(request):
+@user_operator_record
+def user_add(request, res, *args):
     error = ''
     msg = ''
     header_title, path1, path2 = '添加用户', '用户管理', '添加用户'
-    res = gen_record_info(request, path2)
+    res['operator'] = path2
     user_role = {'SU': '超级管理员', 'CU': '普通用户'}
     group_all = UserGroup.objects.all()
 
@@ -178,7 +178,6 @@ def user_add(request):
         except ServerError:
                 res['flag'] = 'false'
                 res['content'] = error
-                user_operator_record(res)
         else:
             try:
                 user = db_add_user(username=username, name=name,
@@ -199,7 +198,6 @@ def user_add(request):
                 error = '添加用户 %s 失败 %s ' % (username, e)
                 res['flag'] = 'false'
                 res['content'] = error
-                user_operator_record(res)
                 try:
                     db_del_user(username)
                     server_del_user(username)
@@ -211,7 +209,6 @@ def user_add(request):
                 msg = get_display_msg(user, password=password, ssh_key_pwd=ssh_key_pwd, send_mail_need=send_mail_need)
                 error = '添加用户 %s' % username
                 res['content'] = error
-                user_operator_record(res)
     return my_render('userManage/user_add.html', locals(), request)
 
 
@@ -259,8 +256,9 @@ def user_detail(request):
 
 
 @require_role(role='admin')
-def user_del(request):
-    res = gen_record_info(request, '删除用户')
+@user_operator_record
+def user_del(request, res, *args):
+    res['operator'] = '删除用户'
     if request.method == "GET":
         user_ids = request.GET.get('id', '')
         user_id_list = user_ids.split(',')
@@ -270,29 +268,28 @@ def user_del(request):
     else:
         res['flag'] = 'false'
         res['content'] = '错误请求'
-        user_operator_record(res)
         return HttpResponse('错误请求')
 
+    res['content'] = '删除用户'
     for user_id in user_id_list:
         try:
             user = get_object(User, id=user_id)
             if user and user.username != 'admin':
                 logger.debug("删除用户 %s " % user.username)
                 bash('userdel -r %s' % user.username)
-                res['content'] = "删除用户 %s " % user.username + ' '
+                res['content'] += "%s   "%user.username
                 user.delete()
         except Exception, e:
             res['flag'] = 'false'
             res['content'] = e
-            user_operator_record(res)
             logger.debug(e)
-    user_operator_record(res)
     return HttpResponse('删除成功')
 
 
 @require_role('admin')
-def send_mail_retry(request):
-    res = gen_record_info(request, '发送邮件')
+@user_operator_record
+def send_mail_retry(request,res, *args):
+    res['operator'] = '发送邮件'
     uuid_r = request.GET.get('uuid', '1')
     user = get_object(User, uuid=uuid_r)
     msg = u"""
@@ -307,11 +304,9 @@ def send_mail_retry(request):
     except IndexError,e:
         res['flag'] = 'false'
         res['comment'].append(e)
-        user_operator_record(res)
         return Http404
 
-    res['comment'].append('发送邮件成功')
-    user_operator_record(res)
+    res['comment'] = '发送邮件成功'
     return HttpResponse('发送成功')
 
 
@@ -374,9 +369,10 @@ def reset_password(request):
 
 
 @require_role(role='super')
-def user_edit(request):
+@user_operator_record
+def user_edit(request,res, *args):
     header_title, path1, path2 = '编辑用户', '用户管理', '编辑用户'
-    res = gen_record_info(request, path2)
+    res['operator'] = path2
     if request.method == 'GET':
         user_id = request.GET.get('id', '')
         if not user_id:
@@ -407,7 +403,6 @@ def user_edit(request):
         else:
             res['flag'] = 'false'
             res['content'] = '用户不存在!'
-            user_operator_record(res)
             return HttpResponseRedirect(reverse('user_list'))
 
         db_update_user(user_id=user_id,
@@ -420,7 +415,6 @@ def user_edit(request):
                        is_active=is_active)
 
         res['content'] = '编辑用户%s' % user.username
-        user_operator_record(res)
 
         if email_need:
             msg = u"""

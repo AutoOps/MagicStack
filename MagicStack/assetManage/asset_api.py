@@ -276,6 +276,7 @@ def excel_to_db(excel_file):
     """
     Asset add batch function
     """
+    asset_name_list = []
     try:
         data = xlrd.open_workbook(filename=None, file_contents=excel_file.read())
     except Exception, e:
@@ -311,7 +312,8 @@ def excel_to_db(excel_file):
                     if group_instance:
                         asset.group = group_instance
                     asset.save()
-        return True
+                    asset_name_list.append(hostname)
+        return True,asset_name_list
 
 
 def get_ansible_asset_info(asset_ip, setup_info):

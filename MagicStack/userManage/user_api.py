@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 
-from userManage.models import AdminGroup
+from userManage.models import AdminGroup,UserOperatorRecord
 from MagicStack.api import *
 from MagicStack.settings import BASE_DIR, EMAIL_HOST_USER as MAIL_FROM
-
+import functools
 
 def group_add_user(group, user_id=None, username=None):
     """
@@ -194,30 +194,23 @@ def get_display_msg(user, password='', ssh_key_pwd='', send_mail_need=False):
     return msg
 
 
-def gen_record_info(request, oper='编辑'):
-    """
-    获取记录信息
-    :param request:
-    :return:
-    """
-    start_time = datetime.datetime.now()
-    res = dict(username=request.user.username, flag='success', operator=oper, content='', op_time=start_time)
-    return res
-
-
-def user_operator_record(res):
-    """
-    获取用户操作记录， flag用来标识操作成功或者失败
-    :param operator:
-    :param flag:
-    :return:
-    """
-    logger.debug('用户操作记录:')
-    user_record = UserOperatorRecord()
-    user_record.username = res['username']
-    user_record.operator = res['operator']
-    user_record.op_time = res['op_time']
-    user_record.content = str(res['content'])
-    user_record.result = res['flag']
-    user_record.save()
-
+def user_operator_record(func):
+    res = {'operator':'', 'flag':'success', 'content':''}
+    @functools.wraps(func)
+    def wrapper(request, *args):
+        response = func(request,res,*args)
+        logger.debug('用户操作记录:')
+        if request.method == 'POST':
+            user_record = UserOperatorRecord()
+            start_time = datetime.datetime.now()
+            user_record.username = request.user.username
+            user_record.operator = res['operator']
+            logger.debug('operator:%s'%res['operator'])
+            user_record.op_time = start_time
+            user_record.content = res['content']
+            logger.debug('content:%s'%res['content'])
+            user_record.result = res['flag']
+            user_record.save()
+            logger.debug('用户操作记录写入成功！')
+        return response
+    return wrapper

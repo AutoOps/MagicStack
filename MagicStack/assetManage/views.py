@@ -7,15 +7,18 @@ from MagicStack.models import Setting
 from assetManage.forms import AssetForm, IdcForm
 from assetManage.models import Asset, IDC, AssetGroup, ASSET_TYPE, ASSET_STATUS
 from permManage.perm_api import get_group_asset_perm, get_group_user_perm
+from userManage.user_api import user_operator_record
 
 
 @require_role('admin')
-def group_add(request):
+@user_operator_record
+def group_add(request, res,*args):
     """
     Group add view
     添加资产组
     """
-    header_title, path1, path2 = u'添加资产组', u'资产管理', u'添加资产组'
+    header_title, path1, path2 = '添加资产组', '资产管理', '添加资产组'
+    res['operator'] = path2
     asset_all = Asset.objects.all()
 
     if request.method == 'POST':
@@ -25,31 +28,35 @@ def group_add(request):
 
         try:
             if not name:
-                emg = u'组名不能为空'
+                emg = '组名不能为空'
                 raise ServerError(emg)
 
             asset_group_test = get_object(AssetGroup, name=name)
             if asset_group_test:
-                emg = u"该组名 %s 已存在" % name
+                emg = "该组名 %s 已存在" % name
                 raise ServerError(emg)
 
         except ServerError:
-            pass
+            res['flag'] = 'false'
+            res['content'] = emg
 
         else:
             db_add_group(name=name, comment=comment, asset_select=asset_select)
-            smg = u"主机组 %s 添加成功" % name
+            smg = "主机组 %s 添加成功" % name
+            res['content'] = smg
 
     return my_render('assetManage/group_add.html', locals(), request)
 
 
 @require_role('admin')
-def group_edit(request):
+@user_operator_record
+def group_edit(request,res, *args):
     """
     Group edit view
     编辑资产组
     """
-    header_title, path1, path2 = u'编辑主机组', u'资产管理', u'编辑主机组'
+    header_title, path1, path2 = '编辑主机组', '资产管理', '编辑主机组'
+    res['operator'] = path2
     group_id = request.GET.get('id', '')
     group = get_object(AssetGroup, id=group_id)
 
@@ -74,12 +81,14 @@ def group_edit(request):
                     raise ServerError(emg)
 
         except ServerError:
-            pass
+            res['flag'] = 'false'
+            res['content'] = emg
 
         else:
             group.asset_set.clear()
             db_update_group(id=group_id, name=name, comment=comment, asset_select=asset_select)
             smg = u"主机组 %s 添加成功" % name
+            res['content'] = smg
 
         return HttpResponseRedirect(reverse('asset_group_list'))
 
@@ -106,27 +115,33 @@ def group_list(request):
 
 
 @require_role('admin')
-def group_del(request):
+@user_operator_record
+def group_del(request,res, *args):
     """
     Group delete view
     删除主机组
     """
+    res['operator'] = '删除主机组'
+    res['content'] = '删除主机组'
     group_ids = request.GET.get('id', '')
     group_id_list = group_ids.split(',')
-
     for group_id in group_id_list:
-        AssetGroup.objects.filter(id=group_id).delete()
+        asset_group = AssetGroup.objects.get(id=group_id)
+        res['content'] += '%s   ' % asset_group.name
+        asset_group.delete()
 
     return HttpResponse(u'删除成功')
 
 
 @require_role('admin')
-def asset_add(request):
+@user_operator_record
+def asset_add(request,res, *args):
     """
     Asset add view
     添加资产
     """
-    header_title, path1, path2 = u'添加资产', u'资产管理', u'添加资产'
+    header_title, path1, path2 = '添加资产', '资产管理', '添加资产'
+    res['operator'] = path2
     asset_group_all = AssetGroup.objects.all()
     af = AssetForm()
     default_setting = get_object(Setting, name='default')
@@ -139,11 +154,12 @@ def asset_add(request):
         use_default_auth = request.POST.get('use_default_auth', '')
         try:
             if Asset.objects.filter(hostname=unicode(hostname)):
-                error = u'该主机名 %s 已存在!' % hostname
+                error = '该主机名 %s 已存在!' % hostname
                 raise ServerError(error)
 
         except ServerError:
-            pass
+            res['flag'] = 'false'
+            res['content'] = error
         else:
             if af_post.is_valid():
                 asset_save = af_post.save(commit=False)
@@ -157,9 +173,12 @@ def asset_add(request):
                 asset_save.save()
                 af_post.save_m2m()
 
-                msg = u'主机 %s 添加成功' % hostname
+                msg = '主机 %s 添加成功' % hostname
+                res['content'] = msg
             else:
-                esg = u'主机 %s 添加失败' % hostname
+                esg = '主机 %s 添加失败' % hostname
+                res['flag'] = 'false'
+                res['content'] = esg
 
     return my_render('assetManage/asset_add.html', locals(), request)
 
@@ -171,11 +190,13 @@ def asset_add_batch(request):
 
 
 @require_role('admin')
-def asset_del(request):
+@user_operator_record
+def asset_del(request,res, *args):
     """
     del a asset
     删除主机
     """
+    res['operator'] = res['content'] = '删除主机'
     asset_id = request.GET.get('id', '')
     if asset_id:
         Asset.objects.filter(id=asset_id).delete()
@@ -187,25 +208,26 @@ def asset_del(request):
         if asset_batch:
             for asset_id in asset_id_all.split(','):
                 asset = get_object(Asset, id=asset_id)
+                res['content'] += '%s   ' % asset.hostname
                 asset.delete()
 
     return HttpResponse(u'删除成功')
 
 
 @require_role(role='super')
-def asset_edit(request):
+@user_operator_record
+def asset_edit(request,res, *args):
     """
     edit a asset
     修改主机
     """
     header_title, path1, path2 = u'修改资产', u'资产管理', u'修改资产'
-
+    res['operator'] = path2
     asset_id = request.GET.get('id', '')
     username = request.user.username
     asset = get_object(Asset, id=asset_id)
     if asset:
         password_old = asset.password
-    # asset_old = copy_model_instance(asset)
     af = AssetForm(instance=asset)
     if request.method == 'POST':
         af_post = AssetForm(request.POST, instance=asset)
@@ -220,14 +242,14 @@ def asset_edit(request):
                 emg = u'该主机名 %s 已存在!' % hostname
                 raise ServerError(emg)
         except ServerError:
-            pass
+            res['flag'] = 'false'
+            res['content'] = emg
         else:
             if af_post.is_valid():
                 af_save = af_post.save(commit=False)
                 if use_default_auth:
                     af_save.username = ''
                     af_save.password = ''
-                    # af_save.port = None
                 else:
                     if password:
                         password_encode = CRYPTOR.encrypt(password)
@@ -237,14 +259,15 @@ def asset_edit(request):
                 af_save.is_active = True if is_active else False
                 af_save.save()
                 af_post.save_m2m()
-                # asset_new = get_object(Asset, id=asset_id)
-                # asset_diff_one(asset_old, asset_new)
                 info = asset_diff(af_post.__dict__.get('initial'), request.POST)
                 db_asset_alert(asset, username, info)
 
                 smg = u'主机 %s 修改成功' % ip
+                res['content'] = smg
             else:
                 emg = u'主机 %s 修改失败' % ip
+                res['flag'] = 'false'
+                res['content'] = emg
                 return my_render('assetManage/error.html', locals(), request)
             return HttpResponseRedirect(reverse('asset_detail')+'?id=%s' % asset_id)
 
@@ -344,7 +367,9 @@ def asset_list(request):
 
 
 @require_role('admin')
-def asset_edit_batch(request):
+@user_operator_record
+def asset_edit_batch(request, res, *args):
+    res['operator'] = res['content'] = '修改主机'
     af = AssetForm()
     name = request.user.username
     asset_group_all = AssetGroup.objects.all()
@@ -415,7 +440,7 @@ def asset_edit_batch(request):
                         asset.comment = comment
                         alert_list.append([u'备注', asset.comment, comment])
                 asset.save()
-
+                res['content'] += '[%s]   ' % asset.hostname
             if alert_list:
                 recode_name = unicode(name) + ' - ' + u'批量'
                 AssetRecord.objects.create(asset=asset, username=recode_name, content=alert_list)
@@ -450,22 +475,29 @@ def asset_detail(request):
 
 
 @require_role('admin')
-def asset_update(request):
+@user_operator_record
+def asset_update(request,res, *args):
     """
     Asset update host info via ansible view
     """
+    res['operator'] = '更新主机'
     asset_id = request.GET.get('id', '')
     asset = get_object(Asset, id=asset_id)
     name = request.user.username
     if not asset:
+        res['flag'] = 'false'
+        res['content'] = '主机[%s]不存在' % asset.hostname
         return HttpResponseRedirect(reverse('asset_detail')+'?id=%s' % asset_id)
     else:
         asset_ansible_update([asset], name)
+        res['content'] = '更新主机[%s]' % asset.hostname
     return HttpResponseRedirect(reverse('asset_detail')+'?id=%s' % asset_id)
 
 
 @require_role('admin')
-def asset_update_batch(request):
+@user_operator_record
+def asset_update_batch(request,res,*args):
+    res['operator'] = res['content'] = '批量更新主机'
     if request.method == 'POST':
         arg = request.GET.get('arg', '')
         name = unicode(request.user.username) + ' - ' + u'自动更新'
@@ -480,27 +512,34 @@ def asset_update_batch(request):
                 if asset:
                     asset_list.append(asset)
         asset_ansible_update(asset_list, name)
+        for asset in asset_list:
+            res['content'] += ' [%s] '% asset.hostname
         return HttpResponse(u'批量更新成功!')
     return HttpResponse(u'批量更新成功!')
 
 
 @require_role('admin')
-def idc_add(request):
+@user_operator_record
+def idc_add(request,res, *args):
     """
     IDC add view
     """
-    header_title, path1, path2 = u'添加IDC', u'资产管理', u'添加IDC'
+    header_title, path1, path2 = '添加IDC', '资产管理', '添加IDC'
+    res['operator'] = path2
     if request.method == 'POST':
         idc_form = IdcForm(request.POST)
         if idc_form.is_valid():
             idc_name = idc_form.cleaned_data['name']
 
             if IDC.objects.filter(name=idc_name):
-                emg = u'添加失败, 此IDC %s 已存在!' % idc_name
+                emg = '添加失败, 此IDC [%s] 已存在!' % idc_name
+                res['flag'] = 'false'
+                res['content'] = emg
                 return my_render('assetManage/idc_add.html', locals(), request)
             else:
                 idc_form.save()
-                smg = u'IDC: %s添加成功' % idc_name
+                smg = 'IDC: [%s]添加成功' % idc_name
+                res['content'] = smg
             return HttpResponseRedirect(reverse('idc_list'))
     else:
         idc_form = IdcForm()
@@ -524,16 +563,19 @@ def idc_list(request):
 
 
 @require_role('admin')
-def idc_edit(request):
+@user_operator_record
+def idc_edit(request, res, *args):
     """
     IDC edit view
     """
-    header_title, path1, path2 = u'编辑IDC', u'资产管理', u'编辑IDC'
+    header_title, path1, path2 = '编辑IDC', '资产管理', '编辑IDC'
+    res['operator'] = path2
     idc_id = request.GET.get('id', '')
     idc = get_object(IDC, id=idc_id)
     if request.method == 'POST':
         idc_form = IdcForm(request.POST, instance=idc)
         if idc_form.is_valid():
+            res['content'] = '编辑IDC[%s]' % idc.name
             idc_form.save()
             return HttpResponseRedirect(reverse('idc_list'))
     else:
@@ -542,29 +584,39 @@ def idc_edit(request):
 
 
 @require_role('admin')
-def idc_del(request):
+@user_operator_record
+def idc_del(request,res, *args):
     """
     IDC delete view
     """
+    res['operator'] = res['content'] = '删除机房'
     idc_ids = request.GET.get('id', '')
     idc_id_list = idc_ids.split(',')
 
     for idc_id in idc_id_list:
-        IDC.objects.filter(id=idc_id).delete()
+        idc = IDC.objects.get(id=idc_id)
+        res['content'] += '  [%s]  ' % idc.name
 
     return HttpResponseRedirect(reverse('idc_list'))
 
 
 @require_role('admin')
-def asset_upload(request):
+@user_operator_record
+def asset_upload(request,res, *args):
     """
     Upload asset excel file view
     """
+    res['operator'] = '批量添加主机'
     if request.method == 'POST':
         excel_file = request.FILES.get('file_name', '')
-        ret = excel_to_db(excel_file)
+        ret, asset_name_list = excel_to_db(excel_file)
         if ret:
             smg = u'批量添加成功'
+            for item in asset_name_list:
+                res['content'] += " [%s] " % item
+
         else:
             emg = u'批量添加失败,请检查格式.'
+            res['flag'] = 'false'
+            res['content'] = emg
     return my_render('assetManage/asset_add_batch.html', locals(), request)

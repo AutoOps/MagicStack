@@ -43,11 +43,11 @@ def log_list(request, offset):
             posts = posts.filter(
                 Q(user__icontains=keyword) | Q(host__icontains=keyword) | Q(filename__icontains=keyword))
     elif offset == 'user_record':
+        keyword = request.GET.get('keyword', '')
         posts = UserOperatorRecord.objects.all().order_by('-op_time')
-        if date_seven_day and date_now_str:
-            datetime_start = datetime.datetime.strptime(date_seven_day + ' 00:00:01', '%m/%d/%Y %H:%M:%S')
-            datetime_end = datetime.datetime.strptime(date_now_str + ' 23:59:59', '%m/%d/%Y %H:%M:%S')
-            posts = posts.filter(start_time__gte=datetime_start).filter(start_time__lte=datetime_end)
+        if keyword:
+            posts = posts.filter(Q(username__icontains=keyword) | Q(result__icontains=keyword) |
+                                 Q(operator__icontains=keyword))
     else:
         posts = Log.objects.filter(is_finished=True).order_by('-start_time')
         username_all = set([log.user for log in Log.objects.all()])

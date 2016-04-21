@@ -252,7 +252,7 @@ def get_object(model, **kwargs):
     try:
         the_object = model.objects.get(**kwargs)
     except model.DoesNotExist:
-        the_object = None
+        return Http404
     except model.MultipleObjectsReturned:
         the_object = model.objects.get(**kwargs)[0]
     return the_object

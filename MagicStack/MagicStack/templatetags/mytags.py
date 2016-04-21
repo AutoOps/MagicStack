@@ -8,6 +8,7 @@ from django import template
 from permManage.models import PermPush
 from MagicStack.api import *
 from permManage.perm_api import get_group_user_perm
+from proxyManage.models import Proxy
 
 register = template.Library()
 
@@ -84,6 +85,19 @@ def members_count(group_id):
         return group.user_set.count()
     else:
         return 0
+
+
+@register.filter(name='proxy_asset_count')
+def proxy_asset_count(proxy_id):
+    proxy = get_object(Proxy, id=proxy_id)
+    count = 0
+    # if proxy:
+    #     count = proxy.asset_set.count()
+    # else:
+    #     count = 0
+    return count
+
+
 
 
 @register.filter(name='to_name')

@@ -76,7 +76,8 @@ INSTALLED_APPS = (
     'userManage',
     'assetManage',
     'permManage',
-    'logManage'
+    'logManage',
+    'proxyManage'
 )
 
 MIDDLEWARE_CLASSES = (

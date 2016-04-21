@@ -15,7 +15,7 @@ from MagicStack.models import Setting
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from logManage.models import Log, FileLog
-from permManage.perm_api import get_group_user_perm, gen_resource
+from permManage.perm_api import get_group_user_perm, gen_resource,user_have_perm
 from assetManage.models import Asset, IDC
 from permManage.ansible_api import MyRunner
 
@@ -36,9 +36,6 @@ def getDaysByNum(num):
     date_str.reverse()
     return date_li, date_str
 
-
-def get_data(x, y, z):
-    pass
 
 
 def get_data_by_day(date_li, item):
@@ -331,6 +328,7 @@ def exec_cmd(request):
 
 @require_role('user')
 def web_terminal(request):
+    user = request.user
     asset_id = request.GET.get('id')
     role_name = request.GET.get('role')
     asset = get_object(Asset, id=asset_id)

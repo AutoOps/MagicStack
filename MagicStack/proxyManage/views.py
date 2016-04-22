@@ -4,6 +4,7 @@ from django.shortcuts import HttpResponse
 from datetime import datetime
 from MagicStack.api import require_role, pages, my_render, ServerError, get_object
 from models import *
+from userManage.user_api import user_operator_record
 
 @require_role('admin')
 def proxy_list(request):
@@ -26,10 +27,12 @@ def proxy_list(request):
 
 
 @require_role('admin')
-def proxy_add(request):
+@user_operator_record
+def proxy_add(request, res, *args):
     error = ''
     msg = ''
     header_title, path1, path2 = '添加代理', '代理管理', '添加代理'
+    res['operator'] = path2
     if request.method == 'POST':
         proxy_name = request.POST.get('proxy_name', '')
         user_name = request.POST.get('user_name', '')
@@ -46,18 +49,22 @@ def proxy_add(request):
             Proxy.objects.create(proxy_name=proxy_name, username=user_name, password=password,
                                  url=proxy_url, comment=comment, create_time=create_time)
             msg = '添加Proxy[%s]成功' % proxy_name
-
+            res['content'] = msg
         except ServerError, e:
             error = e
+            res['flag'] = False
+            res['content'] = error
 
     return my_render('proxyManage/proxy_add.html', locals(), request)
 
 
 @require_role('admin')
-def proxy_edit(request):
+@user_operator_record
+def proxy_edit(request, res, *args):
     error = ''
     msg = ''
     header_title, path1, path2 = '编辑代理', '代理管理', '编辑代理'
+    res['operator'] = path2
     if request.method == 'GET':
         id = request.GET.get('id', '')
         proxy = get_object(Proxy, id=id)
@@ -79,19 +86,25 @@ def proxy_edit(request):
                          url=proxy_url, comment=comment)
 
             msg = '编辑Proxy[%s]成功' % proxy_name
-
+            res['content'] = msg
         except ServerError, e:
             error = e
+            res['flag'] = 'false'
+            res['content'] = e
     return my_render('proxyManage/proxy_edit.html', locals(), request)
 
 
 @require_role('admin')
-def proxy_del(request):
+@user_operator_record
+def proxy_del(request, res, *args):
     msg = ''
+    res['operator'] = '删除代理'
+    res['content'] = '删除代理'
     proxy_id = request.GET.get('id')
     id_list = proxy_id.split(',')
     for pid in id_list:
         proxy = get_object(Proxy, id=int(pid))
-        msg += '  %s  ' % (proxy.proxy_name)
+        msg += '  %s  ' % proxy.proxy_name
+        res['content'] += ' [%s]  ' % proxy.proxy_name
         proxy.delete()
     return HttpResponse('删除[%s]成功' % msg)

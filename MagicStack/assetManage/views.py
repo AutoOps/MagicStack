@@ -184,6 +184,21 @@ def asset_add(request,res, *args):
 
 
 @require_role('admin')
+def asset_networking_global(request):
+    return my_render('assetManage/asset_networking_global', locals(), request)
+
+
+@require_role('admin')
+def asset_networking(request):
+    return my_render('assetManage/asset_networking_global', locals(), request)
+
+
+@require_role('admin')
+def asset_power_manage(request):
+    return my_render('assetManage/asset_power_manage', locals(), request)
+
+
+@require_role('admin')
 def asset_add_batch(request):
     header_title, path1, path2 = u'添加资产', u'资产管理', u'批量添加'
     return my_render('assetManage/asset_add_batch.html', locals(), request)

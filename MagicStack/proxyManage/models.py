@@ -10,4 +10,7 @@ class Proxy(models.Model):
     create_time = models.DateField()
     comment = models.TextField(blank=True, help_text='备注')
 
+    def __unicode__(self):
+        return self.proxy_name
+
 

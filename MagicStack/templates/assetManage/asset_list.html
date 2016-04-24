@@ -27,8 +27,26 @@
                         <div class="col-sm-1" style="padding-left: 0">
                             <a href="{% url 'asset_add' %}" class="btn btn-sm btn-primary "> 添加资产 </a>
                         </div>
+                        <div class="col-sm-2" style="padding-left: 0">
+                                <div class="btn-group">
+                                      <button type="button" class="btn btn-sm btn-danger">更多操作</button>
+                                      <button type="button" class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                      </button>
+                                      <ul class="dropdown-menu">
+                                        <li><a href="#">创建主机</a></li>
+                                        <li><a href="#">开机</a></li>
+                                        <li><a href="#">重启</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">关闭</a></li>
+                                      </ul>
+                                </div>
+                        </div>
 
-                        <div class="col-sm-7" style="padding-left: 0px">
+
+
+                        <div class="col-sm-6" style="padding-left: 0px">
                             <label>
                                 <select name="idc" class="form-control m-b input-sm" onchange="change_info()">
                                     <option value="">机房</option>
@@ -82,7 +100,7 @@
                             </label>
                         </div>
 
-                        <div class="col-sm-4" style="padding-right: 0">
+                        <div class="col-sm-3" style="padding-right: 0">
                              <div class="input-group inline-group">
                                 <input type="text" class="form-control m-b input-sm" id="search_input" name="keyword" value="{{ keyword }}" placeholder="Search">
                                 <input type="text" style="display: none">
@@ -107,7 +125,7 @@
                                     <th class="text-center" name="ip"> IP地址 </th>
                                     <th class="text-center"> IDC </th>
                                     <th class="text-center"> 所属主机组 </th>
-{#                                    <th class="text-center"> 配置信息 </th>#}
+                                    <th class="text-center"> 所属代理 </th>
                                     <th class="text-center"> 操作系统 </th>
                                     <th class="text-center"> cpu核数 </th>
                                     <th class="text-center"> 内存 </th>
@@ -125,7 +143,7 @@
                                     <td class="text-center"> {{ asset.ip|default_if_none:"" }} </td>
                                     <td class="text-center"> {{ asset.idc.name|default_if_none:"" }} </td>
                                     <td class="text-center">{{ asset.group.all|group_str2 }}</td>
-{#                                    <td class="text-center">{{ asset.cpu }}|{{ asset.memory }}|{{ asset.disk }}</td>#}
+                                    <td class="text-center">{{ asset.proxy.proxy_name|default_if_none:"" }}</td>
                                     <td class="text-center">{{ asset.system_type|default_if_none:"" }}{{ asset.system_version|default_if_none:"" }}</td>
                                     <td class="text-center"> {{ asset.cpu|get_cpu_core|default_if_none:"" }} </td>
                                     <td class="text-center"> {{ asset.memory|default_if_none:"" }}{% if asset.memory %}G{% endif %}</td>
@@ -144,7 +162,6 @@
                                 <input type="button" id="asset_del" class="btn btn-danger btn-sm"  name="del_button" value="删除"/>
                                 <a value="{% url 'asset_edit_batch' %}" type="button" class="btn btn-sm btn-warning iframe">修改</a>
                                 <input type="button" id="asset_update" class="btn btn-info btn-sm"  name="update_button" value="更新"/>
-{#                                <input type="button" id="asset_update_all" class="btn btn-primary btn-sm"  name="update_button" value="更新全部"/>#}
                                 <input type="button" id="exec_cmd" class="btn btn-sm btn-primary"  name="exec_cmd" value="执行命令"/>
                             </div>
                             {% include 'paginator.html' %}
@@ -219,28 +236,32 @@
 
         $('.conn').click(function(){
             var url='{% url "role_get" %}?id=' + $(this).attr('value'); // 获取用户有权限的角色
+            alert(url);
             var href = $(this).attr('href');
             var new_url = '{% url "terminal" %}?id=' + $(this).attr('value') + '&role='; // webterminal socket url
             var hostname = $(this).closest('tr').find('.hostname a')[0].innerHTML;
+            alert(hostname);
             $.ajax({
                 type: 'GET',
                 url: url,
                 data: {},
                 success: function(data){
+                    alert(data);
                     var dataArray = data.split(',');
                     if (data == 'error' || data == '' || data == null || data == undefined){
                         layer.alert('没有授权系统用户')
                     }
                     else if (dataArray.length == 1 && data != 'error' && navigator.platform == 'Win32'){
-                        window.open(encodeURI(new_url+data), '', 'width=628px, height=380px');
+                        window.open(new_url+data, '', 'width=628px, height=380px');
                     }  else if (dataArray.length == 1 && data != 'error'){
-                        window.open(encodeURI(new_url+data), '_blank', 'toolbar=yes, location=yes, copyhistory=yes, scrollbars=yes, width=628, height=410');
+                        window.open(new_url+data, '_blank', 'toolbar=yes, location=yes, copyhistory=yes, scrollbars=yes, width=628, height=410');
 
                     }
                     else {
                         aUrl = '';
+                        alert(aUrl);
                         $.each(dataArray, function(index, value){
-                            aUrl += '<a onclick="windowOpen(this); return false" class="btn btn-xs btn-primary newa" href=' + new_url + value + ' value=' + hostname +  '>' + value  + '</a> '
+                            aUrl += '<a onclick="windowOpen(this); return false" class="btn btn-xs btn-primary newa" href=' + new_url +  ' value=' + hostname +  '>' + value  + '</a> '
                         });
                         console.log(aUrl);
                         layer.alert(aUrl, {
@@ -261,10 +282,10 @@
         var hostname = $(a).attr('value');
         var title = 'MagicStack Web Terminal - ' + '<span class="text-info"> '+ hostname +'</span>';
         if (navigator.platform == 'Win32'){
-            window.open(encodeURI(new_url), '_blank', 'toolbar=yes, location=yes, copyhistory=yes, scrollbars=yes, width=628, height=400')
+            window.open(new_url, '_blank', 'toolbar=yes, location=yes, copyhistory=yes, scrollbars=yes, width=628, height=400')
 
         } else {
-            window.open(encodeURI(new_url), '_blank', 'toolbar=yes, location=yes, copyhistory=yes, scrollbars=yes, width=628, height=410');
+            window.open(new_url, '_blank', 'toolbar=yes, location=yes, copyhistory=yes, scrollbars=yes, width=628, height=410');
         }
 
         return false

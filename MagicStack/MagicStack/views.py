@@ -253,7 +253,7 @@ def upload(request):
 
         if not set(asset_select).issubset(set(assets)):
             illegal_asset = set(asset_select).issubset(set(assets))
-            return HttpResponse('没有权限的服务器 %s' % ','.join([asset.hostname for asset in illegal_asset]))
+            return HttpResponse('没有权限的服务器 %s' % ','.join([asset.name for asset in illegal_asset]))
 
         for upload_file in upload_files:
             file_path = '%s/%s' % (upload_dir, upload_file.name)
@@ -267,7 +267,7 @@ def upload(request):
                                         % (upload_dir, '/tmp'), pattern='*')
         ret = runner.results
         logger.debug(ret)
-        FileLog(user=request.user.username, host=' '.join([asset.hostname for asset in asset_select]),
+        FileLog(user=request.user.username, host=' '.join([asset.name for asset in asset_select]),
                 filename=' '.join([f.name for f in upload_files]), type='upload', remote_ip=remote_ip,
                 result=ret).save()
         if ret.get('failed'):
@@ -296,12 +296,12 @@ def download(request):
 
         if not set(asset_select).issubset(set(assets)):
             illegal_asset = set(asset_select).issubset(set(assets))
-            return HttpResponse(u'没有权限的服务器 %s' % ','.join([asset.hostname for asset in illegal_asset]))
+            return HttpResponse(u'没有权限的服务器 %s' % ','.join([asset.name for asset in illegal_asset]))
 
         res = gen_resource({'user': user, 'asset': asset_select})
         runner = MyRunner(res)
         runner.run('fetch', module_args='src=%s dest=%s' % (file_path, upload_dir), pattern='*')
-        FileLog(user=request.user.username, host=' '.join([asset.hostname for asset in asset_select]),
+        FileLog(user=request.user.username, host=' '.join([asset.name for asset in asset_select]),
                 filename=file_path, type='download', remote_ip=remote_ip, result=runner.results).save()
         logger.debug(runner.results)
         os.chdir('/tmp')
@@ -333,7 +333,7 @@ def web_terminal(request):
     role_name = request.GET.get('role')
     asset = get_object(Asset, id=asset_id)
     if asset:
-        hostname = asset.hostname
+        hostname = asset.name
     return render_to_response('logManage/web_terminal.html', locals())
 
 

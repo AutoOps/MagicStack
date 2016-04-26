@@ -90,11 +90,10 @@ def members_count(group_id):
 @register.filter(name='proxy_asset_count')
 def proxy_asset_count(proxy_id):
     proxy = get_object(Proxy, id=proxy_id)
-    count = 0
-    # if proxy:
-    #     count = proxy.asset_set.count()
-    # else:
-    #     count = 0
+    if proxy:
+        count = proxy.asset_set.count()
+    else:
+        count = 0
     return count
 
 
@@ -279,7 +278,7 @@ def get_push_info(push_id, arg):
     push = get_object(PermPush, id=push_id)
     if push and arg:
         if arg == 'asset':
-            return [asset.hostname for asset in push.asset.all()]
+            return [asset.name for asset in push.asset.all()]
         if arg == 'asset_group':
             return [asset_group.name for asset_group in push.asset_group.all()]
         if arg == 'role':

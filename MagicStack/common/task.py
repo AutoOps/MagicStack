@@ -1,6 +1,8 @@
 #! /usr/bin/env python
 # -*- coding:utf-8 -*-
-from apscheduler.Schedulers.blocking import BackgroundScheduler
+
+from apscheduler.Schedulers.background import BackgroundScheduler
+from apscheduler.events import *
 import Queue
 from interface import APIRequest
 from MagicStack.api import get_object
@@ -12,7 +14,7 @@ queue_jobs = Queue.Queue()
 def get_jobs(request):
     jobs = Task.objects.filter(status='running', username=request.user.username)
     for item in jobs:
-        queue_jobs.put(dict(task_name=item.name, url=item.url))
+        queue_jobs.put(dict(task_name=item.name, url=item.url, uuid=item.uuid))
 
 
 def exec_jobs(username, password):
@@ -20,12 +22,19 @@ def exec_jobs(username, password):
         job = queue_jobs.get()
         schedu = TaskScheduler(username, password)
         res = schedu.get_result(job['url'])
-        tk = get_object(Task, name=res['task_name'])
+        tk = get_object(Task, name=res['task_name'],uuid=job['uuid'])
         tk.status = res['status']
         if 'content' in res.keys():
             tk.content = res['content']
         tk.save()
         return res
+
+
+def my_listener(event):
+    if event.exception:
+        pass
+    else:
+        pass
 
 
 class TaskScheduler(object):
@@ -47,6 +56,7 @@ if __name__ == '__main__':
     schedu = BackgroundScheduler()
     schedu.add_jobs(get_jobs, 'interval', seconds=5)
     schedu.add_jobs(exec_jobs, 'interval', seconds=10)
+    schedu.add_listener(my_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
     schedu.start()
 
 

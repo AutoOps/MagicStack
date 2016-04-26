@@ -23,13 +23,13 @@
                 </div>
 
                 <div class="ibox-content">
-                        <div>
-                              <ul class="nav nav-tabs" role="tablist">
-                                <li role="presentation"><a href="{% url 'asset_add' %}" aria-controls="general" role="tab" data-toggle="tab">General</a></li>
-                                <li role="presentation"><a href="{% url 'asset_networking_global' %}" aria-controls="networking_global" role="tab" data-toggle="tab">Networking(Global)</a></li>
-                                <li role="presentation"><a href="{% url 'asset_networking' %}" aria-controls="networking" role="tab" data-toggle="tab">Networking</a></li>
-                                <li role="presentation" class="active"><a href="{% url 'asset_power_manage' %}" aria-controls="power" role="tab" data-toggle="tab">Power Management</a></li>
-                              </ul>
+                       <div class="panel-options">
+                            <ul class="nav nav-tabs">
+                                <li><a href="{% url 'asset_add' %}" class="text-center"><i class="fa fa-laptop"></i> General </a></li>
+                                <li><a href="{% url 'asset_networking_global' %}" class="text-center"><i class="fa fa-bar-chart-o"></i> Networking(Global)</a></li>
+                                <li><a href="{% url 'asset_networking' %}" class="text-center"><i class="fa fa-bar-chart-o"></i> Networking </a></li>
+                                <li class="active"><a href="{% url 'asset_power_manage' %}" class="text-center"><i class="fa fa-bar-chart-o"></i> Power Management </a></li>
+                            </ul>
                         </div>
                         <div class="panel-body">
                             <div class="tab-content">
@@ -42,46 +42,20 @@
                                     {% endif %}
                                     <form id="assetForm" method="post" class="form-horizontal">
 
-                                        {{ af.name|bootstrap_horizontal}}
+                                        {{ pf.power_type|bootstrap_horizontal}}
 
                                         <div class="hr-line-dashed"></div>
-                                        {{ af.ip|bootstrap_horizontal }}
-                                        <p class="col-sm-offset-2">Tips: 如果IP地址不填写, IP默认会设置与主机名一致</p>
+                                        {{ pf.power_address|bootstrap_horizontal }}
+
 
                                         <div class="hr-line-dashed"></div>
-                                        {{ af.port|bootstrap_horizontal }}
+                                        {{ pf.power_username|bootstrap_horizontal }}
 
                                         <div class="hr-line-dashed"></div>
-                                        {{ af.username|bootstrap_horizontal }}
+                                        {{ pf.power_password|bootstrap_horizontal }}
 
                                        <div class="hr-line-dashed"></div>
-                                        {{ af.password|bootstrap_horizontal }}
-
-
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.networking_g|bootstrap_horizontal }}
-
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.networking|bootstrap_horizontal }}
-
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.power_manage|bootstrap_horizontal }}
-
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.group|bootstrap_horizontal }}
-
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.proxy|bootstrap_horizontal }}
-
-                                        <div class="hr-line-dashed"></div>
-                                        <div class="form-group"><label class="col-sm-2 control-label"> 是否激活<span class="red-fonts"> *</span> </label>
-                                            <div class="col-sm-8">
-                                                <div class="radio i-checks">
-                                                    <label> <input type="radio" checked="" value="1" name="is_active">激活 </label>
-                                                    <label> <input type="radio" value="0" name="is_active"> 禁用</label>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        {{ pf.power_id|bootstrap_horizontal }}
 
                                         <div class="hr-line-dashed"></div>
                                         <div class="form-group">
@@ -105,23 +79,6 @@
 {% block self_footer_js %}
 <script>
     $('document').ready(function(){
-        var check_default = "{{ default_setting.name }}";
-        console.log(check_default);
-        if (check_default != 'default'){
-            $('#id_use_default_auth').attr('disabled', true);
-            $('#id_use_default_auth').attr('checked', false);
-            $('#admin_account').css('display', 'block');
-        } else {
-            $('#id_use_default_auth').click(function(){
-                if ($(this).is(':checked')){
-                    $('#admin_account').css('display', 'none');
-                }
-                else {
-                    $('#admin_account').css('display', 'block');
-                }
-            })
-        }
-
     });
 
     var required_fields = ["id_hostname", "id_port"];

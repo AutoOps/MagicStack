@@ -37,7 +37,7 @@
                                 <table class="table">
                                     <tr>
                                         <td class="text-navy">主机名</td>
-                                        <td>{{ asset.hostname|default_if_none:""  }}</td>
+                                        <td>{{ asset.name|default_if_none:""  }}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-navy">IP</td>
@@ -58,8 +58,11 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="text-navy">远控IP</td>
-                                        <td>{{ asset.remote_ip|default_if_none:"" }}</td>
+                                        <td class="text-navy">远程管理卡</td>
+                                        <td>{{ asset.power_manage.power_type|default_if_none:"" }}</td>
+                                        <td>{{ asset.power_manage.power_address|default_if_none:"" }}</td>
+                                        <td>{{ asset.power_manage.power_username|default_if_none:"" }}</td>
+                                        <td>{{ asset.power_manage.power_id|default_if_none:"" }}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-navy">端口</td>
@@ -77,11 +80,6 @@
                                                  {% endfor %}
                                              </table>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">使用默认管理账号</td>
-{#                                        <td>{{ asset.use_default_auth|bool2str }}</td>#}
-                                        <td>{{ asset.use_default_auth|bool2str }} {% if not asset.use_default_auth %} <span class="text-info">{{ asset.username }}</span> {% endif %}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-navy">机房</td>

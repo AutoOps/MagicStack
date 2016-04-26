@@ -35,11 +35,19 @@
                                         <span class="sr-only">Toggle Dropdown</span>
                                       </button>
                                       <ul class="dropdown-menu">
-                                        <li><a href="#">创建主机</a></li>
-                                        <li><a href="#">开机</a></li>
-                                        <li><a href="#">重启</a></li>
+                                        <li>
+                                            <button type="button" class="btn btn-sm" id="create_host">创建主机</button>
+                                        </li>
+                                        <li >
+                                             <button type="button" class="btn btn-sm" id="start_up">开机</button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="btn btn-sm" id="restart">重启</button>
+                                        </li>
                                         <li role="separator" class="divider"></li>
-                                        <li><a href="#">关闭</a></li>
+                                        <li>
+                                            <button type="button" class="btn btn-sm" id="shutdown">关机</button>
+                                        </li>
                                       </ul>
                                 </div>
                         </div>
@@ -139,7 +147,7 @@
                                     <td class="text-center" name="id" value="{{ asset.id }}" data-editable='false'>
                                         <input name="id" value="{{ asset.id }}" type="checkbox" class="i-checks">
                                     </td>
-                                    <td class="text-center hostname"> <a href="{% url 'asset_detail' %}?id={{ asset.id }}">{{ asset.hostname|default_if_none:"" }}</a></td>
+                                    <td class="text-center hostname"> <a href="{% url 'asset_detail' %}?id={{ asset.id }}">{{ asset.name|default_if_none:"" }}</a></td>
                                     <td class="text-center"> {{ asset.ip|default_if_none:"" }} </td>
                                     <td class="text-center"> {{ asset.idc.name|default_if_none:"" }} </td>
                                     <td class="text-center">{{ asset.group.all|group_str2 }}</td>
@@ -149,7 +157,7 @@
                                     <td class="text-center"> {{ asset.memory|default_if_none:"" }}{% if asset.memory %}G{% endif %}</td>
                                     <td class="text-center"> {{ asset.disk|get_disk_info }}{% if asset.disk %}G{% endif %}</td>
                                     <td class="text-center" data-editable='false'>
-                                        <a href="{% url 'asset_edit' %}?id={{ asset.id }}" class="btn btn-xs btn-info">编辑</a>
+{#                                        <a href="{% url 'asset_edit' %}?id={{ asset.id }}" class="btn btn-xs btn-info">编辑</a>#}
                                         <a value="{{ asset.id }}" class="conn btn btn-xs btn-warning">连接</a>
                                         <a value="{% url 'asset_del' %}?id={{ asset.id }}" class="btn btn-xs btn-danger asset_del">删除</a>
                                     </td>
@@ -397,6 +405,83 @@
             change_info()
             }
     });
+
+
+    $('#create_host').click(function () {
+        var asset_id_all = getIDall();
+        if (asset_id_all == ''){
+            alert("请至少选择一行!");
+            return false;
+        }
+        if (confirm("确定在所选机器上新建主机?")) {
+            $.ajax({
+                type: "post",
+                data: {asset_id_all: asset_id_all},
+                url: "{% url 'create_host' %}",
+                success: function () {
+                    parent.location.reload();
+                }
+            });
+        }
+    });
+
+
+    $('#start_up').click(function () {
+        var asset_id_all = getIDall();
+        if (asset_id_all == ''){
+            alert("请至少选择一行!");
+            return false;
+        }
+        if (confirm("确定开启所选机器?")) {
+            $.ajax({
+                type: "post",
+                data: {asset_id_all: asset_id_all},
+                url: "{% url 'start_up' %}",
+                success: function () {
+                    parent.location.reload();
+                }
+            });
+        }
+    });
+
+    $('#restart').click(function () {
+        var asset_id_all = getIDall();
+        if (asset_id_all == ''){
+            alert("请至少选择一行!");
+            return false;
+        }
+        if (confirm("确定重启所选的机器?")) {
+            $.ajax({
+                type: "post",
+                data: {asset_id_all: asset_id_all},
+                url: "{% url 'restart' %}",
+                success: function () {
+                    parent.location.reload();
+                }
+            });
+        }
+    });
+
+    $('#shutdown').click(function () {
+        var asset_id_all = getIDall();
+        if (asset_id_all == ''){
+            alert("请至少选择一行!");
+            return false;
+        }
+        if (confirm("确定关闭所选的机器?")) {
+            $.ajax({
+                type: "post",
+                data: {asset_id_all: asset_id_all},
+                url: "{% url 'shutdown' %}",
+                success: function () {
+                    parent.location.reload();
+                }
+            });
+        }
+    });
+
+
+
 </script>
 
 {% endblock %}

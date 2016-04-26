@@ -10,9 +10,8 @@ class AssetForm(forms.ModelForm):
         model = Asset
 
         fields = [
-            "ip", "other_ip", 'name', 'owerns', 'profice', 'status','kickstart', 'netboot_enabled', "port", "group", "proxy",'username','password', 'networking_g', 'networking', 'power_manage',
-            "idc", "brand", "cpu", "memory", "disk", "system_type", "system_version", "cabinet", "position", "number", "machine_status", "asset_type", "env", "sn", "is_active", "comment",
-            "system_arch"
+            'name', 'ip',  "port",'username','password',  'owerns', 'profile', 'status','kickstart', 'netboot_enabled','networking_g',  'power_manage',
+          "group", "proxy","idc",  "cabinet", "number", "machine_status", "asset_type", "sn", "is_active", "comment",
         ]
 
 

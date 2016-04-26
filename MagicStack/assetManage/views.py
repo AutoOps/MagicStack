@@ -4,10 +4,14 @@ from django.db.models import Q
 from assetManage.asset_api import *
 from MagicStack.api import *
 from MagicStack.models import Setting
-from assetManage.forms import AssetForm, IdcForm
-from assetManage.models import Asset, IDC, AssetGroup, ASSET_TYPE, ASSET_STATUS
+from assetManage.forms import AssetForm, IdcForm,NetWorkingForm,NetWorkingGlobalForm,PowerManageForm
+from assetManage.models import *
 from permManage.perm_api import get_group_asset_perm, get_group_user_perm
 from userManage.user_api import user_operator_record
+from common.interface import APIRequest
+from common.models import Task
+import uuid
+import time
 
 
 @require_role('admin')
@@ -140,20 +144,22 @@ def asset_add(request,res, *args):
     Asset add view
     添加资产
     """
+    error = msg = ''
     header_title, path1, path2 = '添加资产', '资产管理', '添加资产'
     res['operator'] = path2
-    asset_group_all = AssetGroup.objects.all()
+    asset_groups = AssetGroup.objects.all()
+    asset_nets = NetWorking.objects.all()
     af = AssetForm()
-    default_setting = get_object(Setting, name='default')
-    default_port = default_setting.field2 if default_setting else ''
     if request.method == 'POST':
-        af_post = AssetForm(request.POST)
-        ip = request.POST.get('ip', '')
-        hostname = request.POST.get('hostname', '')
+        asset_ins = Asset()
+        hostname = request.POST.get('name', '')
+
         is_active = True if request.POST.get('is_active') == '1' else False
-        use_default_auth = request.POST.get('use_default_auth', '')
+        is_enabled = True if request.POST.get('is_enabled') == '1' else False
+        asset_nets_p = request.POST.getlist('asset_net', [])
+        asset_groups_p = request.POST.getlist('asset_group', [])
         try:
-            if Asset.objects.filter(hostname=unicode(hostname)):
+            if Asset.objects.filter(name=unicode(hostname)):
                 error = '该主机名 %s 已存在!' % hostname
                 raise ServerError(error)
 
@@ -161,41 +167,71 @@ def asset_add(request,res, *args):
             res['flag'] = 'false'
             res['content'] = error
         else:
-            if af_post.is_valid():
-                asset_save = af_post.save(commit=False)
-                if not use_default_auth:
-                    password = request.POST.get('password', '')
-                    password_encode = CRYPTOR.encrypt(password)
-                    asset_save.password = password_encode
-                if not ip:
-                    asset_save.ip = hostname
-                asset_save.is_active = True if is_active else False
-                asset_save.save()
-                af_post.save_m2m()
+                if af_post.is_valid():
+                    asset_save = af_post.save(commit=False)
+                    asset_save.is_active = True if is_active else False
+                    asset_save.netboot_enabled = True if is_enabled else False
+                    asset_save.networking = asset_nets_p
+                    asset_save.group = asset_groups_p
+                    asset_save.save()
+                    af_post.save_m2m()
 
-                msg = '主机 %s 添加成功' % hostname
-                res['content'] = msg
-            else:
-                esg = '主机 %s 添加失败' % hostname
-                res['flag'] = 'false'
-                res['content'] = esg
+                    msg = '主机 %s 添加成功' % hostname
+                    res['content'] = msg
+                else:
+                    error = '主机 %s 添加失败' % hostname
+                    res['flag'] = 'false'
+                    res['content'] = error
 
     return my_render('assetManage/asset_add.html', locals(), request)
 
 
 @require_role('admin')
 def asset_networking_global(request):
-    return my_render('assetManage/asset_networking_global', locals(), request)
+    msg = error = ''
+    nfg = NetWorkingGlobalForm()
+    if request.method == 'POST':
+        try:
+            nfg = NetWorkingGlobalForm(request.POST)
+            if nfg.is_valid():
+                nfg_save = nfg.save()
+            msg = "创建Networking(Global)成功"
+        except Exception,e:
+            error = e
+    return my_render('assetManage/asset_networking_g.html', locals(), request)
 
 
 @require_role('admin')
 def asset_networking(request):
-    return my_render('assetManage/asset_networking_global', locals(), request)
+    error = msg = ''
+    nf = NetWorkingForm()
+    if request.method == 'POST':
+        try:
+            nf = NetWorkingForm(request.POST)
+            net_name = request.POST.get('name')
+            if nf.is_valid():
+                if NetWorking.objects.filter(name=net_name):
+                    raise ServerError('网卡名已存在,请重新填写')
+                save_nf = nf.save()
+            msg = "创建Networking成功"
+        except Exception,e:
+            error = e
+    return my_render('assetManage/asset_networking.html', locals(), request)
 
 
 @require_role('admin')
 def asset_power_manage(request):
-    return my_render('assetManage/asset_power_manage', locals(), request)
+    error = msg = ''
+    pf = PowerManageForm()
+    if request.method == 'POST':
+        try:
+            pf = PowerManageForm(request.POST)
+            if pf.is_valid():
+                save_pf = pf.save()
+                msg = "添加远程管理卡成功"
+        except Exception,e:
+            error = e
+    return my_render('assetManage/asset_power_manage.html', locals(), request)
 
 
 @require_role('admin')
@@ -223,7 +259,7 @@ def asset_del(request,res, *args):
         if asset_batch:
             for asset_id in asset_id_all.split(','):
                 asset = get_object(Asset, id=asset_id)
-                res['content'] += '%s   ' % asset.hostname
+                res['content'] += '%s   ' % asset.name
                 asset.delete()
 
     return HttpResponse(u'删除成功')
@@ -382,6 +418,71 @@ def asset_list(request):
 
 
 @require_role('admin')
+def asset_create_host(request):
+    res = {}
+    if request.method == 'POST':
+        asset_id_all = request.POST.get('asset_id_all')
+        asset_ids = asset_id_all.split(',')
+        print "asset_ids:",asset_ids
+        for item in asset_ids:
+            asset = get_object(Asset, id=int(item))
+            fileds = {
+                "name": asset.name,
+                "hostname": asset.networking_g.hostname,
+                "profile": asset.profile,
+                "gateway": asset.networking_g.getway,
+                "power_type": asset.power_manage.power_type,
+                "power_address": asset.power_manage.power_address,
+                "power_user": asset.power_manage.power_user,
+                "power_pass": asset.power_manage.power_password,
+                "interfaces": {
+                    "eth0":{
+                        "mac_address": asset.networking.mac_address,
+                        "ip_address": asset.networking.ip_address,
+                        "if_gateway": asset.networking.gateway,
+                        "mtu": asset.networking.mtu,
+                        "static": 1,
+                    },
+                    "eth1":{
+                        "mac_address": "fa:16:3e:76:35:53",
+                        "ip_address": "192.160.10.30"
+                    }
+                }
+            }
+
+            data = json.dumps(fileds)
+            pro_username = asset.proxy.username
+            pro_password = asset.proxy.password
+            pro_url = asset.proxy.url
+            api = APIRequest(pro_url, pro_username, pro_password)
+            res = api.req_post(data)
+
+            md5_str = request.user.username + str(time.time())
+
+            tk = Task()
+            tk.task_name = res['task_name']
+            tk.username = request.user.username
+            tk.status = res['status']
+            tk.url = res['link']
+            tk.uuid = uuid.uuid3(uuid.NAMESPACE_DNS, md5_str)
+            tk.start_time = datetime.datetime.now()
+    return HttpResponse(json.dumps(res), content_type='application/json')
+
+
+@require_role('admin')
+def asset_start_up(request):
+    pass
+
+@require_role('admin')
+def asset_restart(request):
+    pass
+
+@require_role('admin')
+def asset_shutdown(request):
+    pass
+
+
+@require_role('admin')
 @user_operator_record
 def asset_edit_batch(request, res, *args):
     res['operator'] = res['content'] = '修改主机'
@@ -455,7 +556,7 @@ def asset_edit_batch(request, res, *args):
                         asset.comment = comment
                         alert_list.append([u'备注', asset.comment, comment])
                 asset.save()
-                res['content'] += '[%s]   ' % asset.hostname
+                res['content'] += '[%s]   ' % asset.name
             if alert_list:
                 recode_name = unicode(name) + ' - ' + u'批量'
                 AssetRecord.objects.create(asset=asset, username=recode_name, content=alert_list)
@@ -473,7 +574,7 @@ def asset_detail(request):
     asset_id = request.GET.get('id', '')
     asset = get_object(Asset, id=asset_id)
     perm_info = get_group_asset_perm(asset)
-    log = Log.objects.filter(host=asset.hostname)
+    log = Log.objects.filter(host=asset.name)
     if perm_info:
         user_perm = []
         for perm, value in perm_info.items():
@@ -501,11 +602,11 @@ def asset_update(request,res, *args):
     name = request.user.username
     if not asset:
         res['flag'] = 'false'
-        res['content'] = '主机[%s]不存在' % asset.hostname
+        res['content'] = '主机[%s]不存在' % asset.name
         return HttpResponseRedirect(reverse('asset_detail')+'?id=%s' % asset_id)
     else:
         asset_ansible_update([asset], name)
-        res['content'] = '更新主机[%s]' % asset.hostname
+        res['content'] = '更新主机[%s]' % asset.name
     return HttpResponseRedirect(reverse('asset_detail')+'?id=%s' % asset_id)
 
 
@@ -528,7 +629,7 @@ def asset_update_batch(request,res,*args):
                     asset_list.append(asset)
         asset_ansible_update(asset_list, name)
         for asset in asset_list:
-            res['content'] += ' [%s] '% asset.hostname
+            res['content'] += ' [%s] '% asset.name
         return HttpResponse(u'批量更新成功!')
     return HttpResponse(u'批量更新成功!')
 

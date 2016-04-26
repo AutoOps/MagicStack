@@ -219,7 +219,7 @@ def write_excel(asset_all):
         system_version = asset.system_version if asset.system_version else u''
         system_os = unicode(system_type) + unicode(system_version)
 
-        alter_dic = [asset.hostname, asset.ip, idc_name, group_all, system_os, asset.cpu, asset.memory,
+        alter_dic = [asset.name, asset.ip, idc_name, group_all, system_os, asset.cpu, asset.memory,
                      disk, asset.cabinet, asset.mac, asset.remote_ip, status, asset.comment]
         data.append(alter_dic)
     format = workbook.add_format()
@@ -368,7 +368,7 @@ def asset_ansible_update(obj_list, name=''):
     logger.debug('获取硬件信息: %s' % ansible_asset_info)
     for asset in obj_list:
         try:
-            setup_info = ansible_asset_info['contacted'][asset.hostname]['ansible_facts']
+            setup_info = ansible_asset_info['contacted'][asset.name]['ansible_facts']
             logger.debug("setup_info: %s" % setup_info)
         except KeyError, e:
             logger.error("获取setup_info失败: %s" % e)

@@ -77,7 +77,8 @@ INSTALLED_APPS = (
     'assetManage',
     'permManage',
     'logManage',
-    'proxyManage'
+    'proxyManage',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -124,7 +125,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'magicstack',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'password',
         'HOST': '127.0.0.1',
         'PORT': 3306,
     }

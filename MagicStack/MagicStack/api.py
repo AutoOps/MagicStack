@@ -60,7 +60,7 @@ def get_asset_info(asset):
     获取资产的相关管理账号端口等信息
     """
     default = get_object(Setting, name='default')
-    info = {'hostname': asset.hostname, 'ip': asset.ip}
+    info = {'hostname': asset.name, 'ip': asset.ip}
     if asset.use_default_auth:
         if default:
             info['username'] = default.field1
@@ -252,7 +252,7 @@ def get_object(model, **kwargs):
     try:
         the_object = model.objects.get(**kwargs)
     except model.DoesNotExist:
-        return Http404
+        return None
     except model.MultipleObjectsReturned:
         the_object = model.objects.get(**kwargs)[0]
     return the_object

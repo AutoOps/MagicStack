@@ -179,7 +179,7 @@ def gen_resource(ob, perm=None):
             for asset in assets:
                 asset_info = get_asset_info(asset)
                 role_key = get_role_key(user, role)
-                info = {'hostname': asset.hostname,
+                info = {'hostname': asset.name,
                         'ip': asset.ip,
                         'port': asset_info.get('port', 22),
                         'ansible_ssh_private_key_file': role_key,
@@ -202,7 +202,7 @@ def gen_resource(ob, perm=None):
                     continue
 
                 role_key = get_role_key(user, role)
-                info = {'hostname': asset.hostname,
+                info = {'hostname': asset.name,
                         'ip': asset.ip,
                         'port': asset_info.get('port', 22),
                         'username': role.name,
@@ -219,7 +219,7 @@ def gen_resource(ob, perm=None):
 
         for asset, asset_info in perm.get('asset').items():
             asset_info = get_asset_info(asset)
-            info = {'hostname': asset.hostname, 'ip': asset.ip, 'port': asset_info.get('port', 22)}
+            info = {'hostname': asset.name, 'ip': asset.ip, 'port': asset_info.get('port', 22)}
             try:
                 role = sorted(list(perm.get('asset').get(asset).get('role')))[0]
             except IndexError:

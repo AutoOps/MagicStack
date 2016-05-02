@@ -103,7 +103,7 @@
                                     <th class="text-center" name="ip"> IP地址 </th>
                                     <th class="text-center"> IDC </th>
                                     <th class="text-center"> 所属主机组 </th>
-{#                                    <th class="text-center"> 配置信息 </th>#}
+                                    <th class="text-center"> 所属代理 </th>
                                     <th class="text-center"> 操作系统 </th>
                                     <th class="text-center"> cpu核数 </th>
                                     <th class="text-center"> 内存 </th>
@@ -117,11 +117,11 @@
                                     <td class="text-center" name="id" value="{{ asset.id }}" data-editable='false'>
                                         <input name="id" value="{{ asset.id }}" type="checkbox" class="i-checks">
                                     </td>
-                                    <td class="text-center hostname"> <a href="{% url 'asset_detail' %}?id={{ asset.id }}">{{ asset.hostname|default_if_none:"" }}</a></td>
+                                    <td class="text-center hostname"> <a href="{% url 'asset_detail' %}?id={{ asset.id }}">{{ asset.name|default_if_none:"" }}</a></td>
                                     <td class="text-center"> {{ asset.ip|default_if_none:"" }} </td>
                                     <td class="text-center"> {{ asset.idc.name|default_if_none:"" }} </td>
                                     <td class="text-center">{{ asset.group.all|group_str2 }}</td>
-{#                                    <td class="text-center">{{ asset.cpu }}|{{ asset.memory }}|{{ asset.disk }}</td>#}
+                                    <td class="text-center">{{ asset.proxy}}</td>
                                     <td class="text-center">{{ asset.system_type|default_if_none:"" }}{{ asset.system_version|default_if_none:"" }}</td>
                                     <td class="text-center"> {{ asset.cpu|get_cpu_core|default_if_none:"" }} </td>
                                     <td class="text-center"> {{ asset.memory|default_if_none:"" }}{% if asset.memory %}G{% endif %} </td>

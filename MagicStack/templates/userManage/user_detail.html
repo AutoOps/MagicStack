@@ -159,7 +159,7 @@
                                         </p>
                                         <p>
                                             {% for asset in assets.asset %}
-                                                <a href="{% url 'asset_list' %}?id={{ asset.id }}">{{ asset.hostname }}</a><br>
+                                                <a href="{% url 'asset_list' %}?id={{ asset.id }}">{{ asset.name }}</a><br>
                                             {% endfor %}
                                         </p>
                                     </div>

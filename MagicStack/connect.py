@@ -482,7 +482,7 @@ class Nav(object):
             else:
                 # 匹配 ip, hostname, 备注
                 for asset in user_asset_all:
-                    if str_r in asset.ip or str_r in str(asset.hostname) or str_r in str(asset.comment):
+                    if str_r in asset.ip or str_r in str(asset.name) or str_r in str(asset.comment):
                         user_asset_search.append(asset)
         else:
             # 如果没有输入就展现所有
@@ -543,7 +543,7 @@ class Nav(object):
             assets = list(self.user_perm.get('role', {}).get(role).get('asset'))  # 获取该用户，角色授权主机
             print "授权包含该系统用户的所有主机"
             for asset in assets:
-                print ' %s' % asset.hostname
+                print ' %s' % asset.name
             print
             print "请输入主机名或ansible支持的pattern, 多个主机:分隔, q退出"
             pattern = raw_input("\033[1;32mPattern>:\033[0m ").strip()

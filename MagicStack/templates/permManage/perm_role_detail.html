@@ -198,7 +198,7 @@
                                             <th class="text-center">
                                                 <input type="checkbox" name="asset_id" value="{{ asset.id }}">
                                             </th>
-                                            <td class="text-center"> {{ asset.hostname }} </td>
+                                            <td class="text-center"> {{ asset.name }} </td>
                                             <td class="text-center"> {{ info.key | yesno:"是,否,未知" }} </td>
                                             <td class="text-center"> {{ info.password | yesno:"是,否,未知" }} </td>
                                             {% if info.success %}
@@ -253,7 +253,7 @@
                                             <th class="text-center">
                                                 <input type="checkbox" name="asset_no_push_id" value="{{ asset.id }}">
                                             </th>
-                                            <td class="text-center"> {{ asset.hostname }} </td>
+                                            <td class="text-center"> {{ asset.name }} </td>
                                             <td class="text-center"> {{ asset.ip }} </td>
                                         </tr>
                                     {% endfor %}

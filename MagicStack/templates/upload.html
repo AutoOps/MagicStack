@@ -73,7 +73,7 @@
                                 <div class="col-sm-10">
                                     <select name="asset_ids" id="assets" data-placeholder="请选择上传的主机" class="chosen-select form-control m-b" multiple  tabindex="2">
                                         {% for asset in assets %}
-                                            <option value="{{ asset.id }}">{{ asset.hostname }}</option>
+                                            <option value="{{ asset.id }}">{{ asset.name }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>

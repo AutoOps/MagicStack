@@ -46,7 +46,7 @@
                         <div class="col-sm-8">
                             <select name="asset_ids" id="asset_ids" data-placeholder="请输入" class="chosen-select form-control m-b" multiple  tabindex="2">
                                 {% for asset in assets %}
-                                    <option value="{{ asset.id }}">{{ asset.hostname }}</option>
+                                    <option value="{{ asset.id }}">{{ asset.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>

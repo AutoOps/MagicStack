@@ -245,7 +245,7 @@ class ExecHandler(tornado.websocket.WebSocketHandler):
 
         res = gen_resource({'user': self.user, 'asset': self.assets, 'role': self.role})
         self.runner = MyRunner(res)
-        message = '有权限的主机: ' + ', '.join([asset.hostname for asset in self.assets])
+        message = '有权限的主机: ' + ', '.join([asset.name for asset in self.assets])
         self.__class__.clients.append(self)
         self.write_message(message)
 
@@ -328,7 +328,7 @@ class WebTerminalHandler(tornado.websocket.WebSocketHandler):
                     login_role = role
                     break
             if not login_role:
-                logger.warning('Websocket: Not that Role %s for Host: %s User: %s ' % (role_name, asset.hostname,
+                logger.warning('Websocket: Not that Role %s for Host: %s User: %s ' % (role_name, asset.name,
                                                                                        self.user.username))
                 self.close()
                 return
@@ -336,7 +336,7 @@ class WebTerminalHandler(tornado.websocket.WebSocketHandler):
             logger.warning('Websocket: No that Host: %s User: %s ' % (asset_id, self.user.username))
             self.close()
             return
-        logger.debug('Websocket: request web terminal Host: %s User: %s Role: %s' % (asset.hostname, self.user.username,
+        logger.debug('Websocket: request web terminal Host: %s User: %s Role: %s' % (asset.name, self.user.username,
                                                                                      login_role.name))
         self.term = WebTty(self.user, asset, login_role, login_type='web')
         self.term.remote_ip = self.request.headers.get("X-Real-IP")

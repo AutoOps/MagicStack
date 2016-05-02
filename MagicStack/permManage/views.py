@@ -136,7 +136,7 @@ def perm_rule_add(request, res, *args):
                 need_push_asset.update(set(calc_assets) & set(asset_no_push))
                 if need_push_asset:
                     raise ServerError(u'没有推送系统用户 %s 的主机 %s'
-                                      % (role.name, ','.join([asset.hostname for asset in need_push_asset])))
+                                      % (role.name, ','.join([asset.name for asset in need_push_asset])))
 
             # 仅授权成功的，写回数据库(授权规则,用户,用户组,资产,资产组,用户角色)
             rule = PermRule(name=rule_name, comment=rule_comment)
@@ -211,7 +211,7 @@ def perm_rule_edit(request, res, *args):
                 need_push_asset.update(set(calc_assets) & set(asset_no_push))
                 if need_push_asset:
                     raise ServerError(u'没有推送系统用户 %s 的主机 %s'
-                                      % (role.name, ','.join([asset.hostname for asset in need_push_asset])))
+                                      % (role.name, ','.join([asset.name for asset in need_push_asset])))
 
                 # 仅授权成功的，写回数据库(授权规则,用户,用户组,资产,资产组,用户角色)
                 rule.user = users_obj
@@ -583,9 +583,9 @@ def perm_role_push(request, res, *args):
                 def func(**kwargs):
                     PermPush(**kwargs).save()
 
-            if failed_asset.get(asset.hostname):
+            if failed_asset.get(asset.name):
                 func(is_password=password_push, is_public_key=key_push, role=role, asset=asset, success=False,
-                     result=failed_asset.get(asset.hostname))
+                     result=failed_asset.get(asset.name))
             else:
                 func(is_password=password_push, is_public_key=key_push, role=role, asset=asset, success=True)
 
@@ -763,6 +763,7 @@ def perm_role_recycle(request):
 
     return HttpResponse('删除成功')
 
+
 @require_role('user')
 def perm_role_get(request):
     asset_id = request.GET.get('id', 0)
@@ -774,7 +775,6 @@ def perm_role_get(request):
             return HttpResponse(','.join([i.name for i in role]))
     else:
         roles = get_group_user_perm(request.user).get('role').keys()
-        return HttpResponse(','.join(i.name for i in roles))
-
+        return HttpResponse(','.join([i.name for i in roles]))
     return HttpResponse('error')
 

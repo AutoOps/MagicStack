@@ -59,10 +59,20 @@
                                     </tr>
                                     <tr>
                                         <td class="text-navy">远程管理卡</td>
-                                        <td>{{ asset.power_manage.power_type|default_if_none:"" }}</td>
-                                        <td>{{ asset.power_manage.power_address|default_if_none:"" }}</td>
-                                        <td>{{ asset.power_manage.power_username|default_if_none:"" }}</td>
-                                        <td>{{ asset.power_manage.power_id|default_if_none:"" }}</td>
+                                        <td>
+                                             <table class="table">
+                                                    <tr>
+                                                        <td>{{ asset.power_manage.power_type|default_if_none:"" }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{ asset.power_manage.power_address|default_if_none:"" }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{ asset.power_manage.power_username|default_if_none:"" }}</td>
+                                                    </tr>
+
+                                             </table>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="text-navy">端口</td>
@@ -81,6 +91,20 @@
                                              </table>
                                         </td>
                                     </tr>
+
+                                    <tr>
+                                        <td class="text-navy">网卡</td>
+                                        <td>
+                                             <table class="table">
+                                                 {% for asset_net in asset.networking.all %}
+                                                    <tr>
+                                                        <td>{{ asset_net.net_name|default_if_none:"" }}</td>
+                                                    </tr>
+                                                 {% endfor %}
+                                             </table>
+                                        </td>
+                                    </tr>
+
                                     <tr>
                                         <td class="text-navy">机房</td>
                                         <td>{{ asset.idc.name|default_if_none:"" }}</td>

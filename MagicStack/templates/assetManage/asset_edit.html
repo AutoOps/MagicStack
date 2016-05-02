@@ -1,8 +1,19 @@
 {% extends 'base.html' %}
+{% block self_head_css_js %}
+{% endblock %}
 {% load mytags %}
 {% load bootstrap %}
 {% block content %}
 {% include 'nav_cat_bar.html' %}
+
+<script type="text/javascript">
+$(function(){
+    $('#myTabs a').click(function (e) {
+      e.preventDefault();
+      $(this).tab('show')
+    })
+})
+</script>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-sm-10">
@@ -21,220 +32,165 @@
                         </a>
                     </div>
                 </div>
-
                 <div class="ibox-content">
-                        <div class="panel-body">
-                            <div class="tab-content">
-                                <div id="tab-1" class="ibox float-e-margins tab-pane active">
-                                    {% if error %}
-                                        <div class="alert alert-warning text-center">{{ error }}</div>
-                                    {% endif %}
-                                    {% if msg %}
-                                        <div class="alert alert-success text-center">{{ msg }}</div>
-                                    {% endif %}
-                                    <form id="assetForm" method="post" class="form-horizontal">
+                  <form id="assetForm" method="post" class="form-horizontal">
+                      <div class="form-group">
+                        <button class="btn btn-primary" type="submit" style="margin-left: 20px"> 提交 </button>
+                          &nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-white" type="reset"> 取消 </button>
+                      </div>
+                      {% if error %}
+                          <div class="alert alert-warning text-center">{{ error }}</div>
+                      {% endif %}
+                      {% if msg %}
+                          <div class="alert alert-success text-center">{{ msg }}</div>
+                      {% endif %}
+                    <div id="myTabs">
+                      <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#general" aria-controls="home" role="tab" data-toggle="tab">General</a></li>
+                            <li role="presentation"><a href="#networkingglobal" aria-controls="profile" role="tab" data-toggle="tab">Networking(Global)</a></li>
+                            <li role="presentation"><a href="#networking" aria-controls="messages" role="tab" data-toggle="tab">Networking</a></li>
+                            <li role="presentation"><a href="#powermanage" aria-controls="settings" role="tab" data-toggle="tab">Power Manage</a></li>
+                      </ul>
 
-                                        {{ af.hostname|bootstrap_horizontal }}
+                      <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="general">
+                                <div class="ibox-content">
+                                    {{ af.name|bootstrap_horizontal}}
 
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.ip|bootstrap_horizontal }}
+                                    <div class="hr-line-dashed"></div>
+                                    {{ af.ip|bootstrap_horizontal }}
+                                    <p class="col-sm-offset-2">Tips: 如果IP地址不填写, IP默认会设置与主机名一致</p>
 
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.other_ip|bootstrap_horizontal }}
-                                        <p class="col-sm-offset-2">Tips: 多个IP使用,号隔开</p>
+                                    <div class="hr-line-dashed"></div>
+                                    {{ af.port|bootstrap_horizontal }}
 
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.remote_ip|bootstrap_horizontal }}
+                                    <div class="hr-line-dashed"></div>
+                                    {{ af.username|bootstrap_horizontal }}
 
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.mac|bootstrap_horizontal }}
+                                    <div class="hr-line-dashed"></div>
+                                    {{ af.password|bootstrap_horizontal }}
 
-{#                                        <div class="hr-line-dashed"></div>#}
-{#                                        {{ af.port|bootstrap_horizontal }}#}
+                                    <div class="hr-line-dashed"></div>
+                                    {{ af.owerns|bootstrap_horizontal }}
 
-                                        <div class="hr-line-dashed"></div>
-                                        <div class="form-group">
-                                            <label for="j_group" class="col-sm-2 control-label">管理账号 <span class="red-fonts">*</span></label>
-                                            <div class="col-sm-2">
-                                                <div class="radio i-checks">
-                                                    <label style="padding-left: 0">
-                                                        <input type="checkbox" {% if asset.use_default_auth %} checked="checked" {% endif %} id="id_use_default_auth" name="use_default_auth"><span> 使用默认 </span>
-                                                    </label>
-                                                </div>
+                                    <div class="hr-line-dashed"></div>
+                                    {{ af.profile|bootstrap_horizontal }}
+
+                                    <div class="hr-line-dashed"></div>
+                                    {{ af.status|bootstrap_horizontal }}
+
+                                    <div class="hr-line-dashed"></div>
+                                    {{ af.kickstart|bootstrap_horizontal }}
+
+                                     <div class="hr-line-dashed"></div>
+                                     <div class="form-group"><label class="col-sm-2 control-label"> netboot enabled<span class="red-fonts"> *</span> </label>
+                                        <div class="col-sm-8">
+                                            <div class="radio i-checks">
+                                                <label> <input type="radio" checked="" value="1" name="is_enabled">激活 </label>
+                                                <label> <input type="radio" value="0" name="is_enabled"> 禁用</label>
                                             </div>
                                         </div>
-                                        <div class="form-group" id="admin_account" {% if asset.use_default_auth %} style="display: none" {% endif %}>
-                                            <label class="col-sm-2 control-label"> </label>
-                                            <div class="col-sm-3">
-                                                <input type="text" value="{{ asset.username }}" name="username" class="form-control">
-                                            </div>
+                                    </div>
 
-                                            <label class="col-sm-1 control-label"> </label>
-                                            <div class="col-sm-4">
-                                                <input type="password" value="" name="password" placeholder="不填写即不更改密码." class="form-control">
-                                            </div>
-                                        </div>
+                                    <div class="hr-line-dashed"></div>
+                                      {{ af.group|bootstrap_horizontal }}
+                                    <p>Hold down "Control", or "Command" on a Mac, to select more than one. </p>
 
-                                        <div class="form-group" id="id_port">
-                                            <div class="hr-line-dashed"></div>
-                                            <label class="col-sm-2 control-label"> 端口<span class="red-fonts">*</span> </label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" placeholder="Port" value="{{ asset.port|default_if_none:"" }}" name="port" class="form-control">
-                                                </div>
-                                        </div>
+                                    <div class="hr-line-dashed"></div>
+                                    {{ af.proxy|bootstrap_horizontal }}
 
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.group|bootstrap_horizontal }}
+                                    <div class="hr-line-dashed"></div>
+                                    {{ af.idc|bootstrap_horizontal }}
 
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.idc|bootstrap_horizontal }}
+                                    <div class="hr-line-dashed"></div>
+                                    {{ af.cabinet|bootstrap_horizontal }}
 
-                                       <div class="hr-line-dashed"></div>
-                                        {{ af.brand|bootstrap_horizontal }}
 
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.cpu|bootstrap_horizontal }}
+                                    <div class="hr-line-dashed"></div>
+                                    {{ af.number|bootstrap_horizontal }}
 
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.memory|bootstrap_horizontal }}
+                                    <div class="hr-line-dashed"></div>
+                                    {{ af.machine_status|bootstrap_horizontal }}
 
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.disk|bootstrap_horizontal }}
+                                    <div class="hr-line-dashed"></div>
+                                    {{ af.asset_type|bootstrap_horizontal }}
 
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.system_type|bootstrap_horizontal }}
+                                    <div class="hr-line-dashed"></div>
+                                    {{ af.sn|bootstrap_horizontal }}
 
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.system_version|bootstrap_horizontal }}
-
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.system_arch|bootstrap_horizontal }}
-
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.number|bootstrap_horizontal }}
-
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.sn|bootstrap_horizontal }}
-
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.cabinet|bootstrap_horizontal }}
-
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.position|bootstrap_horizontal }}
-
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.asset_type|bootstrap_horizontal }}
-
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.env|bootstrap_horizontal }}
-
-                                        <div class="hr-line-dashed"></div>
-                                        {{ af.status|bootstrap_horizontal }}
-
-{#                                        <div class="hr-line-dashed"></div>#}
-{#                                        {{ af.is_active|bootstrap_horizontal }}#}
-
-                                        <div class="hr-line-dashed"></div>
-                                        <div class="form-group"><label class="col-sm-2 control-label"> 是否激活<span class="red-fonts">*</span> </label>
-                                            <div class="col-sm-8">
-                                                <div class="radio i-checks">
-                                                    {% ifequal asset.is_active 1 %}
-                                                        <label> <input type="radio" checked="" value="1" name="is_active">激活 </label>
-                                                        <label> <input type="radio"  value="0" name="is_active"> 禁用</label>
-                                                    {% else %}
-                                                        <label> <input type="radio"  value="1" name="is_active">激活 </label>
-                                                        <label> <input type="radio"  checked="" value="0" name="is_active"> 禁用</label>
-                                                    {% endifequal %}
-                                                </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group"><label class="col-sm-2 control-label"> 是否激活<span class="red-fonts"> *</span> </label>
+                                        <div class="col-sm-8">
+                                            <div class="radio i-checks">
+                                                <label> <input type="radio" checked="" value="1" name="is_active">激活 </label>
+                                                <label> <input type="radio" value="0" name="is_active"> 禁用</label>
                                             </div>
                                         </div>
+                                    </div>
 
-                                       <div class="hr-line-dashed"></div>
-                                        {{ af.comment|bootstrap_horizontal }}
-
-                                        <div class="hr-line-dashed"></div>
-                                        <div class="form-group">
-                                            <div class="col-sm-4 col-sm-offset-2">
-                                                <button class="btn btn-white" type="reset"> 重置 </button>
-                                                <button class="btn btn-primary" type="submit"> 提交 </button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                    <div class="hr-line-dashed"></div>
+                                    {{ af.comment|bootstrap_horizontal }}
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                            <div role="tabpanel" class="tab-pane" id="networkingglobal">
+                               <div class="ibox-content">
+                                    {{ nfg.hostname|bootstrap_horizontal}}
+
+                                    <div class="hr-line-dashed"></div>
+                                    {{ nfg.gateway|bootstrap_horizontal }}
+
+                                    <div class="hr-line-dashed"></div>
+                                    {{ nfg.name_servers|bootstrap_horizontal }}
+                               </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="networking">
+                              <div class="ibox-content">
+
+                                {{ nf.net_name|bootstrap_horizontal }}
+
+                                {{ nf.mac_address|bootstrap_horizontal }}
+
+                                {{ nf.mtu|bootstrap_horizontal }}
+
+                                {{ nf.ip_address|bootstrap_horizontal }}
+
+                                {{ nf.static|bootstrap_horizontal }}
+
+                                {{ nf.subnet_mask|bootstrap_horizontal }}
+
+                                {{ nf.per_gateway|bootstrap_horizontal }}
+
+                                {{ nf.dns_name|bootstrap_horizontal }}
+
+                                {{ nf.static_routes|bootstrap_horizontal }}
+
+                                {{ nf.cnames|bootstrap_horizontal }}
+                              </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="powermanage">
+                                <div class="ibox-content">
+                                    {{ pf.power_type|bootstrap_horizontal }}
+
+                                    <div class="hr-line-dashed"></div>
+                                    {{ pf.power_address|bootstrap_horizontal }}
+
+                                    <div class="hr-line-dashed"></div>
+                                    {{ pf.power_username|bootstrap_horizontal }}
+
+                                    <div class="hr-line-dashed"></div>
+                                    {{ pf.power_password|bootstrap_horizontal }}
+
+                                    <div class="hr-line-dashed"></div>
+                                    {{ pf.power_id|bootstrap_horizontal }}
+                                </div>
+                            </div>
+                      </div>
+                   </div>
+                  </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block self_footer_js %}
-<script>
-    $('document').ready(function(){
-        $('#id_use_default_auth').click(function(){
-            if ($(this).is(':checked')){
-                $('#admin_account').css('display', 'none');
-            }
-            else {
-                $('#admin_account').css('display', 'block');
-            }
-        })
-    });
-
-    var required_fields = ["id_hostname", "id_port"];
-    required_fields.forEach(function(field) {
-        $('label[for="' + field + '"]').parent().addClass("required");
-    });
-
-   $('#assetForm').validator({
-        timely: 2,
-        theme: "yellow_right_effect",
-        rules: {
-            check_ip: [/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])(\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])){3}$/, 'ip地址不正确'],
-            check_port: [/^\d{1,5}$/, '端口号不正确'],
-            use_default_auth: function() {
-                var str1 = $("#id_use_default_auth").is(":checked");
-                if (str1 == true){
-                    var decide = false;
-                } else {
-                    var decide = true;
-                }
-                return decide}
-        },
-        fields: {
-            "hostname": {
-                rule: "required",
-                tip: "填写主机名",
-                ok: "",
-                msg: {required: "必须填写!"}
-            },
-            "port": {
-                rule: "required(use_default_auth)",
-                tip: "输入端口号",
-                ok: "",
-                msg: {required: "必须填写!"}
-            },
-            "username": {
-                rule: "required(use_default_auth)",
-                tip: "输入用户名",
-                ok: "",
-                msg: {required: "必须填写!"}
-            },
-{#            "password": {#}
-{#                rule: "required(use_default_auth)",#}
-{#                tip: "输入密码",#}
-{#                ok: "",#}
-{#                msg: {required: "必须填写!"}#}
-{#            }#}
-        },
-        valid: function(form) {
-            form.submit();
-        }
-    });
-
-</script>
-
 {% endblock %}

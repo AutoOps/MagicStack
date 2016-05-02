@@ -150,88 +150,126 @@ def asset_add(request,res, *args):
     asset_groups = AssetGroup.objects.all()
     asset_nets = NetWorking.objects.all()
     af = AssetForm()
+    nfg = NetWorkingGlobalForm()
+    nf = NetWorkingForm()
+    pf = PowerManageForm()
     if request.method == 'POST':
-        asset_ins = Asset()
-        hostname = request.POST.get('name', '')
-
-        is_active = True if request.POST.get('is_active') == '1' else False
-        is_enabled = True if request.POST.get('is_enabled') == '1' else False
-        asset_nets_p = request.POST.getlist('asset_net', [])
-        asset_groups_p = request.POST.getlist('asset_group', [])
         try:
+            asset_info = Asset()
+            asset_info.ip = request.POST.get('ip', '')
+            asset_info.name = request.POST.get('name', '')
+            asset_info.owerns = request.POST.get('owerns', '')
+            asset_info.profile = request.POST.get('profile', '')
+            asset_info.status = request.POST.get('status', '1')
+            asset_info.kickstart = request.POST.get('kickstart', '')
+            asset_info.port = request.POST.get('port',22)
+            asset_info.username = request.POST.get('username', 'rooot')
+            asset_info.password = request.POST.get('password', '')
+            asset_info.idc_id = int(request.POST.get('idc', '1'))
+            asset_info.cabinet = request.POST.get('cabinet', '')
+            asset_info.number = request.POST.get('number', '')
+            asset_info.machine_status = int(request.POST.get('machine_status', 1))
+            asset_info.asset_type = int(request.POST.get('asset_type', 1))
+            asset_info.sn = request.POST.get('sn', '')
+            asset_info.comment = request.POST.get('comment', '')
+            asset_info.proxy_id = int(request.POST.get('proxy', '1'))
+
+
+            nt_g = NetWorkingGlobal()
+            nt_g.hostname = request.POST.get('hostname', '')
+            nt_g.gateway = request.POST.get('gateway','')
+            nt_g.name_servers = request.POST.get('name_servers', '')
+            nt_g.save()
+            asset_info.networking_g_id = nt_g.id
+
+            pm = PowerManage()
+            pm.power_type = request.POST.get('power_type')
+            pm.power_address = request.POST.get('power_address')
+            pm.power_username = request.POST.get('power_username')
+            pm.power_password = request.POST.get('power_password')
+            pm.power_id = request.POST.get('power_id',1)
+            pm.save()
+            asset_info.power_manage_id = pm.id
+
+            asset_info.proxy_id = int(request.POST.get('proxy', 1))
+            hostname = request.POST.get('name', '')
+            is_active = True if request.POST.get('is_active', '1') == '1' else False
+            is_enabled = True if request.POST.get('is_enabled', '1') == '1' else False
+            asset_info.netboot_enabled = is_enabled
+            asset_info.is_active = is_active
             if Asset.objects.filter(name=unicode(hostname)):
-                error = '该主机名 %s 已存在!' % hostname
-                raise ServerError(error)
+                    error = '该主机名 %s 已存在!' % hostname
+                    raise ServerError(error)
+            asset_info.save()
+
+            net = NetWorking()
+            net.name = request.POST.get('add_name', '')
+            net.mac_address = request.POST.get('mac_address', '')
+            net.ip_address = request.POST.get('ip_address','')
+            net.cnames = request.POST.get('cnames', '')
+            net.dns_name = request.POST.get('dns_name', '')
+            net.mtu = request.POST.get('mtu', '')
+            net.per_gateway = request.POST.get('per_gateway', '')
+            net.static = request.POST.get('static', '')
+            net.static_routes = request.POST.get('static_routes', '')
+            net.subnet_mask = request.POST.get('subnet_mask', '')
+            net.save()
+            asset_info.networking.add(net)
+
+            group = AssetGroup()
+            group_id = request.POST.getlist('group')
+            for item in group_id:
+                group = AssetGroup.objects.get(id=int(item))
+                asset_info.group.add(group)
 
         except ServerError:
             res['flag'] = 'false'
             res['content'] = error
         else:
-                if af_post.is_valid():
-                    asset_save = af_post.save(commit=False)
-                    asset_save.is_active = True if is_active else False
-                    asset_save.netboot_enabled = True if is_enabled else False
-                    asset_save.networking = asset_nets_p
-                    asset_save.group = asset_groups_p
-                    asset_save.save()
-                    af_post.save_m2m()
+            msg = 'add %s success' % hostname
+            res['content'] = msg
+            fileds = {
+                "name": request.POST.get('name'),
+                "hostname": request.POST.get('hostname'),
+                "profile": request.POST.get('profile'),
+                "gateway": request.POST.get('gateway'),
+                "power_type": request.POST.get('power_type'),
+                "power_address": request.POST.get('power_address'),
+                "power_user": request.POST.get('power_username'),
+                "power_pass": request.POST.get('power_password'),
+                "interfaces": {
+                    "eth0":{
+                        "mac_address": request.POST.get('mac_address'),
+                        "ip_address": request.POST.get('ip_address'),
+                        "if_gateway": request.POST.get('per_gateway'),
+                        "mtu": request.POST.get('mtu'),
+                        "static": 1,
+                    },
+                }
+            }
 
-                    msg = '主机 %s 添加成功' % hostname
-                    res['content'] = msg
-                else:
-                    error = '主机 %s 添加失败' % hostname
-                    res['flag'] = 'false'
-                    res['content'] = error
+            data = json.dumps(fileds)
+            select_proxy = get_object(Proxy, id=int(request.POST.get('proxy')))
+            pro_username = select_proxy.username
+            pro_password = select_proxy.password
+            pro_url = select_proxy.url
+            try:
+                api = APIRequest('http://172.16.30.69:8100/v1.0/system/', 'test', '123456')
+                result = api.req_post(data)
+                print "result:",result
+                # tk = Task()
+                # tk.task_name = res['task_name']
+                # tk.username = request.user.username
+                # tk.status = res['status']
+                # tk.url = res['link']
+                # tk.start_time = datetime.datetime.now()
+            except Exception,e:
+                error = e
+            else:
+                result = json.loads(result)
+                msg = result['message']
 
     return my_render('assetManage/asset_add.html', locals(), request)
-
-
-@require_role('admin')
-def asset_networking_global(request):
-    msg = error = ''
-    nfg = NetWorkingGlobalForm()
-    if request.method == 'POST':
-        try:
-            nfg = NetWorkingGlobalForm(request.POST)
-            if nfg.is_valid():
-                nfg_save = nfg.save()
-            msg = "创建Networking(Global)成功"
-        except Exception,e:
-            error = e
-    return my_render('assetManage/asset_networking_g.html', locals(), request)
-
-
-@require_role('admin')
-def asset_networking(request):
-    error = msg = ''
-    nf = NetWorkingForm()
-    if request.method == 'POST':
-        try:
-            nf = NetWorkingForm(request.POST)
-            net_name = request.POST.get('name')
-            if nf.is_valid():
-                if NetWorking.objects.filter(name=net_name):
-                    raise ServerError('网卡名已存在,请重新填写')
-                save_nf = nf.save()
-            msg = "创建Networking成功"
-        except Exception,e:
-            error = e
-    return my_render('assetManage/asset_networking.html', locals(), request)
-
-
-@require_role('admin')
-def asset_power_manage(request):
-    error = msg = ''
-    pf = PowerManageForm()
-    if request.method == 'POST':
-        try:
-            pf = PowerManageForm(request.POST)
-            if pf.is_valid():
-                save_pf = pf.save()
-                msg = "添加远程管理卡成功"
-        except Exception,e:
-            error = e
-    return my_render('assetManage/asset_power_manage.html', locals(), request)
 
 
 @require_role('admin')
@@ -272,55 +310,133 @@ def asset_edit(request,res, *args):
     edit a asset
     修改主机
     """
+    error = msg = ''
     header_title, path1, path2 = u'修改资产', u'资产管理', u'修改资产'
     res['operator'] = path2
     asset_id = request.GET.get('id', '')
     username = request.user.username
-    asset = get_object(Asset, id=asset_id)
-    if asset:
-        password_old = asset.password
-    af = AssetForm(instance=asset)
+    asset_info = get_object(Asset, id=asset_id)
+    if asset_info:
+        password_old = asset_info.password
+    af = AssetForm(instance=asset_info)
+    nf = NetWorkingForm(instance=asset_info.networking.all()[0])
+    nfg = NetWorkingGlobalForm(instance=asset_info.networking_g)
+    pf = PowerManageForm(instance=asset_info.power_manage)
     if request.method == 'POST':
-        af_post = AssetForm(request.POST, instance=asset)
         ip = request.POST.get('ip', '')
-        hostname = request.POST.get('hostname', '')
-        password = request.POST.get('password', '')
-        is_active = True if request.POST.get('is_active') == '1' else False
-        use_default_auth = request.POST.get('use_default_auth', '')
         try:
-            asset_test = get_object(Asset, hostname=hostname)
-            if asset_test and asset_id != unicode(asset_test.id):
-                emg = u'该主机名 %s 已存在!' % hostname
-                raise ServerError(emg)
+            asset_info.ip = request.POST.get('ip', '')
+            asset_info.name = request.POST.get('name', '')
+            asset_info.owerns = request.POST.get('owerns', '')
+            asset_info.profile = request.POST.get('profile', '')
+            asset_info.status = request.POST.get('status', '1')
+            asset_info.kickstart = request.POST.get('kickstart', '')
+            asset_info.port = request.POST.get('port',22)
+            asset_info.username = request.POST.get('username', 'rooot')
+            asset_info.password = request.POST.get('password', '')
+            asset_info.idc_id = int(request.POST.get('idc', '1'))
+            asset_info.cabinet = request.POST.get('cabinet', '')
+            asset_info.number = request.POST.get('number', '')
+            asset_info.machine_status = int(request.POST.get('machine_status', 1))
+            asset_info.asset_type = int(request.POST.get('asset_type', 1))
+            asset_info.sn = request.POST.get('sn', '')
+            asset_info.comment = request.POST.get('comment', '')
+            asset_info.proxy_id = int(request.POST.get('proxy', '1'))
+
+
+            nt_g = NetWorkingGlobal()
+            nt_g.hostname = request.POST.get('hostname', '')
+            nt_g.gateway = request.POST.get('gateway','')
+            nt_g.name_servers = request.POST.get('name_servers', '')
+            nt_g.save()
+            asset_info.networking_g_id = nt_g.id
+
+            pm = PowerManage()
+            pm.power_type = request.POST.get('power_type')
+            pm.power_address = request.POST.get('power_address')
+            pm.power_username = request.POST.get('power_username')
+            pm.power_password = request.POST.get('power_password')
+            pm.power_id = request.POST.get('power_id',1)
+            pm.save()
+            asset_info.power_manage = pm
+
+            asset_info.proxy_id = int(request.POST.get('proxy', 1))
+            hostname = request.POST.get('name', '')
+            is_active = True if request.POST.get('is_active', '1') == '1' else False
+            is_enabled = True if request.POST.get('is_enabled', '1') == '1' else False
+            asset_info.netboot_enabled = is_enabled
+            asset_info.is_active = is_active
+
+            net = NetWorking()
+            net.name = request.POST.get('net_name', '')
+            net.mac_address = request.POST.get('mac_address', '')
+            net.ip_address = request.POST.get('ip_address','')
+            net.cnames = request.POST.get('cnames', '')
+            net.dns_name = request.POST.get('dns_name', '')
+            net.mtu = request.POST.get('mtu', '')
+            net.per_gateway = request.POST.get('per_gateway', '')
+            net.static = request.POST.get('static', '')
+            net.static_routes = request.POST.get('static_routes', '')
+            net.subnet_mask = request.POST.get('subnet_mask', '')
+            net.save()
+            asset_info.networking.add(net)
+
+            group = AssetGroup()
+            group_id = request.POST.getlist('group')
+            for item in group_id:
+                group = AssetGroup.objects.get(id=int(item))
+                asset_info.group.add(group)
+
         except ServerError:
             res['flag'] = 'false'
-            res['content'] = emg
+            res['content'] = error
         else:
-            if af_post.is_valid():
-                af_save = af_post.save(commit=False)
-                if use_default_auth:
-                    af_save.username = ''
-                    af_save.password = ''
-                else:
-                    if password:
-                        password_encode = CRYPTOR.encrypt(password)
-                        af_save.password = password_encode
-                    else:
-                        af_save.password = password_old
-                af_save.is_active = True if is_active else False
-                af_save.save()
-                af_post.save_m2m()
-                info = asset_diff(af_post.__dict__.get('initial'), request.POST)
-                db_asset_alert(asset, username, info)
+            # emg = u'主机 %s 修改失败' %ip
+            # res['flag'] = 'false'
+            # res['content'] = emg
+            # return my_render('assetManage/error.html', locals(), request)
+            #return HttpResponseRedirect(reverse('asset_detail')+'?id=%s' % asset_id)
+            msg = 'edit %s success' % hostname
+            res['content'] = msg
+            fileds = {
+                "name": request.POST.get('name'),
+                "hostname": request.POST.get('hostname'),
+                "profile": request.POST.get('profile'),
+                "gateway": request.POST.get('gateway'),
+                "power_type": request.POST.get('power_type'),
+                "power_address": request.POST.get('power_address'),
+                "power_user": request.POST.get('power_username'),
+                "power_pass": request.POST.get('power_password'),
+                "interfaces": {
+                    "eth0":{
+                        "mac_address": request.POST.get('mac_address'),
+                        "ip_address": request.POST.get('ip_address'),
+                        "if_gateway": request.POST.get('per_gateway'),
+                        "mtu": request.POST.get('mtu'),
+                        "static": 1,
+                    },
+                }
+            }
 
-                smg = u'主机 %s 修改成功' % ip
-                res['content'] = smg
+            data = json.dumps(fileds)
+            select_proxy = get_object(Proxy, id=int(request.POST.get('proxy')))
+            pro_username = select_proxy.username
+            pro_password = select_proxy.password
+            pro_url = select_proxy.url
+            try:
+                api = APIRequest('http://172.16.30.69:8100/v1.0/system/', 'test', '123456')
+                result = api.req_put(data)
+                # tk = Task()
+                # tk.task_name = res['task_name']
+                # tk.username = request.user.username
+                # tk.status = res['status']
+                # tk.url = res['link']
+                # tk.start_time = datetime.datetime.now()
+            except Exception,e:
+                    error = e
             else:
-                emg = u'主机 %s 修改失败' % ip
-                res['flag'] = 'false'
-                res['content'] = emg
-                return my_render('assetManage/error.html', locals(), request)
-            return HttpResponseRedirect(reverse('asset_detail')+'?id=%s' % asset_id)
+                    result = json.loads(result)
+                    msg = result['message']
 
     return my_render('assetManage/asset_edit.html', locals(), request)
 

@@ -4,12 +4,8 @@ from assetManage.views import *
 
 urlpatterns = patterns('',
     url(r'^add/$', asset_add, name='asset_add'),
-    url(r'^networking/global/$', asset_networking_global, name='asset_networking_global'),
-    url(r'^networking/$', asset_networking, name='asset_networking'),
-    url(r'^power_manage/$', asset_power_manage, name='asset_power_manage'),
     url(r"^add_batch/$", asset_add_batch, name='asset_add_batch'),
     url(r'^list/$', asset_list, name='asset_list'),
-    url(r'^create_host/$', asset_create_host, name='create_host'),
     url(r'^start_up/$', asset_start_up, name='start_up'),
     url(r'^restart/$', asset_restart, name='restart'),
     url(r'^shutdown/$', asset_shutdown, name='shutdown'),

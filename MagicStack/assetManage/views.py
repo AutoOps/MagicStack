@@ -255,8 +255,7 @@ def asset_add(request,res, *args):
             pro_url = select_proxy.url
             try:
                 api = APIRequest('http://172.16.30.69:8100/v1.0/system/', 'test', '123456')
-                result = api.req_post(data)
-                print "result:",result
+                result, codes = api.req_post(data)
                 # tk = Task()
                 # tk.task_name = res['task_name']
                 # tk.username = request.user.username
@@ -266,8 +265,10 @@ def asset_add(request,res, *args):
             except Exception,e:
                 error = e
             else:
-                result = json.loads(result)
-                msg = result['message']
+                if codes == 200:
+                    msg = result['messege']
+                else:
+                    error = result['messegs']
 
     return my_render('assetManage/asset_add.html', locals(), request)
 
@@ -332,7 +333,7 @@ def asset_edit(request,res, *args):
             asset_info.status = request.POST.get('status', '1')
             asset_info.kickstart = request.POST.get('kickstart', '')
             asset_info.port = request.POST.get('port',22)
-            asset_info.username = request.POST.get('username', 'rooot')
+            asset_info.username = request.POST.get('username', 'root')
             asset_info.password = request.POST.get('password', '')
             asset_info.idc_id = int(request.POST.get('idc', '1'))
             asset_info.cabinet = request.POST.get('cabinet', '')
@@ -343,7 +344,7 @@ def asset_edit(request,res, *args):
             asset_info.comment = request.POST.get('comment', '')
             asset_info.proxy_id = int(request.POST.get('proxy', '1'))
 
-
+            #save NetWorkingGlobal
             nt_g = NetWorkingGlobal()
             nt_g.hostname = request.POST.get('hostname', '')
             nt_g.gateway = request.POST.get('gateway','')
@@ -351,6 +352,7 @@ def asset_edit(request,res, *args):
             nt_g.save()
             asset_info.networking_g_id = nt_g.id
 
+            #save PowerManage
             pm = PowerManage()
             pm.power_type = request.POST.get('power_type')
             pm.power_address = request.POST.get('power_address')
@@ -366,6 +368,7 @@ def asset_edit(request,res, *args):
             is_enabled = True if request.POST.get('is_enabled', '1') == '1' else False
             asset_info.netboot_enabled = is_enabled
             asset_info.is_active = is_active
+
 
             net = NetWorking()
             net.name = request.POST.get('net_name', '')
@@ -391,13 +394,7 @@ def asset_edit(request,res, *args):
             res['flag'] = 'false'
             res['content'] = error
         else:
-            # emg = u'主机 %s 修改失败' %ip
-            # res['flag'] = 'false'
-            # res['content'] = emg
-            # return my_render('assetManage/error.html', locals(), request)
-            #return HttpResponseRedirect(reverse('asset_detail')+'?id=%s' % asset_id)
-            msg = 'edit %s success' % hostname
-            res['content'] = msg
+            res['content'] = 'edit %s success' % hostname
             fileds = {
                 "name": request.POST.get('name'),
                 "hostname": request.POST.get('hostname'),
@@ -425,7 +422,7 @@ def asset_edit(request,res, *args):
             pro_url = select_proxy.url
             try:
                 api = APIRequest('http://172.16.30.69:8100/v1.0/system/', 'test', '123456')
-                result = api.req_put(data)
+                result, code = api.req_put(data)
                 # tk = Task()
                 # tk.task_name = res['task_name']
                 # tk.username = request.user.username
@@ -435,8 +432,10 @@ def asset_edit(request,res, *args):
             except Exception,e:
                     error = e
             else:
-                    result = json.loads(result)
-                    msg = result['message']
+                if code == 200:
+                    msg = result['messege']
+                else:
+                    error = result['messege']
 
     return my_render('assetManage/asset_edit.html', locals(), request)
 
@@ -534,68 +533,57 @@ def asset_list(request):
 
 
 @require_role('admin')
-def asset_create_host(request):
-    res = {}
-    if request.method == 'POST':
-        asset_id_all = request.POST.get('asset_id_all')
-        asset_ids = asset_id_all.split(',')
-        print "asset_ids:",asset_ids
-        for item in asset_ids:
-            asset = get_object(Asset, id=int(item))
-            fileds = {
-                "name": asset.name,
-                "hostname": asset.networking_g.hostname,
-                "profile": asset.profile,
-                "gateway": asset.networking_g.getway,
-                "power_type": asset.power_manage.power_type,
-                "power_address": asset.power_manage.power_address,
-                "power_user": asset.power_manage.power_user,
-                "power_pass": asset.power_manage.power_password,
-                "interfaces": {
-                    "eth0":{
-                        "mac_address": asset.networking.mac_address,
-                        "ip_address": asset.networking.ip_address,
-                        "if_gateway": asset.networking.gateway,
-                        "mtu": asset.networking.mtu,
-                        "static": 1,
-                    },
-                    "eth1":{
-                        "mac_address": "fa:16:3e:76:35:53",
-                        "ip_address": "192.160.10.30"
-                    }
-                }
-            }
-
-            data = json.dumps(fileds)
-            pro_username = asset.proxy.username
-            pro_password = asset.proxy.password
-            pro_url = asset.proxy.url
-            api = APIRequest(pro_url, pro_username, pro_password)
-            res = api.req_post(data)
-
-            md5_str = request.user.username + str(time.time())
-
-            tk = Task()
-            tk.task_name = res['task_name']
-            tk.username = request.user.username
-            tk.status = res['status']
-            tk.url = res['link']
-            tk.uuid = uuid.uuid3(uuid.NAMESPACE_DNS, md5_str)
-            tk.start_time = datetime.datetime.now()
-    return HttpResponse(json.dumps(res), content_type='application/json')
-
-
-@require_role('admin')
 def asset_start_up(request):
-    pass
+    data = {}
+    if request.method == 'POST':
+        select_ids = request.POST.getlist('asset_id_all')
+        asset_list = []
+        for item in select_ids:
+            asset = get_object(Asset, id=int(item))
+            asset_list.append(asset)
+        proxy = asset_list[0].proxy
+        username = proxy.username
+        password = proxy.password
+        api = APIRequest('http://172.16.30.69:8100/v1.0/system/action', 'test', '123456')
+        result, codes = api.req_post(data)
+        logger.debug("result:%s   codes:%s"%(result,codes))
+        return HttpResponse(json.dumps(result), content_type='application/json')
+
 
 @require_role('admin')
 def asset_restart(request):
-    pass
+    data = {}
+    if request.method == 'POST':
+        select_ids = request.POST.getlist('asset_id_all')
+        asset_list = []
+        for item in select_ids:
+            asset = get_object(Asset, id=int(item))
+            asset_list.append(asset)
+        proxy = asset_list[0].proxy
+        username = proxy.username
+        password = proxy.password
+        api = APIRequest('http://172.16.30.69:8100/v1.0/system/action', 'test', '123456')
+        result, codes = api.req_post(data)
+        logger.debug("result:%s   codes:%s"%(result,codes))
+        return HttpResponse(json.dumps(result), content_type='application/json')
+
 
 @require_role('admin')
 def asset_shutdown(request):
-    pass
+    data = {}
+    if request.method == 'POST':
+        select_ids = request.POST.getlist('asset_id_all')
+        asset_list = []
+        for item in select_ids:
+            asset = get_object(Asset, id=int(item))
+            asset_list.append(asset)
+        proxy = asset_list[0].proxy
+        username = proxy.username
+        password = proxy.password
+        api = APIRequest('http://172.16.30.69:8100/v1.0/system/action', 'test', '123456')
+        result, codes = api.req_post(data)
+        logger.debug("result:%s   codes:%s"%(result,codes))
+        return HttpResponse(json.dumps(result), content_type='application/json')
 
 
 @require_role('admin')

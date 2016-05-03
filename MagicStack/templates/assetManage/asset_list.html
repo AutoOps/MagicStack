@@ -403,25 +403,6 @@
     });
 
 
-    $('#create_host').click(function () {
-        var asset_id_all = getIDall();
-        if (asset_id_all == ''){
-            alert("请至少选择一行!");
-            return false;
-        }
-        if (confirm("确定在所选机器上新建主机?")) {
-            $.ajax({
-                type: "post",
-                data: {asset_id_all: asset_id_all},
-                url: "{% url 'create_host' %}",
-                success: function () {
-                    parent.location.reload();
-                }
-            });
-        }
-    });
-
-
     $('#start_up').click(function () {
         var asset_id_all = getIDall();
         if (asset_id_all == ''){
@@ -433,7 +414,8 @@
                 type: "post",
                 data: {asset_id_all: asset_id_all},
                 url: "{% url 'start_up' %}",
-                success: function () {
+                success: function (data) {
+                    alert(data.messege);
                     parent.location.reload();
                 }
             });
@@ -451,7 +433,8 @@
                 type: "post",
                 data: {asset_id_all: asset_id_all},
                 url: "{% url 'restart' %}",
-                success: function () {
+                success: function (data) {
+                    alert(data.messege);
                     parent.location.reload();
                 }
             });
@@ -469,7 +452,8 @@
                 type: "post",
                 data: {asset_id_all: asset_id_all},
                 url: "{% url 'shutdown' %}",
-                success: function () {
+                success: function (data) {
+                    alert(data.messege);
                     parent.location.reload();
                 }
             });

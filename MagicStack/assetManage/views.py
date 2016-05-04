@@ -10,9 +10,9 @@ from permManage.perm_api import get_group_asset_perm, get_group_user_perm
 from userManage.user_api import user_operator_record
 from common.interface import APIRequest
 from common.models import Task
-import uuid
-import time
+import Queue
 
+task_queue = Queue.Queue()
 
 @require_role('admin')
 @user_operator_record
@@ -146,89 +146,22 @@ def asset_add(request,res, *args):
     """
     error = msg = ''
     header_title, path1, path2 = '添加资产', '资产管理', '添加资产'
+    profiles = get_profiles()
     res['operator'] = path2
-    asset_groups = AssetGroup.objects.all()
-    asset_nets = NetWorking.objects.all()
+
     af = AssetForm()
     nfg = NetWorkingGlobalForm()
     nf = NetWorkingForm()
     pf = PowerManageForm()
+
     if request.method == 'POST':
         try:
-            asset_info = Asset()
-            asset_info.ip = request.POST.get('ip', '')
-            asset_info.name = request.POST.get('name', '')
-            asset_info.owerns = request.POST.get('owerns', '')
-            asset_info.profile = request.POST.get('profile', '')
-            asset_info.status = request.POST.get('status', '1')
-            asset_info.kickstart = request.POST.get('kickstart', '')
-            asset_info.port = request.POST.get('port',22)
-            asset_info.username = request.POST.get('username', 'rooot')
-            asset_info.password = request.POST.get('password', '')
-            asset_info.idc_id = int(request.POST.get('idc', '1'))
-            asset_info.cabinet = request.POST.get('cabinet', '')
-            asset_info.number = request.POST.get('number', '')
-            asset_info.machine_status = int(request.POST.get('machine_status', 1))
-            asset_info.asset_type = int(request.POST.get('asset_type', 1))
-            asset_info.sn = request.POST.get('sn', '')
-            asset_info.comment = request.POST.get('comment', '')
-            asset_info.proxy_id = int(request.POST.get('proxy', '1'))
-
-
-            nt_g = NetWorkingGlobal()
-            nt_g.hostname = request.POST.get('hostname', '')
-            nt_g.gateway = request.POST.get('gateway','')
-            nt_g.name_servers = request.POST.get('name_servers', '')
-            nt_g.save()
-            asset_info.networking_g_id = nt_g.id
-
-            pm = PowerManage()
-            pm.power_type = request.POST.get('power_type')
-            pm.power_address = request.POST.get('power_address')
-            pm.power_username = request.POST.get('power_username')
-            pm.power_password = request.POST.get('power_password')
-            pm.power_id = request.POST.get('power_id',1)
-            pm.save()
-            asset_info.power_manage_id = pm.id
-
-            asset_info.proxy_id = int(request.POST.get('proxy', 1))
             hostname = request.POST.get('name', '')
-            is_active = True if request.POST.get('is_active', '1') == '1' else False
-            is_enabled = True if request.POST.get('is_enabled', '1') == '1' else False
-            asset_info.netboot_enabled = is_enabled
-            asset_info.is_active = is_active
             if Asset.objects.filter(name=unicode(hostname)):
-                    error = '该主机名 %s 已存在!' % hostname
-                    raise ServerError(error)
-            asset_info.save()
+                error = '该主机名 %s 已存在!' % hostname
+                raise ServerError(error)
 
-            net = NetWorking()
-            net.name = request.POST.get('add_name', '')
-            net.mac_address = request.POST.get('mac_address', '')
-            net.ip_address = request.POST.get('ip_address','')
-            net.cnames = request.POST.get('cnames', '')
-            net.dns_name = request.POST.get('dns_name', '')
-            net.mtu = request.POST.get('mtu', '')
-            net.per_gateway = request.POST.get('per_gateway', '')
-            net.static = request.POST.get('static', '')
-            net.static_routes = request.POST.get('static_routes', '')
-            net.subnet_mask = request.POST.get('subnet_mask', '')
-            net.save()
-            asset_info.networking.add(net)
-
-            group = AssetGroup()
-            group_id = request.POST.getlist('group')
-            for item in group_id:
-                group = AssetGroup.objects.get(id=int(item))
-                asset_info.group.add(group)
-
-        except ServerError:
-            res['flag'] = 'false'
-            res['content'] = error
-        else:
-            msg = 'add %s success' % hostname
-            res['content'] = msg
-            fileds = {
+            fields = {
                 "name": request.POST.get('name'),
                 "hostname": request.POST.get('hostname'),
                 "profile": request.POST.get('profile'),
@@ -248,7 +181,7 @@ def asset_add(request,res, *args):
                 }
             }
 
-            data = json.dumps(fileds)
+            data = json.dumps(fields)
             select_proxy = get_object(Proxy, id=int(request.POST.get('proxy')))
             pro_username = select_proxy.username
             pro_password = select_proxy.password
@@ -256,19 +189,81 @@ def asset_add(request,res, *args):
             try:
                 api = APIRequest('http://172.16.30.69:8100/v1.0/system/', 'test', '123456')
                 result, codes = api.req_post(data)
-                # tk = Task()
-                # tk.task_name = res['task_name']
-                # tk.username = request.user.username
-                # tk.status = res['status']
-                # tk.url = res['link']
-                # tk.start_time = datetime.datetime.now()
-            except Exception,e:
+                print "result:%s   codes:%s"%(result, codes)
+            except Exception as e:
+                res['flag'] = 'false'
                 error = e
+                res['content'] = error
             else:
                 if codes == 200:
                     msg = result['messege']
+                    res['content'] = '创建主机成功'
+                    asset_info = Asset()
+                    asset_info.name = request.POST.get('name', '')
+                    asset_info.owerns = request.POST.get('owerns', '')
+                    asset_info.profile = request.POST.get('profile', '')
+                    asset_info.status = request.POST.get('status', '1')
+                    asset_info.kickstart = request.POST.get('kickstart', '')
+                    asset_info.port = request.POST.get('port',22)
+                    asset_info.username = request.POST.get('username', 'rooot')
+                    asset_info.password = request.POST.get('password', '')
+                    asset_info.idc_id = int(request.POST.get('idc', '1'))
+                    asset_info.cabinet = request.POST.get('cabinet', '')
+                    asset_info.number = request.POST.get('number', '')
+                    asset_info.machine_status = int(request.POST.get('machine_status', 1))
+                    asset_info.asset_type = int(request.POST.get('asset_type', 1))
+                    asset_info.sn = request.POST.get('sn', '')
+                    asset_info.comment = request.POST.get('comment', '')
+                    asset_info.proxy_id = int(request.POST.get('proxy', '1'))
+
+                    nt_g = NetWorkingGlobal()
+                    nt_g.hostname = request.POST.get('hostname', '')
+                    nt_g.gateway = request.POST.get('gateway','')
+                    nt_g.name_servers = request.POST.get('name_servers', '')
+                    nt_g.save()
+                    asset_info.networking_g_id = nt_g.id
+
+                    pm = PowerManage()
+                    pm.power_type = request.POST.get('power_type')
+                    pm.power_address = request.POST.get('power_address')
+                    pm.power_username = request.POST.get('power_username')
+                    pm.power_password = request.POST.get('power_password')
+                    pm.power_id = request.POST.get('power_id',1)
+                    pm.save()
+                    asset_info.power_manage_id = pm.id
+
+                    asset_info.proxy_id = int(request.POST.get('proxy', 1))
+                    is_active = True if request.POST.get('is_active', '1') == '1' else False
+                    is_enabled = True if request.POST.get('is_enabled', '1') == '1' else False
+                    asset_info.netboot_enabled = is_enabled
+                    asset_info.is_active = is_active
+                    asset_info.save()
+
+                    net = NetWorking()
+                    net.net_name = request.POST.get('net_name', '')
+                    net.mac_address = request.POST.get('mac_address', '')
+                    net.ip_address = request.POST.get('ip_address','')
+                    net.cnames = request.POST.get('cnames', '')
+                    net.dns_name = request.POST.get('dns_name', '')
+                    net.mtu = request.POST.get('mtu', '')
+                    net.per_gateway = request.POST.get('per_gateway', '')
+                    net.static = request.POST.get('static', '')
+                    net.static_routes = request.POST.get('static_routes', '')
+                    net.subnet_mask = request.POST.get('subnet_mask', '')
+                    net.save()
+                    asset_info.networking.add(net)
+
+                    group = AssetGroup()
+                    group_id = request.POST.getlist('group')
+                    for item in group_id:
+                        group = AssetGroup.objects.get(id=int(item))
+                        asset_info.group.add(group)
                 else:
-                    error = result['messegs']
+                    res['flag'] = 'false'
+                    error = "创建机器失败:%s"%result['messege']
+        except ServerError:
+            res['flag'] = 'false'
+            res['content'] = error
 
     return my_render('assetManage/asset_add.html', locals(), request)
 
@@ -306,7 +301,7 @@ def asset_del(request,res, *args):
 
 @require_role(role='super')
 @user_operator_record
-def asset_edit(request,res, *args):
+def asset_edit(request, res, *args):
     """
     edit a asset
     修改主机
@@ -324,9 +319,7 @@ def asset_edit(request,res, *args):
     nfg = NetWorkingGlobalForm(instance=asset_info.networking_g)
     pf = PowerManageForm(instance=asset_info.power_manage)
     if request.method == 'POST':
-        ip = request.POST.get('ip', '')
         try:
-            asset_info.ip = request.POST.get('ip', '')
             asset_info.name = request.POST.get('name', '')
             asset_info.owerns = request.POST.get('owerns', '')
             asset_info.profile = request.POST.get('profile', '')
@@ -344,34 +337,30 @@ def asset_edit(request,res, *args):
             asset_info.comment = request.POST.get('comment', '')
             asset_info.proxy_id = int(request.POST.get('proxy', '1'))
 
-            #save NetWorkingGlobal
-            nt_g = NetWorkingGlobal()
+            nt_g = asset_info.networking_g
             nt_g.hostname = request.POST.get('hostname', '')
-            nt_g.gateway = request.POST.get('gateway','')
+            nt_g.gateway = request.POST.get('gateway', '')
             nt_g.name_servers = request.POST.get('name_servers', '')
             nt_g.save()
-            asset_info.networking_g_id = nt_g.id
 
-            #save PowerManage
-            pm = PowerManage()
+            pm = asset_info.power_manage
             pm.power_type = request.POST.get('power_type')
             pm.power_address = request.POST.get('power_address')
             pm.power_username = request.POST.get('power_username')
             pm.power_password = request.POST.get('power_password')
             pm.power_id = request.POST.get('power_id',1)
             pm.save()
-            asset_info.power_manage = pm
+
 
             asset_info.proxy_id = int(request.POST.get('proxy', 1))
-            hostname = request.POST.get('name', '')
             is_active = True if request.POST.get('is_active', '1') == '1' else False
             is_enabled = True if request.POST.get('is_enabled', '1') == '1' else False
             asset_info.netboot_enabled = is_enabled
             asset_info.is_active = is_active
 
 
-            net = NetWorking()
-            net.name = request.POST.get('net_name', '')
+            net = asset_info.networking.all()[0]
+            net.net_name = request.POST.get('net_name', '')
             net.mac_address = request.POST.get('mac_address', '')
             net.ip_address = request.POST.get('ip_address','')
             net.cnames = request.POST.get('cnames', '')
@@ -382,7 +371,7 @@ def asset_edit(request,res, *args):
             net.static_routes = request.POST.get('static_routes', '')
             net.subnet_mask = request.POST.get('subnet_mask', '')
             net.save()
-            asset_info.networking.add(net)
+
 
             group = AssetGroup()
             group_id = request.POST.getlist('group')
@@ -394,9 +383,10 @@ def asset_edit(request,res, *args):
             res['flag'] = 'false'
             res['content'] = error
         else:
-            res['content'] = 'edit %s success' % hostname
-            fileds = {
-                "name": request.POST.get('name'),
+            name = request.POST.get('name')
+            res['content'] = 'edit %s success' % name
+
+            fields = {
                 "hostname": request.POST.get('hostname'),
                 "profile": request.POST.get('profile'),
                 "gateway": request.POST.get('gateway'),
@@ -414,21 +404,14 @@ def asset_edit(request,res, *args):
                     },
                 }
             }
-
-            data = json.dumps(fileds)
+            data = json.dumps(fields)
             select_proxy = get_object(Proxy, id=int(request.POST.get('proxy')))
             pro_username = select_proxy.username
             pro_password = select_proxy.password
             pro_url = select_proxy.url
             try:
-                api = APIRequest('http://172.16.30.69:8100/v1.0/system/', 'test', '123456')
+                api = APIRequest('http://172.16.30.69:8100/v1.0/system/{0}'.format(name), 'test', '123456')
                 result, code = api.req_put(data)
-                # tk = Task()
-                # tk.task_name = res['task_name']
-                # tk.username = request.user.username
-                # tk.status = res['status']
-                # tk.url = res['link']
-                # tk.start_time = datetime.datetime.now()
             except Exception,e:
                     error = e
             else:
@@ -533,10 +516,16 @@ def asset_list(request):
 
 
 @require_role('admin')
-def asset_start_up(request):
-    data = {}
+def asset_action(request, status):
+    data = {
+        'power': status,
+        'systems': [
+
+        ]
+    }
     if request.method == 'POST':
         select_ids = request.POST.getlist('asset_id_all')
+        select_ids = select_ids[0].split(',')
         asset_list = []
         for item in select_ids:
             asset = get_object(Asset, id=int(item))
@@ -544,46 +533,48 @@ def asset_start_up(request):
         proxy = asset_list[0].proxy
         username = proxy.username
         password = proxy.password
-        api = APIRequest('http://172.16.30.69:8100/v1.0/system/action', 'test', '123456')
-        result, codes = api.req_post(data)
-        logger.debug("result:%s   codes:%s"%(result,codes))
+        systems = [item.name for item in asset_list]
+        data['systems'] = systems
+        data = json.dumps(data)
+        logger.debug("data:%s"%data)
+        try:
+            api = APIRequest('http://172.16.30.69:8100/v1.0/system/action', 'test', '123456')
+            result, codes = api.req_post(data)
+            logger.debug("result:%s   codes:%s"%(result, codes))
+            task = Task()
+            task.task_name = result['task_name']
+            task.username = request.user.username
+            task.status = result['messege']
+            task.start_time = datetime.datetime.now()
+            task.url = 'http://172.16.30.69:8100/v1.0/system/action'
+            task.save()
+            task_queue.put(dict(task_name=result['task_name'], task_user=request.user.username))
+        except Exception as e:
+            logger.debug(e)
         return HttpResponse(json.dumps(result), content_type='application/json')
 
 
 @require_role('admin')
-def asset_restart(request):
-    data = {}
-    if request.method == 'POST':
-        select_ids = request.POST.getlist('asset_id_all')
-        asset_list = []
-        for item in select_ids:
-            asset = get_object(Asset, id=int(item))
-            asset_list.append(asset)
-        proxy = asset_list[0].proxy
-        username = proxy.username
-        password = proxy.password
-        api = APIRequest('http://172.16.30.69:8100/v1.0/system/action', 'test', '123456')
-        result, codes = api.req_post(data)
-        logger.debug("result:%s   codes:%s"%(result,codes))
-        return HttpResponse(json.dumps(result), content_type='application/json')
+def asset_event(request):
+    result = {'error': ''}
+    if request.method == 'GET':
+        user_name = request.user.username
+        try:
+            if task_queue.qsize() > 0:
+                tk_event = task_queue.get()
+                while tk_event['task_user'] != user_name:
+                    tk_event = task_queue.get()
+                api = APIRequest('http://172.16.30.69:8100/v1.0/event/{0}'.format(tk_event['task_name']), 'test', '123456')
+                result, codes = api.req_get()
+                tk = get_object(Task, task_name=tk_event['task_name'])
+                tk.status = result['status']
+                tk.content = result['event_log']
+                tk.save()
+                return HttpResponse(json.dumps(result), content_type='application/json')
+        except Exception as e:
+            result['error'] = e
+            return HttpResponse(json.dumps(result), content_type='application/json')
 
-
-@require_role('admin')
-def asset_shutdown(request):
-    data = {}
-    if request.method == 'POST':
-        select_ids = request.POST.getlist('asset_id_all')
-        asset_list = []
-        for item in select_ids:
-            asset = get_object(Asset, id=int(item))
-            asset_list.append(asset)
-        proxy = asset_list[0].proxy
-        username = proxy.username
-        password = proxy.password
-        api = APIRequest('http://172.16.30.69:8100/v1.0/system/action', 'test', '123456')
-        result, codes = api.req_post(data)
-        logger.debug("result:%s   codes:%s"%(result,codes))
-        return HttpResponse(json.dumps(result), content_type='application/json')
 
 
 @require_role('admin')
@@ -717,25 +708,33 @@ def asset_update(request,res, *args):
 @require_role('admin')
 @user_operator_record
 def asset_update_batch(request,res,*args):
+    response = {'success':'', 'error':''}
     res['operator'] = res['content'] = '批量更新主机'
     if request.method == 'POST':
-        arg = request.GET.get('arg', '')
-        name = unicode(request.user.username) + ' - ' + u'自动更新'
-        if arg == 'all':
-            asset_list = Asset.objects.all()
-        else:
-            asset_list = []
-            asset_id_all = unicode(request.POST.get('asset_id_all', ''))
-            asset_id_all = asset_id_all.split(',')
-            for asset_id in asset_id_all:
-                asset = get_object(Asset, id=asset_id)
-                if asset:
-                    asset_list.append(asset)
-        asset_ansible_update(asset_list, name)
-        for asset in asset_list:
-            res['content'] += ' [%s] '% asset.name
-        return HttpResponse(u'批量更新成功!')
-    return HttpResponse(u'批量更新成功!')
+        try:
+            arg = request.GET.get('arg', '')
+            name = unicode(request.user.username) + ' - ' + u'自动更新'
+            if arg == 'all':
+                asset_list = Asset.objects.all()
+            else:
+                asset_list = []
+                asset_id_all = unicode(request.POST.get('asset_id_all', ''))
+                asset_id_all = asset_id_all.split(',')
+                for asset_id in asset_id_all:
+                    asset = get_object(Asset, id=asset_id)
+                    if asset:
+                        asset_list.append(asset)
+            asset_ansible_update(asset_list, name)
+            for asset in asset_list:
+                res['content'] += ' [%s] '% asset.name
+            response['success'] = '批量更新成功!'
+            return HttpResponse(json.dumps(response), content_type='application/json')
+        except Exception as e:
+            logger.error(e)
+            res['flag'] = 'false'
+            res['content'] = '批量更新失败'
+            response['error'] = e
+            return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role('admin')

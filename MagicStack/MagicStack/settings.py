@@ -78,6 +78,7 @@ INSTALLED_APPS = (
     'permManage',
     'logManage',
     'proxyManage',
+    'common',
 
 )
 

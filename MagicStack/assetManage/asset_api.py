@@ -8,6 +8,7 @@ from assetManage.models import ASSET_STATUS, ASSET_TYPE, ASSET_ENV, IDC, AssetRe
 from permManage.ansible_api import MyRunner
 from permManage.perm_api import gen_resource
 from MagicStack.templatetags.mytags import get_disk_info
+from common.interface import APIRequest
 
 import traceback
 
@@ -401,3 +402,13 @@ def asset_ansible_update_all():
     asset_all = Asset.objects.all()
     asset_ansible_update(asset_all, name)
 
+
+def get_profiles():
+    profiles = []
+    try:
+        api = APIRequest('http://172.16.30.69:8100/v1.0/profile', 'test', '123456')
+        req = api.req_get()
+        profiles = req[0]['profiles']
+    except Exception as e:
+        logger.error(e)
+    return profiles

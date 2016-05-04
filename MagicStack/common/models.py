@@ -11,7 +11,6 @@ class Task(models.Model):
     url = models.CharField(max_length=100, verbose_name='api url')
     content = models.TextField()
     start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
 
     class Meta:
         ordering = ['-start_time']

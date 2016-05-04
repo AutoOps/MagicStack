@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% block self_head_css_js %}
+    <link href="/static/css/plugins/datepicker/datepicker3.css" rel="stylesheet">
+    <link href="/static/css/plugins/chosen/chosen.css" rel="stylesheet">
+    <script src="/static/js/plugins/chosen/chosen.jquery.js"></script>
 {% endblock %}
 {% load mytags %}
 {% load bootstrap %}
@@ -58,9 +61,9 @@ $(function(){
                                 <div class="ibox-content">
                                     {{ af.name|bootstrap_horizontal}}
 
-                                    <div class="hr-line-dashed"></div>
-                                    {{ af.ip|bootstrap_horizontal }}
-                                    <p class="col-sm-offset-2">Tips: 如果IP地址不填写, IP默认会设置与主机名一致</p>
+{#                                    <div class="hr-line-dashed"></div>#}
+{#                                    {{ af.ip|bootstrap_horizontal }}#}
+{#                                    <p class="col-sm-offset-2">Tips: 如果IP地址不填写, IP默认会设置与主机名一致</p>#}
 
                                     <div class="hr-line-dashed"></div>
                                     {{ af.port|bootstrap_horizontal }}
@@ -75,7 +78,16 @@ $(function(){
                                     {{ af.owerns|bootstrap_horizontal }}
 
                                     <div class="hr-line-dashed"></div>
-                                    {{ af.profile|bootstrap_horizontal }}
+                                    <div class="form-group">
+                                        <label for="profile" class="col-sm-2 control-label">Profile</label>
+                                        <div class="col-sm-8">
+                                            <select name="profile" id="profile" data-placeholder="请选择profile" class="chosen-select form-control m-b" multiple  tabindex="2">
+                                                {% for profile in profiles %}
+                                                    <option value="{{ profile }}">{{ profile }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
 
                                     <div class="hr-line-dashed"></div>
                                     {{ af.status|bootstrap_horizontal }}
@@ -193,4 +205,23 @@ $(function(){
         </div>
     </div>
 </div>
+{% endblock %}
+{% block self_footer_js %}
+<script>
+
+var config = {
+                '.chosen-select'           : {},
+                '.chosen-select-deselect'  : {allow_single_deselect:true},
+                '.chosen-select-no-single' : {disable_search_threshold:10},
+                '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+                '.chosen-select-width'     : {width:"95%"}
+            };
+
+for (var selector in config) {
+    $(selector).chosen(config[selector]);
+}
+
+</script>
+    <script src="/static/js/cropper/cropper.min.js"></script>
+    <script src="/static/js/datapicker/bootstrap-datepicker.js"></script>
 {% endblock %}

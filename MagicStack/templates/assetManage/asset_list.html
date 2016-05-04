@@ -144,7 +144,7 @@
                                         <input name="id" value="{{ asset.id }}" type="checkbox" class="i-checks">
                                     </td>
                                     <td class="text-center hostname"> <a href="{% url 'asset_detail' %}?id={{ asset.id }}">{{ asset.name|default_if_none:"" }}</a></td>
-                                    <td class="text-center"> {{ asset.ip|default_if_none:"" }} </td>
+                                    <td class="text-center"> {{ asset.networking.all|net_str2 }} </td>
                                     <td class="text-center"> {{ asset.idc.name|default_if_none:"" }} </td>
                                     <td class="text-center">{{ asset.group.all|group_str2 }}</td>
                                     <td class="text-center">{{ asset.proxy.proxy_name|default_if_none:"" }}</td>
@@ -371,7 +371,8 @@
                 $.ajax({
                     type: "post",
                     url: "{% url 'asset_update_batch' %}?arg=all",
-                    success: function () {
+                    success: function (res) {
+                        alert(res);
                         parent.location.reload();
                     }
                 });
@@ -413,7 +414,7 @@
             $.ajax({
                 type: "post",
                 data: {asset_id_all: asset_id_all},
-                url: "{% url 'start_up' %}",
+                url: "{% url 'asset_action' 'on' %}",
                 success: function (data) {
                     alert(data.messege);
                     parent.location.reload();
@@ -432,7 +433,7 @@
             $.ajax({
                 type: "post",
                 data: {asset_id_all: asset_id_all},
-                url: "{% url 'restart' %}",
+                url: "{% url 'asset_action' 'reboot' %}",
                 success: function (data) {
                     alert(data.messege);
                     parent.location.reload();
@@ -451,7 +452,7 @@
             $.ajax({
                 type: "post",
                 data: {asset_id_all: asset_id_all},
-                url: "{% url 'shutdown' %}",
+                url: "{% url 'asset_action' 'off' %}",
                 success: function (data) {
                     alert(data.messege);
                     parent.location.reload();
@@ -461,6 +462,23 @@
     });
 
 
+    function showalert()
+    {
+       $.ajax({
+          url: '{% url 'asset_event' %}',
+          method: 'get',
+          success: function(res) {
+            alert(res.event_log);
+          },
+          error: function(res) {
+            alert(res.event_log);
+          }
+        });
+    }
+    //定时执行，5秒后执行showalert()
+    window.setTimeout(function(){
+    showalert();
+    },5000);
 
 </script>
 

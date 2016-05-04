@@ -59,16 +59,16 @@ class IDC(models.Model):
 
 
 class NetWorking(models.Model):
-    net_name = models.CharField(max_length=90, verbose_name=u'Add Interface')
+    net_name = models.CharField(max_length=90,verbose_name=u'Add Interface')
     mac_address = models.CharField(max_length=90, verbose_name='MAC Address')
-    mtu = models.CharField(max_length=90, verbose_name='MTU')
+    mtu = models.CharField(max_length=90, blank=True, null=True, verbose_name='MTU')
     ip_address = models.CharField(max_length=90, verbose_name='IP Address')
     static = models.BooleanField(default=True, verbose_name='Static')
-    subnet_mask = models.CharField(max_length=90, verbose_name='Subnet Mask')
-    per_gateway = models.CharField(max_length=90, verbose_name='Per-Interface Gateway')
-    dns_name = models.CharField(max_length=90, verbose_name='DNS Name')
-    static_routes = models.CharField(max_length=100, verbose_name='Static Routes')
-    cnames = models.CharField(max_length=100, verbose_name='CNAMES')
+    subnet_mask = models.CharField(max_length=90, blank=True, null=True,verbose_name='Subnet Mask')
+    per_gateway = models.CharField(max_length=90, blank=True, null=True, verbose_name='Per-Interface Gateway')
+    dns_name = models.CharField(max_length=90, blank=True, null=True, verbose_name='DNS Name')
+    static_routes = models.CharField(max_length=100, blank=True, null=True, verbose_name='Static Routes')
+    cnames = models.CharField(max_length=100, blank=True, null=True,verbose_name='CNAMES')
 
     def __unicode__(self):
         return self.name
@@ -77,7 +77,7 @@ class NetWorking(models.Model):
 class NetWorkingGlobal(models.Model):
     hostname = models.CharField(max_length=90, verbose_name='Hostname')
     gateway = models.CharField(max_length=90, verbose_name='Gateway')
-    name_servers = models.CharField(max_length=90, verbose_name='Name Servers')
+    name_servers = models.CharField(max_length=90, blank=True, null=True, verbose_name='Name Servers')
 
     def __unicode__(self):
         return self.hostname
@@ -112,6 +112,7 @@ class Asset(models.Model):
         ('3', 'testing'),
         ('4', 'acceptance'),
     )
+
 
     ip = models.CharField(max_length=32, blank=True, null=True, verbose_name=u"主机IP")
     other_ip = models.CharField(max_length=255, blank=True,null=True, verbose_name=u"其他IP")

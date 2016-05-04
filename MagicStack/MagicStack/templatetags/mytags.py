@@ -208,6 +208,13 @@ def groups_str2(group_list):
         return '%s ...' % ' '.join([group.name for group in group_list[0:2]])
 
 
+@register.filter(name='net_str2')
+def net_str2(net_list):
+    if not net_list:
+        return " "
+    return '  '.join([net.ip_address for net in net_list])
+
+
 @register.filter(name='str_to_list')
 def str_to_list(info):
     """

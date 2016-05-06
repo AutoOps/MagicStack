@@ -59,24 +59,16 @@ def get_asset_info(asset):
     """
     获取资产的相关管理账号端口等信息
     """
-    default = get_object(Setting, name='default')
-    info = {'hostname': asset.name, 'ip': asset.ip}
-    if asset.use_default_auth:
-        if default:
-            info['username'] = default.field1
-            try:
-                info['password'] = CRYPTOR.decrypt(default.field3)
-            except ServerError:
-                pass
-            if os.path.isfile(default.field4):
-                info['ssh_key'] = default.field4
-    else:
-        info['username'] = asset.username
-        info['password'] = CRYPTOR.decrypt(asset.password)
+    ip = asset.networking.all()[0].ip_address
+    info = dict(hostname=ip, ip=ip)
+    info['ssh_key'] = ''
+    info['username'] = asset.username
+    # info['password'] = CRYPTOR.decrypt(asset.password)
+    info['password'] = asset.password
     try:
         info['port'] = int(asset.port)
     except TypeError:
-        info['port'] = int(default.field2)
+        info['port'] = 22
 
     return info
 

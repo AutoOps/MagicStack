@@ -115,7 +115,7 @@ class Asset(models.Model):
 
 
     ip = models.CharField(max_length=32, blank=True, null=True, verbose_name=u"主机IP")
-    other_ip = models.CharField(max_length=255, blank=True,null=True, verbose_name=u"其他IP")
+    other_ip = models.CharField(max_length=255, blank=True, null=True, verbose_name=u"其他IP")
     name = models.CharField(max_length=100, blank=True, verbose_name='Name')
     owerns = models.CharField(max_length=100, blank=True,  verbose_name='Owners')
     profile = models.CharField(max_length=100, blank=True,  verbose_name='Profile')
@@ -138,7 +138,7 @@ class Asset(models.Model):
     position = models.IntegerField(blank=True, null=True, verbose_name=u'机器位置')
     number = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'资产编号')
     machine_status = models.IntegerField(choices=ASSET_STATUS, blank=True, null=True, default=1, verbose_name=u"机器状态")
-    asset_type = models.IntegerField(choices=ASSET_TYPE, blank=True, null=True,default=1, verbose_name=u"主机类型")
+    asset_type = models.IntegerField(choices=ASSET_TYPE, blank=True, null=True, default=1, verbose_name=u"主机类型")
     sn = models.CharField(max_length=128, blank=True, null=True, verbose_name=u"SN编号")
     proxy = models.ForeignKey(Proxy, verbose_name=u'所属代理')
     networking_g = models.ForeignKey(NetWorkingGlobal,  verbose_name='NetWorkingGlobal')
@@ -149,7 +149,7 @@ class Asset(models.Model):
     comment = models.CharField(max_length=128, blank=True, null=True, verbose_name="Comment")
 
     def __unicode__(self):
-        return self.ip
+        return self.name
 
 
 class AssetRecord(models.Model):

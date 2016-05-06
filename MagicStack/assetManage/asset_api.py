@@ -362,25 +362,20 @@ def get_ansible_asset_info(asset_ip, setup_info):
     return asset_info
 
 
-def asset_ansible_update(obj_list, name=''):
-    resource = gen_resource(obj_list)
-    ansible_instance = MyRunner(resource)
-    ansible_asset_info = ansible_instance.run(module_name='setup', pattern='*')
-    logger.debug('获取硬件信息: %s' % ansible_asset_info)
+def asset_ansible_update(obj_list, ansible_asset_info, name):
     for asset in obj_list:
         try:
-            setup_info = ansible_asset_info['contacted'][asset.name]['ansible_facts']
-            logger.debug("setup_info: %s" % setup_info)
+            ip = asset.networking.all()[0].ip_address
+            setup_info = ansible_asset_info['messege']['success'][ip]['ansible_facts']
+            logger.debug("获取硬件信息setup_info: %s" % setup_info)
         except KeyError, e:
             logger.error("获取setup_info失败: %s" % e)
             continue
         else:
             try:
                 asset_info = get_ansible_asset_info(asset.ip, setup_info)
-                print asset_info
                 other_ip, mac, cpu, memory, disk, sn, system_type, system_version, brand, system_arch = asset_info
                 asset_dic = {"other_ip": other_ip,
-                             "mac": mac,
                              "cpu": cpu,
                              "memory": memory,
                              "disk": disk,
@@ -407,8 +402,10 @@ def get_profiles():
     profiles = []
     try:
         api = APIRequest('http://172.16.30.69:8100/v1.0/profile', 'test', '123456')
-        req = api.req_get()
-        profiles = req[0]['profiles']
+        msg, codes = api.req_get()
+        logger.debug("msg:%s"%msg)
+        if msg:
+            profiles = msg['profiles']
     except Exception as e:
         logger.error(e)
     return profiles

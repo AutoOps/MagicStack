@@ -281,22 +281,56 @@ def asset_del(request,res, *args):
     del a asset
     删除主机
     """
+    response = {'msg': '删除成功'}
     res['operator'] = res['content'] = '删除主机'
     asset_id = request.GET.get('id', '')
     if asset_id:
-        Asset.objects.filter(id=asset_id).delete()
+        asset = get_object(Asset, id=int(asset_id))
+        if asset:
+            param = {'names': [asset.name]}
+            data = json.dumps(param)
+            try:
+                api = APIRequest('http://172.16.30.69:8100/v1.0/system', 'test', '123456')
+                result, code = api.req_del(data)
+                logger.debug('result:%s'%result)
+                if code == 200:
+                    asset.delete()
+                else:
+                    response['msg'] = result['messege']
+            except Exception as e:
+                logger.error(e)
+                res['flag'] = 'false'
+                res['content'] = e
+                response['msg'] = e
 
     if request.method == 'POST':
         asset_batch = request.GET.get('arg', '')
-        asset_id_all = str(request.POST.get('asset_id_all', ''))
-
+        asset_id_all = request.POST.get('asset_id_all', '')
+        asset_list = []
         if asset_batch:
             for asset_id in asset_id_all.split(','):
-                asset = get_object(Asset, id=asset_id)
+                asset = get_object(Asset, id=int(asset_id))
                 res['content'] += '%s   ' % asset.name
-                asset.delete()
-
-    return HttpResponse(u'删除成功')
+                if asset:
+                    asset_list.append(asset)
+            asset_names = [asset.name for asset in asset_list]
+            param = {'names': asset_names}
+            data = json.dumps(param)
+            try:
+                api = APIRequest('http://172.16.30.69:8100/v1.0/system', 'test', '123456')
+                result, code = api.req_del(data)
+                logger.debug('result:%s'%result)
+                if code == 200:
+                    for item in asset_list:
+                        item.delete()
+                else:
+                    response['msg'] = result['messege']
+            except Exception as e:
+                logger.error(e)
+                res['flag'] = 'false'
+                res['content'] = e
+                response['msg'] = e
+    return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role(role='super')
@@ -556,7 +590,7 @@ def asset_action(request, status):
 
 @require_role('admin')
 def asset_event(request):
-    result = {'error': ''}
+    response = {'error': '', 'message':''}
     if request.method == 'GET':
         user_name = request.user.username
         try:
@@ -570,10 +604,11 @@ def asset_event(request):
                 tk.status = result['status']
                 tk.content = result['event_log']
                 tk.save()
-                return HttpResponse(json.dumps(result), content_type='application/json')
+                response['message'] = result['event_log']
+                return HttpResponse(json.dumps(response), content_type='application/json')
         except Exception as e:
-            result['error'] = e
-            return HttpResponse(json.dumps(result), content_type='application/json')
+            response['error'] = e
+            return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 
@@ -693,7 +728,7 @@ def asset_update(request,res, *args):
     """
     res['operator'] = '更新主机'
     asset_id = request.GET.get('id', '')
-    asset = get_object(Asset, id=asset_id)
+    asset = get_object(Asset, id=int(asset_id))
     name = request.user.username
     if not asset:
         res['flag'] = 'false'
@@ -718,21 +753,32 @@ def asset_update_batch(request,res,*args):
                 asset_list = Asset.objects.all()
             else:
                 asset_list = []
-                asset_id_all = unicode(request.POST.get('asset_id_all', ''))
+                asset_id_all = request.POST.get('asset_id_all', '')
                 asset_id_all = asset_id_all.split(',')
                 for asset_id in asset_id_all:
-                    asset = get_object(Asset, id=asset_id)
+                    asset = Asset.objects.get(id=int(asset_id))
                     if asset:
                         asset_list.append(asset)
-            asset_ansible_update(asset_list, name)
-            for asset in asset_list:
-                res['content'] += ' [%s] '% asset.name
-            response['success'] = '批量更新成功!'
+            host_list = [asset.networking.all()[0].ip_address for asset in asset_list]
+            resource = gen_resource(asset_list)
+            data = {'mod_name': 'setup',
+                    'resource': resource,
+                    'hosts': host_list
+                    }
+            data = json.dumps(data)
+            api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
+            result, code = api.req_post(data)
+            logger.debug('result: %s            code:%s' % (result,code))
+            if code == 200:
+                asset_ansible_update(asset_list, result, name)
+                for asset in asset_list:
+                    res['content'] += ' [%s] '% asset.name
+                response['success'] = u'批量更新成功!'
             return HttpResponse(json.dumps(response), content_type='application/json')
         except Exception as e:
             logger.error(e)
             res['flag'] = 'false'
-            res['content'] = '批量更新失败'
+            res['content'] = u'批量更新失败'
             response['error'] = e
             return HttpResponse(json.dumps(response), content_type='application/json')
 

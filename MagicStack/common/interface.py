@@ -1,10 +1,8 @@
 # -*- coding:utf-8 -*-
-import urllib2
 import urllib
 import time
 import hmac
 import logging
-import json
 import requests
 
 logger = logging.getLogger('interface')
@@ -33,7 +31,7 @@ class APIRequest(object):
         hexdigest = passwd.hexdigest()
         headers['X-Timestamp'] = int(timestamp)
         headers['X-Username'] = username
-        headers['hexdigest'] = hexdigest
+        headers['X-Hexdigest'] = hexdigest
         headers['Content-Type'] = 'application/json'
         return headers
 
@@ -64,6 +62,18 @@ class APIRequest(object):
         codes = 200
         try:
             req = requests.put(self.url, headers=self.header, data=data)
+            codes = req.status_code
+            msg = req.json()
+            logger.debug("msg:%s    status_codes:%s" % (msg, codes))
+        except Exception as e:
+                logger.error(e)
+        return msg, codes
+
+    def req_del(self, data):
+        msg = ''
+        codes = 200
+        try:
+            req = requests.delete(self.url, headers=self.header, data=data)
             codes = req.status_code
             msg = req.json()
             logger.debug("msg:%s    status_codes:%s" % (msg, codes))

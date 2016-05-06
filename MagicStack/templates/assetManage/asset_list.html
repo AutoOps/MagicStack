@@ -356,7 +356,8 @@
                 type: "post",
                 data: {asset_id_all: asset_id_all},
                 url: "{% url 'asset_del' %}?arg=batch",
-                success: function () {
+                success: function (res) {
+                    alert(res.msg);
                     parent.location.reload();
                 }
             });
@@ -416,8 +417,8 @@
                 data: {asset_id_all: asset_id_all},
                 url: "{% url 'asset_action' 'on' %}",
                 success: function (data) {
-                    alert(data.messege);
-                    parent.location.reload();
+                    layer.msg(data.messege,{time: 20000});
+{#                    parent.location.reload();#}
                 }
             });
         }
@@ -435,8 +436,8 @@
                 data: {asset_id_all: asset_id_all},
                 url: "{% url 'asset_action' 'reboot' %}",
                 success: function (data) {
-                    alert(data.messege);
-                    parent.location.reload();
+                    layer.msg( data.messege, {time: 20000});
+{#                    parent.location.reload();#}
                 }
             });
         }
@@ -454,8 +455,7 @@
                 data: {asset_id_all: asset_id_all},
                 url: "{% url 'asset_action' 'off' %}",
                 success: function (data) {
-                    alert(data.messege);
-                    parent.location.reload();
+                    layer.msg( data.messege, {time: 20000});
                 }
             });
         }
@@ -468,10 +468,10 @@
           url: '{% url 'asset_event' %}',
           method: 'get',
           success: function(res) {
-            alert(res.event_log);
+              layer.msg(res.messege, {time: 200000});
           },
           error: function(res) {
-            alert(res.event_log);
+              layer.msg(res.messege, {time: 200000});
           }
         });
     }

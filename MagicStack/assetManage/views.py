@@ -600,6 +600,7 @@ def asset_event(request):
                     tk_event = task_queue.get()
                 api = APIRequest('http://172.16.30.69:8100/v1.0/event/{0}'.format(tk_event['task_name']), 'test', '123456')
                 result, codes = api.req_get()
+                logger.debug('result:%s'%result)
                 tk = get_object(Task, task_name=tk_event['task_name'])
                 tk.status = result['status']
                 tk.content = result['event_log']

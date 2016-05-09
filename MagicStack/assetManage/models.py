@@ -99,7 +99,7 @@ class PowerManage(models.Model):
     power_address = models.CharField(max_length=90, verbose_name='Power Management Address')
     power_username = models.CharField(max_length=90, verbose_name='Power Management Username')
     power_password = models.CharField(max_length=90, verbose_name='Power Management Password')
-    power_id = models.IntegerField(verbose_name='Power Management ID')
+    power_id = models.IntegerField(verbose_name='Power Management ID', default=0)
 
     def __unicode__(self):
         return self.power_address

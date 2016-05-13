@@ -240,17 +240,14 @@
 
         $('.conn').click(function(){
             var url='{% url "role_get" %}?id=' + $(this).attr('value'); // 获取用户有权限的角色
-            alert(url);
             var href = $(this).attr('href');
             var new_url = '{% url "terminal" %}?id=' + $(this).attr('value') + '&role='; // webterminal socket url
             var hostname = $(this).closest('tr').find('.hostname a')[0].innerHTML;
-            alert(hostname);
             $.ajax({
                 type: 'GET',
                 url: url,
                 data: {},
                 success: function(data){
-                    alert(data);
                     var dataArray = data.split(',');
                     if (data == 'error' || data == '' || data == null || data == undefined){
                         layer.alert('没有授权系统用户')
@@ -263,7 +260,6 @@
                     }
                     else {
                         aUrl = '';
-                        alert(aUrl);
                         $.each(dataArray, function(index, value){
                             aUrl += '<a onclick="windowOpen(this); return false" class="btn btn-xs btn-primary newa" href=' + new_url +  ' value=' + hostname +  '>' + value  + '</a> '
                         });

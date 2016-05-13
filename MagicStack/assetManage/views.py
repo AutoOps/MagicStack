@@ -764,7 +764,8 @@ def asset_update_batch(request,res,*args):
             resource = gen_resource(asset_list)
             data = {'mod_name': 'setup',
                     'resource': resource,
-                    'hosts': host_list
+                    'hosts': host_list,
+                    'mod_args': ''
                     }
             data = json.dumps(data)
             api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')

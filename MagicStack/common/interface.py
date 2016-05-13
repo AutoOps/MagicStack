@@ -2,11 +2,8 @@
 import urllib
 import time
 import hmac
-import logging
 import requests
-
-logger = logging.getLogger('interface')
-logger.setLevel(logging.DEBUG)
+from MagicStack.api import logger
 
 
 class APIRequest(object):

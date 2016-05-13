@@ -3,7 +3,7 @@
 
 from tempfile import NamedTemporaryFile
 import os.path
-
+import json
 from ansible.inventory.group import Group
 from ansible.inventory.host import Host
 from ansible.inventory import Inventory
@@ -15,7 +15,7 @@ import ansible.constants as C
 from passlib.hash import sha512_crypt
 from django.template.loader import get_template
 from django.template import Context
-
+from common.interface import APIRequest
 
 from MagicStack.api import logger
 
@@ -276,21 +276,32 @@ class Command(MyInventory):
         return self.results_raw.get("dark")
 
 
-class MyTask(MyRunner):
+class MyTask(object):
     """
     this is a tasks object for include the common command.
     """
-    def __init__(self, *args, **kwargs):
-        super(MyTask, self).__init__(*args, **kwargs)
+    def __init__(self, resource, host_list):
+        self.resource = resource
+        self.host_list = host_list
 
     def push_key(self, user, key_path):
         """
         push the ssh authorized key to target.
         """
+        result = None
         module_args = 'user="%s" key="{{ lookup("file", "%s") }}" state=present' % (user, key_path)
-        self.run("authorized_key", module_args, become=True)
-
-        return self.results
+        # self.run("authorized_key", module_args, become=True)
+        data = {'mod_name': 'authorized_key',
+                'resource': self.resource,
+                'hosts': self.host_list,
+                'mod_args': module_args
+                }
+        data = json.dumps(data)
+        api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
+        result, code = api.req_post(data)
+        if code == 200:
+            result = result['messege']
+        return result
 
     def push_multi_key(self, **user_info):
         """
@@ -317,9 +328,16 @@ class MyTask(MyRunner):
         push the ssh authorized key to target.
         """
         module_args = 'user="%s" key="{{ lookup("file", "%s") }}" state="absent"' % (user, key_path)
-        self.run("authorized_key", module_args, become=True)
-
-        return self.results
+        # self.run("authorized_key", module_args, become=True)
+        data = {'mod_name': 'authorized_key',
+                'resource': self.resource,
+                'hosts': self.host_list,
+                'mod_args': module_args
+                }
+        data = json.dumps(data)
+        api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
+        result, code = api.req_post(data)
+        return result
 
     def add_user(self, username, password=''):
         """
@@ -332,9 +350,15 @@ class MyTask(MyRunner):
         else:
             module_args = 'name=%s shell=/bin/bash' % username
 
-        self.run("user", module_args, become=True)
-
-        return self.results
+        data = {'mod_name': 'user',
+                'resource': self.resource,
+                'hosts': self.host_list,
+                'mod_args': module_args
+                }
+        data = json.dumps(data)
+        api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
+        result, code = api.req_post(data)
+        return result
 
     def add_multi_user(self, **user_info):
         """
@@ -362,8 +386,16 @@ class MyTask(MyRunner):
         delete a host user.
         """
         module_args = 'name=%s state=absent remove=yes move_home=yes force=yes' % username
-        self.run("user", module_args, become=True)
-        return self.results
+        # self.run("user", module_args, become=True)
+        data = {'mod_name': 'user',
+                'resource': self.resource,
+                'hosts': self.host_list,
+                'mod_args': module_args
+                }
+        data = json.dumps(data)
+        api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
+        result, code = api.req_post(data)
+        return result
 
     def del_user_sudo(self, username):
         """
@@ -372,8 +404,16 @@ class MyTask(MyRunner):
         :return:
         """
         module_args = "sed -i 's/^%s.*//' /etc/sudoers" % username
-        self.run("command", module_args, become=True)
-        return self.results
+        # self.run("command", module_args, become=True)
+        data = {'mod_name': 'command',
+                'resource': self.resource,
+                'hosts': self.host_list,
+                'mod_args': module_args
+                }
+        data = json.dumps(data)
+        api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
+        result, code = api.req_post(data)
+        return result
 
     @staticmethod
     def gen_sudo_script(role_list, sudo_list):
@@ -382,10 +422,10 @@ class MyTask(MyRunner):
         sudo_alias = {}
         sudo_user = {}
         for sudo in sudo_list:
-            sudo_alias[sudo.name] = sudo.commands
+            sudo_alias[sudo['name']] = sudo['commands']
 
         for role in role_list:
-            sudo_user[role.name] = ','.join(sudo_alias.keys())
+            sudo_user[role['name']] = ','.join(sudo_alias.keys())
 
         sudo_j2 = get_template('permManage/role_sudo.j2')
         sudo_content = sudo_j2.render(Context({"sudo_alias": sudo_alias, "sudo_user": sudo_user}))
@@ -399,9 +439,17 @@ class MyTask(MyRunner):
         use template to render pushed sudoers file
         :return:
         """
-        module_args1 = self.gen_sudo_script(role_list, sudo_list)
-        self.run("script", module_args1, become=True)
-        return self.results
+        module_args = self.gen_sudo_script(role_list, sudo_list)
+        # self.run("script", module_args1, become=True)
+        data = {'mod_name': 'script',
+                'resource': self.resource,
+                'hosts': self.host_list,
+                'mod_args': module_args
+                }
+        data = json.dumps(data)
+        api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
+        result, code = api.req_post(data)
+        return result
 
 
 class CustomAggregateStats(callbacks.AggregateStats):
@@ -480,18 +528,7 @@ class App(MyPlaybook):
 
 if __name__ == "__main__":
 
-#   resource =  {
-#                "group1": {
-#                    "hosts": [{"hostname": "127.0.0.1", "port": "22", "username": "root", "password": "xxx"},],
-#                    "vars" : {"var1": "value1", "var2": "value2"},
-#                          },
-#                }
-
     resource = [{"hostname": "127.0.0.1", "port": "22", "username": "yumaojun", "password": "yusky0902",
-                 # "ansible_become": "yes",
-                 # "ansible_become_method": "sudo",
-                 # # "ansible_become_user": "root",
-                 # "ansible_become_pass": "yusky0902",
                  }]
     cmd = Command(resource)
     print cmd.run('ls')

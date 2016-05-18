@@ -288,7 +288,6 @@ class MyTask(object):
         """
         push the ssh authorized key to target.
         """
-        result = None
         module_args = 'user="%s" key="{{ lookup("file", "%s") }}" state=present' % (user, key_path)
         # self.run("authorized_key", module_args, become=True)
         data = {'mod_name': 'authorized_key',

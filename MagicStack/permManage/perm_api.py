@@ -303,12 +303,12 @@ def get_role_push_host(role):
     asset_no_push: set(asset1, asset2)
     """
     # 计算该role 所有push记录 总共推送的主机
-    pushs = PermPush.objects.filter(role=role)
+    pushs = [item for item in get_one_or_all('PermPush') if item['role']['name'] == role['name']]
     asset_all = Asset.objects.all()
     asset_pushed = {}
     for push in pushs:
-        asset_pushed[push.asset] = {'success': push.success, 'key': push.is_public_key, 'password': push.is_password,
-                                    'result': push.result}
+        asset_pushed[push['asset']] = {'success': push['success'], 'key': push['is_public_key'], 'password': push['is_password'],
+                                    'result': push['result']}
     asset_no_push = set(asset_all) - set(asset_pushed.keys())
     return asset_pushed, asset_no_push
 
@@ -325,8 +325,56 @@ def get_permpush_info(role_id):
         info = result['messege']
     except Exception as e:
         logger.error(e)
-
     return info
+
+
+def get_one_or_all(obj_name, obj_id='all'):
+    """
+    获取所有的对象或者一个id对应的对象
+    """
+    obj_list = []
+    try:
+        api = APIRequest('http://172.16.30.69:8100/v1.0/permission/{0}/{1}'.format(obj_name, obj_id), 'test', '123456')
+        result, codes = api.req_get()
+        obj_list = result['messege']
+    except Exception as e:
+        logger.error(e)
+    return obj_list
+
+
+def save_or_delete(obj_name, data, obj_id='all', action='save'):
+    """
+    保存，更新, 删除数据
+    """
+    res = ''
+    try:
+        api = APIRequest('http://172.16.30.69:8100/v1.0/permission/{0}/{1}'.format(obj_name, obj_id), 'test', '123456')
+        if action == 'save':
+            result, codes = api.req_post(data)
+        elif action == 'update':
+            result, codes = api.req_put(data)
+        elif action == 'delete':
+            result, codes = api.req_del(data)
+        logger.debug('save_object:%s'%result)
+        res = result['messege']
+    except Exception as e:
+        logger.error(e)
+    return res
+
+
+def isexist(obj_name, param):
+    """
+    判断新添加的对象的名字是否已经在数据库中
+    :param obj_name:
+    :param param:
+    :return:
+    """
+    all_objects = get_one_or_all(obj_name)
+    for item in all_objects:
+        if item['name'] == param:
+            return True
+    return False
+
 
 if __name__ == "__main__":
     print get_role_info(1)

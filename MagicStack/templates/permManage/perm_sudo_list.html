@@ -59,7 +59,7 @@
                             <tr class="gradeX" id={{ sudo.id }}>
                                 <td class="text-center"> {{ sudo.name }} </td>
                                 <td class="text-center"> {{ sudo.commands }} </td>
-                                <td class="text-center"> {{ sudo.date_added | date:"Y-m-d H:i:s"}} </td>
+                                <td class="text-center"> {{ sudo.date_added }} </td>
                                 <td class="text-center">
 {#                                    <a href="/jperm/sudo/perm_sudo_detail/?id={{ sudo.id }}" class="btn btn-xs btn-primary">详情</a>#}
                                     <a href="{% url 'sudo_edit' %}?id={{ sudo.id }}" class="btn btn-xs btn-info">编辑</a>
@@ -89,8 +89,8 @@ function remove_sudo(sudo_id){
     if (confirm("确认删除")) {
         $.ajax({
            type: "POST",
-           url: "/jperm/sudo/del/",
-           data: "id=" + sudo_id,
+           url: "{% url 'sudo_del' %}",
+           data: {'id': sudo_id},
            success: function(msg){
                alert( "成功: " + msg );
                var del_row = $('tbody#edittbody>tr#' + sudo_id);

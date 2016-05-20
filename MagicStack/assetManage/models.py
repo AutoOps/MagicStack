@@ -59,15 +59,15 @@ class IDC(models.Model):
 
 
 class NetWorking(models.Model):
-    net_name = models.CharField(max_length=90,verbose_name=u'Add Interface')
-    mac_address = models.CharField(max_length=90, verbose_name='MAC Address')
-    mtu = models.CharField(max_length=90, blank=True, null=True, verbose_name='MTU')
-    ip_address = models.CharField(max_length=90, verbose_name='IP Address')
+    net_name = models.CharField(max_length=90,verbose_name=u'添加网卡')
+    mac_address = models.CharField(max_length=90, verbose_name=u'MAC地址')
+    mtu = models.CharField(max_length=90, blank=True, null=True, verbose_name=u'最大传输单元')
+    ip_address = models.CharField(max_length=90, verbose_name=u'IP地址')
     static = models.BooleanField(default=True, verbose_name='Static')
-    subnet_mask = models.CharField(max_length=90, blank=True, null=True,verbose_name='Subnet Mask')
-    per_gateway = models.CharField(max_length=90, blank=True, null=True, verbose_name='Per-Interface Gateway')
-    dns_name = models.CharField(max_length=90, blank=True, null=True, verbose_name='DNS Name')
-    static_routes = models.CharField(max_length=100, blank=True, null=True, verbose_name='Static Routes')
+    subnet_mask = models.CharField(max_length=90, blank=True, null=True,verbose_name=u'子网掩码')
+    per_gateway = models.CharField(max_length=90, blank=True, null=True, verbose_name=u'默认网关')
+    dns_name = models.CharField(max_length=90, blank=True, null=True, verbose_name=u'DNS名称')
+    static_routes = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'静态路由')
     cnames = models.CharField(max_length=100, blank=True, null=True,verbose_name='CNAMES')
 
     def __unicode__(self):
@@ -75,9 +75,9 @@ class NetWorking(models.Model):
 
 
 class NetWorkingGlobal(models.Model):
-    hostname = models.CharField(max_length=90, verbose_name='Hostname')
-    gateway = models.CharField(max_length=90, verbose_name='Gateway')
-    name_servers = models.CharField(max_length=90, blank=True, null=True, verbose_name='Name Servers')
+    hostname = models.CharField(max_length=90, verbose_name=u'主机名')
+    gateway = models.CharField(max_length=90, verbose_name=u'网关')
+    name_servers = models.CharField(max_length=90, blank=True, null=True, verbose_name=u'域名服务器')
 
     def __unicode__(self):
         return self.hostname
@@ -95,10 +95,10 @@ class PowerManage(models.Model):
                     ('ipmilan', 'ipmilan'),
     )
 
-    power_type = models.CharField(choices=POWER_TYPE, max_length=90, default='ipmilan', verbose_name='Power Management Type')
-    power_address = models.CharField(max_length=90, verbose_name='Power Management Address')
-    power_username = models.CharField(max_length=90, verbose_name='Power Management Username')
-    power_password = models.CharField(max_length=90, verbose_name='Power Management Password')
+    power_type = models.CharField(choices=POWER_TYPE, max_length=90, default='ipmilan', verbose_name=u'电源管理类型')
+    power_address = models.CharField(max_length=90, verbose_name=u'电源管理地址')
+    power_username = models.CharField(max_length=90, verbose_name=u'电源管理用户名')
+    power_password = models.CharField(max_length=90, verbose_name=u'电源管理用户密码')
     power_id = models.IntegerField(verbose_name='Power Management ID', default=0)
 
     def __unicode__(self):
@@ -116,12 +116,12 @@ class Asset(models.Model):
 
     ip = models.CharField(max_length=32, blank=True, null=True, verbose_name=u"主机IP")
     other_ip = models.CharField(max_length=255, blank=True, null=True, verbose_name=u"其他IP")
-    name = models.CharField(max_length=100, blank=True, verbose_name='Name')
-    owerns = models.CharField(max_length=100, blank=True,  verbose_name='Owners')
-    profile = models.CharField(max_length=100, blank=True,  verbose_name='Profile')
-    status = models.CharField(choices=STATUS_TYPE, max_length=90, default='1',verbose_name='Status')
-    kickstart = models.CharField(max_length=255, verbose_name='Kickstart Metadata')
-    netboot_enabled = models.BooleanField(default=True, verbose_name='Netboot Enabled')
+    name = models.CharField(max_length=100, blank=True, verbose_name=u'主机名')
+    owerns = models.CharField(max_length=100, blank=True,  verbose_name=u'所有者')
+    profile = models.CharField(max_length=100, blank=True,  verbose_name=u'用户配置文件')
+    status = models.CharField(choices=STATUS_TYPE, max_length=90, default='1',verbose_name=u'状态')
+    kickstart = models.CharField(max_length=255, verbose_name=u'创建元数据')
+    netboot_enabled = models.BooleanField(default=True, verbose_name=u'网络服务')
     port = models.IntegerField(blank=True, null=True, verbose_name=u"端口号")
     group = models.ManyToManyField(AssetGroup, blank=True, verbose_name=u"所属主机组")
     username = models.CharField(max_length=16, blank=True, null=True, verbose_name=u"管理用户名")
@@ -141,12 +141,12 @@ class Asset(models.Model):
     asset_type = models.IntegerField(choices=ASSET_TYPE, blank=True, null=True, default=1, verbose_name=u"主机类型")
     sn = models.CharField(max_length=128, blank=True, null=True, verbose_name=u"SN编号")
     proxy = models.ForeignKey(Proxy, verbose_name=u'所属代理')
-    networking_g = models.ForeignKey(NetWorkingGlobal,  verbose_name='NetWorkingGlobal')
-    networking = models.ManyToManyField(NetWorking,  verbose_name='NetWorking')
-    power_manage = models.ForeignKey(PowerManage, verbose_name='Power Management')
+    networking_g = models.ForeignKey(NetWorkingGlobal,  verbose_name=u'全局网络设置')
+    networking = models.ManyToManyField(NetWorking,  verbose_name=u'网络')
+    power_manage = models.ForeignKey(PowerManage, verbose_name=u'电源管理')
     date_added = models.DateTimeField(auto_now=True, null=True)
     is_active = models.BooleanField(default=True, verbose_name=u"是否激活")
-    comment = models.CharField(max_length=128, blank=True, null=True, verbose_name="Comment")
+    comment = models.CharField(max_length=128, blank=True, null=True, verbose_name=u"备注")
 
     def __unicode__(self):
         return self.name

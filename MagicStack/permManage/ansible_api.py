@@ -289,17 +289,15 @@ class MyTask(object):
         push the ssh authorized key to target.
         """
         module_args = 'user="%s" key="{{ lookup("file", "%s") }}" state=present' % (user, key_path)
-        # self.run("authorized_key", module_args, become=True)
         data = {'mod_name': 'authorized_key',
                 'resource': self.resource,
                 'hosts': self.host_list,
-                'mod_args': module_args
+                'mod_args': module_args,
+                'role_name': user
                 }
         data = json.dumps(data)
         api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
         result, code = api.req_post(data)
-        if code == 200:
-            result = result['messege']
         return result
 
     def push_multi_key(self, **user_info):
@@ -331,7 +329,8 @@ class MyTask(object):
         data = {'mod_name': 'authorized_key',
                 'resource': self.resource,
                 'hosts': self.host_list,
-                'mod_args': module_args
+                'mod_args': module_args,
+                'role_name': user
                 }
         data = json.dumps(data)
         api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
@@ -352,7 +351,8 @@ class MyTask(object):
         data = {'mod_name': 'user',
                 'resource': self.resource,
                 'hosts': self.host_list,
-                'mod_args': module_args
+                'mod_args': module_args,
+                'role_name': username
                 }
         data = json.dumps(data)
         api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
@@ -389,7 +389,8 @@ class MyTask(object):
         data = {'mod_name': 'user',
                 'resource': self.resource,
                 'hosts': self.host_list,
-                'mod_args': module_args
+                'mod_args': module_args,
+                'role_name': username
                 }
         data = json.dumps(data)
         api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
@@ -421,10 +422,10 @@ class MyTask(object):
         sudo_alias = {}
         sudo_user = {}
         for sudo in sudo_list:
-            sudo_alias[sudo['name']] = sudo['commands']
+            sudo_alias[sudo.name] = sudo.commands
 
         for role in role_list:
-            sudo_user[role['name']] = ','.join(sudo_alias.keys())
+            sudo_user[role.name] = ','.join(sudo_alias.keys())
 
         sudo_j2 = get_template('permManage/role_sudo.j2')
         sudo_content = sudo_j2.render(Context({"sudo_alias": sudo_alias, "sudo_user": sudo_user}))

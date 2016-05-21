@@ -57,8 +57,7 @@
                             <tr class="gradeX" id={{ role.id }}>
                                 <td class="text-center"><a href="{% url 'role_detail' %}?id={{ role.id }}">{{ role.name }} </a></td>
                                 <td class="text-center"> {{ role | role_contain_which_sudos }} </td>
-{#                                <td class="text-center"> {{ role.date_added | date:"Y-m-d H:i:s"}} </td>#}
-                                <td class="text-center"> {{ role.date_added }} </td>
+                                <td class="text-center"> {{ role.date_added | date:"Y-m-d H:i:s"}} </td>
                                 <td class="text-center">
                                     <a href="{% url 'role_edit' %}?id={{ role.id }}" class="btn btn-xs btn-info">编辑</a>
                                     <a href="{% url 'role_push' %}?id={{ role.id }}" class="btn btn-xs btn-warning">推送</a>
@@ -116,14 +115,30 @@ function remove_role(role_id){
         },
         error: function(error) {
             alert(error)
-        },
+        }
     });
-
-
-
-
-
 }
+
+    {# 定时器 #}
+    function showalert()
+    {
+       $.ajax({
+          url: '{% url 'push_role_event' %}',
+          method: 'get',
+          success: function(res) {
+              layer.msg(res.message,
+                      {
+                          time: 10000,
+                          offset:['70px','1000px']
+              });
+          }
+        });
+    }
+    //定时执行，20秒后执行showalert()
+    window.setTimeout(function(){
+    showalert();
+{#    parent.location.reload();#}
+    },20000);
 </script>
 
 

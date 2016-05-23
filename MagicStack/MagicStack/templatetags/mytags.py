@@ -276,7 +276,7 @@ def role_contain_which_sudos(role):
     """
     get role sudo commands
     """
-    sudo_names = [sudo['name'] for sudo in role['sudo']]
+    sudo_names = [sudo.name for sudo in role.sudo.all()]
     return ','.join(sudo_names)
 
 

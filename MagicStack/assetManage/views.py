@@ -228,7 +228,6 @@ def asset_add(request,res, *args):
                     pm.power_address = request.POST.get('power_address')
                     pm.power_username = request.POST.get('power_username')
                     pm.power_password = request.POST.get('power_password')
-                    pm.power_id = request.POST.get('power_id',1)
                     pm.save()
                     asset_info.power_manage_id = pm.id
 
@@ -243,7 +242,6 @@ def asset_add(request,res, *args):
                     net.net_name = request.POST.get('net_name', '')
                     net.mac_address = request.POST.get('mac_address', '')
                     net.ip_address = request.POST.get('ip_address','')
-                    net.cnames = request.POST.get('cnames', '')
                     net.dns_name = request.POST.get('dns_name', '')
                     net.mtu = request.POST.get('mtu', '')
                     net.per_gateway = request.POST.get('per_gateway', '')
@@ -382,7 +380,6 @@ def asset_edit(request, res, *args):
             pm.power_address = request.POST.get('power_address')
             pm.power_username = request.POST.get('power_username')
             pm.power_password = request.POST.get('power_password')
-            pm.power_id = request.POST.get('power_id',1)
             pm.save()
 
 
@@ -397,7 +394,6 @@ def asset_edit(request, res, *args):
             net.net_name = request.POST.get('net_name', '')
             net.mac_address = request.POST.get('mac_address', '')
             net.ip_address = request.POST.get('ip_address','')
-            net.cnames = request.POST.get('cnames', '')
             net.dns_name = request.POST.get('dns_name', '')
             net.mtu = request.POST.get('mtu', '')
             net.per_gateway = request.POST.get('per_gateway', '')
@@ -551,12 +547,12 @@ def asset_list(request):
 
 @require_role('admin')
 def asset_action(request, status):
+    result = ''
     data = {
         'power': status,
-        'systems': [
-
-        ]
+        'systems': []
     }
+
     if request.method == 'POST':
         select_ids = request.POST.getlist('asset_id_all')
         select_ids = select_ids[0].split(',')
@@ -568,9 +564,15 @@ def asset_action(request, status):
         username = proxy.username
         password = proxy.password
         systems = [item.name for item in asset_list]
+        profile = asset_list[0].profile
+        if status == 'rebuild':
+            data = {
+                'rebuild': 'true',
+                'profile': profile,
+                'systems': []
+            }
         data['systems'] = systems
         data = json.dumps(data)
-        logger.debug("data:%s"%data)
         try:
             api = APIRequest('http://172.16.30.69:8100/v1.0/system/action', 'test', '123456')
             result, codes = api.req_post(data)

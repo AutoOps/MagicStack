@@ -45,6 +45,9 @@
                                         <li>
                                             <button type="button" class="btn btn-sm" id="shutdown">关机</button>
                                         </li>
+                                        <li>
+                                            <button type="button" class="btn btn-sm" id="rebuild">重装系统</button>
+                                        </li>
                                       </ul>
                                 </div>
                         </div>
@@ -166,7 +169,7 @@
                                 <input type="button" id="asset_del" class="btn btn-danger btn-sm"  name="del_button" value="删除"/>
                                 <a value="{% url 'asset_edit_batch' %}" type="button" class="btn btn-sm btn-warning iframe">修改</a>
                                 <input type="button" id="asset_update" class="btn btn-info btn-sm"  name="update_button" value="更新"/>
-                                <input type="button" id="exec_cmd" class="btn btn-sm btn-primary"  name="exec_cmd" value="执行命令"/>
+{#                                <input type="button" id="exec_cmd" class="btn btn-sm btn-primary"  name="exec_cmd" value="执行命令"/>#}
                             </div>
                             {% include 'paginator.html' %}
                         </div>
@@ -465,17 +468,38 @@
     });
 
 
+    $('#rebuild').click(function () {
+        var asset_id_all = getIDall();
+        if (asset_id_all == ''){
+            alert("请至少选择一行!");
+            return false;
+        }
+        if (confirm("确定重装所选的机器?")) {
+            $.ajax({
+                type: "post",
+                data: {asset_id_all: asset_id_all},
+                url: "{% url 'asset_action' 'rebuild' %}",
+                success: function (data) {
+                    layer.msg( data.messege,{offset:['100px','1200px']}, function(){
+                        parent.location.reload();
+                    });
+                }
+            });
+        }
+    });
+
     function showalert()
     {
        $.ajax({
           url: '{% url 'asset_event' %}',
           method: 'get',
           success: function(res) {
-              layer.msg(res.message,
-                      {
-                          time: 20000,
+{#              layer.msg(res.message,#}
+{#                      {#}
+{#                          time: 20000,#}
 {#                          offset:['100px','800px']#}
-              });
+{#              });#}
+              alert(res.message)
           }
 {#          error: function(res) {#}
 {#              layer.msg(res.messege,#}

@@ -68,7 +68,6 @@ class NetWorking(models.Model):
     per_gateway = models.CharField(max_length=90, blank=True, null=True, verbose_name=u'默认网关')
     dns_name = models.CharField(max_length=90, blank=True, null=True, verbose_name=u'DNS名称')
     static_routes = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'静态路由')
-    cnames = models.CharField(max_length=100, blank=True, null=True,verbose_name='CNAMES')
 
     def __unicode__(self):
         return self.name
@@ -99,7 +98,7 @@ class PowerManage(models.Model):
     power_address = models.CharField(max_length=90, verbose_name=u'电源管理地址')
     power_username = models.CharField(max_length=90, verbose_name=u'电源管理用户名')
     power_password = models.CharField(max_length=90, verbose_name=u'电源管理用户密码')
-    power_id = models.IntegerField(verbose_name='Power Management ID', default=0)
+
 
     def __unicode__(self):
         return self.power_address

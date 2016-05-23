@@ -390,7 +390,8 @@ class MyTask(object):
                 'resource': self.resource,
                 'hosts': self.host_list,
                 'mod_args': module_args,
-                'role_name': username
+                'role_name': username,
+                'action': 'delete'
                 }
         data = json.dumps(data)
         api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
@@ -408,7 +409,8 @@ class MyTask(object):
         data = {'mod_name': 'command',
                 'resource': self.resource,
                 'hosts': self.host_list,
-                'mod_args': module_args
+                'mod_args': module_args,
+                'action': 'delete'
                 }
         data = json.dumps(data)
         api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')

@@ -542,6 +542,10 @@ def perm_role_push(request, res, *args):
     asset_ids = request.GET.get('asset_id')
     role = get_object(PermRole, id=role_id)
     role_proxy = get_one_or_all('PermRole', role_id)
+    logger.debug('role_proxy:%s'%role_proxy)
+    if not role_proxy:
+        error = u'连接proxy失败,请检查proxy服务是否正常!'
+        return my_render('permManage/perm_role_push.html', locals(), request)
     assets = Asset.objects.all()
     asset_groups = AssetGroup.objects.all()
     if asset_ids:
@@ -615,7 +619,6 @@ def perm_role_push(request, res, *args):
 
 @require_role('admin')
 def push_role_event(request):
-    logger.debug('task_queue:%s'%task_queue.qsize())
     response = {'error': '', 'message':''}
     if request.method == 'GET':
         user_name = request.user.username

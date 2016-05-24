@@ -148,9 +148,9 @@ def group_edit(request, res, *args):
 def user_add(request, res, *args):
     error = ''
     msg = ''
-    header_title, path1, path2 = '添加用户', '用户管理', '添加用户'
+    header_title, path1, path2 = u'添加用户', u'用户管理', u'添加用户'
     res['operator'] = path2
-    user_role = {'SU': '超级管理员', 'CU': '普通用户'}
+    user_role = {'SU': u'超级管理员', 'CU': u'普通用户'}
     group_all = UserGroup.objects.all()
 
     if request.method == 'POST':
@@ -169,11 +169,11 @@ def user_add(request, res, *args):
 
         try:
             if '' in [username, password, ssh_key_pwd, name, role]:
-                error = '带*内容不能为空'
+                error = u'带*内容不能为空'
                 raise ServerError
             check_user_is_exist = User.objects.filter(username=username)
             if check_user_is_exist:
-                error = '用户 %s 已存在' % username
+                error = u'用户 %s 已存在' % username
                 raise ServerError
         except ServerError:
                 res['flag'] = 'false'
@@ -195,7 +195,7 @@ def user_add(request, res, *args):
                         user_groups.extend(UserGroup.objects.filter(id=user_group_id))
 
             except IndexError, e:
-                error = '添加用户 %s 失败 %s ' % (username, e)
+                error = u'添加用户 %s 失败 %s ' % (username, e)
                 res['flag'] = 'false'
                 res['content'] = error
                 try:
@@ -207,7 +207,7 @@ def user_add(request, res, *args):
                 if MAIL_ENABLE and send_mail_need:
                     user_add_mail(user, kwargs=locals())
                 msg = get_display_msg(user, password=password, ssh_key_pwd=ssh_key_pwd, send_mail_need=send_mail_need)
-                error = '添加用户 %s' % username
+                error = u'添加用户 %s' % username
                 res['content'] = error
     return my_render('userManage/user_add.html', locals(), request)
 
@@ -371,14 +371,14 @@ def reset_password(request):
 @require_role(role='super')
 @user_operator_record
 def user_edit(request,res, *args):
-    header_title, path1, path2 = '编辑用户', '用户管理', '编辑用户'
+    header_title, path1, path2 = u'编辑用户', u'用户管理', u'编辑用户'
     res['operator'] = path2
     if request.method == 'GET':
         user_id = request.GET.get('id', '')
         if not user_id:
             return HttpResponseRedirect(reverse('index'))
 
-        user_role = {'SU': '超级管理员', 'CU': '普通用户'}
+        user_role = {'SU': u'超级管理员', 'CU': u'普通用户'}
         user = get_object(User, id=user_id)
         group_all = UserGroup.objects.all()
         if user:
@@ -396,13 +396,13 @@ def user_edit(request,res, *args):
         extra = request.POST.getlist('extra', [])
         is_active = True if '0' in extra else False
         email_need = True if '1' in extra else False
-        user_role = {'SU': '超级管理员', 'GA': '部门管理员', 'CU': '普通用户'}
+        user_role = {'SU': u'超级管理员', 'GA': u'部门管理员', 'CU': u'普通用户'}
 
         if user_id:
             user = get_object(User, id=user_id)
         else:
             res['flag'] = 'false'
-            res['content'] = '用户不存在!'
+            res['content'] = u'用户不存在!'
             return HttpResponseRedirect(reverse('user_list'))
 
         db_update_user(user_id=user_id,
@@ -414,8 +414,7 @@ def user_edit(request,res, *args):
                        role=role_post,
                        is_active=is_active)
 
-        res['content'] = '编辑用户%s' % user.username
-
+        res['content'] = u'编辑用户%s' % user.username
         if email_need:
             msg = u"""
             Hi %s:
@@ -426,7 +425,7 @@ def user_edit(request,res, *args):
                 权限：：%s
 
             """ % (user.name, URL, user.username, password, user_role.get(role_post, u''))
-            send_mail('您的信息已修改', msg, MAIL_FROM, [email], fail_silently=False)
+            send_mail(u'您的信息已修改', msg, MAIL_FROM, [email], fail_silently=False)
 
         return HttpResponseRedirect(reverse('user_list'))
     return my_render('userManage/user_edit.html', locals(), request)

@@ -21,6 +21,27 @@
                     <li class="idc"> <a href="{% url 'idc_list' %}">查看机房</a></li>
                 </ul>
             </li>
+            <li id="application">
+                <a><i class="fa fa-inbox"></i> <span class="nav-label">应用管理</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li class="app_script"> <a href="#">脚本<span class="label label-info pull-right">{{ host_active_num }}/{{ host_total_num}}</span></a></li>
+                    <li class="docker"> <a href="#">Docker FIle</a></li>
+                </ul>
+            </li>
+            <li id="tasks">
+                <a><i class="fa fa-inbox"></i> <span class="nav-label">任务管理</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li class="app_script"> <a href="#">1<span class="label label-info pull-right">{{ host_active_num }}/{{ host_total_num}}</span></a></li>
+                    <li class="docker"> <a href="#">2</a></li>
+                </ul>
+            </li>
+            <li id="backups">
+                <a><i class="fa fa-inbox"></i> <span class="nav-label">备份管理</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li class="1"> <a href="#">1<span class="label label-info pull-right">{{ host_active_num }}/{{ host_total_num}}</span></a></li>
+                    <li class="2"> <a href="#">2</a></li>
+                </ul>
+            </li>
             <li id="jperm">
                 <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">授权管理</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -35,18 +56,27 @@
                     </li>
                 </ul>
             </li>
+
+            <li id="proxy">
+                   <a href="{% url 'proxy_list' %}"><i class="fa fa-gears"></i> <span class="nav-label">代理管理</span><span class="label label-info pull-right"></span></a>
+            </li>
             <li id="jlog">
                <a href="{% url 'log_list' 'online' %}"><i class="fa fa-files-o"></i> <span class="nav-label">日志审计</span><span class="label label-info pull-right"></span></a>
             </li>
-            <li id="file">
-                <a href="#"><i class="fa fa-download"></i> <span class="nav-label">上传下载</span><span class="fa arrow"></span></a>
+            <li id="emails">
+                <a><i class="fa fa-inbox"></i> <span class="nav-label">告警管理</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li class="upload"><a href="{% url 'file_upload' %}">文件上传</a></li>
-                    <li class="download"><a href="{% url 'file_download' %}">文件下载</a></li>
+                    <li class="media_type"> <a href="#">告警媒介类型<span class="label label-info pull-right">{{ host_active_num }}/{{ host_total_num}}</span></a></li>
+                    <li class="email_set"> <a href="#">告警设置</a></li>
                 </ul>
             </li>
-            <li id="proxy">
-                   <a href="{% url 'proxy_list' %}"><i class="fa fa-gears"></i> <span class="nav-label">代理管理</span><span class="label label-info pull-right"></span></a>
+
+            <li id="global_setting">
+                <a><i class="fa fa-inbox"></i> <span class="nav-label">全局设置</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li class="1"> <a href="#">1<span class="label label-info pull-right">{{ host_active_num }}/{{ host_total_num}}</span></a></li>
+                    <li class="2"> <a href="#">2</a></li>
+                </ul>
             </li>
         </ul>
 

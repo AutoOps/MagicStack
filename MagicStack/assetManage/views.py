@@ -11,6 +11,7 @@ from userManage.user_api import user_operator_record
 from common.interface import APIRequest
 from common.models import Task
 import Queue
+import time
 
 task_queue = Queue.Queue()
 
@@ -160,8 +161,11 @@ def asset_add(request,res, *args):
             if Asset.objects.filter(name=unicode(hostname)):
                 error = '该主机名 %s 已存在!' % hostname
                 raise ServerError(error)
-
+            name = request.POST.get('name')
+            timestamp = int(time.time())
+            id_unique = name + '_'+ str(timestamp)
             fields = {
+                "id_unique": id_unique,
                 "name": request.POST.get('name'),
                 "hostname": request.POST.get('hostname'),
                 "profile": request.POST.get('profile'),
@@ -189,7 +193,6 @@ def asset_add(request,res, *args):
             try:
                 api = APIRequest('http://172.16.30.69:8100/v1.0/system/', 'test', '123456')
                 result, codes = api.req_post(data)
-                print "result:%s   codes:%s"%(result, codes)
             except Exception as e:
                 res['flag'] = 'false'
                 error = e
@@ -344,6 +347,7 @@ def asset_edit(request, res, *args):
     asset_id = request.GET.get('id', '')
     username = request.user.username
     asset_info = get_object(Asset, id=asset_id)
+    id_unique = asset_info.id_unique
     if asset_info:
         password_old = asset_info.password
     af = AssetForm(instance=asset_info)
@@ -417,6 +421,7 @@ def asset_edit(request, res, *args):
             res['content'] = 'edit %s success' % name
 
             fields = {
+                'id_unique': id_unique,
                 "hostname": request.POST.get('hostname'),
                 "profile": request.POST.get('profile'),
                 "gateway": request.POST.get('gateway'),

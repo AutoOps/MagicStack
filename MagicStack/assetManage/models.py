@@ -112,11 +112,10 @@ class Asset(models.Model):
         ('4', 'acceptance'),
     )
 
-
+    id_unique = models.CharField(max_length=200, blank=True, null=True, verbose_name=u"唯一标示")
     ip = models.CharField(max_length=32, blank=True, null=True, verbose_name=u"主机IP")
     other_ip = models.CharField(max_length=255, blank=True, null=True, verbose_name=u"其他IP")
     name = models.CharField(max_length=100, blank=True, verbose_name=u'主机名')
-    owerns = models.CharField(max_length=100, blank=True,  verbose_name=u'所有者')
     profile = models.CharField(max_length=100, blank=True,  verbose_name=u'用户配置文件')
     status = models.CharField(choices=STATUS_TYPE, max_length=90, default='1',verbose_name=u'状态')
     kickstart = models.CharField(max_length=255, verbose_name=u'创建元数据')

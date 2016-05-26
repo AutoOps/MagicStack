@@ -2,19 +2,24 @@
 /**
  * Created by liuzheng on 3/3/16.
  */
+
 var rowHeight = 1;
 var colWidth = 1;
 function WSSHClient() {
 }
 WSSHClient.prototype._generateEndpoint = function (options) {
     console.log(options);
+    var protocol = '';
     if (window.location.protocol == 'https:') {
-        var protocol = 'wss://';
+        protocol = 'wss://';
     } else {
-        var protocol = 'ws://';
+        protocol = 'ws://';
     }
 
-    var endpoint = protocol + document.URL.match(RegExp('//(.*?)/'))[1] + '/ws/terminal' + document.URL.match(/(\?.*)/);
+    var url_params = document.URL.match(/(\?.*)/)[0].split('&')[3];
+    var proxy_url = url_params.split('=')[1]+'/';
+    var server_ip = proxy_url.match(RegExp('//(.*?)/'))[1];
+    var endpoint = protocol + server_ip + '/v1.0/ws/terminal' + document.URL.match(/(\?.*)/)[0];
     return endpoint;
 };
 WSSHClient.prototype.connect = function (options) {

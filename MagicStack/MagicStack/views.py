@@ -331,7 +331,7 @@ def web_terminal(request):
     user = request.user
     asset_id = request.GET.get('id')
     role_name = request.GET.get('role')
-    asset = get_object(Asset, id=asset_id)
+    asset = get_object(Asset, id_unique=asset_id)
     if asset:
         hostname = asset.name
     return render_to_response('logManage/web_terminal.html', locals())

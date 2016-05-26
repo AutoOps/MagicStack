@@ -63,8 +63,7 @@ def get_asset_info(asset):
     info = dict(hostname=ip, ip=ip)
     info['ssh_key'] = ''
     info['username'] = asset.username
-    # info['password'] = CRYPTOR.decrypt(asset.password)
-    info['password'] = asset.password
+    info['password'] = CRYPTOR.decrypt(asset.password)
     try:
         info['port'] = int(asset.port)
     except TypeError:

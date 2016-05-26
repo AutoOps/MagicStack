@@ -2,7 +2,6 @@
 {% load mytags %}
 {% block content %}
 {% include 'nav_cat_bar.html' %}
-
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-sm-12">
@@ -244,21 +243,22 @@
         $('.conn').click(function(){
             var url='{% url "role_get" %}?id=' + $(this).attr('value'); // 获取用户有权限的角色
             var href = $(this).attr('href');
-            var new_url = '{% url "terminal" %}?id=' + $(this).attr('value') + '&role='; // webterminal socket url
+            var new_url = '{% url "terminal" %}?id=' ;  //wbterminal socket url
             var hostname = $(this).closest('tr').find('.hostname a')[0].innerHTML;
             $.ajax({
                 type: 'GET',
                 url: url,
                 data: {},
                 success: function(data){
-                    var dataArray = data.split(',');
+                    var param = eval("("+data+")");
+                    var dataArray = param.role_name.split(',');
                     if (data == 'error' || data == '' || data == null || data == undefined){
                         layer.alert('没有授权系统用户')
                     }
                     else if (dataArray.length == 1 && data != 'error' && navigator.platform == 'Win32'){
-                        window.open(new_url+data, '', 'width=628px, height=380px');
+                        window.open(new_url+ param.id_unique + '&role_id='+ param.role_id + '&user_id='+ param.user_id+'&proxy_url='+ param.proxy_url, '', 'width=628px, height=380px');
                     }  else if (dataArray.length == 1 && data != 'error'){
-                        window.open(new_url+data, '_blank', 'toolbar=yes, location=yes, copyhistory=yes, scrollbars=yes, width=628, height=410');
+                        window.open(new_url+ param.id_unique + '&role_id='+ param.role_id + '&user_id='+ param.user_id+'&proxy_url='+ param.proxy_url, '_blank', 'toolbar=yes, location=yes, copyhistory=yes, scrollbars=yes, width=628, height=410');
 
                     }
                     else {

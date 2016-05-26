@@ -78,7 +78,7 @@ $(function(){
                                     <div class="form-group">
                                         <label for="profile" class="col-sm-2 control-label">Profile</label>
                                         <div class="col-sm-8">
-                                            <select name="profile" id="profile" data-placeholder="请选择profile" class="chosen-select form-control m-b" multiple  tabindex="2">
+                                            <select name="profile" id="profile" data-placeholder="请选择profile" class="chosen-select form-control m-b"  tabindex="2">
                                                 {% for profile in profiles %}
                                                     <option value="{{ profile }}">{{ profile }}</option>
                                                 {% endfor %}
@@ -91,7 +91,7 @@ $(function(){
                                     {{ af.kickstart|bootstrap_horizontal }}
 
                                      <div class="hr-line-dashed"></div>
-                                     <div class="form-group"><label class="col-sm-2 control-label"> netboot enabled<span class="red-fonts"> *</span> </label>
+                                     <div class="form-group"><label class="col-sm-2 control-label"> 网络引导 <span class="red-fonts"> *</span> </label>
                                         <div class="col-sm-8">
                                             <div class="radio i-checks">
                                                 <label> <input type="radio" checked="" value="1" name="is_enabled">激活 </label>

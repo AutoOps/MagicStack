@@ -202,14 +202,15 @@ def asset_add(request,res, *args):
                     msg = result['messege']
                     res['content'] = '创建主机成功'
                     asset_info = Asset()
+                    asset_info.id_unique = id_unique
                     asset_info.name = request.POST.get('name', '')
-                    asset_info.owerns = request.POST.get('owerns', '')
                     asset_info.profile = request.POST.get('profile', '')
                     asset_info.status = request.POST.get('status', '1')
                     asset_info.kickstart = request.POST.get('kickstart', '')
                     asset_info.port = request.POST.get('port',22)
                     asset_info.username = request.POST.get('username', 'rooot')
-                    asset_info.password = request.POST.get('password', '')
+                    pwd = request.POST.get('password', '')
+                    asset_info.password = CRYPTOR.encrypt(pwd)
                     asset_info.idc_id = int(request.POST.get('idc', '1'))
                     asset_info.cabinet = request.POST.get('cabinet', '')
                     asset_info.number = request.POST.get('number', '')
@@ -348,8 +349,8 @@ def asset_edit(request, res, *args):
     username = request.user.username
     asset_info = get_object(Asset, id=asset_id)
     id_unique = asset_info.id_unique
-    if asset_info:
-        password_old = asset_info.password
+    # if asset_info:
+    #     password_old = asset_info.password
     af = AssetForm(instance=asset_info)
     nf = NetWorkingForm(instance=asset_info.networking.all()[0])
     nfg = NetWorkingGlobalForm(instance=asset_info.networking_g)
@@ -357,19 +358,17 @@ def asset_edit(request, res, *args):
     if request.method == 'POST':
         try:
             asset_info.name = request.POST.get('name', '')
-            asset_info.owerns = request.POST.get('owerns', '')
             asset_info.profile = request.POST.get('profile', '')
-            asset_info.status = request.POST.get('status', '1')
             asset_info.kickstart = request.POST.get('kickstart', '')
             asset_info.port = request.POST.get('port',22)
             asset_info.username = request.POST.get('username', 'root')
-            asset_info.password = request.POST.get('password', '')
+            pwd = request.POST.get('password', '')
+            asset_info.password = CRYPTOR.encrypt(pwd)
             asset_info.idc_id = int(request.POST.get('idc', '1'))
             asset_info.cabinet = request.POST.get('cabinet', '')
             asset_info.number = request.POST.get('number', '')
             asset_info.machine_status = int(request.POST.get('machine_status', 1))
             asset_info.asset_type = int(request.POST.get('asset_type', 1))
-            asset_info.sn = request.POST.get('sn', '')
             asset_info.comment = request.POST.get('comment', '')
             asset_info.proxy_id = int(request.POST.get('proxy', '1'))
 
@@ -386,13 +385,11 @@ def asset_edit(request, res, *args):
             pm.power_password = request.POST.get('power_password')
             pm.save()
 
-
             asset_info.proxy_id = int(request.POST.get('proxy', 1))
             is_active = True if request.POST.get('is_active', '1') == '1' else False
             is_enabled = True if request.POST.get('is_enabled', '1') == '1' else False
             asset_info.netboot_enabled = is_enabled
             asset_info.is_active = is_active
-
 
             net = asset_info.networking.all()[0]
             net.net_name = request.POST.get('net_name', '')
@@ -412,7 +409,7 @@ def asset_edit(request, res, *args):
             for item in group_id:
                 group = AssetGroup.objects.get(id=int(item))
                 asset_info.group.add(group)
-
+            asset_info.save()
         except ServerError:
             res['flag'] = 'false'
             res['content'] = error
@@ -445,9 +442,9 @@ def asset_edit(request, res, *args):
             pro_password = select_proxy.password
             pro_url = select_proxy.url
             try:
-                api = APIRequest('http://172.16.30.69:8100/v1.0/system/{0}'.format(name), 'test', '123456')
+                api = APIRequest('{0}/v1.0/system/{1}'.format(pro_url, name), 'test', '123456')
                 result, code = api.req_put(data)
-            except Exception,e:
+            except Exception, e:
                     error = e
             else:
                 if code == 200:
@@ -772,7 +769,8 @@ def asset_update_batch(request,res,*args):
             data = {'mod_name': 'setup',
                     'resource': resource,
                     'hosts': host_list,
-                    'mod_args': ''
+                    'mod_args': '',
+                    'action': 'update',
                     }
             data = json.dumps(data)
             api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')

@@ -2,7 +2,7 @@
 from django.db.models import Q
 from django.shortcuts import HttpResponse
 from datetime import datetime
-from MagicStack.api import require_role, pages, my_render, ServerError, get_object, logger
+from MagicStack.api import require_role, pages, my_render, ServerError, get_object, logger, CRYPTOR
 from models import *
 from userManage.user_api import user_operator_record
 
@@ -39,14 +39,14 @@ def proxy_add(request, res, *args):
         password = request.POST.get('user_password', '')
         proxy_url = request.POST.get('proxy_url', '')
         comment = request.POST.get('comment', '')
-
+        encrypt = CRYPTOR.encrypt(password)
         try:
             if not proxy_name:
                 raise ServerError('Proxy名不能为空')
             if Proxy.objects.filter(proxy_name=proxy_name):
                 raise ServerError('Proxy名已存在')
             create_time = datetime.now()
-            Proxy.objects.create(proxy_name=proxy_name, username=user_name, password=password,
+            Proxy.objects.create(proxy_name=proxy_name, username=user_name, password=encrypt,
                                  url=proxy_url, comment=comment, create_time=create_time)
             msg = '添加Proxy[%s]成功' % proxy_name
             res['content'] = msg
@@ -72,12 +72,14 @@ def proxy_edit(request, res, *args):
         password = request.POST.get('password')
         proxy_url = request.POST.get('proxy_url')
         comment = request.POST.get('comment', '')
+        encrypt = CRYPTOR.encrypt(password)
+
         try:
             if not proxy_name:
                 raise ServerError('Proxy名不能为空')
             proxy.proxy_name = proxy_name
             proxy.username = user_name
-            proxy.password = password
+            proxy.password = encrypt
             proxy.url = proxy_url
             proxy.comment = comment
             proxy.save()

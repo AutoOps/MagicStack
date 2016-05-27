@@ -147,14 +147,14 @@ def asset_add(request,res, *args):
     """
     error = msg = ''
     header_title, path1, path2 = '添加资产', '资产管理', '添加资产'
-    profiles = get_profiles()
+    proxys = Proxy.objects.all()
     res['operator'] = path2
-
+    proxy_profiles = gen_proxy_profiles(proxys)
     af = AssetForm()
     nfg = NetWorkingGlobalForm()
     nf = NetWorkingForm()
     pf = PowerManageForm()
-
+    asset_groups = AssetGroup.objects.all()
     if request.method == 'POST':
         try:
             hostname = request.POST.get('name', '')
@@ -191,7 +191,7 @@ def asset_add(request,res, *args):
             pro_password = select_proxy.password
             pro_url = select_proxy.url
             try:
-                api = APIRequest('http://172.16.30.69:8100/v1.0/system/', 'test', '123456')
+                api = APIRequest('{0}/v1.0/system/'.format(pro_url), pro_username, CRYPTOR.decrypt(pro_password))
                 result, codes = api.req_post(data)
             except Exception as e:
                 res['flag'] = 'false'
@@ -289,12 +289,13 @@ def asset_del(request,res, *args):
     if asset_id:
         asset = get_object(Asset, id=int(asset_id))
         if asset:
-            param = {'names': [asset.name]}
+            proxy = asset.proxy
+            param = {'names': [asset.name], 'id_unique': asset.id_unique}
             data = json.dumps(param)
             try:
-                api = APIRequest('http://172.16.30.69:8100/v1.0/system', 'test', '123456')
+                api = APIRequest('{0}/v1.0/system'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
                 result, code = api.req_del(data)
-                logger.debug('result:%s'%result)
+                logger.debug('删除单一资产result:%s'%result)
                 if code == 200:
                     asset.delete()
                 else:
@@ -315,23 +316,27 @@ def asset_del(request,res, *args):
                 res['content'] += '%s   ' % asset.name
                 if asset:
                     asset_list.append(asset)
-            asset_names = [asset.name for asset in asset_list]
-            param = {'names': asset_names}
-            data = json.dumps(param)
-            try:
-                api = APIRequest('http://172.16.30.69:8100/v1.0/system', 'test', '123456')
-                result, code = api.req_del(data)
-                logger.debug('result:%s'%result)
-                if code == 200:
-                    for item in asset_list:
-                        item.delete()
-                else:
-                    response['msg'] = result['messege']
-            except Exception as e:
-                logger.error(e)
-                res['flag'] = 'false'
-                res['content'] = e
-                response['msg'] = e
+            asset_proxys = gen_asset_proxy(asset_list)
+            for key, value in asset_proxys.items():
+                asset_names = [asset.name for asset in value]
+                id_uniques = [asset.id_unique for asset in value]
+                param = {'names': asset_names, 'id_unique': id_uniques}
+                data = json.dumps(param)
+                proxy_obj = Proxy.objects.get(proxy_name=key)
+                try:
+                    api = APIRequest('{0}/v1.0/system'.format(proxy_obj.url), proxy_obj.username, CRYPTOR.decrypt(proxy_obj.password))
+                    result, code = api.req_del(data)
+                    logger.debug('删除多个资产result:%s'% result)
+                    if code == 200:
+                        for item in value:
+                            item.delete()
+                    else:
+                        response['msg'] = result['messege']
+                except Exception as e:
+                    logger.error(e)
+                    res['flag'] = 'false'
+                    res['content'] = e
+                    response['msg'] = e
     return HttpResponse(json.dumps(response), content_type='application/json')
 
 
@@ -348,9 +353,10 @@ def asset_edit(request, res, *args):
     asset_id = request.GET.get('id', '')
     username = request.user.username
     asset_info = get_object(Asset, id=asset_id)
+    asset_password = CRYPTOR.decrypt(asset_info.password)
     id_unique = asset_info.id_unique
-    # if asset_info:
-    #     password_old = asset_info.password
+    proxys = Proxy.objects.all()
+    proxy_profiles = gen_proxy_profiles(proxys)
     af = AssetForm(instance=asset_info)
     nf = NetWorkingForm(instance=asset_info.networking.all()[0])
     nfg = NetWorkingGlobalForm(instance=asset_info.networking_g)
@@ -403,7 +409,6 @@ def asset_edit(request, res, *args):
             net.subnet_mask = request.POST.get('subnet_mask', '')
             net.save()
 
-
             group = AssetGroup()
             group_id = request.POST.getlist('group')
             for item in group_id:
@@ -442,7 +447,7 @@ def asset_edit(request, res, *args):
             pro_password = select_proxy.password
             pro_url = select_proxy.url
             try:
-                api = APIRequest('{0}/v1.0/system/{1}'.format(pro_url, name), 'test', '123456')
+                api = APIRequest('{0}/v1.0/system/{1}'.format(pro_url, name), pro_username, CRYPTOR.decrypt(pro_password))
                 result, code = api.req_put(data)
             except Exception, e:
                     error = e
@@ -550,11 +555,6 @@ def asset_list(request):
 @require_role('admin')
 def asset_action(request, status):
     result = ''
-    data = {
-        'power': status,
-        'systems': []
-    }
-
     if request.method == 'POST':
         select_ids = request.POST.getlist('asset_id_all')
         select_ids = select_ids[0].split(',')
@@ -562,33 +562,37 @@ def asset_action(request, status):
         for item in select_ids:
             asset = get_object(Asset, id=int(item))
             asset_list.append(asset)
-        proxy = asset_list[0].proxy
-        username = proxy.username
-        password = proxy.password
-        systems = [item.name for item in asset_list]
-        profile = asset_list[0].profile
-        if status == 'rebuild':
-            data = {
-                'rebuild': 'true',
-                'profile': profile,
-                'systems': []
-            }
-        data['systems'] = systems
-        data = json.dumps(data)
-        try:
-            api = APIRequest('http://172.16.30.69:8100/v1.0/system/action', 'test', '123456')
-            result, codes = api.req_post(data)
-            logger.debug("result:%s   codes:%s"%(result, codes))
-            task = Task()
-            task.task_name = result['task_name']
-            task.username = request.user.username
-            task.status = result['messege']
-            task.start_time = datetime.datetime.now()
-            task.url = 'http://172.16.30.69:8100/v1.0/system/action'
-            task.save()
-            task_queue.put(dict(task_name=result['task_name'], task_user=request.user.username))
-        except Exception as e:
-            logger.debug(e)
+        asset_proxys = gen_asset_proxy(asset_list)
+        for key, value in asset_proxys.items():
+            proxy = Proxy.objects.get(proxy_name=key)
+            systems = [item.name for item in value]
+            profile = asset_list[0].profile
+            if status == 'rebuild':
+                data = {
+                    'rebuild': 'true',
+                    'profile': profile,
+                    'systems': systems
+                }
+            else:
+                data = {
+                    'power': status,
+                    'systems': systems
+                }
+            data = json.dumps(data)
+            try:
+                api = APIRequest('{0}/v1.0/system/action'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
+                result, codes = api.req_post(data)
+                logger.debug("操作结果result:%s   codes:%s"%(result, codes))
+                task = Task()
+                task.task_name = result['task_name']
+                task.username = request.user.username
+                task.status = result['messege']
+                task.start_time = datetime.datetime.now()
+                task.url = '{0}/v1.0/system/action'.format(proxy.url)
+                task.save()
+                task_queue.put(dict(task_name=result['task_name'], task_user=request.user.username, task_proxy=proxy.proxy_name))
+            except Exception as e:
+                logger.debug(e)
         return HttpResponse(json.dumps(result), content_type='application/json')
 
 
@@ -602,9 +606,10 @@ def asset_event(request):
                 tk_event = task_queue.get()
                 while tk_event['task_user'] != user_name:
                     tk_event = task_queue.get()
-                api = APIRequest('http://172.16.30.69:8100/v1.0/event/{0}'.format(tk_event['task_name']), 'test', '123456')
+                tk_proxy = Proxy.objects.get(proxy_name=tk_event['task_proxy'])
+                api = APIRequest('{0}/v1.0/event/{1}'.format(tk_proxy.url, tk_event['task_name']), tk_proxy.username, CRYPTOR.decrypt(tk_proxy.password))
                 result, codes = api.req_get()
-                logger.debug('result:%s'%result)
+                logger.debug('事件查询结果result:%s'%result)
                 tk = get_object(Task, task_name=tk_event['task_name'])
                 tk.status = result['status']
                 tk.content = result['event_log']

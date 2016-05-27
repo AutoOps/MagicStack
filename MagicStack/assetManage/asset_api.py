@@ -9,6 +9,7 @@ from permManage.ansible_api import MyRunner
 from permManage.perm_api import gen_resource
 from MagicStack.templatetags.mytags import get_disk_info
 from common.interface import APIRequest
+from django.db.models.query import QuerySet
 
 import traceback
 
@@ -398,14 +399,36 @@ def asset_ansible_update_all():
     asset_ansible_update(asset_all, name)
 
 
-def get_profiles():
-    profiles = []
-    try:
-        api = APIRequest('http://172.16.30.69:8100/v1.0/profile', 'test', '123456')
-        msg, codes = api.req_get()
-        logger.debug("msg:%s"%msg)
-        if msg:
-            profiles = msg['profiles']
-    except Exception as e:
-        logger.error(e)
-    return profiles
+def gen_proxy_profiles(proxys):
+    """
+    获取proxy对应的profiles
+    """
+    proxy_profiles = {}
+    if isinstance(proxys, (list, QuerySet)):
+        for item in proxys:
+            profiles = []
+            try:
+                api = APIRequest('{0}/v1.0/profile'.format(item.url), item.username, CRYPTOR.decrypt(item.password))
+                msg, codes = api.req_get()
+                if msg:
+                    profiles = msg['profiles']
+            except Exception as e:
+                logger.error(e)
+            proxy_profiles[item.proxy_name] = profiles
+    logger.info("获取proxy对应的profiles:%s"%proxy_profiles)
+    return proxy_profiles
+
+
+def gen_asset_proxy(asset_list):
+    """
+    {'proxy_1':[asset1, asset2], 'proxy_2':[asset3,asset4]}
+    """
+    asset_proxys = {}
+    proxy_set = set([asset.proxy.proxy_name for asset in asset_list])
+    for item in proxy_set:
+        asset_proxys[item] = []
+        for asset in asset_list:
+            if asset.proxy.proxy_name == item:
+                asset_proxys[item].append(asset)
+    logger.info('获取不同proxy所拥有的主机asset_proxys: %s'% asset_proxys)
+    return asset_proxys

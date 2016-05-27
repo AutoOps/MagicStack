@@ -1,6 +1,4 @@
 {% extends 'base.html' %}
-{% block self_head_css_js %}
-{% endblock %}
 {% load mytags %}
 {% load bootstrap %}
 {% block content %}
@@ -33,7 +31,7 @@ $(function(){
                     </div>
                 </div>
                 <div class="ibox-content">
-                  <form id="assetForm" method="post" class="form-horizontal">
+                  <form id="assetForm" method="post" class="form-horizontal" name="assetForm">
                       <div class="form-group">
                         <button class="btn btn-primary" type="submit" style="margin-left: 20px"> 提交 </button>
                           &nbsp;&nbsp;&nbsp;
@@ -56,7 +54,12 @@ $(function(){
                       <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="general">
                                 <div class="ibox-content">
-                                    {{ af.name|bootstrap_horizontal }}
+                                    <div class="form-group">
+                                        <label for="name" class="col-sm-2 control-label">名字</label>
+                                        <div class="col-sm-8">
+                                            <input id="name" name="name"  type="text" class="form-control" readonly value="{{ asset_info.name }}">
+                                        </div>
+                                    </div>
 
                                     <div class="hr-line-dashed"></div>
                                     {{ af.port|bootstrap_horizontal }}
@@ -65,11 +68,35 @@ $(function(){
                                     {{ af.username|bootstrap_horizontal}}
 
                                     <div class="hr-line-dashed"></div>
-                                    {{ af.password|bootstrap_horizontal }}
+                                    <div class="form-group">
+                                        <label for="password" class="col-sm-2 control-label">密码</label>
+                                        <div class="col-sm-8">
+                                            <input id="password" name="password" type="password" class="form-control" value="{{ asset_password }}">
+                                        </div>
+                                    </div>
 
                                     <div class="hr-line-dashed"></div>
-                                    {{ af.profile|bootstrap_horizontal }}
+                                    <div class="form-group">
+                                        <label for="profile" class="col-sm-2 control-label">所属代理</label>
+                                        <div class="col-sm-8">
+                                            <select name="proxy" id="proxy" data-placeholder="请选择代理" class="chosen-select form-control m-b"  tabindex="2" onChange="redirec(document.assetForm.proxy.options.selectedIndex)">
+                                                <option value="请选择proxy">请选择proxy</option>
+                                                {% for proxy in proxys %}
+                                                    <option value="{{ proxy.id }}" {% ifequal proxy asset_info.proxy %}selected {% endifequal %}> {{ proxy.proxy_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
 
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group">
+                                        <label for="profile" class="col-sm-2 control-label">用户配置文件</label>
+                                        <div class="col-sm-8">
+                                            <select name="profile" id="profile" data-placeholder="请选择profile" class="chosen-select form-control m-b"  tabindex="2" >
+                                                <option value="{{ asset_info.profile }}" selected>{{ asset_info.profile }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
 
                                     <div class="hr-line-dashed"></div>
                                     {{ af.kickstart|bootstrap_horizontal }}
@@ -87,9 +114,6 @@ $(function(){
                                     <div class="hr-line-dashed"></div>
                                       {{ af.group|bootstrap_horizontal }}
                                     <p>Hold down "Control", or "Command" on a Mac, to select more than one. </p>
-
-                                    <div class="hr-line-dashed"></div>
-                                    {{ af.proxy|bootstrap_horizontal }}
 
                                     <div class="hr-line-dashed"></div>
                                     {{ af.idc|bootstrap_horizontal }}
@@ -151,8 +175,6 @@ $(function(){
                                 {{ nf.dns_name|bootstrap_horizontal }}
 
                                 {{ nf.static_routes|bootstrap_horizontal }}
-
-
                               </div>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="powermanage">
@@ -168,7 +190,6 @@ $(function(){
                                     <div class="hr-line-dashed"></div>
                                     {{ pf.power_password|bootstrap_horizontal }}
 
-
                                 </div>
                             </div>
                       </div>
@@ -179,4 +200,43 @@ $(function(){
         </div>
     </div>
 </div>
+{% endblock %}
+{% block self_footer_js %}
+<script type="text/javascript">
+    //获取一级菜单长度
+    var select1_len = document.assetForm.proxy.options.length;
+    var select2 = new Array(select1_len);
+    //把一级菜单都设为数组
+    for (i = 0; i < select1_len; i++) {
+        select2[i] = new Array();
+    }
+    select2[0][0] = new Option('请选择profile','');
+    var pcount = 1;
+    {% for proxy in proxys %}
+        var mcount = 0;
+        {% for k , v in proxy_profiles.items %}
+            {% ifequal k proxy.proxy_name %}
+                {% for item in v %}
+                    select2[pcount][mcount] = new Option('{{ item }}', '{{ item }}');
+                    mcount += 1;
+                {% endfor %}
+            {% endifequal %}
+        {% endfor %}
+        pcount += 1;
+    {% endfor %}
+
+    //联动函数
+    function redirec(x) {
+        var temp = document.assetForm.profile;
+        for (i = 0; i < select2[x].length; i++) {
+            temp.options[i] = new Option(select2[x][i].text, select2[x][i].value);
+        }
+
+        temp.options[0].selected = true;
+
+    }
+
+</script>
+    <script src="/static/js/cropper/cropper.min.js"></script>
+    <script src="/static/js/datapicker/bootstrap-datepicker.js"></script>
 {% endblock %}

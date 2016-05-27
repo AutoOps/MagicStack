@@ -78,13 +78,13 @@ def group_del(request,res, *args):
     del a group
     删除用户组
     """
-    res['operator'] = '删除用户组'
-    res['content'] = '删除用户组'
+    res['operator'] = u'删除用户组'
+    res['content'] = u'删除用户组'
     group_ids = request.GET.get('id', '')
     group_id_list = group_ids.split(',')
     for group_id in group_id_list:
         group = UserGroup.objects.get(id=group_id)
-        res['content'] += "%s   "%group.name
+        res['content'] += "%s   "% group.name
         group.delete()
 
     return HttpResponse('删除成功')

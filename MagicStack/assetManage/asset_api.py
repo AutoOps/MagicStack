@@ -368,7 +368,6 @@ def asset_ansible_update(obj_list, ansible_asset_info, name):
         try:
             ip = asset.networking.all()[0].ip_address
             setup_info = ansible_asset_info['messege']['success'][ip]['ansible_facts']
-            logger.debug("获取硬件信息setup_info: %s" % setup_info)
         except KeyError, e:
             logger.error("获取setup_info失败: %s" % e)
             continue

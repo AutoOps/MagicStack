@@ -754,7 +754,7 @@ def asset_update(request,res, *args):
 @user_operator_record
 def asset_update_batch(request,res,*args):
     response = {'success':'', 'error':''}
-    res['operator'] = res['content'] = '批量更新主机'
+    res['operator'] = res['content'] = u'批量更新主机'
     if request.method == 'POST':
         try:
             arg = request.GET.get('arg', '')
@@ -769,30 +769,32 @@ def asset_update_batch(request,res,*args):
                     asset = Asset.objects.get(id=int(asset_id))
                     if asset:
                         asset_list.append(asset)
-            host_list = [asset.networking.all()[0].ip_address for asset in asset_list]
-            resource = gen_resource(asset_list)
-            data = {'mod_name': 'setup',
-                    'resource': resource,
-                    'hosts': host_list,
-                    'mod_args': '',
-                    'action': 'update',
-                    }
-            data = json.dumps(data)
-            api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
-            result, code = api.req_post(data)
-            logger.debug('result: %s            code:%s' % (result,code))
-            if code == 200:
-                asset_ansible_update(asset_list, result, name)
-                for asset in asset_list:
-                    res['content'] += ' [%s] '% asset.name
-                response['success'] = u'批量更新成功!'
-            return HttpResponse(json.dumps(response), content_type='application/json')
+            asset_proxys = gen_asset_proxy(asset_list)
+            for key, value in asset_proxys.items():
+                host_list = [asset.networking.all()[0].ip_address for asset in value]
+                proxy = Proxy.objects.get(proxy_name=key)
+                resource = gen_resource(value)
+                data = {'mod_name': 'setup',
+                        'resource': resource,
+                        'hosts': host_list,
+                        'mod_args': '',
+                        'action': 'update',
+                        }
+                data = json.dumps(data)
+                api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
+                result, code = api.req_post(data)
+                logger.debug('更新操作结果result:%s       code:%s' % (result,code))
+                if code == 200:
+                    asset_ansible_update(value, result, name)
+                    for asset in value:
+                        res['content'] += ' [%s] '% asset.name
+                    response['success'] = u'批量更新成功!'
         except Exception as e:
             logger.error(e)
             res['flag'] = 'false'
             res['content'] = u'批量更新失败'
             response['error'] = e
-            return HttpResponse(json.dumps(response), content_type='application/json')
+        return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role('admin')

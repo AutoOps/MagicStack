@@ -17,7 +17,7 @@ def group_add(request,res, *args):
     """
     error = ''
     msg = ''
-    header_title, path1, path2 = '添加用户组', '用户管理', '添加用户组'
+    header_title, path1, path2 = u'添加用户组', u'用户管理', u'添加用户组'
     res['operator'] = path2
     user_all = User.objects.all()
 
@@ -28,22 +28,22 @@ def group_add(request,res, *args):
 
         try:
             if not group_name:
-                error = '组名 不能为空'
+                error = u'组名 不能为空'
                 raise ServerError(error)
 
             if UserGroup.objects.filter(name=group_name):
-                error = '组名已存在'
+                error = u'组名已存在'
                 raise ServerError(error)
             db_add_group(name=group_name, users_id=users_selected, comment=comment)
         except ServerError:
             res['flag'] = 'false'
             res['content'] = error
         except TypeError:
-            error = '添加小组失败'
+            error = u'添加小组失败'
             res['flag'] = 'false'
             res['content'] = error
         else:
-            msg = '添加用户组 %s ' % group_name
+            msg = u'添加用户组 %s ' % group_name
             res['content'] = msg
             print "msg:",msg
 
@@ -56,7 +56,7 @@ def group_list(request):
     list user group
     用户组列表
     """
-    header_title, path1, path2 = '查看用户组', '用户管理', '查看用户组'
+    header_title, path1, path2 = u'查看用户组', u'用户管理', u'查看用户组'
     keyword = request.GET.get('search', '')
     user_group_list = UserGroup.objects.all().order_by('name')
     group_id = request.GET.get('id', '')
@@ -87,7 +87,7 @@ def group_del(request,res, *args):
         res['content'] += "%s   "% group.name
         group.delete()
 
-    return HttpResponse('删除成功')
+    return HttpResponse(u'删除成功')
 
 
 @require_role(role='super')
@@ -95,7 +95,7 @@ def group_del(request,res, *args):
 def group_edit(request, res, *args):
     error = ''
     msg = ''
-    header_title, path1, path2 = '编辑用户组', '用户管理', '编辑用户组'
+    header_title, path1, path2 = u'编辑用户组', u'用户管理', u'编辑用户组'
     res['operator'] = path2
     if request.method == 'GET':
         group_id = request.GET.get('id', '')
@@ -112,10 +112,10 @@ def group_edit(request, res, *args):
 
         try:
             if '' in [group_id, group_name]:
-                raise ServerError('组名不能为空')
+                raise ServerError(u'组名不能为空')
 
             if len(UserGroup.objects.filter(name=group_name)) > 1:
-                raise ServerError('%s 用户组已存在' % group_name)
+                raise ServerError(u'%s 用户组已存在' % group_name)
 
             user_group = get_object(UserGroup, id=group_id)
             user_group.user_set.clear()
@@ -132,7 +132,7 @@ def group_edit(request, res, *args):
             res['comment'] = e
 
         if not error:
-            res['content'] = '添加用户组%s' % group_name
+            res['content'] = u'添加用户组%s' % group_name
 
             return HttpResponseRedirect(reverse('user_group_list'))
         else:
@@ -214,8 +214,8 @@ def user_add(request, res, *args):
 
 @require_role(role='super')
 def user_list(request):
-    user_role = {'SU': '超级管理员', 'GA': '组管理员', 'CU': '普通用户'}
-    header_title, path1, path2 = '查看用户', '用户管理', '用户列表'
+    user_role = {'SU': u'超级管理员', 'GA': u'组管理员', 'CU': u'普通用户'}
+    header_title, path1, path2 = u'查看用户', u'用户管理', u'用户列表'
     keyword = request.GET.get('keyword', '')
     gid = request.GET.get('gid', '')
     users_list = User.objects.all().order_by('username')
@@ -236,7 +236,7 @@ def user_list(request):
 
 @require_role(role='user')
 def user_detail(request):
-    header_title, path1, path2 = '用户详情', '用户管理', '用户详情'
+    header_title, path1, path2 = u'用户详情', u'用户管理', u'用户详情'
     if request.session.get('role_id') == 0:
         user_id = request.user.id
     else:
@@ -258,7 +258,7 @@ def user_detail(request):
 @require_role(role='admin')
 @user_operator_record
 def user_del(request, res, *args):
-    res['operator'] = '删除用户'
+    res['operator'] = u'删除用户'
     if request.method == "GET":
         user_ids = request.GET.get('id', '')
         user_id_list = user_ids.split(',')
@@ -267,15 +267,15 @@ def user_del(request, res, *args):
         user_id_list = user_ids.split(',')
     else:
         res['flag'] = 'false'
-        res['content'] = '错误请求'
-        return HttpResponse('错误请求')
+        res['content'] = u'错误请求'
+        return HttpResponse(u'错误请求')
 
-    res['content'] = '删除用户'
+    res['content'] = u'删除用户'
     for user_id in user_id_list:
         try:
             user = get_object(User, id=user_id)
             if user and user.username != 'admin':
-                logger.debug("删除用户 %s " % user.username)
+                logger.debug(u"删除用户 %s " % user.username)
                 bash('userdel -r %s' % user.username)
                 res['content'] += "%s   "%user.username
                 user.delete()
@@ -283,13 +283,13 @@ def user_del(request, res, *args):
             res['flag'] = 'false'
             res['content'] = e
             logger.debug(e)
-    return HttpResponse('删除成功')
+    return HttpResponse(u'删除成功')
 
 
 @require_role('admin')
 @user_operator_record
 def send_mail_retry(request,res, *args):
-    res['operator'] = '发送邮件'
+    res['operator'] = u'发送邮件'
     uuid_r = request.GET.get('uuid', '1')
     user = get_object(User, uuid=uuid_r)
     msg = u"""
@@ -306,8 +306,8 @@ def send_mail_retry(request,res, *args):
         res['comment'].append(e)
         return Http404
 
-    res['comment'] = '发送邮件成功'
-    return HttpResponse('发送成功')
+    res['comment'] = u'发送邮件成功'
+    return HttpResponse(u'发送成功')
 
 
 @defend_attack
@@ -325,7 +325,7 @@ def forget_password(request):
             Hi %s, 请点击下面链接重设密码！
             %s/userManage/password/reset/?uuid=%s&timestamp=%s&hash=%s
             """ % (user.name, URL, user.uuid, timestamp, hash_encode)
-            send_mail('忘记登录密码', msg, MAIL_FROM, [email], fail_silently=False)
+            send_mail(u'忘记登录密码', msg, MAIL_FROM, [email], fail_silently=False)
             msg = u'请登陆邮箱，点击邮件重设密码'
             return http_success(request, msg)
         else:
@@ -352,7 +352,7 @@ def reset_password(request):
         password_confirm = request.POST.get('password_confirm')
         print password, password_confirm
         if password != password_confirm:
-            return HttpResponse('密码不匹配')
+            return HttpResponse(u'密码不匹配')
         else:
             user = get_object(User, uuid=uuid_r)
             if user:
@@ -360,7 +360,7 @@ def reset_password(request):
                 user.save()
                 return http_success(request, u'密码重设成功')
             else:
-                return HttpResponse('用户不存在')
+                return HttpResponse(u'用户不存在')
 
     elif request.method == 'GET':
         return render_to_response('userManage/reset_password.html', locals())
@@ -441,7 +441,7 @@ def profile(request):
 
 
 def change_info(request):
-    header_title, path1, path2 = '修改信息', '用户管理', '修改个人信息'
+    header_title, path1, path2 = u'修改信息', u'用户管理', u'修改个人信息'
     user_id = request.user.id
     user = User.objects.get(id=user_id)
     error = ''
@@ -454,14 +454,14 @@ def change_info(request):
         email = request.POST.get('email', '')
 
         if '' in [name, email]:
-            error = '不能为空'
+            error = u'不能为空'
 
         if not error:
             User.objects.filter(id=user_id).update(name=name, email=email)
             if len(password) > 0:
                 user.set_password(password)
                 user.save()
-            msg = '修改成功'
+            msg = u'修改成功'
 
     return my_render('userManage/change_info.html', locals(), request)
 
@@ -471,12 +471,12 @@ def regen_ssh_key(request):
     uuid_r = request.GET.get('uuid', '')
     user = get_object(User, uuid=uuid_r)
     if not user:
-        return HttpResponse('没有该用户')
+        return HttpResponse(u'没有该用户')
 
     username = user.username
     ssh_key_pass = PyCrypt.gen_rand_pass(16)
     gen_ssh_key(username, ssh_key_pass)
-    return HttpResponse('ssh密钥已生成，密码为 %s, 请到下载页面下载' % ssh_key_pass)
+    return HttpResponse(u'ssh密钥已生成，密码为 %s, 请到下载页面下载' % ssh_key_pass)
 
 
 @require_role(role='user')

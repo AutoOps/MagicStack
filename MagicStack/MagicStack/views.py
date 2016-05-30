@@ -330,7 +330,10 @@ def exec_cmd(request):
 def web_terminal(request):
     user = request.user
     asset_id = request.GET.get('id')
-    role_name = request.GET.get('role')
+    role_id = request.GET.get('role_id')
+    logger.debug('web_terminal:%s'%role_id)
+    role = PermRole.objects.get(id=int(role_id))
+    role_name = role.name
     asset = get_object(Asset, id_unique=asset_id)
     if asset:
         hostname = asset.name

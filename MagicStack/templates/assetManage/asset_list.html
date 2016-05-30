@@ -264,8 +264,8 @@
                     }
                     else {
                         aUrl = '';
-                        $.each(dataArray, function(index, value){
-                            aUrl += '<a onclick="windowOpen(this); return false" class="btn btn-xs btn-primary newa" href=' + new_url +  ' value=' + hostname +  '>' + value  + '</a> '
+                        $.each(roleArray,function(index, value){
+                            aUrl += '<a onclick="windowOpen(this); return false" class="btn btn-xs btn-primary newa" href=' + new_url + param.id_unique + "&role_id="+ value + "&user_id="+ param.user_id+"&proxy_url="+ param.proxy_url+'  value=' + hostname +  '>' + dataArray[index]+'</a> '
                         });
                         console.log(aUrl);
                         layer.alert(aUrl, {

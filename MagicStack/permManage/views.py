@@ -325,7 +325,6 @@ def perm_role_add(request, res, *args):
                     'sudo_ids': sudo_ids}
             data = json.dumps(data)
             message = save_or_delete('PermRole', data, proxy_list)
-            logger.debug('message:%s'%message)
             flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
             if flag:
                 msg = u"添加系统用户: %s" % name
@@ -573,14 +572,14 @@ def perm_role_push(request, res, *args):
             task = MyTask(push_resource, host_list)
             ret = {}
 
-            # 因为要先建立用户，而push key是在 password也完成的情况下的 可选项
+            # 因为要先建立用户，而push key是在 password也完成的情况下的可选项
             # 1. 以秘钥 方式推送角色
             role_proxy = get_one_or_all('PermRole', proxy, role_id)
             if key_push:
                 ret["pass_push"] = task.add_user(role.name, proxy)
                 ret["key_push"] = task.push_key(role.name, os.path.join(role_proxy['key_path'], 'id_rsa.pub'), proxy)
 
-            # 2. 推送账号密码 <为了安全 系统用户统一使用秘钥进行通信， 不再提供密码方式的推送>
+            # 2. 推送账号密码 <为了安全 系统用户统一使用秘钥进行通信，不再提供密码方式的推送>
             # elif password_push:
             #     ret["pass_push"] = task.add_user(role.name, CRYPTOR.decrypt(role.password))
 
@@ -666,7 +665,6 @@ def push_role_event(request):
                                     success_asset[hostname] += str(info)
                             else:
                                 success_asset[hostname] = str(info)
-
                 # 推送成功 回写push表
                 for asset in calc_assets:
                     push_check = PermPush.objects.filter(role=role, asset=asset)
@@ -678,7 +676,7 @@ def push_role_event(request):
 
                     if failed_asset.get(asset.networking.all()[0].ip_address):
                         func(is_password=password_push, is_public_key=key_push, role=role, asset=asset, success=False,
-                             result=failed_asset.get(asset.hostname))
+                             result=failed_asset.get(asset.networking.all()[0].ip_address))
                     else:
                         func(is_password=password_push, is_public_key=key_push, role=role, asset=asset, success=True)
 
@@ -686,7 +684,14 @@ def push_role_event(request):
                     msg = u'系统用户 %s 推送成功[ %s ]' % (role.name, ','.join(success_asset.keys()))
                     response['message'] = msg
                 else:
-                    error = u'系统用户 %s 推送失败 [ %s ], 推送成功 [ %s ] 进入系统用户详情，查看失败原因' % (role.name,
+                    intersection = set(success_asset)&set(failed_asset)
+                    if intersection:
+                        success_asset = list(set(success_asset) - intersection)
+                        error = u'系统用户 %s 推送失败 [ %s ], 推送成功 [ %s ] 进入系统用户详情，查看失败原因' % (role.name,
+                                                                        ','.join(failed_asset.keys()),
+                                                                        ','.join(success_asset.keys()))
+                    else:
+                         error = u'系统用户 %s 推送失败 [ %s ], 推送成功 [ %s ] 进入系统用户详情，查看失败原因' % (role.name,
                                                                         ','.join(failed_asset.keys()),
                                                                         ','.join(success_asset.keys()))
                     response['message'] = error
@@ -887,7 +892,7 @@ def perm_role_recycle(request):
 
 @require_role('user')
 def perm_role_get(request):
-    response = {'role_id': '', 'proxy_url': '', 'user_id': request.user.id, 'role_name': '', 'id_unique': ''}
+    response = {'role_id': '', 'proxy_url': '', 'user_id': request.user.id, 'role_name': '', 'id_unique': '', 'role_id_name':[]}
     asset_id = request.GET.get('id', 0)
     if asset_id:
         asset = get_object(Asset, id=asset_id)

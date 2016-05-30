@@ -335,7 +335,7 @@ def save_or_delete(obj_name, data, proxy_list, obj_id='all', action='save'):
     res = []
     for proxy in proxy_list:
         try:
-            api = APIRequest('{0}/v1.0/permission/{1}/{2}'.format(proxy.url, obj_name, obj_id), proxy.username, CRYPTOR(proxy.password))
+            api = APIRequest('{0}/v1.0/permission/{1}/{2}'.format(proxy.url, obj_name, obj_id), proxy.username, CRYPTOR.decrypt(proxy.password))
             if action == 'save':
                 result, codes = api.req_post(data)
             elif action == 'update':

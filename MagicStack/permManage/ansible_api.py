@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-
 from tempfile import NamedTemporaryFile
 import os.path
 import json
@@ -16,8 +14,7 @@ from passlib.hash import sha512_crypt
 from django.template.loader import get_template
 from django.template import Context
 from common.interface import APIRequest
-
-from MagicStack.api import logger
+from MagicStack.api import logger, CRYPTOR
 
 
 API_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -284,7 +281,7 @@ class MyTask(object):
         self.resource = resource
         self.host_list = host_list
 
-    def push_key(self, user, key_path):
+    def push_key(self, user, key_path, proxy):
         """
         push the ssh authorized key to target.
         """
@@ -296,7 +293,7 @@ class MyTask(object):
                 'role_name': user
                 }
         data = json.dumps(data)
-        api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
+        api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
         result, code = api.req_post(data)
         return result
 
@@ -320,7 +317,7 @@ class MyTask(object):
         else:
             return {"status": "success", "msg": ret_success}
 
-    def del_key(self, user, key_path):
+    def del_key(self, user, key_path, proxy):
         """
         push the ssh authorized key to target.
         """
@@ -333,11 +330,11 @@ class MyTask(object):
                 'role_name': user
                 }
         data = json.dumps(data)
-        api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
+        api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR(proxy.password))
         result, code = api.req_post(data)
         return result
 
-    def add_user(self, username, password=''):
+    def add_user(self, username,proxy, password=''):
         """
         add a host user.
         """
@@ -355,7 +352,7 @@ class MyTask(object):
                 'role_name': username
                 }
         data = json.dumps(data)
-        api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
+        api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
         result, code = api.req_post(data)
         return result
 
@@ -380,7 +377,7 @@ class MyTask(object):
         else:
             return {"status": "success", "msg": ret_success}
 
-    def del_user(self, username):
+    def del_user(self, username, proxy):
         """
         delete a host user.
         """
@@ -394,11 +391,11 @@ class MyTask(object):
                 'action': 'delete'
                 }
         data = json.dumps(data)
-        api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
+        api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
         result, code = api.req_post(data)
         return result
 
-    def del_user_sudo(self, username):
+    def del_user_sudo(self, username, proxy):
         """
         delete a role sudo item
         :param username:
@@ -413,7 +410,7 @@ class MyTask(object):
                 'action': 'delete'
                 }
         data = json.dumps(data)
-        api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
+        api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
         result, code = api.req_post(data)
         return result
 
@@ -436,7 +433,7 @@ class MyTask(object):
         sudo_file.close()
         return sudo_file.name
 
-    def push_sudo_file(self, role_list, sudo_list):
+    def push_sudo_file(self, role_list, sudo_list, proxy):
         """
         use template to render pushed sudoers file
         :return:
@@ -449,7 +446,7 @@ class MyTask(object):
                 'mod_args': module_args
                 }
         data = json.dumps(data)
-        api = APIRequest('http://172.16.30.69:8100/v1.0/module', 'test', '123456')
+        api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
         result, code = api.req_post(data)
         return result
 

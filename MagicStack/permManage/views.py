@@ -1,22 +1,21 @@
 # -*- coding:utf-8 -*-
 from __future__ import unicode_literals
-
 from django.db.models import Q
 from django.http import HttpResponseBadRequest, HttpResponseNotAllowed
 from paramiko import SSHException
 from permManage.perm_api import *
-
+from assetManage.asset_api import gen_asset_proxy
 from userManage.models import User, UserGroup
 from userManage.user_api import user_operator_record
 from assetManage.models import Asset, AssetGroup
 from permManage.models import PermRole, PermRule, PermSudo, PermPush
-from MagicStack.models import Setting
 import Queue
 from permManage.utils import gen_keys, trans_all
 from permManage.ansible_api import MyTask
 from permManage.perm_api import get_role_info, get_role_push_host,query_event
 from MagicStack.api import my_render, get_object, CRYPTOR
 from common.models import Task
+from proxyManage.models import Proxy
 
 
 # 设置PERM APP Log
@@ -317,8 +316,7 @@ def perm_role_add(request, res, *args):
                     raise ServerError(e)
             else:
                 key_path = gen_keys()
-            logger.debug('generate role key: %s' % key_path)
-
+            proxy_list = Proxy.objects.all()
             #将数据同时保存到proxy上
             data = {'name': name,
                     'password': encrypt_pass,
@@ -326,9 +324,10 @@ def perm_role_add(request, res, *args):
                     'key_content': key_content,
                     'sudo_ids': sudo_ids}
             data = json.dumps(data)
-            message = save_or_delete('PermRole', data)
+            message = save_or_delete('PermRole', data, proxy_list)
             logger.debug('message:%s'%message)
-            if message == 'success':
+            flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
+            if flag:
                 msg = u"添加系统用户: %s" % name
                 res['content'] = msg
                 # 将数据保存到magicstack上
@@ -362,7 +361,6 @@ def perm_role_delete(request, res, *args):
             if filter_type:
                 if filter_type == "recycle_assets":
                     recycle_assets = [push.asset for push in role.perm_push.all() if push.success]
-                    print recycle_assets
                     recycle_assets_ip = ','.join([asset.name for asset in recycle_assets])
                     return HttpResponse(recycle_assets_ip)
                 else:
@@ -382,18 +380,21 @@ def perm_role_delete(request, res, *args):
             recycle_assets = [push.asset for push in role.perm_push.all() if push.success]
             logger.debug(u"delete role %s - delete_assets: %s" % (role.name, recycle_assets))
             if recycle_assets:
-                recycle_resource = gen_resource(recycle_assets)
-                host_list = [asset.networking.all()[0].ip_address for asset in recycle_assets]
-                task = MyTask(recycle_resource, host_list)
-                try:
-                    msg_del_user = task.del_user(get_object(PermRole, id=role_id).name)
-                    msg_del_sudo = task.del_user_sudo(get_object(PermRole, id=role_id).name)
-                except Exception, e:
-                    logger.warning(u"Recycle Role failed: %s" % e)
-                    raise ServerError(u"回收已推送的系统用户失败: %s" % e)
-                logger.info(u"delete role %s - execute delete user: %s" % (role.name, msg_del_user))
-                logger.info(u"delete role %s - execute delete sudo: %s" % (role.name, msg_del_sudo))
-                # TODO: 判断返回结果，处理异常
+                asset_proxys = gen_asset_proxy(recycle_assets)
+                for key, value in asset_proxys.items():
+                    proxy = Proxy.objects.filter(proxy_name=key)
+                    recycle_resource = gen_resource(value)
+                    host_list = [asset.networking.all()[0].ip_address for asset in value]
+                    task = MyTask(recycle_resource, host_list)
+                    try:
+                        msg_del_user = task.del_user(get_object(PermRole, id=role_id).name, proxy)
+                        msg_del_sudo = task.del_user_sudo(get_object(PermRole, id=role_id).name, proxy)
+                    except Exception, e:
+                        logger.warning(u"Recycle Role failed: %s" % e)
+                        raise ServerError(u"回收已推送的系统用户失败: %s" % e)
+                    logger.info(u"delete role %s - execute delete user: %s" % (role.name, msg_del_user))
+                    logger.info(u"delete role %s - execute delete sudo: %s" % (role.name, msg_del_sudo))
+                    # TODO: 判断返回结果，处理异常
             # 删除存储的秘钥，以及目录
             try:
                 key_files = os.listdir(role_key)
@@ -404,7 +405,10 @@ def perm_role_delete(request, res, *args):
                 logger.warning(u"Delete Role: delete key error, %s" % e)
                 raise ServerError(u"删除系统用户key失败: %s" % e)
             logger.info(u"delete role %s - delete role key directory: %s" % (role.name, role_key))
-            message = save_or_delete('PermRole',{}, obj_id=role_id, action='delete')
+
+            # 删除proxy上的role, proxy上的role删除成功后再删除magicstack上的role
+            proxy_list = Proxy.objects.all()
+            message = save_or_delete('PermRole', {}, proxy_list, obj_id=role_id, action='delete')
             if message == 'success':
                 res['content'] = "删除系统用户: %s成功" % role.name
                 role.delete()
@@ -507,8 +511,10 @@ def perm_role_edit(request, res, *args):
                     'sudo_ids': role_sudo_names,
                     'key_content': key_content}
             data = json.dumps(data)
-            message = save_or_delete('PermRole', data, role_id, 'update')
-            if message == 'success':
+            proxy_list = Proxy.objects.all()
+            message = save_or_delete('PermRole', data, proxy_list, role_id, 'update')
+            flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
+            if flag:
                 msg = u"更新系统用户： %s成功" % role.name
                 res['content'] = msg
                 # 只有proxy上的数据库保存完成后,才会写入本地数据库
@@ -520,15 +526,13 @@ def perm_role_edit(request, res, *args):
                 msg = u"更新系统用户： %s失败" % role.name
                 res['content'] = msg
                 res['flag'] = 'false'
-
-            return HttpResponseRedirect(reverse('role_list'))
+                return my_render('permManage/perm_role_edit.html', locals(), request)
         except ServerError, e:
             error = e
             res['flag'] = 'false'
             res['content'] = e
-
-    return my_render('permManage/perm_role_edit.html', locals(), request)
-
+            return my_render('permManage/perm_role_edit.html', locals(), request)
+    return HttpResponseRedirect(reverse('role_list'))
 
 @require_role('admin')
 @user_operator_record
@@ -540,12 +544,7 @@ def perm_role_push(request, res, *args):
     header_title, path1, path2 = "系统用户", "系统用户管理", "系统用户推送"
     role_id = request.GET.get('id')
     asset_ids = request.GET.get('asset_id')
-    role = get_object(PermRole, id=role_id)
-    role_proxy = get_one_or_all('PermRole', role_id)
-    logger.debug('role_proxy:%s'%role_proxy)
-    if not role_proxy:
-        error = u'连接proxy失败,请检查proxy服务是否正常!'
-        return my_render('permManage/perm_role_push.html', locals(), request)
+    role = get_object(PermRole, id=int(role_id))
     assets = Asset.objects.all()
     asset_groups = AssetGroup.objects.all()
     if asset_ids:
@@ -562,58 +561,61 @@ def perm_role_push(request, res, *args):
         for asset_group in asset_groups_obj:
             group_assets_obj.extend(asset_group.asset_set.all())
         calc_assets = list(set(assets_obj) | set(group_assets_obj))
+        asset_proxys = gen_asset_proxy(calc_assets)
+        for key, value in asset_proxys.items():
+            proxy = Proxy.objects.get(proxy_name=key)
+            push_resource = gen_resource(value)
+            # 调用Ansible API 进行推送
+            password_push = True if request.POST.get("use_password") else False
+            key_push = True if request.POST.get("use_publicKey") else False
+            host_list = [asset.networking.all()[0].ip_address for asset in value]
+            host_names = [asset.name for asset in value]
+            task = MyTask(push_resource, host_list)
+            ret = {}
 
-        push_resource = gen_resource(calc_assets)
+            # 因为要先建立用户，而push key是在 password也完成的情况下的 可选项
+            # 1. 以秘钥 方式推送角色
+            role_proxy = get_one_or_all('PermRole', proxy, role_id)
+            if key_push:
+                ret["pass_push"] = task.add_user(role.name, proxy)
+                ret["key_push"] = task.push_key(role.name, os.path.join(role_proxy['key_path'], 'id_rsa.pub'), proxy)
 
-        # 调用Ansible API 进行推送
-        password_push = True if request.POST.get("use_password") else False
-        key_push = True if request.POST.get("use_publicKey") else False
-        host_list = [asset.networking.all()[0].ip_address for asset in calc_assets]
-        host_names = [asset.name for asset in calc_assets]
-        task = MyTask(push_resource, host_list)
-        ret = {}
+            # 2. 推送账号密码 <为了安全 系统用户统一使用秘钥进行通信， 不再提供密码方式的推送>
+            # elif password_push:
+            #     ret["pass_push"] = task.add_user(role.name, CRYPTOR.decrypt(role.password))
 
-        # 因为要先建立用户，而push key是在 password也完成的情况下的 可选项
-        # 1. 以秘钥 方式推送角色
-        if key_push:
-            ret["pass_push"] = task.add_user(role.name)
-            ret["key_push"] = task.push_key(role.name, os.path.join(role_proxy['key_path'], 'id_rsa.pub'))
+            # 3. 推送sudo配置文件
+            if key_push:
+                sudo_list = set([sudo for sudo in role.sudo.all()])  # set(sudo1, sudo2, sudo3)
+                if sudo_list:
+                    ret['sudo'] = task.push_sudo_file([role], sudo_list)
+            logger.info('推送用户结果ret:%s'%ret)
+            event_task_names = []
+            msg = 'running'
+            # 将事件放进queue
+            if ret.has_key('pass_push'):
+                tk_pass_push = ret['pass_push']['task_name']
+                event_task_names.append(tk_pass_push)
+            if ret.has_key('key_push'):
+                tk_key_push = ret['key_push']['task_name']
+                event_task_names.append(tk_key_push)
+            if ret.has_key('sudo'):
+                if 'task_name' in ret['sudo']:
+                    tk_sudo_push = ret['sudo']['task_name']
+                    event_task_names.append(tk_sudo_push)
+            event = dict(push_assets=host_names, role_name=role.name, password_push=password_push,
+                         key_push=key_push, task_proxy=proxy.proxy_name)
+            event['tasks'] = event_task_names
+            task_queue.put(event)
 
-        # 2. 推送账号密码 <为了安全 系统用户统一使用秘钥进行通信， 不再提供密码方式的推送>
-        # elif password_push:
-        #     ret["pass_push"] = task.add_user(role.name, CRYPTOR.decrypt(role.password))
-
-        # 3. 推送sudo配置文件
-        if key_push:
-            sudo_list = set([sudo for sudo in role.sudo.all()])  # set(sudo1, sudo2, sudo3)
-            if sudo_list:
-                ret['sudo'] = task.push_sudo_file([role], sudo_list)
-        logger.debug('ret:%s'%ret)
-        event_task_names = []
-        msg = 'running'
-        # 将事件放进queue
-        if ret.has_key('pass_push'):
-            tk_pass_push = ret['pass_push']['task_name']
-            event_task_names.append(tk_pass_push)
-        if ret.has_key('key_push'):
-            tk_key_push = ret['key_push']['task_name']
-            event_task_names.append(tk_key_push)
-        if ret.has_key('sudo'):
-            if 'task_name' in ret['sudo']:
-                tk_sudo_push = ret['sudo']['task_name']
-                event_task_names.append(tk_sudo_push)
-        event = dict(push_assets=host_names, role_name=role.name,password_push=password_push, key_push=key_push)
-        event['tasks'] = event_task_names
-        task_queue.put(event)
-
-        #记录task事件
-        for item in event['tasks']:
-            tk = Task()
-            tk.task_name = item
-            tk.status = 'running'
-            tk.start_time = datetime.datetime.now()
-            tk.username = request.user.username
-            tk.save()
+            #记录task事件
+            for item in event['tasks']:
+                tk = Task()
+                tk.task_name = item
+                tk.status = 'running'
+                tk.start_time = datetime.datetime.now()
+                tk.username = request.user.username
+                tk.save()
     return my_render('permManage/perm_role_push.html', locals(), request)
 
 
@@ -621,22 +623,20 @@ def perm_role_push(request, res, *args):
 def push_role_event(request):
     response = {'error': '', 'message':''}
     if request.method == 'GET':
-        user_name = request.user.username
         try:
             if task_queue.qsize() > 0:
                 tk_event = task_queue.get()
-                # while tk_event['task_user'] != user_name:
-                #     tk_event = task_queue.get()
                 host_names = tk_event.pop('push_assets')
                 calc_assets = [Asset.objects.get(name=name) for name in host_names]
                 role = PermRole.objects.get(name=tk_event['role_name'])
                 password_push = tk_event['password_push']
                 key_push = tk_event['key_push']
+                proxy = Proxy.objects.get(proxy_name=tk_event['task_proxy'])
                 success_asset = {}
                 failed_asset = {}
                 for task_name in tk_event['tasks']:
-                    result = query_event(task_name)
-                    #更新task的status, result
+                    result = query_event(task_name, proxy)
+                    # 更新task的status, result
                     tk = get_object(Task, task_name=task_name)
                     tk.status = 'complete'
                     tk.content = result['messege']
@@ -676,7 +676,7 @@ def push_role_event(request):
                         def func(**kwargs):
                             PermPush(**kwargs).save()
 
-                    if failed_asset.get(asset.name):
+                    if failed_asset.get(asset.networking.all()[0].ip_address):
                         func(is_password=password_push, is_public_key=key_push, role=role, asset=asset, success=False,
                              result=failed_asset.get(asset.hostname))
                     else:
@@ -895,7 +895,7 @@ def perm_role_get(request):
             role = user_have_perm(request.user, asset=asset)
             logger.debug(u'获取授权系统用户: ' + ','.join([i.name for i in role]))
             response['role_name'] = ','.join([i.name for i in role])
-            response['role_id'] = ','.join(str(i.id) for i in role)
+            response['role_id'] = ','.join([str(i.id) for i in role])
             response['proxy_url'] = asset.proxy.url
             response['id_unique'] = asset.id_unique
             return HttpResponse(json.dumps(response))

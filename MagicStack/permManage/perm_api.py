@@ -236,7 +236,6 @@ def gen_resource(ob, perm=None):
         for asset in ob:
             info = get_asset_info(asset)
             res.append(info)
-    logger.debug('生成res: %s' % res)
     return res
 
 
@@ -329,33 +328,34 @@ def get_permpush_info(role_id):
     return info
 
 
-def save_or_delete(obj_name, data, obj_id='all', action='save'):
+def save_or_delete(obj_name, data, proxy_list, obj_id='all', action='save'):
     """
     保存，更新, 删除数据
     """
-    res = ''
-    try:
-        api = APIRequest('http://172.16.30.69:8100/v1.0/permission/{0}/{1}'.format(obj_name, obj_id), 'test', '123456')
-        if action == 'save':
-            result, codes = api.req_post(data)
-        elif action == 'update':
-            result, codes = api.req_put(data)
-        elif action == 'delete':
-            result, codes = api.req_del(data)
-        logger.debug('save_object:%s'%result)
-        res = result['messege']
-    except Exception as e:
-        logger.error(e)
+    res = []
+    for proxy in proxy_list:
+        try:
+            api = APIRequest('{0}/v1.0/permission/{1}/{2}'.format(proxy.url, obj_name, obj_id), proxy.username, CRYPTOR(proxy.password))
+            if action == 'save':
+                result, codes = api.req_post(data)
+            elif action == 'update':
+                result, codes = api.req_put(data)
+            elif action == 'delete':
+                result, codes = api.req_del(data)
+            logger.debug('save_object:%s'%result)
+            res.append(result['messege'])
+        except Exception as e:
+            logger.error(e)
     return res
 
 
-def get_one_or_all(obj_name, obj_id='all'):
+def get_one_or_all(obj_name, proxy, obj_id='all'):
     """
     获取所有的对象或者一个id对应的对象
     """
     obj_list = []
     try:
-        api = APIRequest('http://172.16.30.69:8100/v1.0/permission/{0}/{1}'.format(obj_name, obj_id), 'test', '123456')
+        api = APIRequest('{0}/v1.0/permission/{1}/{2}'.format(proxy.url, obj_name, obj_id), proxy.username, CRYPTOR.decrypt(proxy.password))
         result, codes = api.req_get()
         obj_list = result['messege']
     except Exception as e:
@@ -363,12 +363,12 @@ def get_one_or_all(obj_name, obj_id='all'):
     return obj_list
 
 
-def query_event(task_name):
+def query_event(task_name, proxy):
     data = {'task_name': task_name}
     data = json.dumps(data)
-    api = APIRequest('http://172.16.30.69:8100/v1.0/permission/event', 'test', '123456')
+    api = APIRequest('{0}/v1.0/permission/event'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
     result, codes = api.req_post(data)
-    logger.debug('result:%s'%result)
+    logger.info('推送用户事件查询结果result:%s'%result)
     return result
 
 if __name__ == "__main__":

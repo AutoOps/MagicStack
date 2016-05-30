@@ -252,10 +252,11 @@
                 success: function(data){
                     var param = eval("("+data+")");
                     var dataArray = param.role_name.split(',');
+                    var roleArray = param.role_id.split(',');
                     if (data == 'error' || data == '' || data == null || data == undefined){
                         layer.alert('没有授权系统用户')
                     }
-                    else if (dataArray.length == 1 && data != 'error' && navigator.platform == 'Win32'){
+                    else if (dataArray.length == 1 && data != 'error' && navigator.platform == 'Win32'&& roleArray.length == 1){
                         window.open(new_url+ param.id_unique + '&role_id='+ param.role_id + '&user_id='+ param.user_id+'&proxy_url='+ param.proxy_url, '', 'width=628px, height=380px');
                     }  else if (dataArray.length == 1 && data != 'error'){
                         window.open(new_url+ param.id_unique + '&role_id='+ param.role_id + '&user_id='+ param.user_id+'&proxy_url='+ param.proxy_url, '_blank', 'toolbar=yes, location=yes, copyhistory=yes, scrollbars=yes, width=628, height=410');
@@ -372,7 +373,7 @@
                     type: "post",
                     url: "{% url 'asset_update_batch' %}?arg=all",
                     success: function (res) {
-                        alert(res);
+                        alert(res.success);
                         parent.location.reload();
                     }
                 });

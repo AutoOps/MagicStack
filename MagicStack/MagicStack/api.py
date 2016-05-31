@@ -474,7 +474,7 @@ def defend_attack(func):
             logger.debug('请求次数: %s' % request.session.get('visit', 1))
             return HttpResponse('Forbidden', status=403)
         request.session['visit'] = request.session.get('visit', 1) + 1
-        request.session.set_expiry(300)
+        request.session.set_expiry(1800)
         return func(request, *args, **kwargs)
     return _deco
 

@@ -31,5 +31,6 @@ urlpatterns = patterns('MagicStack.views',
     url(r'^log/', include('logManage.urls')),
     url(r'^permission/', include('permManage.urls')),
     url(r'^proxy/', include('proxyManage.urls')),
+    url(r'^emergency/', include('emergency.urls')),
 )
 

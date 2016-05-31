@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% include 'nav_cat_bar.html' %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>填写告警媒介信息</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+                        <form id="groupForm" method="post" class="form-horizontal" action="">
+                            {% if error %}
+                                <div class="alert alert-warning text-center">{{ error }}</div>
+                            {% endif %}
+                            {% if msg %}
+                                <div class="alert alert-success text-center">{{ msg }}</div>
+                            {% endif %}
+                            <div class="form-group">
+                                <label for="media_name" class="col-sm-2 control-label">名称<span class="red-fonts">*</span></label>
+                                <div class="col-sm-8">
+                                    <input id="media_name" name="media_name"  type="text" class="form-control" value="{{ media_name }}">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label for="profile" class="col-sm-2 control-label">类型</label>
+                                <div class="col-sm-8">
+                                    <select name="media_type" id="media_type" data-placeholder="电子邮件" class="chosen-select form-control m-b"  tabindex="2">
+                                        {% for item in media_types %}
+                                            <option value="{{ item }}">{{ item }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label for="smtp_host" class="col-sm-2 control-label">SMTP服务器<span class="red-fonts">*</span></label>
+                                <div class="col-sm-8">
+                                    <input id="smtp_host" name="smtp_host"  type="text" class="form-control" value="{{ smtp_host }}">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label for="smtp_host_port" class="col-sm-2 control-label">SMTP服务器端口<span class="red-fonts">*</span></label>
+                                <div class="col-sm-8">
+                                    <input id="smtp_host_port" name="smtp_host_port"  type="text" class="form-control" value="{{ smtp_host_port }}">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label for="email_user" class="col-sm-2 control-label">SMTP电邮<span class="red-fonts">*</span></label>
+                                <div class="col-sm-8">
+                                    <input id="email_user" name="email_user"  type="text" class="form-control" value="{{ email_user }}">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label for="email_user_password" class="col-sm-2 control-label">用户密码<span class="red-fonts">*</span></label>
+                                <div class="col-sm-8">
+                                    <input id="email_user_password" name="email_user_password"  type="password" class="form-control" value="{{ email_user_password }}">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group"><label class="col-sm-2 control-label">Connection security</label>
+                                <div class="col-sm-2">
+                                    <div class="checkbox i-checks">
+                                        <label><input type="checkbox" value="0" name="connection" >SSL</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="checkbox i-checks">
+                                        <label><input type="checkbox" value="1" name="connection" checked>TSL</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label for="user_password" class="col-sm-2 control-label">已启用<span class="red-fonts"></span></label>
+                                <div class="col-sm-8">
+                                    <input type="checkbox" value="1" name="extra" checked>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label for="comment" class="col-sm-2 control-label">备注</label>
+                                <div class="col-sm-8">
+                                    <input id="comment" name="comment"  type="text" class="form-control" value="{{ comment }}">
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-white" type="reset">取消</button>
+                                    <button id="submit_button" class="btn btn-primary" type="submit">确认保存</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block self_footer_js %}
+<script>
+$('#groupForm').validator({
+    timely: 2,
+    theme: "yellow_right_effect",
+    fields: {
+        "proxy_name": {
+            rule: "required",
+            tip: "用户输入Proxy名",
+            ok: "",
+            msg: {required: "必须填写!"}
+        },
+        "user_name": {
+            rule: "required",
+            tip: "输入用户名",
+            ok: "",
+            msg: {required: "必须填写!"}
+        },
+        "user_password": {
+            rule: "required",
+            tip: "输入用户密码",
+            ok: "",
+            msg: {required: "必须填写!"}
+        },
+        "proxy_url": {
+            rule: "required",
+            tip: "输入url",
+            ok: "",
+            msg: {required: "必须填写!"}
+        }
+    },
+    valid: function(form) {
+        form.submit();
+    }
+});
+
+</script>
+{% endblock %}

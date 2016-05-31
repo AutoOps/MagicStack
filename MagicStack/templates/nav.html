@@ -66,7 +66,7 @@
             <li id="emails">
                 <a><i class="fa fa-inbox"></i> <span class="nav-label">告警管理</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li class="media_type"> <a href="#">告警媒介类型<span class="label label-info pull-right">{{ host_active_num }}/{{ host_total_num}}</span></a></li>
+                    <li class="media_type"> <a href="{% url 'media_list' %}">告警媒介类型<span class="label label-info pull-right">{{ host_active_num }}/{{ host_total_num}}</span></a></li>
                     <li class="email_set"> <a href="#">告警设置</a></li>
                 </ul>
             </li>

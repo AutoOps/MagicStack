@@ -11,14 +11,16 @@ class Log(models.Model):
     login_type = models.CharField(max_length=100)
     log_path = models.CharField(max_length=100)
     start_time = models.DateTimeField(null=True)
-    pid = models.IntegerField()
+    pid = models.IntegerField(null=True)
     is_finished = models.BooleanField(default=False)
     end_time = models.DateTimeField(null=True)
-    filename = models.CharField(max_length=40)
+    filename = models.CharField(max_length=40, null=True)
+    proxy_log_id = models.IntegerField()
+    proxy_name = models.CharField(max_length=100)
+    asset_id_unique = models.CharField(max_length=200)
 
     def __unicode__(self):
         return self.log_path
-
 
 
 class TtyLog(models.Model):

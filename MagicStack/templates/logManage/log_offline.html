@@ -59,8 +59,8 @@
                         <ul class="nav nav-tabs">
                             <li><a href="{% url 'log_list' 'online' %}" class="text-center"><i class="fa fa-laptop"></i> 在线 </a></li>
                             <li class="active"><a href="{% url 'log_list' 'offline' %}" class="text-center"><i class="fa fa-bar-chart-o"></i> 登录历史</a></li>
-                            <li><a href="{% url 'log_list' 'exec' %}" class="text-center"><i class="fa fa-bar-chart-o"></i> 命令记录 </a></li>
-                            <li><a href="{% url 'log_list' 'file' %}" class="text-center"><i class="fa fa-bar-chart-o"></i> 上传下载 </a></li>
+{#                            <li><a href="{% url 'log_list' 'exec' %}" class="text-center"><i class="fa fa-bar-chart-o"></i> 命令记录 </a></li>#}
+{#                            <li><a href="{% url 'log_list' 'file' %}" class="text-center"><i class="fa fa-bar-chart-o"></i> 上传下载 </a></li>#}
                             <li><a href="{% url 'log_list' 'user_record' %}" class="text-center"><i class="fa fa-bar-chart-o"></i> 操作记录 </a></li>
                         </ul>
                     </div>
@@ -157,7 +157,7 @@
         var div_username = ' 用户名: '+'<span class="text-info">'+username+'' + '</span>';
         var div_ip = ' 主机: '+'<span class="text-info">' + ip + '</span>';
         var div_time = ' 时间: ' + '<span class="text-info">'+start_time +'</span>' +' - <span class="text-info">' + end_time + '</span>';
-        var title = 'JumpServer录像回放 '+ div_username + div_ip + div_time;
+        var title = 'MagicStack录像回放 '+ div_username + div_ip + div_time;
         layer.open({
             type: 2,
             title: title,
@@ -178,7 +178,7 @@
         var div_username = ' 用户名: '+'<span class="text-info">'+username+'' + '</span>';
         var div_ip = ' 主机: '+'<span class="text-info">' + ip + '</span>';
         var div_time = ' 开始时间: ' + '<span class="text-info">'+start_time +'</span>' + ' 结束时间: ' +'<span class="text-info">' + end_time + '</span>';
-        var title = 'JumpServer命令统计 '+ div_username + div_ip + div_time;
+        var title = 'MagicStack命令统计 '+ div_username + div_ip + div_time;
         $.ajax({url:url,
                 success:function(data){
                     var tag = $('<div style="height: 500px;overflow: auto;background-color: rgba(0, 0, 0, 0);"></div>').html(data.replace(/\n/g,"<br />"));
@@ -190,7 +190,7 @@
     function log_search(){
         $.ajax({
             type: "GET",
-            url: "/jlog/search/?env=offline",
+            url: "/log/search/?env=offline",
             data: $("#search_form").serialize(),
             success: function (data) {
                 $(".tab-content").html(data);
@@ -198,11 +198,6 @@
         });
     }
 
-{#    $("#search_input").keydown(function(e){#}
-{#        if(e.keyCode==13){#}
-{#            log_search()#}
-{#            }#}
-{#    });#}
 
     $('#date_5 .input-daterange').datepicker({
             dateFormat: 'mm/dd/yy',

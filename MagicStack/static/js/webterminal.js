@@ -5,6 +5,9 @@
 
 var rowHeight = 1;
 var colWidth = 1;
+var unique_id = '';
+var log_id = '';
+var term_client = ''
 function WSSHClient() {
 }
 WSSHClient.prototype._generateEndpoint = function (options) {
@@ -20,6 +23,8 @@ WSSHClient.prototype._generateEndpoint = function (options) {
     var proxy_url = url_params.split('=')[1]+'/';
     var server_ip = proxy_url.match(RegExp('//(.*?)/'))[1];
     var endpoint = protocol + server_ip + '/v1.0/ws/terminal' + document.URL.match(/(\?.*)/)[0];
+    var unique_id_param = document.URL.match(/(\?.*)/)[0].split('&')[0];
+    unique_id = unique_id_param.split('=')[1];
     return endpoint;
 };
 WSSHClient.prototype.connect = function (options) {
@@ -51,6 +56,7 @@ WSSHClient.prototype.connect = function (options) {
 
     this._connection.onclose = function (evt) {
         options.onClose();
+
     };
 };
 
@@ -83,8 +89,26 @@ function openTerminal(options) {
         },
         onClose: function () {
             term.write('Connection Reset By Peer');
+            var param = {'asset_id': unique_id, 'log_id': log_id};
+            $.post('/log/record/save/', param, function(resp){
+                    if(resp.success == 'false'){
+                          alert(resp.error)
+                      }
+            }, 'json');
         },
         onData: function (data) {
+            if(data.indexOf('Last login') >0 ){
+                var pindex = data.indexOf(']');
+                var log_content = data.slice(1, pindex);
+                log_id = log_content.split('=')[1];
+                data = data.slice(pindex+1);
+                var url = '/log/record/save/?asset_id=' + unique_id + '&log_id=' + log_id;
+                $.get( url , function (resp) {
+                      if(resp.success == 'false'){
+                          alert(resp.error)
+                      }
+                }, 'json')
+            }
             term.write(data);
         }
     }));
@@ -99,15 +123,15 @@ function resize() {
     console.log(window.innerWidth - 10);
     var rows = Math.floor(window.innerHeight / rowHeight) - 2;
     var cols = Math.floor(window.innerWidth / colWidth) - 1;
-
     return {rows: rows, cols: cols};
 }
 
+
 $(document).ready(function () {
     var options = {};
-
     $('#ssh').show();
-    var term_client = openTerminal(options);
+    term_client = openTerminal(options);
     console.log(rowHeight);
 
 });
+

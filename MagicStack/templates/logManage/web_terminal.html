@@ -39,5 +39,19 @@
         <script type="application/javascript" src="/static/js/term.js">
         </script>
     <script type="application/javascript" src="/static/js/webterminal.js"></script>
+if(resp.success == 'false'){
+                          alert(resp.error)
+                      }
+    <script type="text/javascript">
+        window.onbeforeunload = function onbeforeunload_handler(){
+            var warning="确认退出?";
+            var param = {'asset_id': unique_id, 'log_id': log_id};
+            $.post('/log/record/save/', param, function(resp){
+
+            }, 'json');
+            return warning
+        };
+
+    </script>
     </body>
 </html>

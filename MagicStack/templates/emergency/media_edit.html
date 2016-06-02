@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load mytags %}
 {% block content %}
     {% include 'nav_cat_bar.html' %}
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -6,7 +7,7 @@
             <div class="col-sm-10">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>填写告警媒介信息</h5>
+                        <h5>编辑告警媒介信息</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -31,17 +32,27 @@
                             <div class="form-group">
                                 <label for="media_name" class="col-sm-2 control-label">名称<span class="red-fonts">*</span></label>
                                 <div class="col-sm-8">
-                                    <input id="media_name" name="media_name"  type="text" class="form-control" value="{{ media_name }}">
+                                    <input id="media_name" name="media_name"  type="text" class="form-control" value="{{ media_info.name }}">
                                 </div>
                             </div>
                             <li style="list-style-type:none">
                                 <div class="form-group" >
-                                    <label for="profile" class="col-sm-2 control-label">类型</label>
+                                    <label for="media_type" class="col-sm-2 control-label">类型</label>
                                     <div class="col-sm-8">
                                         <select name="media_type" id="media_type" data-placeholder="电子邮件" class="chosen-select form-control m-b"  tabindex="2">
-                                            <option value="0" selected="selected">电子邮件</option>
-                                            <option value="1">微信</option>
-                                            <option value="2">短信</option>
+                                            {% if media_info.type == '0' %}
+                                                 <option value="0" selected="selected">电子邮件</option>
+                                                 <option value="1" >微信</option>
+                                                 <option value="2" >短信</option>
+                                            {% elif media_info.type == '1' %}
+                                                  <option value="0" >电子邮件</option>
+                                                  <option value="1"  selected="selected">微信</option>
+                                                  <option value="2" >短信</option>
+                                            {% else %}
+                                                   <option value="0" >电子邮件</option>
+                                                   <option value="1" >微信</option>
+                                                   <option value="2" selected="selected">短信</option>
+                                            {% endif %}
                                         </select>
                                     </div>
                                 </div>
@@ -50,7 +61,7 @@
                                 <div class="form-group">
                                     <label for="smtp_host" class="col-sm-2 control-label">SMTP服务器<span class="red-fonts">*</span></label>
                                     <div class="col-sm-8">
-                                        <input id="smtp_host" name="smtp_host"  type="text" class="form-control" value="{{ smtp_host }}">
+                                        <input id="smtp_host" name="smtp_host"  type="text" class="form-control" value="{{ media_info.smtp_server }}">
                                     </div>
                                 </div>
                             </li>
@@ -58,7 +69,7 @@
                                 <div class="form-group">
                                     <label for="smtp_host_port" class="col-sm-2 control-label">SMTP服务器端口<span class="red-fonts">*</span></label>
                                     <div class="col-sm-8">
-                                        <input id="smtp_host_port" name="smtp_host_port"  type="text" class="form-control" value="{{ smtp_host_port }}">
+                                        <input id="smtp_host_port" name="smtp_host_port"  type="text" class="form-control" value="{{ media_info.smtp_server_port }}">
                                     </div>
                                 </div>
                             </li>
@@ -66,7 +77,7 @@
                                 <div class="form-group">
                                     <label for="email_user" class="col-sm-2 control-label">SMTP电邮<span class="red-fonts">*</span></label>
                                     <div class="col-sm-8">
-                                        <input id="email_user" name="email_user"  type="text" class="form-control" value="email_user">
+                                        <input id="email_user" name="email_user"  type="text" class="form-control" value="{{ media_info.email_username }}">
                                     </div>
                                 </div>
                             </li>
@@ -74,7 +85,7 @@
                                 <div class="form-group">
                                     <label for="email_user_password" class="col-sm-2 control-label">用户密码<span class="red-fonts">*</span></label>
                                     <div class="col-sm-8">
-                                        <input id="email_user_password" name="email_user_password"  type="password" class="form-control" value="email_user_password">
+                                        <input id="email_user_password" name="email_user_password"  type="password" class="form-control" value="{{media_info.email_password |passwd_decode}}">
                                     </div>
                                 </div>
                             </li>
@@ -83,12 +94,12 @@
                                     <label class="col-sm-2 control-label">Connection security</label>
                                     <div class="col-sm-2">
                                         <div class="checkbox i-checks">
-                                            <label><input type="checkbox" value="0" name="connection" >SSL</label>
+                                            <label><input type="checkbox" value="0" name="connection"  {% if media_info.email_use_ssl %} checked {% endif %}>SSL</label>
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="checkbox i-checks">
-                                            <label><input type="checkbox" value="1" name="connection" checked>TSL</label>
+                                            <label><input type="checkbox" value="1" name="connection"  {% if media_info.email_use_tls %} checked {% endif %}>TSL</label>
                                         </div>
                                     </div>
                                 </div>
@@ -97,7 +108,7 @@
                                  <div class="form-group" id="extra">
                                     <label for="extra" class="col-sm-2 control-label">已启用<span class="red-fonts"></span></label>
                                     <div class="col-sm-8">
-                                        <input type="checkbox" value="1" name="extra" checked>
+                                        <input type="checkbox" value="1" name="extra" {% ifequal media_info.status '1' %}checked {% endifequal %}>
                                     </div>
                                 </div>
                             </li>
@@ -105,7 +116,7 @@
                                 <div class="form-group">
                                     <label for="comment" class="col-sm-2 control-label">备注</label>
                                     <div class="col-sm-8">
-                                        <input id="comment" name="comment"  type="text" class="form-control" value="{{ comment }}">
+                                        <input id="comment" name="comment"  type="text" class="form-control" value="{{ media_info.comment }}">
                                     </div>
                                 </div>
                             </li>

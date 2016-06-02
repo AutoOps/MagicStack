@@ -60,8 +60,8 @@
                                     <input class="shiftCheckbox" type="checkbox"  name="selected" value="{{ media.id }}">
                                 </td>
                                 <td class="text-center"> {{ media.name }} </td>
-                                <td class="text-center"> {{ media.type }} </td>
-                                <td class="text-center"> {{ media.status }} </td>
+                                <td class="text-center"> {{ media.type|number_to_str:"type" }} </td>
+                                <td class="text-center"> {{ media.status|number_to_str:"status" }} </td>
                                 <td class="text-center"> {{ media.detail }} </td>
                                 <td class="text-center"> {{ media.comment }} </td>
                                 <td class="text-center">

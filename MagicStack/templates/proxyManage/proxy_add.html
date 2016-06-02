@@ -43,6 +43,7 @@
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
+
                             <div class="form-group">
                                 <label for="user_password" class="col-sm-2 control-label">用户密码<span class="red-fonts">*</span></label>
                                 <div class="col-sm-8">
@@ -67,7 +68,7 @@
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <div class="col-sm-4 col-sm-offset-2">
-                                    <button class="btn btn-white" type="reset">取消</button>
+                                    <button class="btn btn-white" type="reset"id="reset_button">取消</button>
                                     <button id="submit_button" class="btn btn-primary" type="submit">确认保存</button>
                                 </div>
                             </div>
@@ -115,6 +116,11 @@ $('#groupForm').validator({
         form.submit();
     }
 });
+$(document).ready(function(){
+   $('#reset_button').click(function(){
+            window.location.href = '{% url 'proxy_list' %}'
+        })
+})
 
 </script>
 {% endblock %}

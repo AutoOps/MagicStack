@@ -90,17 +90,21 @@ def log_detail(request):
 @require_role('admin')
 def log_kill(request):
     """ 杀掉connect进程 """
-    pid = request.GET.get('id', '')
-    log = Log.objects.filter(pid=pid)
+    response = {'success':'true', 'error':''}
+    log_id = request.POST.get('log_id')
+    log = Log.objects.get(id=log_id)
     if log:
-        log = log[0]
-        try:
-            os.kill(int(pid), 9)
-        except OSError:
-            pass
-        Log.objects.filter(pid=pid).update(is_finished=1, end_time=datetime.datetime.now())
-        return render_to_response('logManage/log_offline.html', locals(), context_instance=RequestContext(request))
+        proxy_name = log.proxy_name
+        proxy = Proxy.objects.get(proxy_name=proxy_name)
+        proxy_log_id = log.proxy_log_id
+        api = APIRequest('{0}/v1.0/ws/terminal/kill/?id={1}'.format(proxy.url, proxy_log_id), proxy.username, CRYPTOR.decrypt(proxy.password))
+        result, codes = api.req_get()
+        time.sleep(3)
+        response['error'] = u'断开[%s]连接成功'%log.host
+        return HttpResponse(json.dumps(response), content_type='application/json')
     else:
+        response['success'] = 'false'
+        response['error'] = '没有此进程'
         return HttpResponseNotFound(u'没有此进程!')
 
 

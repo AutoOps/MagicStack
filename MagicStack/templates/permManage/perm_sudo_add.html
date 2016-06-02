@@ -52,7 +52,7 @@
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <div class="col-sm-4 col-sm-offset-2">
-                                    <button class="btn btn-white" type="reset">取消</button>
+                                    <button class="btn btn-white" type="reset"id="reset_button">取消</button>
                                     <button id="submit_button" class="btn btn-primary" type="submit">确认保存</button>
                                 </div>
                             </div>
@@ -87,6 +87,11 @@ $('#sudoForm').validator({
             form.submit();
         }
 });
+ $(document).ready(function(){
+   $('#reset_button').click(function(){
+            window.location.href = '{% url 'sudo_list' %}'
+        })
+})
 </script>
 {% endblock %}
 

@@ -1,14 +1,12 @@
 # -*- coding: utf-8
 
-import re
 import ast
-import time
-
 from django import template
 from permManage.models import PermPush
 from MagicStack.api import *
 from permManage.perm_api import get_group_user_perm
 from proxyManage.models import Proxy
+
 
 register = template.Library()
 
@@ -324,3 +322,26 @@ def user_perm_asset_num(user_id):
         return len(user_perm_info.get('asset').keys())
     else:
         return 0
+
+
+@register.filter(name='passwd_decode')
+def passwd_decode(passwd):
+    return CRYPTOR.decrypt(passwd)
+
+
+@register.filter(name='number_to_str')
+def number_to_str(value, ptype):
+    rest = ''
+    if ptype == 'type':
+        if value == '0':
+           rest = '电子邮件'
+        elif value == '1':
+            rest = '微信'
+        elif value == '2':
+            rest = '短信'
+    else:
+        if value == '1':
+            rest = '启用'
+        else:
+            rest = '禁用'
+    return rest

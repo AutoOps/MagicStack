@@ -7,7 +7,6 @@ var rowHeight = 1;
 var colWidth = 1;
 var unique_id = '';
 var log_id = '';
-var term_client = ''
 function WSSHClient() {
 }
 WSSHClient.prototype._generateEndpoint = function (options) {
@@ -91,9 +90,9 @@ function openTerminal(options) {
             term.write('Connection Reset By Peer');
             var param = {'asset_id': unique_id, 'log_id': log_id};
             $.post('/log/record/save/', param, function(resp){
-                    if(resp.success == 'false'){
-                          alert(resp.error)
-                      }
+                if(resp.success == 'false'){
+                    alert(resp.error);
+                }
             }, 'json');
         },
         onData: function (data) {
@@ -104,9 +103,9 @@ function openTerminal(options) {
                 data = data.slice(pindex+1);
                 var url = '/log/record/save/?asset_id=' + unique_id + '&log_id=' + log_id;
                 $.get( url , function (resp) {
-                      if(resp.success == 'false'){
-                          alert(resp.error)
-                      }
+                    if(resp.success == 'false'){
+                         alert(resp.error);
+                    }
                 }, 'json')
             }
             term.write(data);

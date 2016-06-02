@@ -253,7 +253,7 @@
                     var param = eval("("+data+")");
                     var dataArray = param.role_name.split(',');
                     var roleArray = param.role_id.split(',');
-                    if (data == 'error' || data == '' || data == null || data == undefined){
+                    if (roleArray == 'error' || roleArray == '' || roleArray == null || roleArray == undefined){
                         layer.alert('没有授权系统用户')
                     }
                     else if (dataArray.length == 1 && data != 'error' && navigator.platform == 'Win32'&& roleArray.length == 1){
@@ -272,7 +272,8 @@
                             skin: 'layui-layer-molv',
                             title: '授权多个系统用户，请选择一个连接',
                             shade: false,
-                            closeBtn: 0
+                            closeBtn: 0,
+                            time: 5000
                         })
                     }
                 }

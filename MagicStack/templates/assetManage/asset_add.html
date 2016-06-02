@@ -39,8 +39,7 @@ $(function(){
                   <form id="assetForm" method="post" class="form-horizontal" name="assetForm">
                       <div class="form-group">
                         <button class="btn btn-primary" type="submit" style="margin-left: 20px"> 提交 </button>
-                          &nbsp;&nbsp;&nbsp;
-                        <button class="btn btn-white" type="reset"> 取消 </button>
+                        <button class="btn btn-white" type="reset" id="btn_rest"> 取消 </button>
                       </div>
                       {% if error %}
                           <div class="alert alert-warning text-center">{{ error }}</div>
@@ -232,6 +231,12 @@ $(function(){
         }
         temp.options[0].selected = true;
     }
+
+    $(document).ready(function(){
+        $('#btn_rest').click(function(){
+            window.location.href = '{% url 'asset_list' %}'
+        })
+    })
 
 </script>
     <script src="/static/js/cropper/cropper.min.js"></script>

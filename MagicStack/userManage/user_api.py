@@ -4,6 +4,7 @@ from userManage.models import AdminGroup,UserOperatorRecord
 from MagicStack.api import *
 from MagicStack.settings import BASE_DIR, EMAIL_HOST_USER as MAIL_FROM
 import functools
+from emergency.emer_api import send_email
 
 def group_add_user(group, user_id=None, username=None):
     """
@@ -152,7 +153,7 @@ def server_add_user(username, ssh_key_pwd=''):
     gen_ssh_key(username, ssh_key_pwd)
 
 
-def user_add_mail(user, kwargs):
+def user_add_mail(user, default_email, kwargs):
     """
     add user send mail
     发送用户添加邮件
@@ -169,7 +170,7 @@ def user_add_mail(user, kwargs):
         说明： 请登陆跳板机后台下载密钥, 然后使用密钥登陆跳板机！
     """ % (user.name, user.username, user_role.get(user.role, u'普通用户'),
            kwargs.get('password'), kwargs.get('ssh_key_pwd'), URL, user.uuid)
-    send_mail(mail_title, mail_msg, MAIL_FROM, [user.email], fail_silently=False)
+    send_email(default_email, mail_title, [user.email], mail_msg)
 
 
 def server_del_user(username):

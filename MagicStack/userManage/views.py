@@ -3,10 +3,12 @@ import time
 from django.db.models import Q
 from userManage.user_api import *
 from permManage.perm_api import get_group_user_perm
+from emergency.emer_api import send_email
+from emergency.models import EmergencyType
 
-
-MAIL_FROM = EMAIL_HOST_USER
-
+default_email = ''
+if EmergencyType.objects.filter(type='0'):
+    default_email = EmergencyType.objects.filter(type='0')[0]
 
 @require_role(role='super')
 @user_operator_record
@@ -204,8 +206,11 @@ def user_add(request, res, *args):
                 except Exception:
                     pass
             else:
-                if MAIL_ENABLE and send_mail_need:
-                    user_add_mail(user, kwargs=locals())
+                if send_mail_need:
+                    if not default_email:
+                        error = u"没有邮件服务器信息,请先到告警管理配置邮件服务器,谢谢!"
+                        return my_render('userManage/user_add.html', locals(), request)
+                    user_add_mail(user, default_email, kwargs=locals())
                 msg = get_display_msg(user, password=password, ssh_key_pwd=ssh_key_pwd, send_mail_need=send_mail_need)
                 error = u'添加用户 %s' % username
                 res['content'] = error
@@ -298,9 +303,10 @@ def send_mail_retry(request,res, *args):
     重设密码：%s/userManage/password/forget/
     请登录web点击个人信息页面重新生成ssh密钥
     """ % (URL, user.username, URL)
-
+    if not default_email:
+        return HttpResponse(u'没有邮件服务器信息,请先到告警管理中配置邮件服务器,谢谢!')
     try:
-        send_mail(u'邮件重发', msg, MAIL_FROM, [user.email], fail_silently=False)
+        send_email(default_email, u'邮件重发', [user.email], msg)
     except IndexError,e:
         res['flag'] = 'false'
         res['comment'].append(e)
@@ -325,7 +331,9 @@ def forget_password(request):
             Hi %s, 请点击下面链接重设密码！
             %s/userManage/password/reset/?uuid=%s&timestamp=%s&hash=%s
             """ % (user.name, URL, user.uuid, timestamp, hash_encode)
-            send_mail(u'忘记登录密码', msg, MAIL_FROM, [email], fail_silently=False)
+            if not default_email:
+                error = u'没有邮件服务器信息,请先到告警管理中配置邮件服务器,谢谢!'
+            send_email(default_email, u'忘记登录密码', [email], msg)
             msg = u'请登陆邮箱，点击邮件重设密码'
             return http_success(request, msg)
         else:
@@ -371,6 +379,7 @@ def reset_password(request):
 @require_role(role='super')
 @user_operator_record
 def user_edit(request,res, *args):
+    msg = error = ''
     header_title, path1, path2 = u'编辑用户', u'用户管理', u'编辑用户'
     res['operator'] = path2
     if request.method == 'GET':
@@ -386,48 +395,56 @@ def user_edit(request,res, *args):
             admin_groups_str = ' '.join([str(admin_group.group.id) for admin_group in user.admingroup_set.all()])
 
     else:
-        user_id = request.GET.get('id', '')
-        password = request.POST.get('password', '')
-        name = request.POST.get('name', '')
-        email = request.POST.get('email', '')
-        groups = request.POST.getlist('groups', [])
-        role_post = request.POST.get('role', 'CU')
-        admin_groups = request.POST.getlist('admin_groups', [])
-        extra = request.POST.getlist('extra', [])
-        is_active = True if '0' in extra else False
-        email_need = True if '1' in extra else False
-        user_role = {'SU': u'超级管理员', 'GA': u'部门管理员', 'CU': u'普通用户'}
+        try:
+            user_id = request.GET.get('id', '')
+            password = request.POST.get('password', '')
+            name = request.POST.get('name', '')
+            email = request.POST.get('email', '')
+            groups = request.POST.getlist('groups', [])
+            role_post = request.POST.get('role', 'CU')
+            admin_groups = request.POST.getlist('admin_groups', [])
+            extra = request.POST.getlist('extra', [])
+            is_active = True if '0' in extra else False
+            email_need = True if '1' in extra else False
+            user_role = {'SU': u'超级管理员', 'GA': u'部门管理员', 'CU': u'普通用户'}
 
-        if user_id:
-            user = get_object(User, id=user_id)
-        else:
-            res['flag'] = 'false'
-            res['content'] = u'用户不存在!'
+            if user_id:
+                user = get_object(User, id=user_id)
+            else:
+                res['flag'] = 'false'
+                res['content'] = u'用户不存在!'
+                return HttpResponseRedirect(reverse('user_list'))
+
+            db_update_user(user_id=user_id,
+                           password=password,
+                           name=name,
+                           email=email,
+                           groups=groups,
+                           admin_groups=admin_groups,
+                           role=role_post,
+                           is_active=is_active)
+
+            res['content'] = u'编辑用户%s' % user.username
+            if email_need:
+                emsg = u"""
+                Hi %s:
+                    您的信息已修改，请登录MagicStack查看详细信息
+                    地址：%s
+                    用户名： %s
+                    密码：%s (如果密码为None代表密码为原密码)
+                    权限：：%s
+
+                """ % (user.name, URL, user.username, password, user_role.get(role_post, u''))
+
+                if not default_email:
+                    error = u"没有邮件服务器信息,请先到告警管理配置邮件服务器,谢谢!"
+                    return my_render('userManage/user_edit.html', locals(), request)
+                send_email(default_email, u'您的信息已修改',[email], emsg)
+
             return HttpResponseRedirect(reverse('user_list'))
-
-        db_update_user(user_id=user_id,
-                       password=password,
-                       name=name,
-                       email=email,
-                       groups=groups,
-                       admin_groups=admin_groups,
-                       role=role_post,
-                       is_active=is_active)
-
-        res['content'] = u'编辑用户%s' % user.username
-        if email_need:
-            msg = u"""
-            Hi %s:
-                您的信息已修改，请登录MagicStack查看详细信息
-                地址：%s
-                用户名： %s
-                密码：%s (如果密码为None代表密码为原密码)
-                权限：：%s
-
-            """ % (user.name, URL, user.username, password, user_role.get(role_post, u''))
-            send_mail(u'您的信息已修改', msg, MAIL_FROM, [email], fail_silently=False)
-
-        return HttpResponseRedirect(reverse('user_list'))
+        except Exception as e:
+            logger.error(e)
+            error = e
     return my_render('userManage/user_edit.html', locals(), request)
 
 

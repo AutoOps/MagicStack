@@ -22,7 +22,7 @@ def group_add(request, res,*args):
     Group add view
     添加资产组
     """
-    header_title, path1, path2 = '添加资产组', '资产管理', '添加资产组'
+    header_title, path1, path2 = u'添加资产组', u'资产管理', u'添加资产组'
     res['operator'] = path2
     asset_all = Asset.objects.all()
 
@@ -33,12 +33,12 @@ def group_add(request, res,*args):
 
         try:
             if not name:
-                emg = '组名不能为空'
+                emg = u'组名不能为空'
                 raise ServerError(emg)
 
             asset_group_test = get_object(AssetGroup, name=name)
             if asset_group_test:
-                emg = "该组名 %s 已存在" % name
+                emg = u"该组名 %s 已存在" % name
                 raise ServerError(emg)
 
         except ServerError:
@@ -47,7 +47,7 @@ def group_add(request, res,*args):
 
         else:
             db_add_group(name=name, comment=comment, asset_select=asset_select)
-            smg = "主机组 %s 添加成功" % name
+            smg = u"主机组 %s 添加成功" % name
             res['content'] = smg
 
     return my_render('assetManage/group_add.html', locals(), request)
@@ -60,7 +60,7 @@ def group_edit(request,res, *args):
     Group edit view
     编辑资产组
     """
-    header_title, path1, path2 = '编辑主机组', '资产管理', '编辑主机组'
+    header_title, path1, path2 = u'编辑主机组', u'资产管理', u'编辑主机组'
     res['operator'] = path2
     group_id = request.GET.get('id', '')
     group = get_object(AssetGroup, id=group_id)
@@ -126,8 +126,8 @@ def group_del(request,res, *args):
     Group delete view
     删除主机组
     """
-    res['operator'] = '删除主机组'
-    res['content'] = '删除主机组'
+    res['operator'] = u'删除主机组'
+    res['content'] = u'删除主机组'
     group_ids = request.GET.get('id', '')
     group_id_list = group_ids.split(',')
     for group_id in group_id_list:
@@ -146,7 +146,7 @@ def asset_add(request,res, *args):
     添加资产
     """
     error = msg = ''
-    header_title, path1, path2 = '添加资产', '资产管理', '添加资产'
+    header_title, path1, path2 = u'添加资产', u'资产管理', u'添加资产'
     proxys = Proxy.objects.all()
     res['operator'] = path2
     proxy_profiles = gen_proxy_profiles(proxys)
@@ -159,7 +159,7 @@ def asset_add(request,res, *args):
         try:
             hostname = request.POST.get('name', '')
             if Asset.objects.filter(name=unicode(hostname)):
-                error = '该主机名 %s 已存在!' % hostname
+                error = u'该主机名 %s 已存在!' % hostname
                 raise ServerError(error)
             name = request.POST.get('name')
             timestamp = int(time.time())
@@ -200,7 +200,7 @@ def asset_add(request,res, *args):
             else:
                 if codes == 200:
                     msg = result['messege']
-                    res['content'] = '创建主机成功'
+                    res['content'] = u'创建主机成功'
                     asset_info = Asset()
                     asset_info.id_unique = id_unique
                     asset_info.name = request.POST.get('name', '')
@@ -284,8 +284,8 @@ def asset_del(request,res, *args):
     del a asset
     删除主机
     """
-    response = {'msg': '删除成功'}
-    res['operator'] = res['content'] = '删除主机'
+    response = {'msg': u'删除成功'}
+    res['operator'] = res['content'] = u'删除主机'
     asset_id = request.GET.get('id', '')
     if asset_id:
         asset = get_object(Asset, id=int(asset_id))
@@ -296,7 +296,7 @@ def asset_del(request,res, *args):
             try:
                 api = APIRequest('{0}/v1.0/system'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
                 result, code = api.req_del(data)
-                logger.debug('删除单一资产result:%s'%result)
+                logger.debug(u'删除单一资产result:%s'%result)
                 if code == 200:
                     asset.delete()
                 else:
@@ -327,7 +327,7 @@ def asset_del(request,res, *args):
                 try:
                     api = APIRequest('{0}/v1.0/system'.format(proxy_obj.url), proxy_obj.username, CRYPTOR.decrypt(proxy_obj.password))
                     result, code = api.req_del(data)
-                    logger.debug('删除多个资产result:%s'% result)
+                    logger.debug(u'删除多个资产result:%s'% result)
                     if code == 200:
                         for item in value:
                             item.delete()
@@ -584,7 +584,7 @@ def asset_action(request, status):
             try:
                 api = APIRequest('{0}/v1.0/system/action'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
                 result, codes = api.req_post(data)
-                logger.debug("操作结果result:%s   codes:%s"%(result, codes))
+                logger.debug(u"操作结果result:%s   codes:%s"%(result, codes))
                 task = Task()
                 task.task_name = result['task_name']
                 task.username = request.user.username
@@ -611,7 +611,7 @@ def asset_event(request):
                 tk_proxy = Proxy.objects.get(proxy_name=tk_event['task_proxy'])
                 api = APIRequest('{0}/v1.0/event/{1}'.format(tk_proxy.url, tk_event['task_name']), tk_proxy.username, CRYPTOR.decrypt(tk_proxy.password))
                 result, codes = api.req_get()
-                logger.debug('事件查询结果result:%s'%result)
+                logger.debug(u'事件查询结果result:%s'%result)
                 tk = get_object(Task, task_name=tk_event['task_name'])
                 tk.status = result['status']
                 tk.content = result['event_log']
@@ -627,7 +627,7 @@ def asset_event(request):
 @require_role('admin')
 @user_operator_record
 def asset_edit_batch(request, res, *args):
-    res['operator'] = res['content'] = '修改主机'
+    res['operator'] = res['content'] =u'修改主机'
     af = AssetForm()
     name = request.user.username
     asset_group_all = AssetGroup.objects.all()
@@ -738,17 +738,17 @@ def asset_update(request,res, *args):
     """
     Asset update host info via ansible view
     """
-    res['operator'] = '更新主机'
+    res['operator'] = u'更新主机'
     asset_id = request.GET.get('id', '')
     asset = get_object(Asset, id=int(asset_id))
     name = request.user.username
     if not asset:
         res['flag'] = 'false'
-        res['content'] = '主机[%s]不存在' % asset.name
+        res['content'] = u'主机[%s]不存在' % asset.name
         return HttpResponseRedirect(reverse('asset_detail')+'?id=%s' % asset_id)
     else:
         asset_ansible_update([asset], name)
-        res['content'] = '更新主机[%s]' % asset.name
+        res['content'] = u'更新主机[%s]' % asset.name
     return HttpResponseRedirect(reverse('asset_detail')+'?id=%s' % asset_id)
 
 
@@ -785,7 +785,7 @@ def asset_update_batch(request,res,*args):
                 data = json.dumps(data)
                 api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
                 result, code = api.req_post(data)
-                logger.debug('更新操作结果result:%s       code:%s' % (result,code))
+                logger.debug(u'更新操作结果result:%s       code:%s' % (result,code))
                 if code == 200:
                     asset_ansible_update(value, result, name)
                     for asset in value:
@@ -805,7 +805,7 @@ def idc_add(request,res, *args):
     """
     IDC add view
     """
-    header_title, path1, path2 = '添加IDC', '资产管理', '添加IDC'
+    header_title, path1, path2 = u'添加IDC', u'资产管理', u'添加IDC'
     res['operator'] = path2
     if request.method == 'POST':
         idc_form = IdcForm(request.POST)
@@ -813,13 +813,13 @@ def idc_add(request,res, *args):
             idc_name = idc_form.cleaned_data['name']
 
             if IDC.objects.filter(name=idc_name):
-                emg = '添加失败, 此IDC [%s] 已存在!' % idc_name
+                emg = u'添加失败, 此IDC [%s] 已存在!' % idc_name
                 res['flag'] = 'false'
                 res['content'] = emg
                 return my_render('assetManage/idc_add.html', locals(), request)
             else:
                 idc_form.save()
-                smg = 'IDC: [%s]添加成功' % idc_name
+                smg = u'IDC: [%s]添加成功' % idc_name
                 res['content'] = smg
             return HttpResponseRedirect(reverse('idc_list'))
     else:
@@ -849,14 +849,14 @@ def idc_edit(request, res, *args):
     """
     IDC edit view
     """
-    header_title, path1, path2 = '编辑IDC', '资产管理', '编辑IDC'
+    header_title, path1, path2 = u'编辑IDC', u'资产管理', u'编辑IDC'
     res['operator'] = path2
     idc_id = request.GET.get('id', '')
     idc = get_object(IDC, id=idc_id)
     if request.method == 'POST':
         idc_form = IdcForm(request.POST, instance=idc)
         if idc_form.is_valid():
-            res['content'] = '编辑IDC[%s]' % idc.name
+            res['content'] = u'编辑IDC[%s]' % idc.name
             idc_form.save()
             return HttpResponseRedirect(reverse('idc_list'))
     else:
@@ -870,7 +870,7 @@ def idc_del(request,res, *args):
     """
     IDC delete view
     """
-    res['operator'] = res['content'] = '删除机房'
+    res['operator'] = res['content'] = u'删除机房'
     idc_ids = request.GET.get('id', '')
     idc_id_list = idc_ids.split(',')
 
@@ -887,7 +887,7 @@ def asset_upload(request,res, *args):
     """
     Upload asset excel file view
     """
-    res['operator'] = '批量添加主机'
+    res['operator'] = u'批量添加主机'
     if request.method == 'POST':
         excel_file = request.FILES.get('file_name', '')
         ret, asset_name_list = excel_to_db(excel_file)

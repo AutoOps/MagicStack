@@ -35,7 +35,7 @@ $(function(){
                       <div class="form-group">
                         <button class="btn btn-primary" type="submit" style="margin-left: 20px"> 提交 </button>
                           &nbsp;&nbsp;&nbsp;
-                        <button class="btn btn-white" type="reset"> 取消 </button>
+                        <button class="btn btn-white" type="reset"id="reset_button"> 取消 </button>
                       </div>
                       {% if error %}
                           <div class="alert alert-warning text-center">{{ error }}</div>
@@ -235,7 +235,11 @@ $(function(){
         temp.options[0].selected = true;
 
     }
-
+$(document).ready(function(){
+    $('#reset_button').click(function(){
+            window.location.href = '{% url 'asset_list' %}'
+        })
+})
 </script>
     <script src="/static/js/cropper/cropper.min.js"></script>
     <script src="/static/js/datapicker/bootstrap-datepicker.js"></script>

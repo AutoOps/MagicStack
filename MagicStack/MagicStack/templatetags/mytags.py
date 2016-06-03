@@ -326,6 +326,8 @@ def user_perm_asset_num(user_id):
 
 @register.filter(name='passwd_decode')
 def passwd_decode(passwd):
+    if not passwd:
+        return ''
     return CRYPTOR.decrypt(passwd)
 
 

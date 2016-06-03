@@ -231,7 +231,8 @@ def asset_add(request,res, *args):
                     pm.power_type = request.POST.get('power_type')
                     pm.power_address = request.POST.get('power_address')
                     pm.power_username = request.POST.get('power_username')
-                    pm.power_password = request.POST.get('power_password')
+                    ency_password = CRYPTOR.encrypt(request.POST.get('power_password', ''))
+                    pm.power_password = ency_password
                     pm.save()
                     asset_info.power_manage_id = pm.id
 
@@ -388,7 +389,8 @@ def asset_edit(request, res, *args):
             pm.power_type = request.POST.get('power_type')
             pm.power_address = request.POST.get('power_address')
             pm.power_username = request.POST.get('power_username')
-            pm.power_password = request.POST.get('power_password')
+            ency_password = CRYPTOR.encrypt(request.POST.get('power_password', ''))
+            pm.power_password = ency_password
             pm.save()
 
             asset_info.proxy_id = int(request.POST.get('proxy', 1))

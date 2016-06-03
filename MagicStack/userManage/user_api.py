@@ -2,7 +2,7 @@
 
 from userManage.models import AdminGroup,UserOperatorRecord
 from MagicStack.api import *
-from MagicStack.settings import BASE_DIR, EMAIL_HOST_USER as MAIL_FROM
+from MagicStack.settings import BASE_DIR
 import functools
 from emergency.emer_api import send_email
 

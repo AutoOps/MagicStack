@@ -16,11 +16,15 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
-from emergency.models import EmergencyType
+import requests
+import json
 from MagicStack.api import logger, CRYPTOR
 
 
 def send_email(email_config,email_title, email_to, email_msg):
+    """
+    发送邮件
+    """
     message = MIMEText(email_msg, 'plain', 'utf-8')
     message['Subject'] = Header(email_title)
     message['From'] = email_config.email_username
@@ -41,3 +45,30 @@ def send_email(email_config,email_title, email_to, email_msg):
         server.quit()
 
 
+def send_wx_mail(corpid, corpsecret,param):
+    get_token = requests.get('https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={0}&corpsecret={1}'.format(corpid, corpsecret),verify=False)
+    res_token = get_token.json()
+    if 'access_token' in res_token:
+        access_token = res_token['access_token']
+        param = {
+            "touser": "@all",
+            "toparty": "1",
+            "totag": "@all",
+            "msgtype": "text",
+            "agentid": 1,
+            "text": {
+                "content": "hello world"
+            },
+            "safe": "0"
+        }
+        body = json.dumps(param)
+        res = requests.post('https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={0}'.format(access_token),
+                            data=body, verify=False)
+        rest = res.json()    #{'errcode':0, 'errmsg':'ok'}
+        return rest
+    else:
+        return res_token
+
+if __name__ == '__main__':
+    msg = send_wx_mail('wxaf46979b678a2fce', '-NG1TBtm08G55eU2G60KheOA5KpqnISqRz15JeomZICCMIMePF2O_d3u3_NJlqeF', '')
+    print "send_wx_msg:%s"%msg

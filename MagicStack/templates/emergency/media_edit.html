@@ -40,24 +40,14 @@
                                     <label for="media_type" class="col-sm-2 control-label">类型</label>
                                     <div class="col-sm-8">
                                         <select name="media_type" id="media_type" data-placeholder="电子邮件" class="chosen-select form-control m-b"  tabindex="2">
-                                            {% if media_info.type == '0' %}
-                                                 <option value="0" selected="selected">电子邮件</option>
-                                                 <option value="1" >微信</option>
-                                                 <option value="2" >短信</option>
-                                            {% elif media_info.type == '1' %}
-                                                  <option value="0" >电子邮件</option>
-                                                  <option value="1"  selected="selected">微信</option>
-                                                  <option value="2" >短信</option>
-                                            {% else %}
-                                                   <option value="0" >电子邮件</option>
-                                                   <option value="1" >微信</option>
-                                                   <option value="2" selected="selected">短信</option>
-                                            {% endif %}
+                                             <option value="0"  {% if media_info.type == '0'%}selected="selected" {% endif %}>电子邮件</option>
+                                             <option value="1" {% if media_info.type == '1'%}selected="selected" {% endif %}>微信</option>
+                                             <option value="2" {% if media_info.type == '2'%}selected="selected" {% endif %}>短信</option>
                                         </select>
                                     </div>
                                 </div>
                             </li>
-                            <li style="list-style-type:none">
+                            <li style="list-style-type:none" {% if not media_info.smtp_server %} hidden="hidden" {% endif %}>
                                 <div class="form-group">
                                     <label for="smtp_host" class="col-sm-2 control-label">SMTP服务器<span class="red-fonts">*</span></label>
                                     <div class="col-sm-8">
@@ -65,7 +55,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li style="list-style-type:none">
+                            <li style="list-style-type:none" {% if not media_info.smtp_server_port %} hidden="hidden" {% endif %}>
                                 <div class="form-group">
                                     <label for="smtp_host_port" class="col-sm-2 control-label">SMTP服务器端口<span class="red-fonts">*</span></label>
                                     <div class="col-sm-8">
@@ -73,7 +63,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li style="list-style-type:none">
+                            <li style="list-style-type:none" {% if not media_info.email_username %} hidden="hidden" {% endif %}>
                                 <div class="form-group">
                                     <label for="email_user" class="col-sm-2 control-label">SMTP电邮<span class="red-fonts">*</span></label>
                                     <div class="col-sm-8">
@@ -81,7 +71,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li style="list-style-type:none">
+                            <li style="list-style-type:none" {% if not media_info.email_password %} hidden="hidden" {% endif %}>
                                 <div class="form-group">
                                     <label for="email_user_password" class="col-sm-2 control-label">用户密码<span class="red-fonts">*</span></label>
                                     <div class="col-sm-8">
@@ -89,18 +79,34 @@
                                     </div>
                                 </div>
                             </li>
-                            <li style="list-style-type:none">
+                            <li style="list-style-type:none" {% if media_info.type == '1' %} hidden="hidden" {% endif %}>
                                 <div class="form-group" id="smtp_security">
                                     <label class="col-sm-2 control-label">Connection security</label>
                                     <div class="col-sm-2">
                                         <div class="checkbox i-checks">
-                                            <label><input type="checkbox" value="0" name="connection"  {% if media_info.email_use_ssl %} checked {% endif %}>SSL</label>
+                                            <label><input type="radio" value="0" name="connection"  {% if media_info.email_use_ssl %} checked {% endif %}>SSL</label>
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="checkbox i-checks">
-                                            <label><input type="checkbox" value="1" name="connection"  {% if media_info.email_use_tls %} checked {% endif %}>TSL</label>
+                                            <label><input type="radio" value="1" name="connection"  {% if media_info.email_use_tls %} checked {% endif %}>TSL</label>
                                         </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="list-style-type:none"  {% if not media_info.corpid %} hidden="hidden" {% endif %}>
+                                <div class="form-group">
+                                    <label for="corpid" class="col-sm-2 control-label">Corpid<span class="red-fonts">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="corpid" name="corpid"  type="text" class="form-control" value="{{ media_info.corpid }}">
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="list-style-type:none" {% if not media_info.corpsecret %} hidden="hidden" {% endif %}>
+                                <div class="form-group">
+                                    <label for="corpsecret" class="col-sm-2 control-label">Corpsecret<span class="red-fonts">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="corpsecret" name="corpsecret"  type="text" class="form-control" value="{{ media_info.corpsecret }}">
                                     </div>
                                 </div>
                             </li>
@@ -140,38 +146,6 @@
 $('#groupForm').validator({
     timely: 2,
     theme: "yellow_right_effect",
-    fields: {
-        "media_name": {
-            rule: "required",
-            tip: "用户输入媒介名称",
-            ok: "",
-            msg: {required: "必须填写!"}
-        },
-        "smtp_host": {
-            rule: "required",
-            tip: "输入邮件服务器",
-            ok: "",
-            msg: {required: "必须填写!"}
-        },
-        "smtp_host_port": {
-            rule: "required",
-            tip: "输入邮件服务器端口",
-            ok: "",
-            msg: {required: "必须填写!"}
-        },
-        "email_user": {
-            rule: "required",
-            tip: "输入邮件地址",
-            ok: "",
-            msg: {required: "必须填写!"}
-        },
-        "email_user_password":{
-            rule:"required",
-            tip:"输入用户密码",
-            ok: "",
-            msg: {required: "必须填写!"}
-        }
-    },
     valid: function(form) {
         form.submit();
     }
@@ -180,24 +154,21 @@ $('#groupForm').validator({
 </script>
 
 <script type="text/javascript">
+    var media_type_t = '{{ media_info.type }}';
     $(document).ready(function() {
 		// type of media
 		$('#media_type').change(function() {
 			switch ($(this).val()) {
 				case '0':
-					$('#smtp_host, #smtp_host_port, #email_user, #email_user_password, #smtp_security, #extra').closest('li').show();
-					$('#comment').closest('li').hide();
-{#					$('#eztext_link').hide();#}
-
-					// radio button actions
-{#					toggleSecurityOptions();#}
-{#					toggleAuthenticationOptions();#}
+					$('#smtp_host, #smtp_host_port, #email_user, #email_user_password, #smtp_security, #extra,#comment').closest('li').show();
+					$('#corpid, #corpsecret').closest('li').hide();
+                    media_type_t = '0';
 					break;
 
 				case '1':
-					$('#comment').closest('li').show();
-					$('#smtp_host, #smtp_host_port, #email_user, #email_user_password, #smtp_security, #extra').closest('li').hide();
-{#					$('#eztext_link').hide();#}
+					$('#corpid, #corpsecret, #extra,#comment').closest('li').show();
+					$('#smtp_host, #smtp_host_port, #email_user, #email_user_password, #smtp_security').closest('li').hide();
+                    media_type_t = '1';
 					break;
 			}
 		});

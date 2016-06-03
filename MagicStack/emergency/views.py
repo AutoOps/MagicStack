@@ -15,7 +15,7 @@
 from django.db.models import Q
 from django.shortcuts import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
-from MagicStack.api import pages, my_render, require_role, CRYPTOR, ServerError
+from MagicStack.api import pages, my_render, require_role, CRYPTOR, ServerError, logger
 from userManage.user_api import user_operator_record
 from emergency.models import EmergencyType
 
@@ -61,8 +61,8 @@ def media_add(request, res, *args):
             is_use_ssl = True if '0' in connect_security else 0
             media_detail = u"SMTP服务器:{0}    SMTP电邮:{1}".format(smtp_host, email_user)
             try:
-                if not media_name:
-                    raise ServerError(u'名称不能为空')
+                if '' in [media_name, smtp_host, smtp_host_port, email_user, email_user_password]:
+                    raise ServerError(u'必要参数不能为空,请从新填写')
                 if EmergencyType.objects.filter(name=media_name):
                     raise ServerError(u'名称已存在')
                 EmergencyType.objects.create(name=media_name, type=media_type, smtp_server=smtp_host, smtp_server_port=smtp_host_port,
@@ -75,7 +75,25 @@ def media_add(request, res, *args):
                 error = e
                 res['flag'] = False
                 res['content'] = error
-
+        elif media_type == '1':
+            corpid = request.POST.get('corpid', '')
+            corpsecret = request.POST.get('corpsecret', '')
+            status = request.POST.get('extra', '')
+            comment = request.POST.get('comment', '')
+            try:
+                if '' in [media_name, corpid, corpsecret]:
+                    raise ServerError(u'必要参数为空,请从新填写!')
+                if EmergencyType.objects.filter(name=media_name):
+                    raise ServerError(u'名称已存在')
+                media_detail = u'CorpID:%s '%corpid
+                EmergencyType.objects.create(name=media_name, type=media_type, corpid=corpid, corpsecret=corpsecret,
+                                             detail=media_detail, status=status, comment=comment)
+                res['content'] = u'添加成功'
+                return HttpResponseRedirect(reverse('media_list'))
+            except Exception as e:
+                error = e
+                res['flag'] = False
+                res['content'] = error
     return my_render('emergency/media_add.html', locals(), request)
 
 
@@ -103,7 +121,7 @@ def media_edit(request, res):
             is_use_ssl = True if '0' in connect_security else 0
             media_detail = u"SMTP服务器:{0}    SMTP电邮:{1}".format(smtp_host, email_user)
             try:
-                if not media_name:
+                if '' in [media_name, smtp_host, smtp_host_port, email_user, email_user_password]:
                     raise ServerError(u'名称不能为空')
                 if EmergencyType.objects.filter(name=media_name).count()> 1:
                     raise ServerError(u'名称已存在')
@@ -120,14 +138,37 @@ def media_edit(request, res):
                 media.detail = media_detail
                 media.comment = comment
                 media.save()
-                msg = u'添加告警媒介[%s]成功' % media_name
+                msg = u'修改告警媒介[%s]成功' % media_name
                 res['content'] = msg
                 return HttpResponseRedirect(reverse('media_list'))
             except ServerError, e:
                 error = e
                 res['flag'] = False
                 res['content'] = error
-
+        elif media_type == '1':
+            try:
+                corpid = request.POST.get('corpid', '')
+                corpsecret = request.POST.get('corpsecret', '')
+                status = request.POST.get('extra', '')
+                comment = request.POST.get('comment', '')
+                media_detail = u'CorpID:%s'%corpid
+                if '' in [media_name, corpid, corpsecret]:
+                    raise ServerError(u'必要参数为空,请从新填写!')
+                if EmergencyType.objects.filter(name=media_name)>1:
+                    raise ServerError(u'名称已存在')
+                media_info.name = media_name
+                media_info.type = media_type
+                media_info.status = status
+                media_info.corpid = corpid
+                media_info.corpsecret = corpsecret
+                media_info.save()
+                res['content'] = u'修改告警媒介[%s]成功'%media_info.name
+                return HttpResponseRedirect(reverse('media_list'))
+            except Exception as e:
+                logger.error(e)
+                error = e
+                res['flag'] = 'false'
+                res['content'] = e
     return my_render('emergency/media_edit.html', locals(), request)
 
 

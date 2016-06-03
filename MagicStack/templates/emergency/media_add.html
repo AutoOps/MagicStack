@@ -66,7 +66,7 @@
                                 <div class="form-group">
                                     <label for="email_user" class="col-sm-2 control-label">SMTP电邮<span class="red-fonts">*</span></label>
                                     <div class="col-sm-8">
-                                        <input id="email_user" name="email_user"  type="text" class="form-control" value="email_user">
+                                        <input id="email_user" name="email_user"  type="text" class="form-control" value="{{ email_user }}">
                                     </div>
                                 </div>
                             </li>
@@ -74,7 +74,7 @@
                                 <div class="form-group">
                                     <label for="email_user_password" class="col-sm-2 control-label">用户密码<span class="red-fonts">*</span></label>
                                     <div class="col-sm-8">
-                                        <input id="email_user_password" name="email_user_password"  type="password" class="form-control" value="email_user_password">
+                                        <input id="email_user_password" name="email_user_password"  type="password" class="form-control" value="{{ email_user_password }}">
                                     </div>
                                 </div>
                             </li>
@@ -83,13 +83,29 @@
                                     <label class="col-sm-2 control-label">Connection security</label>
                                     <div class="col-sm-2">
                                         <div class="checkbox i-checks">
-                                            <label><input type="checkbox" value="0" name="connection" >SSL</label>
+                                            <label><input type="radio" value="0" name="connection" >SSL</label>
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="checkbox i-checks">
-                                            <label><input type="checkbox" value="1" name="connection" checked>TSL</label>
+                                            <label><input type="radio" value="1" name="connection" checked>TSL</label>
                                         </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="list-style-type:none" hidden="hidden">
+                                <div class="form-group">
+                                    <label for="corpid" class="col-sm-2 control-label">Corpid<span class="red-fonts">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="corpid" name="corpid"  type="text" class="form-control" value="{{ corpid }}">
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="list-style-type:none" hidden="hidden">
+                                <div class="form-group">
+                                    <label for="corpsecret" class="col-sm-2 control-label">Corpsecret<span class="red-fonts">*</span></label>
+                                    <div class="col-sm-8">
+                                        <input id="corpsecret" name="corpsecret"  type="text" class="form-control" value="{{ corpsecret }}">
                                     </div>
                                 </div>
                             </li>
@@ -129,38 +145,6 @@
 $('#groupForm').validator({
     timely: 2,
     theme: "yellow_right_effect",
-    fields: {
-        "media_name": {
-            rule: "required",
-            tip: "用户输入媒介名称",
-            ok: "",
-            msg: {required: "必须填写!"}
-        },
-        "smtp_host": {
-            rule: "required",
-            tip: "输入邮件服务器",
-            ok: "",
-            msg: {required: "必须填写!"}
-        },
-        "smtp_host_port": {
-            rule: "required",
-            tip: "输入邮件服务器端口",
-            ok: "",
-            msg: {required: "必须填写!"}
-        },
-        "email_user": {
-            rule: "required",
-            tip: "输入邮件地址",
-            ok: "",
-            msg: {required: "必须填写!"}
-        },
-        "email_user_password":{
-            rule:"required",
-            tip:"输入用户密码",
-            ok: "",
-            msg: {required: "必须填写!"}
-        }
-    },
     valid: function(form) {
         form.submit();
     }
@@ -174,19 +158,13 @@ $('#groupForm').validator({
 		$('#media_type').change(function() {
 			switch ($(this).val()) {
 				case '0':
-					$('#smtp_host, #smtp_host_port, #email_user, #email_user_password, #smtp_security, #extra').closest('li').show();
-					$('#comment').closest('li').hide();
-{#					$('#eztext_link').hide();#}
-
-					// radio button actions
-{#					toggleSecurityOptions();#}
-{#					toggleAuthenticationOptions();#}
+					$('#smtp_host, #smtp_host_port, #email_user, #email_user_password, #smtp_security, #extra, #comment').closest('li').show();
+					$('#corpid, #corpsecret').closest('li').hide();
 					break;
 
 				case '1':
-					$('#comment').closest('li').show();
-					$('#smtp_host, #smtp_host_port, #email_user, #email_user_password, #smtp_security, #extra').closest('li').hide();
-{#					$('#eztext_link').hide();#}
+					$('#corpid, #corpsecret,#extra, #comment').closest('li').show();
+					$('#smtp_host, #smtp_host_port, #email_user, #email_user_password, #smtp_security').closest('li').hide();
 					break;
 			}
 		});

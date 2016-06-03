@@ -33,6 +33,8 @@ class EmergencyType(models.Model):
     email_password = models.CharField(max_length=200,  blank=True, null=True, verbose_name=u'用户密码')
     email_use_tls = models.BooleanField(default=True)
     email_use_ssl = models.BooleanField(default=False)
+    corpid = models.CharField(max_length=100, null=True, blank=True, verbose_name=u'微信企业号CorpID')
+    corpsecret = models.CharField(max_length=252, null=True, blank=True, verbose_name=u'微信企业号secret')
     comment = models.TextField()
 
     def __unicode__(self):

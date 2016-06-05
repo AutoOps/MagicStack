@@ -322,8 +322,7 @@ def forget_password(request):
         defend_attack(request)
         email = request.POST.get('email', '')
         username = request.POST.get('username', '')
-        name = request.POST.get('name', '')
-        user = get_object(User, username=username, email=email, name=name)
+        user = get_object(User, username=username, email=email)
         if user:
             timestamp = int(time.time())
             hash_encode = PyCrypt.md5_crypt(str(user.uuid) + str(timestamp) + KEY)
@@ -338,8 +337,7 @@ def forget_password(request):
             return http_success(request, msg)
         else:
             error = u'用户不存在或邮件地址错误'
-
-    return render_to_response('userManage/forget_password.html', locals())
+            return http_error(request, error)
 
 
 @defend_attack

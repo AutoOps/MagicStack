@@ -2,9 +2,13 @@
 {% load mytags %}
 {% load humanize %}
 {% block content %}
-{% include 'nav_cat_bar.html' %}
-
-<div class="wrapper wrapper-content">
+{#{% include 'nav_cat_bar.html' %}#}
+<!-- BEGIN PAGE TITLE-->
+    <h3 class="page-title"> Dashboard
+        <small>dashboard & statistics</small>
+    </h3>
+<!-- END PAGE TITLE-->
+{#<div class="wrapper wrapper-content">#}
     <div class="row">
         <div class="col-sm-3">
             <div class="ibox float-e-margins">
@@ -167,7 +171,7 @@
                                 {% for login in login_10 %}
                                     <div class="feed-element">
                                         <a href="#" class="pull-left">
-                                            <img alt="image" class="img-circle" src="/static/img/root.png">
+{#                                            <img alt="image" class="img-circle" src="/static/img/root.png">#}
                                         </a>
                                         <div class="media-body ">
                                             {% ifequal login.is_finished 0 %}
@@ -189,7 +193,7 @@
                                         {% for login in login_more_10 %}
                                             <div class="feed-element">
                                                 <a href="#" class="pull-left">
-                                                    <img alt="image" class="img-circle" src="/static/img/root.png">
+{#                                                    <img alt="image" class="img-circle" src="/static/img/root.png">#}
                                                 </a>
                                                 <div class="media-body ">
                                                     {% ifequal login.is_finished 0 %}
@@ -260,8 +264,8 @@
                 </div>
             </div>
         </div>
-{#    </div>#}
-</div>
+    </div>
+{#</div>#}
 
 {% endblock %}
 

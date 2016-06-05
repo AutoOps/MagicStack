@@ -16,7 +16,7 @@ urlpatterns = patterns('userManage.views',
                        url(r'^update/$', 'change_info', name='user_update'),
                        url(r'^mail/retry/$', 'send_mail_retry', name='mail_retry'),
                        url(r'^password/reset/$', 'reset_password', name='password_reset'),
-                       url(r'^password/forget/$', 'forget_password', name='password_forget'),
+                       url(r'^login/password/forget/$', 'forget_password', name='password_forget'),
                        url(r'^key/gen/$', 'regen_ssh_key', name='key_gen'),
                        url(r'^key/down/$', 'down_key', name='key_down'),
                        )

@@ -1,108 +1,216 @@
-{% if request.session.role_id == 2 %}
-<nav class="navbar-default navbar-static-side" role="navigation">
-    <div class="sidebar-collapse">
-        <ul class="nav" id="side-menu">
-            {% include 'nav_li_profile.html' %}
-            <li id="index">
-               <a href="{% url 'index' %}"><i class="fa fa-dashboard"></i> <span class="nav-label">仪表盘</span><span class="label label-info pull-right"></span></a>
-            </li>
-            <li id="juser">
-                <a href="#"><i class="fa fa-group"></i> <span class="nav-label">用户管理</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li class="group"><a href="{% url 'user_group_list' %}">查看用户组</a></li>
-                    <li class="user"><a href="{% url 'user_list' %}">查看用户<span class="label {% ifequal user_active_num user_total_num %}label-primary {% else %}label-warning {% endifequal %}pull-right">{{ user_active_num }}/{{ user_total_num }}</span></a></li>
-                </ul>
-            </li>
-            <li id="jasset">
-                <a><i class="fa fa-inbox"></i> <span class="nav-label">资产管理</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li class="group"><a href="{% url 'asset_group_list' %}">查看资产组</a></li>
-                    <li class="asset"> <a href="{% url 'asset_list' %}">查看资产<span class="label label-info pull-right">{{ host_active_num }}/{{ host_total_num}}</span></a></li>
-                    <li class="idc"> <a href="{% url 'idc_list' %}">查看机房</a></li>
-                </ul>
-            </li>
-            <li id="application">
-                <a><i class="fa fa-inbox"></i> <span class="nav-label">应用管理</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li class="app_script"> <a href="#">脚本<span class="label label-info pull-right">{{ host_active_num }}/{{ host_total_num}}</span></a></li>
-                    <li class="docker"> <a href="#">Docker FIle</a></li>
-                </ul>
-            </li>
-            <li id="tasks">
-                <a><i class="fa fa-inbox"></i> <span class="nav-label">任务管理</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li class="app_script"> <a href="#">1<span class="label label-info pull-right">{{ host_active_num }}/{{ host_total_num}}</span></a></li>
-                    <li class="docker"> <a href="#">2</a></li>
-                </ul>
-            </li>
-            <li id="backups">
-                <a><i class="fa fa-inbox"></i> <span class="nav-label">备份管理</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li class="1"> <a href="#">1<span class="label label-info pull-right">{{ host_active_num }}/{{ host_total_num}}</span></a></li>
-                    <li class="2"> <a href="#">2</a></li>
-                </ul>
-            </li>
-            <li id="jperm">
-                <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">授权管理</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li class="sudo">
-                        <a class="sudo" href="{% url 'sudo_list' %}">Sudo</a>
-                    </li>
-                    <li class="role">
-                        <a href="{% url 'role_list' %}">系统用户</a>
-                    </li>
-                    <li class="rule">
-                        <a href="{% url 'rule_list' %}">授权规则</a>
+
+<div class="page-sidebar navbar-collapse collapse">
+<!-- BEGIN SIDEBAR MENU -->
+<!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+<!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+<!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+<!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+<!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+    <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+        <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+        <li class="sidebar-toggler-wrapper hide">
+            <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+            <div class="sidebar-toggler">
+                <span></span>
+            </div>
+            <!-- END SIDEBAR TOGGLER BUTTON -->
+        </li>
+        <li class="nav-item start active open">
+            <li class="nav-item  ">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-diamond"></i>
+                    <span class="title">Dashboard</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item start active open">
+                        <a href="{% url 'index' %}" class="nav-link ">
+                            <i class="icon-bar-chart"></i>
+                            <span class="title">Dashboard </span>
+                            <span class="selected"></span>
+                        </a>
                     </li>
                 </ul>
             </li>
-
-            <li id="proxy">
-                   <a href="{% url 'proxy_list' %}"><i class="fa fa-gears"></i> <span class="nav-label">代理管理</span><span class="label label-info pull-right"></span></a>
-            </li>
-            <li id="jlog">
-               <a href="{% url 'log_list' 'online' %}"><i class="fa fa-files-o"></i> <span class="nav-label">日志审计</span><span class="label label-info pull-right"></span></a>
-            </li>
-            <li id="emails">
-                <a><i class="fa fa-inbox"></i> <span class="nav-label">告警管理</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li class="media_type"> <a href="{% url 'media_list' %}">告警媒介类型<span class="label label-info pull-right">{{ host_active_num }}/{{ host_total_num}}</span></a></li>
-                    <li class="email_set"> <a href="#">告警设置</a></li>
-                </ul>
-            </li>
-
-            <li id="global_setting">
-                <a><i class="fa fa-inbox"></i> <span class="nav-label">全局设置</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li class="1"> <a href="#">1<span class="label label-info pull-right">{{ host_active_num }}/{{ host_total_num}}</span></a></li>
-                    <li class="2"> <a href="#">2</a></li>
-                </ul>
-            </li>
-        </ul>
-
-    </div>
-</nav>
-{% endif %}
-
-{% if request.session.role_id == 0 %}
-<nav class="navbar-default navbar-static-side" role="navigation">
-    <div class="sidebar-collapse">
-        <ul class="nav" id="side-menu">
-            {% include 'nav_li_profile.html' %}
-            <li id="juser">
-               <a href="{% url 'user_detail' %}"><i class="fa fa-dashboard"></i> <span class="nav-label">仪表盘</span><span class="label label-info pull-right"></span></a>
-            </li>
-            <li id="jasset">
-               <a href="{% url 'asset_list' %}"><i class="fa fa-inbox"></i> <span class="nav-label">查看主机</span><span class="label label-info pull-right"></span></a>
-            </li>
-            <li id="file">
-                <a href="#"><i class="fa fa-download"></i> <span class="nav-label">上传下载</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li class="upload"><a href="{% url 'file_upload' %}">文件上传</a></li>
-                    <li class="download"><a href="{% url 'file_download' %}">文件下载</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</nav>
-{% endif %}
+        </li>
+        <li class="nav-item  ">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-diamond"></i>
+                <span class="title">用户管理</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item ">
+                    <a href="{% url 'user_group_list' %}" class="nav-link ">
+                        <span class="title">查看用户组</span>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a href="{% url 'user_list' %}" class="nav-link ">
+                        <span class="title">查看用户</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item  ">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-puzzle"></i>
+                <span class="title">资产管理</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item  ">
+                    <a href="{% url 'asset_group_list' %}" class="nav-link ">
+                        <span class="title">查看资产组</span>
+                    </a>
+                </li>
+                <li class="nav-item  ">
+                    <a href="{% url 'asset_list' %}" class="nav-link ">
+                        <span class="title">查看资产</span>
+                        <span class="badge badge-danger">2</span>
+                    </a>
+                </li>
+                <li class="nav-item  ">
+                    <a href="{% url 'idc_list' %}" class="nav-link ">
+                        <span class="title">查看机房</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item  ">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-settings"></i>
+                <span class="title">应用管理</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item  ">
+                    <a href="#" class="nav-link ">
+                        <span class="title">脚本</span>
+                    </a>
+                </li>
+                <li class="nav-item  ">
+                    <a href="#" class="nav-link ">
+                        <span class="title">Docker FIle</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item  ">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-briefcase"></i>
+                <span class="title">任务管理</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item  ">
+                    <a href="#" class="nav-link ">
+                        <span class="title">1</span>
+                    </a>
+                </li>
+                <li class="nav-item  ">
+                    <a href="#" class="nav-link ">
+                        <span class="title">2</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item  ">
+            <a href="?p=" class="nav-link nav-toggle">
+                <i class="icon-wallet"></i>
+                <span class="title">备份管理</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item  ">
+                    <a href="#" class="nav-link ">
+                        <span class="title">1</span>
+                    </a>
+                </li>
+                <li class="nav-item  ">
+                    <a href="#" class="nav-link ">
+                        <span class="title">2</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item  ">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-bar-chart"></i>
+                <span class="title">授权管理</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item  ">
+                    <a href="{% url 'sudo_list' %}" class="nav-link ">
+                        <span class="title">SUDO</span>
+                    </a>
+                </li>
+                <li class="nav-item  ">
+                    <a href="{% url 'role_list' %}" class="nav-link ">
+                        <span class="title">系统用户</span>
+                    </a>
+                </li>
+                <li class="nav-item  ">
+                    <a href="{% url 'rule_list' %}" class="nav-link ">
+                        <span class="title">授权规则</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item  ">
+            <a href="{% url 'proxy_list' %}" class="nav-link nav-toggle">
+                <i class="icon-pointer"></i>
+                <span class="title">代理管理</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+        <li class="nav-item  ">
+            <a href="{% url 'log_list' 'online' %}" class="nav-link nav-toggle">
+                <i class="icon-pointer"></i>
+                <span class="title">日志审计</span>
+                <span class="arrow"></span>
+            </a>
+        </li>
+        <li class="nav-item  ">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-bar-chart"></i>
+                <span class="title">告警管理</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item  ">
+                    <a href="{% url 'media_list' %}" class="nav-link ">
+                        <span class="title">告警媒介类型</span>
+                    </a>
+                </li>
+                <li class="nav-item  ">
+                    <a href="#" class="nav-link ">
+                        <span class="title">告警设置</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item  ">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-bar-chart"></i>
+                <span class="title">全局设置</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item  ">
+                    <a href="#" class="nav-link ">
+                        <span class="title">1</span>
+                    </a>
+                </li>
+                <li class="nav-item  ">
+                    <a href="#" class="nav-link ">
+                        <span class="title">2</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<!-- END SIDEBAR -->

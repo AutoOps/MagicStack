@@ -47,7 +47,7 @@ def group_add(request,res, *args):
         else:
             msg = u'添加用户组 %s ' % group_name
             res['content'] = msg
-            print "msg:",msg
+            return HttpResponseRedirect(reverse('user_group_list'))
 
     return my_render('userManage/group_add.html', locals(), request)
 
@@ -68,8 +68,6 @@ def group_list(request):
 
     if group_id:
         user_group_list = user_group_list.filter(id=int(group_id))
-
-    user_group_list, p, user_groups, page_range, current_page, show_first, show_end = pages(user_group_list, request)
     return my_render('userManage/group_list.html', locals(), request)
 
 

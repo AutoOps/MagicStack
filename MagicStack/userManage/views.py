@@ -24,8 +24,8 @@ def group_add(request,res, *args):
     user_all = User.objects.all()
 
     if request.method == 'POST':
-        group_name = request.POST.get('group_name', '')
-        users_selected = request.POST.getlist('users_selected', '')
+        group_name = request.POST.get('name', '')
+        users_selected = request.POST.getlist('select_multi', '')
         comment = request.POST.get('comment', '')
 
         try:

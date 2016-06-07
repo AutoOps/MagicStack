@@ -141,7 +141,6 @@
                 $(".gradeX input:checked").each(function() {
                     check_array.push($(this).attr("value"))
                 });
-                alert(check_array);
                 $.get("{% url 'user_group_del' %}",
                     {id: check_array.join(",")},
                     function(result){

@@ -1,8 +1,5 @@
 {% extends 'base.html' %}
 {% load mytags %}
-{% block content %}
-{% include 'nav_cat_bar.html' %}
-
 {% block self_head_css_js %}
         <link href="/static/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="/static/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
@@ -22,6 +19,9 @@
         <link href="/static/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
         <link href="/static/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
 {% endblock %}
+
+{% block content %}
+{% include 'nav_cat_bar.html' %}
 
 <div class="row">
     <div class="col-md-12">

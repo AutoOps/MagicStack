@@ -24,8 +24,8 @@ def group_add(request,res, *args):
     user_all = User.objects.all()
 
     if request.method == 'POST':
-        group_name = request.POST.get('group_name', '')
-        users_selected = request.POST.getlist('users_selected', '')
+        group_name = request.POST.get('name', '')
+        users_selected = request.POST.getlist('select_multi', '')
         comment = request.POST.get('comment', '')
 
         try:
@@ -101,15 +101,14 @@ def group_edit(request, res, *args):
         group_id = request.GET.get('id', '')
         user_group = get_object(UserGroup, id=group_id)
         users_selected = User.objects.filter(group=user_group)
-        users_remain = User.objects.filter(~Q(group=user_group))
         users_all = User.objects.all()
 
     elif request.method == 'POST':
-        group_id = request.POST.get('group_id', '')
-        group_name = request.POST.get('group_name', '')
+        group_id = request.GET.get('id', '')
+        group_name = request.POST.get('name', '')
         comment = request.POST.get('comment', '')
-        users_selected = request.POST.getlist('users_selected')
-
+        users_selected = request.POST.getlist('select_multi')
+        user_group = get_object(UserGroup, id=group_id)
         try:
             if '' in [group_id, group_name]:
                 raise ServerError(u'组名不能为空')
@@ -117,7 +116,6 @@ def group_edit(request, res, *args):
             if len(UserGroup.objects.filter(name=group_name)) > 1:
                 raise ServerError(u'%s 用户组已存在' % group_name)
 
-            user_group = get_object(UserGroup, id=group_id)
             user_group.user_set.clear()
 
             for user in User.objects.filter(id__in=users_selected):
@@ -138,7 +136,6 @@ def group_edit(request, res, *args):
         else:
             users_all = User.objects.all()
             users_selected = User.objects.filter(group=user_group)
-            users_remain = User.objects.filter(~Q(group=user_group))
 
     return my_render('userManage/group_edit.html', locals(), request)
 

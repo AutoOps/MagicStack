@@ -207,8 +207,7 @@ def user_add(request, res, *args):
                         return my_render('userManage/user_add.html', locals(), request)
                     user_add_mail(user, default_email, kwargs=locals())
                 msg = get_display_msg(user, password=password, ssh_key_pwd=ssh_key_pwd, send_mail_need=send_mail_need)
-                error = u'添加用户 %s' % username
-                res['content'] = error
+                res['content'] = u'添加用户 %s' % username
     return my_render('userManage/user_add.html', locals(), request)
 
 
@@ -500,7 +499,6 @@ def down_key(request):
         if user:
             username = user.username
             private_key_file = os.path.join(KEY_DIR, 'user', username+'.pem')
-            print private_key_file
             if os.path.isfile(private_key_file):
                 f = open(private_key_file)
                 data = f.read()

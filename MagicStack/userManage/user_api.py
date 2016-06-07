@@ -159,17 +159,15 @@ def user_add_mail(user, default_email, kwargs):
     发送用户添加邮件
     """
     user_role = {'SU': u'超级管理员', 'GA': u'组管理员', 'CU': u'普通用户'}
-    mail_title = u'恭喜你的跳板机用户 %s 添加成功 MagicStack' % user.name
+    mail_title = u'恭喜你!用户 %s 已成功添加至MagicStack,您可以用此账户登录MagicStack' % user.name
     mail_msg = u"""
     Hi, %s
         您的用户名： %s
         您的权限： %s
         您的web登录密码： %s
-        您的ssh密钥文件密码： %s
-        密钥下载地址： %s/userManage/key/down/?uuid=%s
-        说明： 请登陆跳板机后台下载密钥, 然后使用密钥登陆跳板机！
+        感谢您使用MagicStack,谢谢!
     """ % (user.name, user.username, user_role.get(user.role, u'普通用户'),
-           kwargs.get('password'), kwargs.get('ssh_key_pwd'), URL, user.uuid)
+           kwargs.get('password'))
     send_email(default_email, mail_title, [user.email], mail_msg)
 
 

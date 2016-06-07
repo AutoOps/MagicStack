@@ -472,82 +472,20 @@ def asset_list(request):
     user_perm = request.session['role_id']
     idc_all = IDC.objects.filter()
     asset_group_all = AssetGroup.objects.all()
-    asset_types = ASSET_TYPE
-    asset_status = ASSET_STATUS
-    idc_name = request.GET.get('idc', '')
-    group_name = request.GET.get('group', '')
-    asset_type = request.GET.get('asset_type', '')
-    status = request.GET.get('status', '')
-    keyword = request.GET.get('keyword', '')
-    export = request.GET.get("export", False)
-    group_id = request.GET.get("group_id", '')
-    idc_id = request.GET.get("idc_id", '')
-    asset_id_all = request.GET.getlist("id", '')
+    asset_list = Asset.objects.all()
 
-    if group_id:
-        group = get_object(AssetGroup, id=group_id)
-        if group:
-            asset_find = Asset.objects.filter(group=group)
-    elif idc_id:
-        idc = get_object(IDC, id=idc_id)
-        if idc:
-            asset_find = Asset.objects.filter(idc=idc)
+    if user_perm != 0:
+        asset_find = Asset.objects.all()
     else:
-        if user_perm != 0:
-            asset_find = Asset.objects.all()
-        else:
-            asset_id_all = []
-            user = get_object(User, username=username)
-            asset_perm = get_group_user_perm(user) if user else {'asset': ''}
-            user_asset_perm = asset_perm['asset'].keys()
-            for asset in user_asset_perm:
-                asset_id_all.append(asset.id)
-            asset_find = Asset.objects.filter(pk__in=asset_id_all)
-            asset_group_all = list(asset_perm['asset_group'])
+        asset_id_all = []
+        user = get_object(User, username=username)
+        asset_perm = get_group_user_perm(user) if user else {'asset': ''}
+        user_asset_perm = asset_perm['asset'].keys()
+        for asset in user_asset_perm:
+            asset_id_all.append(asset.id)
+        asset_find = Asset.objects.filter(pk__in=asset_id_all)
+        asset_group_all = list(asset_perm['asset_group'])
 
-    if idc_name:
-        asset_find = asset_find.filter(idc__name__contains=idc_name)
-
-    if group_name:
-        asset_find = asset_find.filter(group__name__contains=group_name)
-
-    if asset_type:
-        asset_find = asset_find.filter(asset_type__contains=asset_type)
-
-    if status:
-        asset_find = asset_find.filter(status__contains=status)
-
-    if keyword:
-        asset_find = asset_find.filter(
-            Q(hostname__contains=keyword) |
-            Q(other_ip__contains=keyword) |
-            Q(ip__contains=keyword) |
-            Q(remote_ip__contains=keyword) |
-            Q(comment__contains=keyword) |
-            Q(username__contains=keyword) |
-            Q(group__name__contains=keyword) |
-            Q(cpu__contains=keyword) |
-            Q(memory__contains=keyword) |
-            Q(disk__contains=keyword) |
-            Q(brand__contains=keyword) |
-            Q(cabinet__contains=keyword) |
-            Q(sn__contains=keyword) |
-            Q(system_type__contains=keyword) |
-            Q(system_version__contains=keyword))
-
-    if export:
-        if asset_id_all:
-            asset_find = []
-            for asset_id in asset_id_all:
-                asset = get_object(Asset, id=asset_id)
-                if asset:
-                    asset_find.append(asset)
-        s = write_excel(asset_find)
-        if s[0]:
-            file_name = s[1]
-        smg = u'excel文件已生成，请点击下载!'
-        return my_render('assetManage/asset_excel_download.html', locals(), request)
-    assets_list, p, assets, page_range, current_page, show_first, show_end = pages(asset_find, request)
     if user_perm != 0:
         return my_render('assetManage/asset_list.html', locals(), request)
     else:

@@ -153,7 +153,7 @@ def user_add(request, res, *args):
     if request.method == 'POST':
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
-        encrypt_password = CRYPTOR.encrypt(password)
+        # encrypt_password = CRYPTOR.encrypt(password)
         name = request.POST.get('name', '')
         email = request.POST.get('email', '')
         groups = request.POST.getlist('groups', [])
@@ -179,7 +179,7 @@ def user_add(request, res, *args):
         else:
             try:
                 user = db_add_user(username=username, name=name,
-                                   password=encrypt_password,
+                                   password=password,
                                    email=email, role=role, uuid=uuid_r,
                                    groups=groups, admin_groups=admin_groups,
                                    ssh_key_pwd=ssh_key_pwd,

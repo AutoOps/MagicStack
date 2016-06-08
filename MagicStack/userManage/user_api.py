@@ -59,6 +59,7 @@ def db_add_user(**kwargs):
     admin_groups = kwargs.pop('admin_groups')
     role = kwargs.get('role', 'CU')
     user = User(**kwargs)
+    user.set_password(kwargs.get('password'))
     user.save()
     if groups_post:
         group_select = []
@@ -86,7 +87,11 @@ def db_update_user(**kwargs):
     user = User.objects.filter(id=user_id)
     if user:
         user_get = user[0]
+        password = kwargs.pop('password')
         user.update(**kwargs)
+        if password.strip():
+            user_get.set_password(password)
+            user_get.save()
     else:
         return None
 

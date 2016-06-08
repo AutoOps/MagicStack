@@ -59,7 +59,6 @@ def db_add_user(**kwargs):
     admin_groups = kwargs.pop('admin_groups')
     role = kwargs.get('role', 'CU')
     user = User(**kwargs)
-    user.set_password(kwargs.get('password'))
     user.save()
     if groups_post:
         group_select = []
@@ -87,11 +86,7 @@ def db_update_user(**kwargs):
     user = User.objects.filter(id=user_id)
     if user:
         user_get = user[0]
-        password = kwargs.pop('password')
         user.update(**kwargs)
-        if password.strip():
-            user_get.set_password(password)
-            user_get.save()
     else:
         return None
 
@@ -178,18 +173,15 @@ def server_del_user(username):
     bash('userdel -r -f %s' % username)
 
 
-def get_display_msg(user, password='', ssh_key_pwd='', send_mail_need=False):
+def get_display_msg(user, password='', send_mail_need=False):
     if send_mail_need:
         msg = u'添加用户 %s 成功！ 用户密码已发送到 %s 邮箱！' % (user.name, user.email)
     else:
         msg = u"""
-        跳板机地址： %s <br />
         用户名：%s <br />
         密码：%s <br />
-        密钥密码：%s <br />
-        密钥下载url: %s/userManage/key/down/?uuid=%s <br />
-        该账号密码可以登陆web和跳板机。
-        """ % (URL, user.username, password, ssh_key_pwd, URL, user.uuid)
+        该账号密码可以登陆MagicStack
+        """ % (user.username, password)
     return msg
 
 

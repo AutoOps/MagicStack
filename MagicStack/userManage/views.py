@@ -152,7 +152,8 @@ def user_add(request, res, *args):
 
     if request.method == 'POST':
         username = request.POST.get('username', '')
-        password = PyCrypt.gen_rand_pass(16)
+        password = request.POST.get('password', '')
+        # encrypt_password = CRYPTOR.encrypt(password)
         name = request.POST.get('name', '')
         email = request.POST.get('email', '')
         groups = request.POST.getlist('groups', [])
@@ -184,7 +185,6 @@ def user_add(request, res, *args):
                                    ssh_key_pwd=ssh_key_pwd,
                                    is_active=is_active,
                                    date_joined=datetime.datetime.now())
-                server_add_user(username=username, ssh_key_pwd=ssh_key_pwd)
                 user = get_object(User, username=username)
                 if groups:
                     user_groups = []
@@ -197,7 +197,6 @@ def user_add(request, res, *args):
                 res['content'] = error
                 try:
                     db_del_user(username)
-                    server_del_user(username)
                 except Exception:
                     pass
             else:
@@ -206,9 +205,8 @@ def user_add(request, res, *args):
                         error = u"没有邮件服务器信息,请先到告警管理配置邮件服务器,谢谢!"
                         return my_render('userManage/user_add.html', locals(), request)
                     user_add_mail(user, default_email, kwargs=locals())
-                msg = get_display_msg(user, password=password, ssh_key_pwd=ssh_key_pwd, send_mail_need=send_mail_need)
-                error = u'添加用户 %s' % username
-                res['content'] = error
+                res['content'] = u'添加用户 %s' % username
+                return HttpResponseRedirect(reverse('user_list'))
     return my_render('userManage/user_add.html', locals(), request)
 
 
@@ -216,21 +214,7 @@ def user_add(request, res, *args):
 def user_list(request):
     user_role = {'SU': u'超级管理员', 'GA': u'组管理员', 'CU': u'普通用户'}
     header_title, path1, path2 = u'查看用户', u'用户管理', u'用户列表'
-    keyword = request.GET.get('keyword', '')
-    gid = request.GET.get('gid', '')
     users_list = User.objects.all().order_by('username')
-
-    if gid:
-        user_group = UserGroup.objects.filter(id=gid)
-        if user_group:
-            user_group = user_group[0]
-            users_list = user_group.user_set.all()
-
-    if keyword:
-        users_list = users_list.filter(Q(username__icontains=keyword) | Q(name__icontains=keyword)).order_by('username')
-
-    users_list, p, users, page_range, current_page, show_first, show_end = pages(users_list, request)
-
     return my_render('userManage/user_list.html', locals(), request)
 
 
@@ -276,13 +260,11 @@ def user_del(request, res, *args):
             user = get_object(User, id=user_id)
             if user and user.username != 'admin':
                 logger.debug(u"删除用户 %s " % user.username)
-                bash('userdel -r %s' % user.username)
                 res['content'] += "%s   "%user.username
                 user.delete()
         except Exception, e:
             res['flag'] = 'false'
             res['content'] = e
-            logger.debug(e)
     return HttpResponse(u'删除成功')
 
 
@@ -383,6 +365,7 @@ def user_edit(request,res, *args):
         user_role = {'SU': u'超级管理员', 'CU': u'普通用户'}
         user = get_object(User, id=user_id)
         group_all = UserGroup.objects.all()
+        select_groups = user.group.all()
         if user:
             groups_str = ' '.join([str(group.id) for group in user.group.all()])
             admin_groups_str = ' '.join([str(admin_group.group.id) for admin_group in user.admingroup_set.all()])
@@ -391,6 +374,7 @@ def user_edit(request,res, *args):
         try:
             user_id = request.GET.get('id', '')
             password = request.POST.get('password', '')
+            encrypt_passwd = CRYPTOR.encrypt(password)
             name = request.POST.get('name', '')
             email = request.POST.get('email', '')
             groups = request.POST.getlist('groups', [])
@@ -409,7 +393,7 @@ def user_edit(request,res, *args):
                 return HttpResponseRedirect(reverse('user_list'))
 
             db_update_user(user_id=user_id,
-                           password=password,
+                           password=encrypt_passwd,
                            name=name,
                            email=email,
                            groups=groups,
@@ -500,7 +484,6 @@ def down_key(request):
         if user:
             username = user.username
             private_key_file = os.path.join(KEY_DIR, 'user', username+'.pem')
-            print private_key_file
             if os.path.isfile(private_key_file):
                 f = open(private_key_file)
                 data = f.read()

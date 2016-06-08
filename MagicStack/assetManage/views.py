@@ -28,27 +28,29 @@ def group_add(request, res,*args):
 
     if request.method == 'POST':
         name = request.POST.get('name', '')
-        asset_select = request.POST.getlist('asset_select', [])
+        asset_select = request.POST.getlist('select_multi', [])
         comment = request.POST.get('comment', '')
 
         try:
             if not name:
-                emg = u'组名不能为空'
-                raise ServerError(emg)
+                error = u'组名不能为空'
+                raise ServerError(error)
 
             asset_group_test = get_object(AssetGroup, name=name)
             if asset_group_test:
-                emg = u"该组名 %s 已存在" % name
-                raise ServerError(emg)
+                error = u"该组名 %s 已存在" % name
+                raise ServerError(error)
 
-        except ServerError:
+        except ServerError as e:
+            error = e
             res['flag'] = 'false'
-            res['content'] = emg
+            res['content'] = e
 
         else:
             db_add_group(name=name, comment=comment, asset_select=asset_select)
             smg = u"主机组 %s 添加成功" % name
             res['content'] = smg
+            return HttpResponseRedirect(reverse('asset_group_list'))
 
     return my_render('assetManage/group_add.html', locals(), request)
 
@@ -67,27 +69,27 @@ def group_edit(request,res, *args):
 
     asset_all = Asset.objects.all()
     asset_select = Asset.objects.filter(group=group)
-    asset_no_select = [a for a in asset_all if a not in asset_select]
 
     if request.method == 'POST':
         name = request.POST.get('name', '')
-        asset_select = request.POST.getlist('asset_select', [])
+        asset_select = request.POST.getlist('select_multi', [])
         comment = request.POST.get('comment', '')
 
         try:
             if not name:
-                emg = u'组名不能为空'
-                raise ServerError(emg)
+                error = u'组名不能为空'
+                raise ServerError(error)
 
             if group.name != name:
                 asset_group_test = get_object(AssetGroup, name=name)
                 if asset_group_test:
-                    emg = u"该组名 %s 已存在" % name
-                    raise ServerError(emg)
+                    error = u"该组名 %s 已存在" % name
+                    raise ServerError(error)
 
-        except ServerError:
+        except ServerError as e:
+            error = e
             res['flag'] = 'false'
-            res['content'] = emg
+            res['content'] = e
 
         else:
             group.asset_set.clear()
@@ -107,15 +109,7 @@ def group_list(request):
     列出资产组
     """
     header_title, path1, path2 = u'查看资产组', u'资产管理', u'查看资产组'
-    keyword = request.GET.get('keyword', '')
     asset_group_list = AssetGroup.objects.all()
-    group_id = request.GET.get('id')
-    if group_id:
-        asset_group_list = asset_group_list.filter(id=group_id)
-    if keyword:
-        asset_group_list = asset_group_list.filter(Q(name__contains=keyword) | Q(comment__contains=keyword))
-
-    asset_group_list, p, asset_groups, page_range, current_page, show_first, show_end = pages(asset_group_list, request)
     return my_render('assetManage/group_list.html', locals(), request)
 
 

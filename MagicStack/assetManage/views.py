@@ -14,6 +14,26 @@ import Queue
 import time
 
 task_queue = Queue.Queue()
+ASSET_STATUS = {'1': u"已使用", '2': u"未使用" , '3': u"报废"}
+ASSET_TYPE = {
+    '1': u"物理机",
+    '2': u"虚拟机",
+    '3': u"交换机",
+    '4': u"路由器",
+    '5': u"防火墙",
+    '6': u"Docker",
+    '7': u"其他"
+}
+POWER_TYPE = {
+    'drac5': 'drac5',
+    'idrac': 'idrac',
+    'ilo': 'ilo',
+    'ilo2': 'ilo2',
+    'ilo3': 'ilo3',
+    'ilo4': 'ilo4',
+    'intelmodular': 'intelmodular',
+    'ipmilan': 'ipmilan',
+}
 
 @require_role('admin')
 @user_operator_record
@@ -144,11 +164,11 @@ def asset_add(request,res, *args):
     proxys = Proxy.objects.all()
     res['operator'] = path2
     proxy_profiles = gen_proxy_profiles(proxys)
-    af = AssetForm()
-    nfg = NetWorkingGlobalForm()
-    nf = NetWorkingForm()
-    pf = PowerManageForm()
-    asset_groups = AssetGroup.objects.all()
+    asset_status = ASSET_STATUS
+    asset_type = ASSET_TYPE
+    power_type = POWER_TYPE
+    group_all = AssetGroup.objects.all()
+    idc_all = IDC.objects.all()
     if request.method == 'POST':
         try:
             hostname = request.POST.get('name', '')

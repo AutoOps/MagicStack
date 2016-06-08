@@ -10,120 +10,6 @@
 
 {% block content %}
     {% include 'nav_cat_bar.html' %}
-{#    <div class="wrapper wrapper-content animated fadeInRight">#}
-{#        <div class="row">#}
-{#            <div class="col-sm-10">#}
-{#                <div class="ibox float-e-margins">#}
-{#                    <div class="ibox-title">#}
-{#                        <h5>填写基本信息</h5>#}
-{#                        <div class="ibox-tools">#}
-{#                            <a class="collapse-link">#}
-{#                                <i class="fa fa-chevron-up"></i>#}
-{#                            </a>#}
-{#                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">#}
-{#                                <i class="fa fa-wrench"></i>#}
-{#                            </a>#}
-{#                            <a class="close-link">#}
-{#                                <i class="fa fa-times"></i>#}
-{#                            </a>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <div class="ibox-content">#}
-{#                        <form method="post" id="userForm" class="form-horizontal" action="">#}
-{#                            {% if error %}#}
-{#                                <div class="alert alert-warning text-center">{{ error }}</div>#}
-{#                            {% endif %}#}
-{#                            {% if msg %}#}
-{#                                <div class="alert alert-success">{{ msg | safe }}</div>#}
-{#                            {% endif %}#}
-{#                            <div class="form-group">#}
-{#                                <label for="username" class="col-sm-2 control-label">用户名<span class="red-fonts">*</span></label>#}
-{#                                <div class="col-sm-8">#}
-{#                                    <input id="username" name="username"  type="text" class="form-control" {% if error %}value="{{ username }}" {% endif %}>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="hr-line-dashed"></div>#}
-{#                            <div class="form-group">#}
-{#                                <label for="name" class="col-sm-2 control-label">姓名<span class="red-fonts">*</span></label>#}
-{#                                <div class="col-sm-8">#}
-{#                                    <input id="name" name="name" placeholder="Name" type="text" class="form-control" {% if error %}value="{{ name }}" {% endif %} >#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="hr-line-dashed"></div>#}
-{#                            <div class="form-group">#}
-{#                                <label for="groups" class="col-sm-2 control-label">用户组</label>#}
-{#                                <div class="col-sm-8">#}
-{#                                    <select id="groups" name="groups" class="form-control m-b" multiple size="12">#}
-{#                                        {% for group in group_all %}#}
-{#                                            {% if forloop.first %}#}
-{#                                                <option value="{{ group.id }}" selected>{{ group.name }}</option>#}
-{#                                            {% else %}#}
-{#                                                <option value="{{ group.id }}">{{ group.name }}</option>#}
-{#                                            {% endif %}#}
-{#                                        {% endfor %}#}
-{#                                    </select>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            {% ifequal session_role_id 2 %}#}
-{#                            <div class="hr-line-dashed"></div>#}
-{#                            <div class="form-group">#}
-{#                                <label for="role" class="col-sm-2 control-label">权限<span class="red-fonts">*</span></label>#}
-{#                                <div class="col-sm-8">#}
-{#                                    {% for r, role_name in user_role.items %}#}
-{#                                    <div class="col-sm-3">#}
-{#                                        <div class="radio i-checks">#}
-{#                                            <label><input type="radio" value="{{ r }}" class="role" name="role" {% ifequal r 'CU' %}checked{% endifequal %}>{{ role_name }}</label>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                    {% endfor %}#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="form-group" id="admin_groups" style="display: none">#}
-{#                                <label for="role" class="col-sm-2 control-label">管理用户组<span class="red-fonts">*</span></label>#}
-{#                                <div class="col-sm-8">#}
-{#                                    {% for user_group in group_all %}#}
-{#                                    <div class="col-sm-3">#}
-{#                                        <div class="checkbox i-checks">#}
-{#                                            <label><input type="checkbox" value="{{ user_group.id }}" name="admin_groups" > {{ user_group.name }}</label>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                    {% endfor %}#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            {% endifequal %}#}
-{#                            <div class="hr-line-dashed"></div>#}
-{#                            <div class="form-group">#}
-{#                                <label for="email" class="col-sm-2 control-label">Email<span class="red-fonts">*</span></label>#}
-{#                                <div class="col-sm-8">#}
-{#                                    <input id="email" name="email" type="email"  class="form-control" {% if error %}value="{{ email }}" {% endif %}>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="hr-line-dashed"></div>#}
-{#                            <div class="form-group"><label class="col-sm-2 control-label">其它</label>#}
-{#                                <div class="col-sm-2">#}
-{#                                    <div class="checkbox i-checks">#}
-{#                                        <label><input type="checkbox" value="0" name="extra" >禁用 </label>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                                <div class="col-sm-2">#}
-{#                                    <div class="checkbox i-checks">#}
-{#                                        <label><input type="checkbox" value="1" name="extra" checked>发送邮件 </label>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="hr-line-dashed"></div>#}
-{#                            <div class="form-group">#}
-{#                                <div class="col-sm-4 col-sm-offset-2">#}
-{#                                    <button class="btn btn-white" type="reset"id="reset_button">取消</button>#}
-{#                                    <button id="submit_button" class="btn btn-primary" type="submit">确认保存</button>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </form>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
 <div class="row">
     <div class="col-md-12">
         <!-- BEGIN VALIDATION STATES-->
@@ -154,11 +40,23 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3">姓名
+                            <label class="control-label col-md-3">昵称
                                 <span class="required"> * </span>
                             </label>
                             <div class="col-md-4">
-                                <input type="text" name="name" data-required="1" class="form-control" /> </div>
+                                <input type="text" name="name" data-required="1" class="form-control" placeholder="Name"/> </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">密码&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-lock fa-fw"></i>
+                                    </span>
+                                    <input type="password" class="form-control" name="password" placeholder="Password">
+
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">用户组

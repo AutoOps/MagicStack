@@ -711,17 +711,8 @@ def perm_sudo_list(request):
     """
     # 渲染数据
     header_title, path1, path2 = "Sudo命令", "别名管理", "查看别名"
-
     # 获取所有sudo 命令别名
     sudos_list = PermSudo.objects.all()
-
-    # TODO: 搜索和分页
-    keyword = request.GET.get('search', '')
-    if keyword:
-        sudos_list = sudos_list.filter(Q(name=keyword))
-
-    sudos_list, p, sudos, page_range, current_page, show_first, show_end = pages(sudos_list, request)
-
     return my_render('permManage/perm_sudo_list.html', locals(), request)
 
 
@@ -738,7 +729,7 @@ def perm_sudo_add(request, res, *args):
         if request.method == "POST":
             # 获取参数： name, comment
             name = request.POST.get("sudo_name").strip().upper()
-            comment = request.POST.get("sudo_comment").strip()
+            comment = request.POST.get("sudo_comment")
             commands = request.POST.get("sudo_commands").strip()
 
             if not name or not commands:
@@ -755,16 +746,19 @@ def perm_sudo_add(request, res, *args):
                 res['flag'] = 'false'
                 res['content'] = error
 
+            proxy_list = Proxy.objects.all()
             data = {'name': name,
                     'comment': comment,
                     'commands': commands}
             data = json.dumps(data)
-            message = save_or_delete('PermSudo', data)
-            if message == 'success':
+            message = save_or_delete('PermSudo', data, proxy_list)
+            flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
+            if flag:
                 msg = u"添加Sudo命令别名: %s成功" % name
                 res['content'] = msg
                 sudo = PermSudo(name=name.strip(), comment=comment, commands=commands)
                 sudo.save()
+                return HttpResponseRedirect(reverse('sudo_list'))
             else:
                 msg = u"添加Sudo命令别名: %s失败" % name
                 res['flag'] = 'false'
@@ -804,14 +798,15 @@ def perm_sudo_edit(request, res, *args):
             deal_space_commands = list_drop_str(pattern.split(commands), u'')
             deal_all_commands = map(trans_all, deal_space_commands)
             commands = ', '.join(deal_all_commands).strip()
-            logger.debug(u'添加sudo %s: %s' % (name, commands))
+            proxy_list = Proxy.objects.all()
             # 更新proxy上的数据
             data = {'name': name.strip(),
                     'comment': comment,
                     'commands': commands}
             data = json.dumps(data)
-            message = save_or_delete('PermSudo', data, sudo_id, 'update')
-            if message == 'success':
+            message = save_or_delete('PermSudo', data, proxy_list, sudo_id, 'update')
+            flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
+            if flag :
                 msg = u"添加Sudo命令别名: %s成功" % sudo.name
                 res['content'] = msg
                 sudo.name = name.strip()
@@ -843,15 +838,15 @@ def perm_sudo_delete(request, res, *args):
         sudo_id = request.POST.get("id")
         sudo = PermSudo.objects.get(id=sudo_id)
         # 数据库里删除记录
-        message = save_or_delete('PermSudo',{}, obj_id=sudo_id, action='delete')
-        if message == 'success':
+        proxy_list = Proxy.objects.all()
+        message = save_or_delete('PermSudo',{}, proxy_list , obj_id=sudo_id, action='delete')
+        flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
+        if flag :
             res['content'] = u'删除Sudo别名[%s]成功'% sudo.name
             sudo.delete()
         else:
             res['flag'] = 'false'
             res['content'] = u'删除Sudo别名[%s]失败'% sudo.name
-
-        res['content'] = '删除Sudo别名[%s]' % sudo.name
         return HttpResponse(u"删除Sudo别名: %s" % sudo.name)
     else:
         res['flag'] = 'false'

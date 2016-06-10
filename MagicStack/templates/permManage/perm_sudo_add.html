@@ -1,94 +1,76 @@
 {% extends 'base.html' %}
 {% load mytags %}
+{% block self_head_css_js %}
+    <link href="/static/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+{% endblock %}
 {% block content %}
     {% include 'nav_cat_bar.html' %}
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-sm-10">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>填写基本信息</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light portlet-fit portlet-form bordered">
+            <div class="portlet-body">
+                <!-- BEGIN FORM-->
+                <form action="" id="form_sample_1" class="form-horizontal" method="post">
+                    <div class="form-body">
+                        {% if error %}
+                            <div class="alert alert-danger text-center">{{ error }}</div>
+                        {% endif %}
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button> You have some form errors. Please check below. </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">命令别名
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <input type="text" name="sudo_name" data-required="1" class="form-control" /> </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">系统命令
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <textarea name="sudo_commands" data-required="1" class="form-control"  placeholder="/bin/grep, /bin/find"></textarea>
+                                <span class="help-block"> sudo命令，逗号分隔, 不支持换行 </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">备注&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <input name="sudo_comment" type="text" class="form-control" />
+                                <span class="help-block"> optional field </span>
+                            </div>
                         </div>
                     </div>
-                    <div class="ibox-content">
-                        <form method="post" id="sudoForm" class="form-horizontal" action="">
-                            {% if error %}
-                                <div class="alert alert-warning text-center">{{ error }}</div>
-                            {% endif %}
-                            {% if msg %}
-                                <div class="alert alert-success text-center">{{ msg }}</div>
-                            {% endif %}
-                            <div class="form-group">
-                                <label for="sudo_name" class="col-sm-2 control-label">命令别名<span class="red-fonts">*</span></label>
-                                <div class="col-sm-8">
-                                    <input id="sudo_name" name="sudo_name" placeholder="Sudo Command Alias" type="text" class="form-control">
-                                </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green">提交</button>
+                                <button type="button" class="btn grey-salsa btn-outline" id="btn_reset">取消</button>
                             </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label for="sudo_commands" class="col-sm-2 control-label">系统命令<span class="red-fonts">*</span></label>
-                                <div class="col-sm-8">
-                                    <textarea id="sudo_commands" name="sudo_commands" class="form-control" rows="3" placeholder="/bin/grep, /bin/find"></textarea>
-                                    <span class="help-block m-b-none">sudo命令，逗号分隔, 不支持换行</span>
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label for="sudo_comment" class="col-sm-2 control-label">备注</label>
-                                <div class="col-sm-8">
-                                    <input id="sudo_comment" name="sudo_comment" placeholder="Sudo Comment" type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <div class="col-sm-4 col-sm-offset-2">
-                                    <button class="btn btn-white" type="reset"id="reset_button">取消</button>
-                                    <button id="submit_button" class="btn btn-primary" type="submit">确认保存</button>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
+                </form>
+                <!-- END FORM-->
             </div>
         </div>
+        <!-- END VALIDATION STATES-->
     </div>
+</div>
+
 {% endblock %}
 {% block self_footer_js %}
+    <script src="/static/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="/static/pages/scripts/form-validation.min.js" type="text/javascript"></script>
 <script>
-$('#sudoForm').validator({
-    timely: 2,
-    theme: "yellow_right_effect",
-    rules: {
-        check_name: [/^\w{2,20}$/, '大写字母,2-20位']
-    },
-
-    fields: {
-        "sudo_name": {
-            rule: "required;check_name"
-        },
-        "sudo_runas": {
-            rule: "required;check_name"
-        },
-        "sudo_commands": {
-            rule: "required"
-        }
-    },
-    valid: function(form) {
-            form.submit();
-        }
-});
  $(document).ready(function(){
-   $('#reset_button').click(function(){
+   $('#btn_reset').click(function(){
             window.location.href = '{% url 'sudo_list' %}'
         })
 })

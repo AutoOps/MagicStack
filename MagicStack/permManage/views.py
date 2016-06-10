@@ -408,7 +408,8 @@ def perm_role_delete(request, res, *args):
             # 删除proxy上的role, proxy上的role删除成功后再删除magicstack上的role
             proxy_list = Proxy.objects.all()
             message = save_or_delete('PermRole', {}, proxy_list, obj_id=role_id, action='delete')
-            if message == 'success':
+            flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
+            if flag:
                 res['content'] = "删除系统用户: %s成功" % role.name
                 role.delete()
             else:
@@ -587,7 +588,7 @@ def perm_role_push(request, res, *args):
             if key_push:
                 sudo_list = set([sudo for sudo in role.sudo.all()])  # set(sudo1, sudo2, sudo3)
                 if sudo_list:
-                    ret['sudo'] = task.push_sudo_file([role], sudo_list)
+                    ret['sudo'] = task.push_sudo_file([role], sudo_list, proxy)
             logger.info('推送用户结果ret:%s'%ret)
             event_task_names = []
             msg = 'running'

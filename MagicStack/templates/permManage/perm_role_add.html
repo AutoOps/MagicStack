@@ -1,145 +1,109 @@
 {% extends 'base.html' %}
-{% block self_head_css_js %}
-    <link href="/static/css/plugins/datepicker/datepicker3.css" rel="stylesheet">
-    <link href="/static/css/plugins/chosen/chosen.css" rel="stylesheet">
-    <script src="/static/js/plugins/chosen/chosen.jquery.js"></script>
-{% endblock %}
 {% load mytags %}
+{% block self_head_css_js %}
+    <link href="/static/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+{% endblock %}
 {% block content %}
     {% include 'nav_cat_bar.html' %}
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-sm-10">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>填写基本信息</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light portlet-fit portlet-form bordered">
+            <div class="portlet-body">
+                <!-- BEGIN FORM-->
+                <form action="" id="form_sample_1" class="form-horizontal" method="post">
+                    <div class="form-body">
+                        {% if error %}
+                            <div class="alert alert-danger text-center">{{ error }}</div>
+                        {% endif %}
+                        {% if msg %}
+                            <div class="alert alert-success text-center">{{ msg }}</div>
+                        {% endif %}
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button> You have some form errors. Please check below. </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">用户名
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                    <input type="text" name="role_name" data-required="1" class="form-control" placeholder="Username">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">密码&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-lock fa-fw"></i>
+                                    </span>
+                                    <input type="password" class="form-control" name="role_password" placeholder="Password">
+                                </div>
+                                <span class="help-block"> 如果不添加密码，会自动生成 </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">秘钥&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <textarea name="role_key" type="text" class="form-control" ></textarea>
+                                <span class="help-block"> 如果不添加密钥，会自动生成</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="multiple" class="col-md-3 control-label">关联SUDO</label>
+                            <div class="col-md-4">
+                                <select id="multiple"  name="sudo_name" class="form-control select2-multiple" multiple>
+                                    {% for sudo in sudos %}
+                                        <option value="{{ sudo.id }}">{{ sudo.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">备注&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <input name="role_comment" type="text" class="form-control" />
+                                <span class="help-block"> optional field </span>
+                            </div>
                         </div>
                     </div>
-                    <div class="ibox-content">
-                        <form method="post" id="roleForm" class="form-horizontal" action="">
-                            {% if error %}
-                                <div class="alert alert-warning text-center">{{ error }}</div>
-                            {% endif %}
-                            {% if msg %}
-                                <div class="alert alert-success text-center">{{ msg }}</div>
-                            {% endif %}
-                            <div class="form-group">
-                                <label for="role_name" class="col-sm-2 control-label">用户名称<span class="red-fonts">*</span></label>
-                                <div class="col-sm-8">
-                                    <input id="role_name" name="role_name" placeholder="Role Name" type="text" class="form-control">
-                                </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green">保存</button>
+                                <button type="button" class="btn grey-salsa btn-outline" id="btn_reset">取消</button>
                             </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label for="role_password" class="col-sm-2 control-label">用户密码</label>
-                                <div class="col-sm-8">
-                                    <input id="role_password" name="role_password" placeholder="Role Password" type="password" class="form-control">
-                                    <span class="help-block m-b-none">如果不添加密码，会自动生成</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="role_key" class="col-sm-2 control-label">用户密钥</label>
-                                <div class="col-sm-8">
-                                    <textarea id='role_key' class="form-control" name="role_key" placeholder="请复制粘贴私钥" rows="10" style="font-size: 9px;"></textarea>
-                                    <span class="help-block m-b-none">如果不添加密钥，会自动生成 </span>
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label for="sudo" class="col-sm-2 control-label">关联Sudo</label>
-                                <div class="col-sm-8" id="sudo_name">
-                                    <select name="sudo_name" data-placeholder="请选择Sudo别名" class="chosen-select form-control m-b" multiple  tabindex="2">
-                                        {% for sudo in sudos %}
-                                            <option  value="{{ sudo.id }}">{{ sudo.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <label for="role_comment" class="col-sm-2 control-label">备注</label>
-                                <div class="col-sm-8">
-                                    <input id="role_comment" name="role_comment" placeholder="Role Comment" type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group">
-                                <div class="col-sm-4 col-sm-offset-2">
-                                    <button class="btn btn-white" type="reset"id="reset_button">取消</button>
-                                    <button id="submit_button" class="btn btn-primary" type="submit">确认保存</button>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
+                </form>
+                <!-- END FORM-->
             </div>
         </div>
+        <!-- END VALIDATION STATES-->
     </div>
+</div>
 {% endblock %}
 {% block self_footer_js %}
+    <script src="/static/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <script src="/static/pages/scripts/components-select2.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="/static/pages/scripts/form-validation.min.js" type="text/javascript"></script>
 <script>
-$('#roleForm').validator({
-    timely: 2,
-    theme: "yellow_right_effect",
-    rules: {
-        check_name: [/(?!^root$)^[\w.]{2,20}$/i, '大小写字母数字和下划线小数点,2-20位,并且非root'],
-        check_begin: [/^[\-]+BEGIN R|DSA PRIVATE KEY[\-]+/gm, 'RSA|DSA Key填写有误，请检查']
-
-    },
-
-    fields: {
-        "role_name": {
-            rule: "required;check_name",
-            tip: "输入系统用户名称",
-            ok: "",
-            msg: {required: "系统用户名称必填"}
-        },
-        "role_password": {
-            rule: "length[0~64]",
-            tip: "系统密码"
-        },
-        "role_key": {
-            rule: "check_begin",
-            ok: "",
-            empty: true
-        }
-
-    },
-    valid: function(form) {
-            form.submit();
-        }
-});
-
-var config = {
-                '.chosen-select'           : {},
-                '.chosen-select-deselect'  : {allow_single_deselect:true},
-                '.chosen-select-no-single' : {disable_search_threshold:10},
-                '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
-                '.chosen-select-width'     : {width:"95%"}
-            };
-
-for (var selector in config) {
-    $(selector).chosen(config[selector]);
-}
 $(document).ready(function(){
-   $('#reset_button').click(function(){
+   $('#btn_reset').click(function(){
             window.location.href = '{% url 'role_list' %}'
         })
-})
-
-
+   })
 </script>
-    <script src="/static/js/cropper/cropper.min.js"></script>
-    <script src="/static/js/datapicker/bootstrap-datepicker.js"></script>
+
 {% endblock %}
 

@@ -368,14 +368,21 @@ def asset_edit(request, res, *args):
     asset_id = request.GET.get('id', '')
     username = request.user.username
     asset_info = get_object(Asset, id=asset_id)
-    asset_password = CRYPTOR.decrypt(asset_info.password)
+    group_all = AssetGroup.objects.all()
+    idc_all = IDC.objects.all()
+    select_groups = asset_info.group.all()
+    asset_status = ASSET_STATUS
+    asset_type = ASSET_TYPE
+    power_type = POWER_TYPE
+    machine_status = str(asset_info.machine_status)
+    machine_type = str(asset_info.asset_type)
     id_unique = asset_info.id_unique
     proxys = Proxy.objects.all()
     proxy_profiles = gen_proxy_profiles(proxys)
-    af = AssetForm(instance=asset_info)
-    nf = NetWorkingForm(instance=asset_info.networking.all()[0])
-    nfg = NetWorkingGlobalForm(instance=asset_info.networking_g)
-    pf = PowerManageForm(instance=asset_info.power_manage)
+    nt_g = asset_info.networking_g
+    pm = asset_info.power_manage
+    power_t = pm.power_type
+    net = asset_info.networking.all()[0]
     if request.method == 'POST':
         try:
             asset_info.name = request.POST.get('name', '')
@@ -393,13 +400,12 @@ def asset_edit(request, res, *args):
             asset_info.comment = request.POST.get('comment', '')
             asset_info.proxy_id = int(request.POST.get('proxy', '1'))
 
-            nt_g = asset_info.networking_g
+
             nt_g.hostname = request.POST.get('hostname', '')
             nt_g.gateway = request.POST.get('gateway', '')
             nt_g.name_servers = request.POST.get('name_servers', '')
             nt_g.save()
 
-            pm = asset_info.power_manage
             pm.power_type = request.POST.get('power_type')
             pm.power_address = request.POST.get('power_address')
             pm.power_username = request.POST.get('power_username')
@@ -413,7 +419,6 @@ def asset_edit(request, res, *args):
             asset_info.netboot_enabled = is_enabled
             asset_info.is_active = is_active
 
-            net = asset_info.networking.all()[0]
             net.net_name = request.POST.get('net_name', '')
             net.mac_address = request.POST.get('mac_address', '')
             net.ip_address = request.POST.get('ip_address','')

@@ -227,6 +227,7 @@ def perm_rule_edit(request, res, *args):
             rule.save()
             msg = u"更新授权规则：%s成功" % rule.name
             res['content'] = msg
+            return HttpResponseRedirect(reverse('rule_list'))
         except ServerError, e:
             error = e
             res['flag'] = 'false'

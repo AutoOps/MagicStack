@@ -103,7 +103,7 @@
                     url: "{% url 'role_del' %}",
                     data: {id: role_id, filter_type: 'recycle_assets'},
                     success: function(data) {
-                        console.log(data)
+                        console.log(data);
                         if (data) {
                             msg = data + "的系统用户会被删除，包括其家目录，请谨慎操作!"
                         }
@@ -117,8 +117,7 @@
                                data: "id=" + role_id,
                                success: function(msg){
                                    alert( "成功: " + msg );
-                                   var del_row = $('tbody#edittbody>tr#' + role_id);
-                                   del_row.remove()
+                                   row.remove()
                                },
                                error: function (msg) {
                                    console.log(msg);

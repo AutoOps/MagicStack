@@ -1,99 +1,110 @@
 {% extends 'base.html' %}
+{% load mytags %}
+{% block self_head_css_js %}
+    <link href="/static/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+{% endblock %}
 {% block content %}
-{% load bootstrap %}
 {% include 'nav_cat_bar.html' %}
-<div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-        <div class="col-sm-10">
-            <div class="ibox float-e-margins">
-                <div id="ibox-content" class="ibox-title">
-                    <h5> 填写IDC基本信息 </h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#">未启用 1</a>
-                            </li>
-                            <li><a href="#">未启用 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
-                </div>
 
-                <div class="ibox-content">
-                    {% if emg %}
-                        <div class="alert alert-warning text-center">{{ emg }}</div>
-                    {% endif %}
-                    {% if smg %}
-                        <div class="alert alert-success text-center">{{ smg }}</div>
-                    {% endif %}
-                    <form id="assetForm" method="post" class="form-horizontal">
-                        {{ idc_form.name|bootstrap_horizontal }}
-
-                        <div class="hr-line-dashed"></div>
-                        {{ idc_form.bandwidth|bootstrap_horizontal }}
-
-                        <div class="hr-line-dashed"></div>
-                        {{ idc_form.operator|bootstrap_horizontal }}
-
-                        <div class="hr-line-dashed"></div>
-                        {{ idc_form.linkman|bootstrap_horizontal }}
-
-                        <div class="hr-line-dashed"></div>
-                        {{ idc_form.phone|bootstrap_horizontal }}
-
-                        <div class="hr-line-dashed"></div>
-                        {{ idc_form.address|bootstrap_horizontal }}
-
-                        <div class="hr-line-dashed"></div>
-                        {{ idc_form.network|bootstrap_horizontal }}
-
-                        <div class="hr-line-dashed"></div>
-                        {{ idc_form.comment|bootstrap_horizontal }}
-
-                        <div class="hr-line-dashed"></div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet light portlet-fit portlet-form bordered">
+            <div class="portlet-body">
+                <!-- BEGIN FORM-->
+                <form action="" id="form_sample_1" class="form-horizontal" method="post">
+                    <div class="form-body">
+                        {% if error %}
+                            <div class="alert alert-danger text-center">{{ error }}</div>
+                        {% endif %}
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button> You have some form errors. Please check below. </div>
                         <div class="form-group">
-                            <div class="col-sm-4 col-sm-offset-5">
-                                <button class="btn btn-white" type="submit"> 取消 </button>
-                                <button class="btn btn-primary" type="sumbit"> 提交 </button>
+                            <label class="control-label col-md-3">机房名称
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <input type="text" name="name" data-required="1" class="form-control"  value="{{ idc.name }}"/> </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">机房带宽&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <input name="bandwidth" type="text" class="form-control"  value="{{ idc.bandwidth}}"/>
+                                <span class="help-block"> optional field </span>
                             </div>
                         </div>
-                    </form>
-                </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">运营商&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <input name="operator" type="text" class="form-control"  value="{{ idc.operator}}"/>
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">联系人&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <input name="linkman" type="text" class="form-control" value="{{ idc.linkman}}"/>
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">联系电话&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <input name="phone" type="text" class="form-control"  value="{{ idc.phone}}"/>
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">机房地址&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <input name="address" type="text" class="form-control" value="{{ idc.address}}" />
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">IP地址段&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <textarea name="network" type="text" class="form-control" >{{ idc.network }}</textarea>
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">备注&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <input name="comment" type="text" class="form-control" value="{{ idc.comment}}" />
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green">提交</button>
+                                <button type="button" class="btn grey-salsa btn-outline" id="btn_reset">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
             </div>
-        </div>
+        <!-- END VALIDATION STATES-->
     </div>
 </div>
-
+{% endblock %}
+{% block self_footer_js %}
+    <script src="/static/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="/static/pages/scripts/form-validation.min.js" type="text/javascript"></script>
 <script>
-    var required_fields = ["id_name"];
-    required_fields.forEach(function(field) {
-        $('label[for="' + field + '"]').parent().addClass("required");
-    });
-
-    $('#assetForm').validator({
-        timely: 2,
-        theme: "yellow_right_effect",
-        fields: {
-            "j_idc": {
-                rule: "required",
-                tip: "输入IDC名",
-                ok: "",
-                msg: {required: "IDC名必须填写!"},
-                data: {'data-ok':"主机名可以使用", 'data-msg-required': '主机名已正确'}
-            }
-        },
-        valid: function(form) {
-            form.submit();
-        }
-    });
+$(document).ready(function(){
+   $('#btn_reset').click(function(){
+            window.location.href = '{% url 'idc_list' %}'
+        })
+})
 </script>
 
 {% endblock %}

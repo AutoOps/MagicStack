@@ -816,9 +816,8 @@ def idc_edit(request, res, *args):
             res['content'] = u'编辑IDC[%s]' % idc.name
             idc_form.save()
             return HttpResponseRedirect(reverse('idc_list'))
-    else:
-        idc_form = IdcForm(instance=idc)
-        return my_render('assetManage/idc_edit.html', locals(), request)
+
+    return my_render('assetManage/idc_edit.html', locals(), request)
 
 
 @require_role('admin')

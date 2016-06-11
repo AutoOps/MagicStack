@@ -25,17 +25,7 @@ MEDIA_TYPES = {'0': u'电子邮件', '1': u'微信', '2':u'短信'}
 @require_role('user')
 def media_list(request):
     header_title, path1, path2 = u'告警媒介类型', u'告警管理', u'查看告警媒介类型'
-    keyword = request.GET.get('search', '')
     media_lists = EmergencyType.objects.all()
-    media_id = request.GET.get('id', '')
-
-    if keyword:
-        media_lists = media_lists.filter(Q(name__icontains=keyword) | Q(create_time__icontains=keyword))
-
-    if media_id:
-        media_lists = media_lists.filter(id=int(media_id))
-
-    media_lists, p, medias, page_range, current_page, show_first, show_end = pages(media_lists, request)
     return my_render('emergency/media_list.html', locals(), request)
 
 
@@ -176,8 +166,8 @@ def media_edit(request, res):
 @user_operator_record
 def media_del(request, res):
     msg = ''
-    res['operator'] = u'删除代理'
-    res['content'] = u'删除代理'
+    res['operator'] = u'删除告警媒介类型'
+    res['content'] = u'删除告警媒介类型'
     selected_id = request.GET.get('id')
     media_ids = selected_id.split(',')
     for item in media_ids:

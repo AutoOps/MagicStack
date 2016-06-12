@@ -144,7 +144,7 @@ def media_edit(request, res):
                 media_detail = u'CorpID:%s'%corpid
                 if '' in [media_name, corpid, corpsecret]:
                     raise ServerError(u'必要参数为空,请从新填写!')
-                if EmergencyType.objects.filter(name=media_name)>1:
+                if EmergencyType.objects.filter(name=media_name).count() > 1:
                     raise ServerError(u'名称已存在')
                 media_info.name = media_name
                 media_info.type = media_type

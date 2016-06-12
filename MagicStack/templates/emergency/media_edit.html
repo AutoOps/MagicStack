@@ -1,157 +1,170 @@
 {% extends 'base.html' %}
+{% block self_head_css_js %}
+    <link href="/static/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" rel="stylesheet" type="text/css" />
+    <link href="/static/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css" rel="stylesheet" type="text/css" />
+{% endblock %}
 {% load mytags %}
 {% block content %}
     {% include 'nav_cat_bar.html' %}
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-sm-10">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>编辑告警媒介信息</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light portlet-fit portlet-form bordered">
+            <div class="portlet-body">
+                <form action="" id="form_sample_1" class="form-horizontal" method="post">
+                    <div class="form-body">
+                        {% if error %}
+                            <div class="alert alert-danger text-center">{{ error }}</div>
+                        {% endif %}
+                        {% if msg %}
+                            <div class="alert alert-success text-center">{{ msg }}</div>
+                        {% endif %}
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button> You have some form errors. Please check below. </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">名称
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <input type="text" id="media_name" name="media_name" data-required="1" class="form-control" value="{{ media_info.name }}"/> </div>
+                        </div>
+                        <li style="list-style-type:none">
+                            <div class="form-group" >
+                                <label for="media_type" class="col-md-3 control-label">类型&nbsp;&nbsp;</label>
+                                <div class="col-md-4">
+                                    <select name="media_type" id="media_type" data-placeholder="电子邮件" class="form-control">
+                                         <option value="0"  {% if media_info.type == '0'%}selected="selected" {% endif %}>电子邮件</option>
+                                         <option value="1" {% if media_info.type == '1'%}selected="selected" {% endif %}>微信</option>
+{#                                         <option value="2" {% if media_info.type == '2'%}selected="selected" {% endif %}>短信</option>#}
+                                    </select>
+                                </div>
+                            </div>
+                        </li>
+                        <li style="list-style-type:none" {% if not media_info.smtp_server %} hidden="hidden" {% endif %}>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">SMTP服务器
+                                    <span class="required" > * </span>
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" id="smtp_host" name="smtp_host"  class="form-control" value="{{ media_info.smtp_server }}"/> </div>
+                            </div>
+                        </li>
+                        <li style="list-style-type:none" {% if not media_info.smtp_server_port %} hidden="hidden" {% endif %}>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">SMTP服务器端口
+                                    <span class="required" > * </span>
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" id="smtp_host_port" name="smtp_host_port"  class="form-control" value="{{ media_info.smtp_server_port }}" /> </div>
+                            </div>
+                        </li>
+                        <li style="list-style-type:none" {% if not media_info.email_username %} hidden="hidden" {% endif %}>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">SMTP电邮
+                                    <span class="required" > * </span>
+                                </label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-envelope"></i>
+                                        </span>
+                                        <input type="email" id="email_user" name="email_user" class="form-control"  value="{% if media_info.email_username %}{{ media_info.email_username }}{% else %}admin@163.com {% endif %}"> </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li style="list-style-type:none" {% if not media_info.email_password %} hidden="hidden" {% endif %}>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">用户密码&nbsp;&nbsp;</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-lock fa-fw"></i>
+                                        </span>
+                                        <input type="password" id="email_user_password" class="form-control" name="email_user_password" value="{{media_info.email_password |passwd_decode}}">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li style="list-style-type:none" {% if media_info.type == '1' %} hidden="hidden" {% endif %}>
+                            <div class="form-group" id="smtp_security">
+                                <label class="col-md-3 control-label">Connection security</label>
+                                <div class="col-md-9">
+                                    <div class="mt-radio-inline">
+                                        <label class="mt-radio">
+                                            <input type="radio" name="connection" value="0" {% if media_info.email_use_ssl %} checked {% endif %}> SSL
+                                            <span></span>
+                                        </label>
+                                        <label class="mt-radio">
+                                            <input type="radio" name="connection"  value="1" {% if media_info.email_use_tls %} checked {% endif %}> TSL
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li style="list-style-type:none"  {% if not media_info.corpid %} hidden="hidden" {% endif %}>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Corpid
+                                    <span class="required" > * </span>
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" id="corpid" name="corpid"  class="form-control" value="{{ media_info.corpid }}" /> </div>
+                            </div>
+                        </li>
+                        <li style="list-style-type:none" {% if not media_info.corpsecret %} hidden="hidden" {% endif %}>
+                             <div class="form-group">
+                                <label class="control-label col-md-3">Corpsecret
+                                    <span class="required" > * </span>
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" id="corpsecret" name="corpsecret"  class="form-control" value="{{ media_info.corpsecret }}" /> </div>
+                            </div>
+                        </li>
+                        <li style="list-style-type:none">
+                             <div class="form-group" id="extra">
+                                <label class="col-md-3 control-label">已启用</label>
+                                <div class="col-md-9">
+                                    <label class="mt-checkbox">
+                                        <input type="checkbox" name="extra" value="1" {% ifequal media_info.status '1' %}checked {% endifequal %}>
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </li>
+                        <li style="list-style-type:none">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">备注&nbsp;&nbsp;</label>
+                                <div class="col-md-4">
+                                    <input name="comment"  id="comment" type="text" class="form-control" value="{{ media_info.comment }}"/>
+                                    <span class="help-block"> optional field </span>
+                                </div>
+                            </div>
+                        </li>
+                    </div>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green">保存</button>
+                                <button type="button" class="btn grey-salsa btn-outline" id="btn_reset">取消</button>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="ibox-content">
-                        <form id="groupForm" method="post" class="form-horizontal" action="">
-                            {% if error %}
-                                <div class="alert alert-warning text-center">{{ error }}</div>
-                            {% endif %}
-                            {% if msg %}
-                                <div class="alert alert-success text-center">{{ msg }}</div>
-                            {% endif %}
-                            <div class="form-group">
-                                <label for="media_name" class="col-sm-2 control-label">名称<span class="red-fonts">*</span></label>
-                                <div class="col-sm-8">
-                                    <input id="media_name" name="media_name"  type="text" class="form-control" value="{{ media_info.name }}">
-                                </div>
-                            </div>
-                            <li style="list-style-type:none">
-                                <div class="form-group" >
-                                    <label for="media_type" class="col-sm-2 control-label">类型</label>
-                                    <div class="col-sm-8">
-                                        <select name="media_type" id="media_type" data-placeholder="电子邮件" class="chosen-select form-control m-b"  tabindex="2">
-                                             <option value="0"  {% if media_info.type == '0'%}selected="selected" {% endif %}>电子邮件</option>
-                                             <option value="1" {% if media_info.type == '1'%}selected="selected" {% endif %}>微信</option>
-                                             <option value="2" {% if media_info.type == '2'%}selected="selected" {% endif %}>短信</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </li>
-                            <li style="list-style-type:none" {% if not media_info.smtp_server %} hidden="hidden" {% endif %}>
-                                <div class="form-group">
-                                    <label for="smtp_host" class="col-sm-2 control-label">SMTP服务器<span class="red-fonts">*</span></label>
-                                    <div class="col-sm-8">
-                                        <input id="smtp_host" name="smtp_host"  type="text" class="form-control" value="{{ media_info.smtp_server }}">
-                                    </div>
-                                </div>
-                            </li>
-                            <li style="list-style-type:none" {% if not media_info.smtp_server_port %} hidden="hidden" {% endif %}>
-                                <div class="form-group">
-                                    <label for="smtp_host_port" class="col-sm-2 control-label">SMTP服务器端口<span class="red-fonts">*</span></label>
-                                    <div class="col-sm-8">
-                                        <input id="smtp_host_port" name="smtp_host_port"  type="text" class="form-control" value="{{ media_info.smtp_server_port }}">
-                                    </div>
-                                </div>
-                            </li>
-                            <li style="list-style-type:none" {% if not media_info.email_username %} hidden="hidden" {% endif %}>
-                                <div class="form-group">
-                                    <label for="email_user" class="col-sm-2 control-label">SMTP电邮<span class="red-fonts">*</span></label>
-                                    <div class="col-sm-8">
-                                        <input id="email_user" name="email_user"  type="text" class="form-control" value="{{ media_info.email_username }}">
-                                    </div>
-                                </div>
-                            </li>
-                            <li style="list-style-type:none" {% if not media_info.email_password %} hidden="hidden" {% endif %}>
-                                <div class="form-group">
-                                    <label for="email_user_password" class="col-sm-2 control-label">用户密码<span class="red-fonts">*</span></label>
-                                    <div class="col-sm-8">
-                                        <input id="email_user_password" name="email_user_password"  type="password" class="form-control" value="{{media_info.email_password |passwd_decode}}">
-                                    </div>
-                                </div>
-                            </li>
-                            <li style="list-style-type:none" {% if media_info.type == '1' %} hidden="hidden" {% endif %}>
-                                <div class="form-group" id="smtp_security">
-                                    <label class="col-sm-2 control-label">Connection security</label>
-                                    <div class="col-sm-2">
-                                        <div class="checkbox i-checks">
-                                            <label><input type="radio" value="0" name="connection"  {% if media_info.email_use_ssl %} checked {% endif %}>SSL</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <div class="checkbox i-checks">
-                                            <label><input type="radio" value="1" name="connection"  {% if media_info.email_use_tls %} checked {% endif %}>TSL</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li style="list-style-type:none"  {% if not media_info.corpid %} hidden="hidden" {% endif %}>
-                                <div class="form-group">
-                                    <label for="corpid" class="col-sm-2 control-label">Corpid<span class="red-fonts">*</span></label>
-                                    <div class="col-sm-8">
-                                        <input id="corpid" name="corpid"  type="text" class="form-control" value="{{ media_info.corpid }}">
-                                    </div>
-                                </div>
-                            </li>
-                            <li style="list-style-type:none" {% if not media_info.corpsecret %} hidden="hidden" {% endif %}>
-                                <div class="form-group">
-                                    <label for="corpsecret" class="col-sm-2 control-label">Corpsecret<span class="red-fonts">*</span></label>
-                                    <div class="col-sm-8">
-                                        <input id="corpsecret" name="corpsecret"  type="text" class="form-control" value="{{ media_info.corpsecret }}">
-                                    </div>
-                                </div>
-                            </li>
-                            <li style="list-style-type:none">
-                                 <div class="form-group" id="extra">
-                                    <label for="extra" class="col-sm-2 control-label">已启用<span class="red-fonts"></span></label>
-                                    <div class="col-sm-8">
-                                        <input type="checkbox" value="1" name="extra" {% ifequal media_info.status '1' %}checked {% endifequal %}>
-                                    </div>
-                                </div>
-                            </li>
-                            <li style="list-style-type:none">
-                                <div class="form-group">
-                                    <label for="comment" class="col-sm-2 control-label">备注</label>
-                                    <div class="col-sm-8">
-                                        <input id="comment" name="comment"  type="text" class="form-control" value="{{ media_info.comment }}">
-                                    </div>
-                                </div>
-                            </li>
-                            <div class="form-group">
-                                <div class="col-sm-4 col-sm-offset-2">
-                                    <button class="btn btn-white" type="reset" id="btn_reset">取消</button>
-                                    <button id="submit_button" class="btn btn-primary" type="submit">确认保存</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
 {% endblock %}
 
 {% block self_footer_js %}
-<script>
-$('#groupForm').validator({
-    timely: 2,
-    theme: "yellow_right_effect",
-    valid: function(form) {
-        form.submit();
-    }
-});
-
-</script>
+   <script src="/static/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="/static/pages/scripts/form-validation.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
     var media_type_t = '{{ media_info.type }}';

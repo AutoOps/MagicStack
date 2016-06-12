@@ -1,11 +1,9 @@
 # -*- coding:utf-8 -*-
 from django.db.models import Q
-from django.shortcuts import HttpResponse
-from datetime import datetime
-from MagicStack.api import require_role, pages, my_render, ServerError, get_object, logger, CRYPTOR
+from MagicStack.api import *
 from models import *
 from userManage.user_api import user_operator_record
-
+from datetime import datetime
 
 @require_role('admin')
 def proxy_list(request):
@@ -45,15 +43,19 @@ def proxy_add(request, res, *args):
                 raise ServerError('Proxy名不能为空')
             if Proxy.objects.filter(proxy_name=proxy_name):
                 raise ServerError('Proxy名已存在')
+
+        except ServerError, e:
+            error = e
+            res['flag'] = False
+            res['content'] = error
+        else:
+
             create_time = datetime.now()
             Proxy.objects.create(proxy_name=proxy_name, username=user_name, password=encrypt,
                                  url=proxy_url, comment=comment, create_time=create_time)
             msg = '添加Proxy[%s]成功' % proxy_name
             res['content'] = msg
-        except ServerError, e:
-            error = e
-            res['flag'] = False
-            res['content'] = error
+            return HttpResponseRedirect(reverse('proxy_list'))
 
     return my_render('proxyManage/proxy_add.html', locals(), request)
 
@@ -73,10 +75,18 @@ def proxy_edit(request, res, *args):
         proxy_url = request.POST.get('proxy_url')
         comment = request.POST.get('comment', '')
         encrypt = CRYPTOR.encrypt(password)
-
         try:
             if not proxy_name:
                 raise ServerError('Proxy名不能为空')
+
+            if proxy.proxy_name != proxy_name and Proxy.objects.filter(proxy_name=proxy_name):
+                raise ServerError('Proxy名已存在')
+
+        except ServerError, e:
+            error = e
+            res['flag'] = 'false'
+            res['content'] = e
+        else:
             proxy.proxy_name = proxy_name
             proxy.username = user_name
             proxy.password = encrypt
@@ -85,11 +95,7 @@ def proxy_edit(request, res, *args):
             proxy.save()
             msg = u'编辑Proxy[%s]成功' % proxy_name
             res['content'] = msg
-        except ServerError, e:
-            error = e
-            res['flag'] = 'false'
-            res['content'] = e
-            return HttpResponse('error:%s'%e)
+            return HttpResponseRedirect(reverse('proxy_list'))
     return my_render('proxyManage/proxy_edit.html', locals(), request)
 
 

@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 {% block self_head_css_js %}
-    <link href="/static/css/plugins/datepicker/datepicker3.css" rel="stylesheet">
-    <link href="/static/css/plugins/chosen/chosen.css" rel="stylesheet">
-    <script src="/static/js/plugins/chosen/chosen.jquery.js"></script>
+    <link href="/static/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
 {% include 'nav_cat_bar.html' %}
 
 <style>
+
     iframe {
 
        overflow:hidden;
@@ -39,21 +42,6 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
-                <div id="ibox-content" class="ibox-title">
-                    <h5> 用户日志详细信息列表 </h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
-                </div>
-
                 <div class="ibox-content">
                     <div class="panel-options">
                         <ul class="nav nav-tabs">
@@ -66,34 +54,33 @@
                     </div>
                     <form class="form-inline" action="" method="get">
                         <div class="form-group" id="date_5">
-                            <div class="input-daterange input-group" id="datepicker">
-                                <input type="text" class="input-sm form-control" style="width: 100px;" name="start" value="{{ date_seven_day }}">
-                                <span class="input-group-addon">to</span>
-                                <input type="text" class="input-sm form-control" style="width: 100px;"  name="end" value="{{ date_now_str }}">
+                            <div class="col-md-4">
+                                <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
+                                    <input type="text" class="form-control" name="start">
+                                    <span class="input-group-addon"> to </span>
+                                    <input type="text" class="form-control" name="end"> </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="input-group">
-                                <select name="username" data-placeholder="用户名" class="chosen-select" multiple style="width:200px;" tabindex="2">
-                                    {% for username in username_all %}
-                                        <option value="{{ username }}"{% if username in username_list %}selected{% endif %}>{{ username }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                            <select id="multiple" name="username" data-placeholder="用户名" class="form-control select2-multiple" multiple style="width:200px;">
+                                {% for username in username_all %}
+                                    <option value="{{ username }}" {% if username in username_list %}selected{% endif %}>{{ username }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
+                        &nbsp;&nbsp;&nbsp;
                         <div class="form-group">
-                            <div class="input-group">
-                                <select name="host" data-placeholder="主机" class="chosen-select" multiple style="width:200px;" tabindex="4">
-                                    {% for ip in ip_all %}
-                                    <option value="{{ ip }}" {% if ip in host_list %}selected{% endif %}>{{ ip }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                            <select id="multiple" name="host" data-placeholder="主机" class="form-control select2-multiple" multiple >
+                                {% for ip in ip_all %}
+                                    <option value="{{ ip }}" {% if ip in host_list %}selected{% endif %} >{{ ip }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
+                        &nbsp;&nbsp;&nbsp;
                         <div class="form-group">
                             <input id="cmd" name="cmd" placeholder="命令" type="text" class="form-control" value="{{ cmd }}" style="width: 200px;">
                         </div>
-                        <button id='search_btn' type="submit" class="btn btn-sm btn-primary">
+                        <button id='search_btn' type="submit" class="btn btn-sm btn-primary ">
                                 - 搜索 -
                         </button>
                     </form>
@@ -198,28 +185,14 @@
         });
     }
 
-
-    $('#date_5 .input-daterange').datepicker({
-            dateFormat: 'mm/dd/yy',
-            keyboardNavigation: false,
-            forceParse: false,
-            autoclose: true
-    });
-
-    var config = {
-                '.chosen-select'           : {},
-                '.chosen-select-deselect'  : {allow_single_deselect:true},
-                '.chosen-select-no-single' : {disable_search_threshold:10},
-                '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
-                '.chosen-select-width'     : {width:"95%"}
-            };
-    for (var selector in config) {
-        $(selector).chosen(config[selector]);
-    }
-
 </script>
 {% endblock %}
 {% block self_footer_js %}
-    <script src="/static/js/cropper/cropper.min.js"></script>
-    <script src="/static/js/datapicker/bootstrap-datepicker.js"></script>
+    <script src="/static/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <script src="/static/pages/scripts/components-select2.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/moment.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+    <script src="/static/pages/scripts/components-date-time-pickers.min.js" type="text/javascript"></script>
 {% endblock %}

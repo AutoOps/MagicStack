@@ -57,10 +57,10 @@
                                     </label>
                                 </td>
                                 <td>
-                                    <a href="{% url 'asset_list' %}?group_id={{ group.id }}" >{{group.name}}</a>
+                                    {{group.name}}
                                 </td>
                                 <td>
-                                    <a href="{% url 'asset_list' %}?group_id={{ group.id }}">{{ group.asset_set.count }}</a>
+                                    {{ group.asset_set.count }}
                                 </td>
                                 <td>
                                     {{ group.comment }}

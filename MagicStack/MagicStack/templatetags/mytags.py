@@ -347,3 +347,7 @@ def number_to_str(value, ptype):
         else:
             rest = '禁用'
     return rest
+
+@register.filter(name='groups_name')
+def groups_name(groups):
+    return ','.join([group.name for group in groups])

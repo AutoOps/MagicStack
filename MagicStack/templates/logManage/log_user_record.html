@@ -1,8 +1,5 @@
 {% extends 'base.html' %}
 {% block self_head_css_js %}
-    <link href="/static/css/plugins/datepicker/datepicker3.css" rel="stylesheet">
-    <link href="/static/css/plugins/chosen/chosen.css" rel="stylesheet">
-    <script src="/static/js/plugins/chosen/chosen.jquery.js"></script>
 {% endblock %}
 {% block content %}
 {% include 'nav_cat_bar.html' %}
@@ -39,21 +36,6 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
-                <div id="ibox-content" class="ibox-title">
-                    <h5> 用户日志详细信息列表 </h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
-                </div>
-
                 <div class="ibox-content">
                     <div class="panel-options">
                         <ul class="nav nav-tabs">
@@ -65,7 +47,7 @@
                             <div class="" style="float: right">
                                 <form id="search_form" method="get" action="" class="pull-right mail-search">
                                     <div class="input-group">
-                                        <input type="text" class="form-control input-sm" id="keyword" name="keyword" value="{{ keyword }}" placeholder="Search">
+                                        <input type="text" class="form-control input-sm" id="keyword" name="keyword" value="{{ keyword }}" placeholder="Search" style="width:200px;margin-left: 900px">
                                         <div class="input-group-btn">
                                             <button id='search_btn' type="submit" class="btn btn-sm btn-primary">
                                                 -搜索-

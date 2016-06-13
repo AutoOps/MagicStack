@@ -374,7 +374,6 @@ def user_edit(request,res, *args):
         try:
             user_id = request.GET.get('id', '')
             password = request.POST.get('password', '')
-            encrypt_passwd = CRYPTOR.encrypt(password)
             name = request.POST.get('name', '')
             email = request.POST.get('email', '')
             groups = request.POST.getlist('groups', [])
@@ -393,7 +392,7 @@ def user_edit(request,res, *args):
                 return HttpResponseRedirect(reverse('user_list'))
 
             db_update_user(user_id=user_id,
-                           password=encrypt_passwd,
+                           password=password,
                            name=name,
                            email=email,
                            groups=groups,

@@ -826,14 +826,14 @@ def idc_del(request,res, *args):
     """
     IDC delete view
     """
+
     res['operator'] = res['content'] = u'删除机房'
     idc_ids = request.GET.get('id', '')
     idc_id_list = idc_ids.split(',')
-
     for idc_id in idc_id_list:
         idc = IDC.objects.get(id=idc_id)
         res['content'] += '  [%s]  ' % idc.name
-
+        idc.delete()
     return HttpResponseRedirect(reverse('idc_list'))
 
 

@@ -673,7 +673,7 @@ def asset_detail(request):
     asset_id = request.GET.get('id', '')
     asset = get_object(Asset, id=asset_id)
     perm_info = get_group_asset_perm(asset)
-    log = Log.objects.filter(host=asset.networking.all()[0].ip_address).order_by('-start_time')[0:20]
+    log = Log.objects.filter(host=asset.networking.all()[0].ip_address).order_by('-start_time')[0:10]
     if perm_info:
         user_perm = []
         for perm, value in perm_info.items():

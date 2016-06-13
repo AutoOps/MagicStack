@@ -10,7 +10,7 @@ def proxy_list(request):
     """
     查看proxy
     """
-    header_title, path1, path2 = '查看代理', '代理管理', '查看代理'
+    header_title, path1, path2 = u'查看代理', u'代理管理', u'查看代理'
     keyword = request.GET.get('search', '')
     proxy_lists = Proxy.objects.all().order_by('create_time')
     proxy_id = request.GET.get('id', '')
@@ -29,7 +29,7 @@ def proxy_list(request):
 @user_operator_record
 def proxy_add(request, res, *args):
     error = msg = ''
-    header_title, path1, path2 = '添加代理', '代理管理', '添加代理'
+    header_title, path1, path2 = u'添加代理', u'代理管理', u'添加代理'
     res['operator'] = path2
     if request.method == 'POST':
         proxy_name = request.POST.get('proxy_name', '')
@@ -40,9 +40,9 @@ def proxy_add(request, res, *args):
         encrypt = CRYPTOR.encrypt(password)
         try:
             if not proxy_name:
-                raise ServerError('Proxy名不能为空')
+                raise ServerError(u'Proxy名不能为空')
             if Proxy.objects.filter(proxy_name=proxy_name):
-                raise ServerError('Proxy名已存在')
+                raise ServerError(u'Proxy名已存在')
 
         except ServerError, e:
             error = e
@@ -53,7 +53,7 @@ def proxy_add(request, res, *args):
             create_time = datetime.now()
             Proxy.objects.create(proxy_name=proxy_name, username=user_name, password=encrypt,
                                  url=proxy_url, comment=comment, create_time=create_time)
-            msg = '添加Proxy[%s]成功' % proxy_name
+            msg = u'添加Proxy[%s]成功' % proxy_name
             res['content'] = msg
             return HttpResponseRedirect(reverse('proxy_list'))
 
@@ -64,7 +64,7 @@ def proxy_add(request, res, *args):
 @user_operator_record
 def proxy_edit(request, res, *args):
     error = msg = ''
-    header_title, path1, path2 = '编辑代理', '代理管理', '编辑代理'
+    header_title, path1, path2 = u'编辑代理', u'代理管理', u'编辑代理'
     res['operator'] = path2
     id = request.GET.get('id', '')
     proxy = get_object(Proxy, id=id)
@@ -77,10 +77,10 @@ def proxy_edit(request, res, *args):
         encrypt = CRYPTOR.encrypt(password)
         try:
             if not proxy_name:
-                raise ServerError('Proxy名不能为空')
+                raise ServerError(u'Proxy名不能为空')
 
             if proxy.proxy_name != proxy_name and Proxy.objects.filter(proxy_name=proxy_name):
-                raise ServerError('Proxy名已存在')
+                raise ServerError(u'Proxy名已存在')
 
         except ServerError, e:
             error = e
@@ -103,8 +103,8 @@ def proxy_edit(request, res, *args):
 @user_operator_record
 def proxy_del(request, res, *args):
     msg = ''
-    res['operator'] = '删除代理'
-    res['content'] = '删除代理'
+    res['operator'] = u'删除代理'
+    res['content'] = u'删除代理'
     proxy_id = request.GET.get('id')
     id_list = proxy_id.split(',')
     for pid in id_list:
@@ -112,4 +112,4 @@ def proxy_del(request, res, *args):
         msg += '  %s  ' % proxy.proxy_name
         res['content'] += ' [%s]  ' % proxy.proxy_name
         proxy.delete()
-    return HttpResponse('删除[%s]成功' % msg)
+    return HttpResponse(u'删除[%s]成功' % msg)

@@ -205,7 +205,7 @@ def user_operator_record(func):
             logger.debug('operator:%s'%res['operator'])
             user_record.op_time = start_time
             user_record.content = res['content']
-            logger.debug('content:%s'%res['content'])
+            logger.debug(u'content:%s'%res['content'])
             user_record.result = res['flag']
             user_record.save()
             logger.debug('用户操作记录写入成功！')

@@ -4,6 +4,8 @@ from MagicStack.api import *
 from models import *
 from userManage.user_api import user_operator_record
 from datetime import datetime
+import json
+
 
 @require_role('admin')
 def proxy_list(request):
@@ -45,7 +47,7 @@ def proxy_add(request, res, *args):
                 raise ServerError(u'Proxy名已存在')
 
         except ServerError, e:
-            error = e
+            error = e.message
             res['flag'] = False
             res['content'] = error
         else:
@@ -54,8 +56,10 @@ def proxy_add(request, res, *args):
             Proxy.objects.create(proxy_name=proxy_name, username=user_name, password=encrypt,
                                  url=proxy_url, comment=comment, create_time=create_time)
             msg = u'添加Proxy[%s]成功' % proxy_name
+            res['flag'] = True
             res['content'] = msg
-            return HttpResponseRedirect(reverse('proxy_list'))
+            # return HttpResponseRedirect(reverse('proxy_list'))
+        return HttpResponse(json.dumps(res))
 
     return my_render('proxyManage/proxy_add.html', locals(), request)
 
@@ -63,10 +67,9 @@ def proxy_add(request, res, *args):
 @require_role('admin')
 @user_operator_record
 def proxy_edit(request, res, *args):
-    error = msg = ''
     header_title, path1, path2 = u'编辑代理', u'代理管理', u'编辑代理'
     res['operator'] = path2
-    id = request.GET.get('id', '')
+    id = request.GET.get('id', request.POST.get('proxy_id'))
     proxy = get_object(Proxy, id=id)
     if request.method == 'POST':
         proxy_name = request.POST.get('proxy_name')
@@ -83,9 +86,8 @@ def proxy_edit(request, res, *args):
                 raise ServerError(u'Proxy名已存在')
 
         except ServerError, e:
-            error = e
             res['flag'] = 'false'
-            res['content'] = e
+            res['content'] = e.message
         else:
             proxy.proxy_name = proxy_name
             proxy.username = user_name
@@ -95,8 +97,16 @@ def proxy_edit(request, res, *args):
             proxy.save()
             msg = u'编辑Proxy[%s]成功' % proxy_name
             res['content'] = msg
-            return HttpResponseRedirect(reverse('proxy_list'))
-    return my_render('proxyManage/proxy_edit.html', locals(), request)
+        return HttpResponse(json.dumps(res))
+
+    res['proxy_id'] = proxy.id
+    res['proxy_name'] = proxy.proxy_name
+    res['username'] = proxy.username
+    res['password'] = CRYPTOR.decrypt(proxy.password)
+    res['proxy_url'] = proxy.url
+    res['comment'] = proxy.comment
+    return HttpResponse(json.dumps(res))
+    # return my_render('proxyManage/proxy_edit.html', locals(), request)
 
 
 @require_role('admin')

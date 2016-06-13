@@ -13,13 +13,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-
-                                <button id="add-proxy" class="btn sbold green">添加代理
+                                <button id="add-proxy" class="btn sbold green" data-toggle="modal">
+                                    添加代理
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
-                       <div class="col-md-6">
+                        <div class="col-md-6">
                             <div class="btn-group pull-right">
                                 <button class="btn green  btn-outline " id="del_btn">删除所选
                                     <i class="fa fa-times"></i>
@@ -28,65 +28,68 @@
                         </div>
                     </div>
                 </div>
-                <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
+                <table class="table table-striped table-bordered table-hover table-checkable order-column"
+                       id="sample_1">
                     <thead>
-                        <tr>
-                            <th>
-                                <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                    <input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" id="select_all" name="select_all"/>
-                                    <span></span>
-                                </label>
-                            </th>
-                            <th>代理名</th>
-                            <th>主机数</th>
-                            <th>用户名</th>
-                            <th>URL</th>
-                            <th>备注</th>
-                            <th>操作</th>
-                        </tr>
+                    <tr>
+                        <th>
+                            <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                <input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes"
+                                       id="select_all" name="select_all"/>
+                                <span></span>
+                            </label>
+                        </th>
+                        <th>代理名</th>
+                        <th>主机数</th>
+                        <th>用户名</th>
+                        <th>URL</th>
+                        <th>备注</th>
+                        <th>操作</th>
+                    </tr>
                     </thead>
                     <tbody>
                     {% for proxy in proxy_lists %}
-                            <tr class="gradeX">
-                                <td>
-                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                        <input type="checkbox" class="checkboxes" value="{{ proxy.id }}" />
-                                        <span></span>
-                                    </label>
-                                </td>
-                                <td>
-                                    {{ proxy.proxy_name }}
-                                </td>
-                                <td>
-                                    <a href="{% url 'asset_list' %}?pid={{ proxy.id }}"> {{ proxy.id | proxy_asset_count }}</a>
-                                </td>
-{#                                <td title="{% for user_group in user.group.all %} {{ user_group.name }} {% endfor %}"> {{ user.group.all | groups2str  }} </td>#}
-                                <td>
-                                    {{ proxy.username }}
-                                </td>
-                                <th>
-                                    {{ proxy.url }}
-                                </th>
-                                <td>
-                                    {{ proxy.comment }}
-                                </td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
-                                            <i class="fa fa-angle-down"></i>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li>
-                                                <a href="{% url 'proxy_edit' %}?id={{ proxy.id }}">编辑</a>
-                                            </li>
-                                            <li>
-                                                <a value="{% url 'proxy_del' %}?id={{ proxy.id }}" class="del">删除</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
+                    <tr class="gradeX">
+                        <td>
+                            <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                <input type="checkbox" class="checkboxes" value="{{ proxy.id }}"/>
+                                <span></span>
+                            </label>
+                        </td>
+                        <td>
+                            {{ proxy.proxy_name }}
+                        </td>
+                        <td>
+                            <a href="{% url 'asset_list' %}?pid={{ proxy.id }}"> {{ proxy.id | proxy_asset_count }}</a>
+                        </td>
+                        <td>
+                            {{ proxy.username }}
+                        </td>
+                        <th>
+                            {{ proxy.url }}
+                        </th>
+                        <td>
+                            {{ proxy.comment }}
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown"
+                                        aria-expanded="false"> Actions
+                                    <i class="fa fa-angle-down"></i>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <!--<a href="{% url 'proxy_edit' %}?id={{ proxy.id }}">编辑</a>-->
+                                        <a data-toggle="modal" href="#" onclick="edit_proxy('{{ proxy.id }}')">编辑</a>
+                                    </li>
+                                    <li>
+                                        <a value="{% url 'proxy_del' %}?id={{ proxy.id }}" class="del">删除</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -95,209 +98,217 @@
     </div>
 </div>
 
+<!-- START MODAL DIV -->
+<div class="modal fade draggable-modal" id="proxy" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">添加代理</h4>
+            </div>
+            <div class="modal-body">
+                <!-- BEGIN FORM-->
+                <form action="" id="form_sample_1" class="form-horizontal" method="post">
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            You have some form errors. Please check below.
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Proxy名
+                                <span class="required"> * </span>
+                            </label>
+
+                            <div class="col-md-4">
+                                <input type="hidden" name="proxy_id" class="form-control" value="">
+                                <input type="text" name="proxy_name" data-required="1" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">用户名
+                                <span class="required"> * </span>
+                            </label>
+
+                            <div class="col-md-4">
+                                <input type="text" name="user_name" data-required="1" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">用户密码
+                                <span class="required"> * </span>
+                            </label>
+
+                            <div class="col-md-4">
+                                <input type="password" name="user_password" data-required="1" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">URL
+                                <span class="required"> * </span>
+                            </label>
+
+                            <div class="col-md-4">
+                                <input type="text" name="proxy_url" data-required="1" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">备注&nbsp;&nbsp;</label>
+
+                            <div class="col-md-4">
+                                <input name="comment" type="text" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="alert alert-danger text-center" id="err_info" style="display:none">
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" value="" id="submit_type"/>
+                <button type="button" class="btn green" id="submit">提交</button>
+                <button type="button" class="btn dark btn-outline" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- END MODAL DIV -->
+
 {% endblock %}
 
 {% block self_head_css_js %}
-{#    {% load staticfiles %}#}
-        <link href="/static/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <link href="/static/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
-        <link href="/static/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="/static/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
-        <!-- END GLOBAL MANDATORY STYLES -->
-        <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <link href="/static/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-        <link href="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
-        <!-- END PAGE LEVEL PLUGINS -->
-        <!-- BEGIN THEME GLOBAL STYLES -->
-        <link href="/static/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
-        <link href="/static/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
-        <!-- END THEME GLOBAL STYLES -->
-        <!-- BEGIN THEME LAYOUT STYLES -->
-        <link href="/static/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
-        <link href="/static/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
-        <link href="/static/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+<link href="/static/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="/static/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+<link href="/static/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="/static/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+<!-- END GLOBAL MANDATORY STYLES -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<link href="/static/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css"/>
+<link href="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet"
+      type="text/css"/>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN THEME GLOBAL STYLES -->
+<link href="/static/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css"/>
+<link href="/static/global/css/plugins.min.css" rel="stylesheet" type="text/css"/>
+<!-- END THEME GLOBAL STYLES -->
+<!-- BEGIN THEME LAYOUT STYLES -->
+<link href="/static/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css"/>
+<link href="/static/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color"/>
+<link href="/static/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css"/>
 {% endblock %}
 {% block self_footer_js %}
-    <!-- BEGIN PAGE LEVEL PLUGINS -->
-    <script src="/static/global/scripts/datatable.js" type="text/javascript"></script>
-    <script src="/static/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
-    <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-    <!-- END PAGE LEVEL PLUGINS -->
-    <!-- BEGIN PAGE LEVEL SCRIPTS -->
-    <script src="/static/pages/scripts/table-datatables-managed.min.js" type="text/javascript"></script>
-    <!-- END PAGE LEVEL SCRIPTS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="/static/global/scripts/datatable.js" type="text/javascript"></script>
+<script src="/static/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"
+        type="text/javascript"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="/static/pages/scripts/table-datatables-managed.min.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
 
-    <script>
-      $(document).ready(function(){
-          $('#add-proxy').click(function(){
-              window.location.href = "{% url 'proxy_add' %}"
-          });
+<script>
+    // 编辑proxy
+    function edit_proxy(proxy_id) {
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'proxy_edit' %}?id=" + proxy_id,
+            success: function (result) {
+                result = $.parseJSON(result);
+                // 设置表单内容
+                $("input[name='proxy_id']").val(result.proxy_id);
+                $("input[name='proxy_name']").val(result.proxy_name);
+                $("input[name='user_name']").val(result.username);
+                $("input[name='user_password']").val(result.password);
+                $("input[name='proxy_url']").val(result.proxy_url);
+                $("input[name='comment']").val(result.comment);
+                // show modal
+                $(".modal-title").html("编辑代理");
+                $("#submit_type").val("edit");
+                $('#proxy').modal({backdrop: 'static', keyboard: false});
+            }
+        });
+    }
 
-          $('.del').click(function(){
-              var row = $(this).closest('tr');
-              if (confirm("确定删除?")) {
-                $.get(
-                    $(this).attr('value'),
-                    {},
-                    function(data){
-                        row.remove();
-                        alert(data);
+    $(document).ready(function () {
+
+        <!-- proxy modal 相关事件处理  开始-->
+        $('#add-proxy').click(function () {
+            //              window.location.href = "{% url 'proxy_add' %}"
+            // open modal并设置modal不可关闭
+            $('#proxy').modal({backdrop: 'static', keyboard: false});
+        });
+
+        // 隐藏proxy modal事件
+        $('#proxy').on('hide.bs.modal', function () {
+            // 设置modal标题
+            $(".modal-title").html("添加代理");
+            // 清空form表单
+            $("#form_sample_1")[0].reset();
+            // 错误层，隐藏并清空
+            $("#err_info").html("").hide();
+            // 默认submit_type为add
+            $("#submit_type").val('add');
+        });
+
+        // 提交添加/修改proxy
+        $("#submit").click(function () {
+            // 控制提交与编辑proxy， 编辑时为edit
+            var url = "{% url 'proxy_add' %}";
+            if ($("#submit_type").val() == 'edit') {
+                url = "{% url 'proxy_edit' %}";
+            }
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: $("#form_sample_1").serialize(),
+                success: function (result) {
+                    result = $.parseJSON(result);
+                    if (result.flag) {
+                        //添加/编辑成功
+                        window.location.reload();
+                    } else {
+                        $("#err_info").html(result.content).show();
                     }
-                )
-              }
-          });
+                }
+            });
+        });
 
-          $('#del_btn').click(function(){
+        <!-- proxy modal 相关事件处理  结束-->
+
+        $('.del').click(function () {
+            var row = $(this).closest('tr');
+            if (confirm("确定删除?")) {
+                $.get(
+                        $(this).attr('value'),
+                        {},
+                        function (data) {
+                            row.remove();
+                            alert(data);
+                        }
+                )
+            }
+        });
+
+        $('#del_btn').click(function () {
             var check_array = [];
             if (confirm("确定删除")) {
-                $(".gradeX input:checked").each(function() {
+                $(".gradeX input:checked").each(function () {
                     check_array.push($(this).attr("value"))
                 });
                 $.get("{% url 'proxy_del' %}",
-                    {id: check_array.join(",")},
-                    function(result){
-                        alert(result);
-                        $(".gradeX input:checked").closest("tr").remove();
+                        {id: check_array.join(",")},
+                        function (result) {
+                            alert(result);
+                            $(".gradeX input:checked").closest("tr").remove();
 
-                    }
+                        }
                 )
             }
-          });
+        });
 
-      })
+    })
 </script>
 {% endblock %}
-
-{#<div class="wrapper wrapper-content animated fadeInRight">#}
-{#    <div class="row">#}
-{#        <div class="col-sm-10">#}
-{#            <div class="ibox float-e-margins">#}
-{##}
-{#                <div class="ibox-title">#}
-{#                    <h5> 查看代理</h5>#}
-{#                    <div class="ibox-tools">#}
-{#                        <a class="collapse-link">#}
-{#                            <i class="fa fa-chevron-up"></i>#}
-{#                        </a>#}
-{#                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">#}
-{#                            <i class="fa fa-wrench"></i>#}
-{#                        </a>#}
-{#                        <a class="close-link">#}
-{#                            <i class="fa fa-times"></i>#}
-{#                        </a>#}
-{#                    </div>#}
-{#                </div>#}
-{##}
-{#                <div class="ibox-content">#}
-{#                    <div class="">#}
-{#                    <a href="{% url 'proxy_add' %}" class="btn btn-sm btn-primary "> 添加代理 </a>#}
-{#                    <a id="del_btn" class="btn btn-sm btn-danger "> 删除所选 </a>#}
-{#                    <form id="search_form" method="get" action="" class="pull-right mail-search">#}
-{#                        <div class="input-group">#}
-{#                            <input type="text" class="form-control input-sm" id="search_input" name="search" placeholder="Search">#}
-{#                            <div class="input-group-btn">#}
-{#                                <button id='search_btn' type="submit" class="btn btn-sm btn-primary">#}
-{#                                    -搜索-#}
-{#                                </button>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </form>#}
-{#                    </div>#}
-{##}
-{#                    <table class="table table-striped table-bordered table-hover " id="editable" >#}
-{#                        <thead>#}
-{#                            <tr>#}
-{#                                <th class="text-center">#}
-{#                                    <input type="checkbox" id="select_all" name="select_all">#}
-{#                                </th>#}
-{#                                <th class="text-center">代理名</th>#}
-{#                                <th class="text-center">主机数</th>#}
-{#                                <th class="text-center">用户名</th>#}
-{#                                <th class="text-center">URL</th>#}
-{#                                <th class="text-center">备注</th>#}
-{#                                <th class="text-center">操作</th>#}
-{#                            </tr>#}
-{#                        </thead>#}
-{#                        <tbody>#}
-{#                        {% for proxy in proxys.object_list %}#}
-{#                            <tr class="gradeX">#}
-{#                                <td class="text-center">#}
-{#                                    <input class="shiftCheckbox" type="checkbox"  name="selected" value="{{ proxy.id }}">#}
-{#                                </td>#}
-{#                                <td class="text-center"> {{ proxy.proxy_name }} </td>#}
-{#                                <td class="text-center">#}
-{#                                    <a href="{% url 'asset_list' %}?pid={{ proxy.id }}"> {{ proxy.id | proxy_asset_count }}</a>#}
-{#                                </td>#}
-{#                                <td class="text-center"> {{ proxy.username }} </td>#}
-{#                                <td class="text-center"> {{ proxy.url }} </td>#}
-{#                                <td class="text-center"> {{ proxy.comment }} </td>#}
-{#                                <td class="text-center">#}
-{#                                    <a href="{% url 'proxy_edit' %}?id={{ proxy.id }}" class="btn btn-xs btn-info">编辑</a>#}
-{#                                    <a value="{% url 'proxy_del' %}?id={{ proxy.id }}" class="btn btn-xs btn-danger del">删除</a>#}
-{#                                </td>#}
-{#                            </tr>#}
-{#                        {% endfor %}#}
-{#                        </tbody>#}
-{#                    </table>#}
-{#                    <div class="row">#}
-{#                        <div class="col-sm-6">#}
-{#                            <div class="dataTables_info" id="editable_info" role="status" aria-live="polite">#}
-{#                                Showing {{ proxys.start_index }} to {{ proxys.end_index }} of {{ p.count }} entries#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        {% include 'paginator.html' %}#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{#</div>#}
-{#{% endblock %}#}
-{##}
-{#{% block self_head_css_js %}#}
-{#    {% load staticfiles %}#}
-{#    <script src="{% static 'js/jquery.shiftcheckbox.js' %}"></script>#}
-{#{% endblock %}#}
-{#{% block self_footer_js %}#}
-{#<script>#}
-{#    $(document).ready(function(){#}
-{#        $('.del').click(function(){#}
-{#            var row = $(this).closest('tr');#}
-{#            if (confirm("确定删除")) {#}
-{#            $.get(#}
-{#                    $(this).attr('value'),#}
-{#                    {},#}
-{#                    function(data){#}
-{#                        row.remove();#}
-{#                        alert(data);#}
-{#                    }#}
-{##}
-{#            )}#}
-{#        });#}
-{##}
-{#        $('#del_btn').click(function(){#}
-{#            var check_array = [];#}
-{#            if (confirm("确定删除")) {#}
-{#                $(".gradeX input:checked").each(function() {#}
-{#                    check_array.push($(this).attr("value"))#}
-{#                });#}
-{#                $.get("{% url 'proxy_del' %}",#}
-{#                    {id: check_array.join(",")},#}
-{#                    function(result){#}
-{#                        alert(result);#}
-{#                        $(".gradeX input:checked").closest("tr").remove();#}
-{##}
-{#                    }#}
-{#                )#}
-{#            }#}
-{##}
-{#        });#}
-{#        $("tbody tr").shiftcheckbox({#}
-{#            checkboxSelector: 'input:checkbox',#}
-{#            selectAll: $('#select_all'),#}
-{#            ignoreClick: 'a'#}
-{#        });#}
-{#        $('.shiftCheckbox').shiftcheckbox();#}
-{#    });#}
-{#</script>#}
-{#{% endblock %}#}

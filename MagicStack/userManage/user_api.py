@@ -84,11 +84,11 @@ def db_update_user(**kwargs):
     groups_post = kwargs.pop('groups')
     admin_groups_post = kwargs.pop('admin_groups')
     user_id = kwargs.pop('user_id')
+    password = kwargs.pop('password')
     user = User.objects.filter(id=user_id)
     if user:
         user.update(**kwargs)
         user_get = user[0]
-        password = kwargs.pop('password')
         if password.strip():
             user_get.set_password(password)
             user_get.save()

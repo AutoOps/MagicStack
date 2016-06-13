@@ -349,5 +349,8 @@ def number_to_str(value, ptype):
     return rest
 
 @register.filter(name='groups_name')
-def groups_name(groups):
-    return ','.join([group.name for group in groups])
+def groups_name(groups, type=None):
+    if type == 'user':
+        return ','.join([group.username for group in groups])
+    else:
+        return ','.join([group.name for group in groups])

@@ -71,7 +71,7 @@ def proxy_edit(request, res, *args):
     if request.method == 'POST':
         proxy_name = request.POST.get('proxy_name')
         user_name = request.POST.get('user_name')
-        password = request.POST.get('password')
+        password = request.POST.get('user_password')
         proxy_url = request.POST.get('proxy_url')
         comment = request.POST.get('comment', '')
         encrypt = CRYPTOR.encrypt(password)

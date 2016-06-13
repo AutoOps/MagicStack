@@ -59,10 +59,10 @@
                                     </label>
                                 </td>
                                 <td>
-                                    <a href="{% url 'asset_list' %}?idc_id={{ post.id }}">{{ post.name }}</a>
+                                    {{ post.name }}
                                 </td>
                                 <td>
-                                    <a href="{% url 'asset_list' %}?idc_id={{ post.id }}">{{ post.asset_set.count }}</a>
+                                    {{ post.asset_set.count }}
                                 </td>
                                 <td>
                                     {{ post.linkman }}

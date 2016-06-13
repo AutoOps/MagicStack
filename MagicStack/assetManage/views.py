@@ -673,7 +673,7 @@ def asset_detail(request):
     asset_id = request.GET.get('id', '')
     asset = get_object(Asset, id=asset_id)
     perm_info = get_group_asset_perm(asset)
-    log = Log.objects.filter(host=asset.name)
+    log = Log.objects.filter(host=asset.networking.all()[0].ip_address).order_by('-start_time')[0:20]
     if perm_info:
         user_perm = []
         for perm, value in perm_info.items():
@@ -682,7 +682,6 @@ def asset_detail(request):
                     user_perm.append([user, role_dic.get('role', '')])
             elif perm == 'user_group' or perm == 'rule':
                 user_group_perm = value
-    print perm_info
 
     asset_record = AssetRecord.objects.filter(asset=asset).order_by('-alert_time')
 

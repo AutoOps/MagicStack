@@ -4,389 +4,320 @@
 
 {% block content %}
     {% include 'nav_cat_bar.html' %}
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <span class="text text-primary"><b>{{ asset.ip }}</b></span>
-                        <div class="ibox-tools">
-                            <a class="" href="{% url 'asset_update' %}?id={{ asset.id }}">
-                                <i class="fa fa-refresh"></i>
-                            </a>
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ibox-content ibox-heading">
-                        <h3>主机详细信息</h3>
-                        <small><i class="fa fa-map-marker"></i> 此主机详细信息.</small>
-                    </div>
-                    <div class="ibox-content">
-                        <div>
-                            <div class="text-left">
-                                <table class="table">
-                                    <tr>
-                                        <td class="text-navy">主机名</td>
-                                        <td>{{ asset.name|default_if_none:""  }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">IP</td>
-                                        <td>{{ asset.ip|default_if_none:""  }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">其他IP</td>
-                                        <td>
-                                            <table class="table">
-                                                {% if asset.other_ip %}
-                                                    {% for ip in asset.other_ip|ip_str_to_list %}
-                                                        <tr>
-                                                            <td>{{ ip }}</td>
-                                                        </tr>
-                                                    {% endfor %}
-                                                {% endif %}
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">远程管理卡</td>
-                                        <td>
-                                             <table class="table">
-                                                    <tr>
-                                                        <td>{{ asset.power_manage.power_type|default_if_none:"" }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{{ asset.power_manage.power_address|default_if_none:"" }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{{ asset.power_manage.power_username|default_if_none:"" }}</td>
-                                                    </tr>
 
-                                             </table>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">端口</td>
-                                        <td>{{ asset.port|default_if_none:"" }}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="text-navy">主机组</td>
-                                        <td>
-                                             <table class="table">
-                                                 {% for asset_group in asset.group.all %}
-                                                    <tr>
-                                                        <td>{{ asset_group.name|default_if_none:"" }}</td>
-                                                    </tr>
-                                                 {% endfor %}
-                                             </table>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="text-navy">网卡</td>
-                                        <td>
-                                             <table class="table">
-                                                 {% for asset_net in asset.networking.all %}
-                                                    <tr>
-                                                        <td>{{ asset_net.net_name|default_if_none:"" }}</td>
-                                                    </tr>
-                                                 {% endfor %}
-                                             </table>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="text-navy">机房</td>
-                                        <td>{{ asset.idc.name|default_if_none:"" }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">硬件厂商型号</td>
-                                        <td>{{ asset.brand|default_if_none:"" }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">CPU</td>
-                                        <td>{{ asset.cpu|default_if_none:"" }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">内存</td>
-                                        <td>{{ asset.memory|default_if_none:"" }}{% if asset.memory %}G{% endif %}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">硬盘</td>
-                                        <td>
-                                            <table class="table">
-                                            {% if asset.disk %}
-                                                 {% for disk, value in asset.disk|str_to_dic %}
-                                                    <tr>
-                                                        <td><span class="text-navy">{{ disk|default_if_none:"" }}</span> &nbsp&nbsp&nbsp {{ value|default_if_none:"" }}</td>
-                                                    </tr>
-                                                 {% endfor %}
-                                            {% endif %}
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">资产编号</td>
-                                        <td>{{ asset.number|default_if_none:"" }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">SN</td>
-                                        <td>{{ asset.sn|default_if_none:"" }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">主机类型</td>
-                                        <td>{{ asset.get_asset_type_display|default_if_none:"" }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">系统版本</td>
-                                        <td>{{ asset.system_type|default_if_none:"" }} {{ asset.system_version|default_if_none:"" }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">系统平台</td>
-                                        <td>{{ asset.system_arch|default_if_none:"" }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">运行环境</td>
-                                        <td>{{ asset.get_env_display|default_if_none:"" }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">机器状态</td>
-                                        <td>{{ asset.get_status_display|default_if_none:"" }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">机柜号</td>
-                                        <td>{{ asset.cabinet|default_if_none:"" }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">机柜位置</td>
-                                        <td>{{ asset.position|default_if_none:"" }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">激活</td>
-                                        <td>{{ asset.is_active|bool2str }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">添加日期</td>
-                                        <td>{{ asset.date_added|date:"Y-m-d H:i:s" }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-navy">备注</td>
-                                        <td>{{ asset.comment|default_if_none:"" }}</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
+<div class="row" xmlns="http://www.w3.org/1999/html">
+    <div class="col-md-12">
+    <div class="profile-content">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- BEGIN PORTLET -->
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font "></i>
+                        <span class="caption-subject font-blue-madison bold uppercase">主机详细信息</span>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>拥有权限的用户</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ibox-content ibox-heading">
-                        <h3>主机所有授权的信息</h3>
-                        <small><i class="fa fa-map-marker"></i> 包含了此主机所有授权的信息.</small>
-                    </div>
-                    <div class="ibox-content">
-                        <div>
-                            <div class="text-left">
-                                {% if perm_info %}
-                                    {% if user_perm %}
-                                        <table class="table">
-                                        <p>授权用户信息</p>
-                                        <td class="text-navy">授权用户</td>
-                                        <td class="text-navy">关联用户</td>
-                                        {% for perm in user_perm %}
+                <div class="portlet-body">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        <table class="table table-hover table-light">
+                            <tr>
+                                <td > <span class="bold theme-font">主机名</span> </td>
+                                <td>{{ asset.name|default_if_none:""  }}</td>
+                            </tr>
+                            <tr>
+                                <td > <span class="bold theme-font"> 远程管理卡</span> </td>
+                                <td>
+                                     <table class="table">
                                             <tr>
-                                                <td class="text-navy"><a href="{% url 'user_detail' %}?id={{ perm.0.id }}">{{ perm.0 }}</a></td>
-                                                <td>
-                                                    <table class="table">
-                                                    {% if perm.1 %}
-                                                         {% for role in perm.1 %}
-                                                            <tr>
-                                                                <td class="text-navy"><a href="{% url 'role_detail' %}?id={{ role.id }}">{{ role }}</a></td>
-                                                            </tr>
-                                                         {% endfor %}
-                                                    {% endif %}
-                                                    </table>
-                                                </td>
+                                                <td>{{ asset.power_manage.power_type|default_if_none:"" }}</td>
                                             </tr>
-                                        {% endfor %}
-                                        </table>
-                                    {% endif %}
-                                    {% if user_group_perm %}
-                                        <table class="table">
-                                            <p>授权用户组信息</p>
-                                            <td class="text-navy">授权用户组</td>
-                                            <td class="text-navy">组详情</td>
-                                            {% for user_group in user_group_perm %}
-                                                <tr>
-                                                    <td class="text-navy">{{ user_group }}</td>
-                                                    <td class="text-navy"><a href="{% url 'user_group_list' %}?gid={{ user_group.id }}">详情</a></td>
-                                                </tr>
-                                            {% endfor %}
-                                        </table>
-                                    {% endif %}
+                                            <tr>
+                                                <td>{{ asset.power_manage.power_address|default_if_none:"" }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ asset.power_manage.power_username|default_if_none:"" }}</td>
+                                            </tr>
 
-                                    {% if user_rule_perm %}
-                                        <table class="table">
-                                            <p>授权规则信息</p>
-                                            <td class="text-navy">授权规则</td>
-                                            <td class="text-navy">详情</td>
-                                            {% for rule in user_rule_perm %}
-                                                <tr>
-                                                    <td class="text-navy">{{ rule }}</td>
-                                                    <td class="text-navy"><a href="{% url 'rule_detail' %}?id={{ rule.id }}">详情</a></td>
-                                                </tr>
-                                            {% endfor %}
-                                        </table>
+                                     </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td > <span class="bold theme-font"> 端口 </span> </td>
+                                <td>{{ asset.port|default_if_none:"" }}</td>
+                            </tr>
+                            <tr>
+                                <td ><span class="bold theme-font">主机组 </span> </td>
+                                <td>
+                                     <table class="table">
+                                         {% for asset_group in asset.group.all %}
+                                            <tr>
+                                                <td>{{ asset_group.name|default_if_none:"" }}</td>
+                                            </tr>
+                                         {% endfor %}
+                                     </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td ><span class="bold theme-font">网卡</span> </td>
+                                <td>
+                                     <table class="table">
+                                         {% for asset_net in asset.networking.all %}
+                                            <tr>
+                                                <td>{{ asset_net.net_name|default_if_none:"" }}</td>
+                                                <td>{{ asset_net.ip_address|default_if_none:"" }}</td>
+                                            </tr>
+                                         {% endfor %}
+                                     </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td ><span class="bold theme-font"> 机房</span> </td>
+                                <td>{{ asset.idc.name|default_if_none:"" }}</td>
+                            </tr>
+                            <tr>
+                                <td><span class="bold theme-font"> 硬件厂商型号</span> </td>
+                                <td>{{ asset.brand|default_if_none:"" }}</td>
+                            </tr>
+                            <tr>
+                                <td ><span class="bold theme-font"> CPU</span> </td>
+                                <td>{{ asset.cpu|default_if_none:"" }}</td>
+                            </tr>
+                            <tr>
+                                <td ><span class="bold theme-font">内存</span> </td>
+                                <td>{{ asset.memory|default_if_none:"" }}{% if asset.memory %}G{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <td ><span class="bold theme-font">硬盘</span></td>
+                                <td>
+                                    <table class="table">
+                                    {% if asset.disk %}
+                                         {% for disk, value in asset.disk|str_to_dic %}
+                                            <tr>
+                                                <td><span class="text-navy">{{ disk|default_if_none:"" }}</span> &nbsp&nbsp&nbsp {{ value|default_if_none:"" }}</td>
+                                            </tr>
+                                         {% endfor %}
                                     {% endif %}
-                                {% else %}
-                                    <p class="text-center">(暂无)</p>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ibox-title">
-                        <h5>主机修改记录</h5>
-                        <a href="{% url 'asset_edit' %}?id={{ asset.id }}" data-toggle="tooltip" class="text-success pull-center" data-placement="bottom" title="修改">&nbsp&nbsp&nbsp&nbsp点击修改</a>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ibox-content ibox-heading">
-                        <h3>主机修改记录</h3>
-                        <small><i class="fa fa-map-marker"></i> 包含了此主机所有历史修改记录.</small>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="feed-activity-list">
-                            {% if asset_record %}
-                                {% for r in asset_record %}
-                                    <div class="feed-element">
-                                        <div>
-                                            <small class="pull-right">{{ r.alert_time|naturaltime }}</small>
-                                            <strong class="text-navy">{{ r.username }}</strong>
-                                                {% for i in r.content|str_to_list %}
-                                                    <div>{{ i.0 }} 由 <span class="text-success">{{ i.1|str_to_code }}</span> 改为 <span class="text-warning">{{ i.2|str_to_code }}</span></div>
-                                                {% endfor %}
-                                            <small class="text-success">{{ r.alert_time }}</small>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            {% else %}
-                                <p class="text-center">(暂无)</p>
-                            {% endif %}
-                        </div>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td ><span class="bold theme-font">资产编号</span></td>
+                                <td>{{ asset.number|default_if_none:"" }}</td>
+                            </tr>
+                            <tr>
+                                <td ><span class="bold theme-font">SN</span></td>
+                                <td>{{ asset.sn|default_if_none:"" }}</td>
+                            </tr>
+                            <tr>
+                                <td ><span class="bold theme-font">主机类型</span></td>
+                                <td>{{ asset.get_asset_type_display|default_if_none:"" }}</td>
+                            </tr>
+                            <tr>
+                                <td ><span class="bold theme-font">系统版本</span></td>
+                                <td>{{ asset.system_type|default_if_none:"" }} {{ asset.system_version|default_if_none:"" }}</td>
+                            </tr>
+                            <tr>
+                                <td ><span class="bold theme-font">系统平台</span></td>
+                                <td>{{ asset.system_arch|default_if_none:"" }}</td>
+                            </tr>
+                            <tr>
+                                <td ><span class="bold theme-font">运行环境</span></td>
+                                <td>{{ asset.get_env_display|default_if_none:"" }}</td>
+                            </tr>
+                            <tr>
+                                <td><span class="bold theme-font">机器状态</span></td>
+                                <td>{{ asset.get_status_display|default_if_none:"" }}</td>
+                            </tr>
+                            <tr>
+                                <td ><span class="bold theme-font">机柜号</span></td>
+                                <td>{{ asset.cabinet|default_if_none:"" }}</td>
+                            </tr>
+                            <tr>
+                                <td><span class="bold theme-font">机柜位置</span></td>
+                                <td>{{ asset.position|default_if_none:"" }}</td>
+                            </tr>
+                            <tr>
+                                <td><span class="bold theme-font">激活</span></td>
+                                <td>{{ asset.is_active|bool2str }}</td>
+                            </tr>
+                            <tr>
+                                <td><span class="bold theme-font">添加日期</span></td>
+                                <td>{{ asset.date_added|date:"Y-m-d H:i:s" }}</td>
+                            </tr>
+                            <tr>
+                                <td ><span class="bold theme-font">备注</span></td>
+                                <td>{{ asset.comment|default_if_none:"" }}</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
-
-            <div class="col-sm-4">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>最近一周登录记录</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
+            <!-- END PORTLET -->
+        </div>
+        <div class="col-md-6">
+            <!-- BEGIN PORTLET -->
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        <i class="icon-bar-chart theme-font "></i>
+                        <span class="caption-subject font-blue-madison bold uppercase">主机授权信息</span>
                     </div>
-                    <div class="ibox-content ibox-heading">
-                        <h3>最近一周登录记录</h3>
-                        <small><i class="fa fa-map-marker"></i> 此主机最近一周用户登录信息.</small>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-scrollable table-scrollable-borderless">
+                        {% if perm_info %}
+                            {% if user_perm %}
+                                <table class="table table-hover table-light">
+                                    <p>授权用户信息</p>
+                                    <td ><span class="bold theme-font">授权用户</span></td>
+                                    <td ><span class="bold theme-font">关联用户</span></td>
+                                    {% for perm in user_perm %}
+                                        <tr>
+                                            <td ><a href="{% url 'user_detail' %}?id={{ perm.0.id }}">{{ perm.0 }}</a></td>
+                                            <td>
+                                                <table class="table">
+                                                {% if perm.1 %}
+                                                     {% for role in perm.1 %}
+                                                        <tr>
+                                                            <td ><a href="{% url 'role_detail' %}?id={{ role.id }}">{{ role }}</a></td>
+                                                        </tr>
+                                                     {% endfor %}
+                                                {% endif %}
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            {% endif %}
+                            {% if user_group_perm %}
+                                <table class="table table-hover table-light">
+                                    <p>授权用户组信息</p>
+                                    <td >授权用户组</td>
+                                    <td >组详情</td>
+                                    {% for user_group in user_group_perm %}
+                                        <tr>
+                                            <td >{{ user_group }}</td>
+                                            <td ><a href="{% url 'user_group_list' %}?gid={{ user_group.id }}">详情</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            {% endif %}
+                            {% if user_rule_perm %}
+                                <table class="table table-hover table-light">
+                                    <p>授权规则信息</p>
+                                    <td >授权规则</td>
+                                    <td >详情</td>
+                                    {% for rule in user_rule_perm %}
+                                        <tr>
+                                            <td >{{ rule }}</td>
+                                            <td ><a href="{% url 'rule_detail' %}?id={{ rule.id }}">详情</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            {% endif %}
+                    {% else %}
+                        <p>(暂无)</p>
+                    {% endif %}
                     </div>
-                    <div class="ibox-content inspinia-timeline">
-                        {% if log %}
-                            {% for l in log %}
-                                <div class="timeline-item">
-                                    <div class="row">
-                                        <div class="col-xs-5 date">
-                                            <i class="fa fa-info-circle"></i>
-                                            <small class="text-navy">{{ l.user }}</small>
-                                            <br/>
-                                        </div>
-                                        <div class="col-xs-7 content no-top-border">
-                                            <p class="m-b-xs"><strong>详细信息</strong></p>
-                                            <p>来源IP: {{ l.remote_ip }}</p>
-                                            <p>开始: {{ l.start_time |date:"Y-m-d H:i:s" }}</p>
-                                            <p>结束: {{ l.end_time |date:"Y-m-d H:i:s" }}</p>
-                                        </div>
+                </div>
+            </div>
+            <!-- END PORTLET -->
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="portlet light portlet-fit bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-microphone font-green"></i>
+                    <span class="caption-subject bold font-green uppercase"> 主机修改记录 </span>
+                    <span class="caption-helper">最近几次修改记录</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="timeline">
+                    <div class="timeline">
+                    {% if asset_record %}
+                        {% for r in asset_record %}
+                            <div class="timeline-item">
+                                <div class="timeline-badge">
+                                    <div class="timeline-icon">
+                                        <i class="icon-docs font-red-intense"></i>
                                     </div>
                                 </div>
-                            {% endfor %}
-                            <button id="show" class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> 所有 </button>
-                            <div id='more' style="display: none">
-                            <br/>
-                            {% for l in log_more %}
-                                <div class="timeline-item">
-                                    <div class="row">
-                                        <div class="col-xs-5 date">
-                                            <i class="fa fa-info-circle"></i>
-                                            <small class="text-navy">{{ l.user }}</small>
-                                            <br/>
-                                        </div>
-                                        <div class="col-xs-7 content no-top-border">
-                                            <p class="m-b-xs"><strong>详细信息</strong></p>
-                                            <p>来源IP: {{ l.remote_ip }}</p>
-                                            <p>开始: {{ l.start_time |date:"Y-m-d H:i:s" }}</p>
-                                            <p>结束: {{ l.end_time |date:"Y-m-d H:i:s" }}</p>
+                                <div class="timeline-body">
+                                    <div class="timeline-body-arrow"> </div>
+                                    <div class="timeline-body-head">
+                                        <div class="timeline-body-head-caption">
+                                            <span class="timeline-body-alerttitle font-green-haze">{{ r.username }}</span>
+                                            <span class="timeline-body-time font-grey-cascade">{{ r.alert_time }}</span>
                                         </div>
                                     </div>
+                                    <div class="timeline-body-content">
+                                        {% for i in r.content|str_to_list %}
+                                            <span class="font-grey-cascade">
+                                                {{ i.0 }} 由 <span class="text-success">{{ i.1|str_to_code }}</span> 改为 <span class="text-warning">{{ i.2|str_to_code }}</span>
+                                            </span>
+                                            <br/>
+                                        {% endfor %}
+                                    </div>
                                 </div>
-                            {% endfor %}
-                        {% else %}
-                            <p class="text-center">(暂无)</p>
-                        {% endif %}
-
-                    </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>(暂无)</p>
+                    {% endif %}
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="portlet light portlet-fit bg-inverse ">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-microphone font-red"></i>
+                    <span class="caption-subject bold font-red uppercase"> 用户登录主机记录</span>
+                    <span class="caption-helper">最近几次登录记录</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="timeline  white-bg ">
+                    <!-- TIMELINE ITEM -->
+                    {% if log %}
+                        {% for l in log %}
+                            <div class="timeline-item">
+                                <div class="timeline-badge">
+                                    <div class="timeline-icon">
+                                        <i class="icon-user-following font-green-haze"></i>
+                                    </div>
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="timeline-body-arrow"> </div>
+                                    <div class="timeline-body-head">
+                                        <div class="timeline-body-head-caption">
+                                            <span class="timeline-body-alerttitle font-red-intense">{{ l.user }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-body-content">
+                                        <p><strong>详细信息</strong></p>
+                                        <span class="font-grey-cascade"> 来源IP: {{ l.remote_ip }}</span>
+                                        <br>
+                                        <span class="font-grey-cascade">开始时间: {{ l.start_time |date:"Y-m-d H:i:s" }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <script>
     $(document).ready(function(){
         $('#show').click(function(){

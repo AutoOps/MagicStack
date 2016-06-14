@@ -65,6 +65,7 @@ INSTALLED_APPS = (
     'permManage',
     'logManage',
     'proxyManage',
+    'taskManage',
     'common',
     'emergency',
 

@@ -555,7 +555,7 @@ def asset_action(request, status):
         return HttpResponse(json.dumps(result), content_type='application/json')
 
 
-@require_role('admin')
+@require_role('user')
 def asset_event(request):
     response = {'error': '', 'message':''}
     if request.method == 'GET':

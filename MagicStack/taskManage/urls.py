@@ -20,7 +20,8 @@ from taskManage.views import *
 
 
 urlpatterns = patterns("",
-                       url("^list/$", task_list, name="task_list"),
-                       url("^add/$", task_add, name="task_add"),
-                       url("^edit/$", task_add, name="task_edit"),
+    url("^list/$", task_list, name="task_list"),
+    url("^add/$", task_add, name="task_add"),
+    url("^edit/$", task_add, name="task_edit"),
+    url("^modules/$", task_modules, name="get_task_module"),
 )

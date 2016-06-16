@@ -2,8 +2,6 @@
 {% load mytags %}
 {% block content %}
 {% include 'nav_cat_bar.html' %}
-
-
 <div class="row">
     <div class="col-md-12">
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
@@ -92,99 +90,7 @@
         <!-- END EXAMPLE TABLE PORTLET-->
     </div>
 </div>
-
-<!-- START MODAL DIV -->
-<div class="modal fade draggable-modal" id="task" tabindex="-1" role="basic" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 class="modal-title">添加任务</h4>
-            </div>
-            <div class="modal-body">
-                <!-- BEGIN FORM-->
-                <form action="" id="form_sample_1" class="form-horizontal" method="post">
-                    <div class="form-body">
-                        <div class="alert alert-danger display-hide">
-                            <button class="close" data-close="alert"></button>
-                            You have some form errors. Please check below.
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Proxy
-                                <span class="required"> * </span>
-                            </label>
-
-                            <div class="col-md-6">
-                                <select class="bs-select form-control" name="proxy">
-                                    <option value="AF">Afghanistan</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">任务类型
-                                <span class="required"> * </span>
-                            </label>
-
-                            <div class="col-md-6">
-                                <select class="bs-select form-control" name="task_type">
-                                    <option>Mustard</option>
-                                    <option>Ketchup</option>
-                                    <option>Relish</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">触发设置
-                                <span class="required"> * </span>
-                            </label>
-
-                            <div class="col-md-6">
-                                <input type="text" name="user_password" data-required="1" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">任务主机
-                                <span class="required"> * </span>
-                            </label>
-
-                            <div class="col-md-6">
-                                <input type="text" name="task_host" data-required="1" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">任务参数
-                                <span class="required"> * </span>
-                            </label>
-
-                            <div class="col-md-6">
-                                <input type="text" name="task_kwargs" data-required="1" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">备注&nbsp;&nbsp;</label>
-
-                            <div class="col-md-6">
-                                <input name="comment" type="text" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="alert alert-danger text-center" id="err_info" style="display:none">
-                        </div>
-                    </div>
-                </form>
-                <!-- END FORM-->
-            </div>
-            <div class="modal-footer">
-                <input type="hidden" value="" id="submit_type"/>
-                <button type="button" class="btn green" id="submit">提交</button>
-                <button type="button" class="btn dark btn-outline" data-dismiss="modal">取消</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- END MODAL DIV -->
-
+{% include 'taskManage/task_tab.html' %}
 {% endblock %}
 
 {% block self_head_css_js %}
@@ -192,12 +98,22 @@
 <link href="/static/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
 <link href="/static/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <link href="/static/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
-<link href="/static/global/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css"/>
+<link href="/static/global/plugins/bootstrap-multiselect/css/bootstrap-multiselect.css" rel="stylesheet"
+      type="text/css"/>
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 <link href="/static/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css"/>
 <link href="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet"
       type="text/css"/>
+<link href="/static/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css"/>
+<link href="/static/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet"
+      type="text/css"/>
+<link href="/static/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet"
+      type="text/css"/>
+<link href="/static/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet"
+      type="text/css"/>
+<link href="/static/global/plugins/clockface/css/clockface.css" rel="stylesheet" type="text/css"/>
+
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN THEME GLOBAL STYLES -->
 <link href="/static/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css"/>
@@ -214,10 +130,20 @@
 <script src="/static/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"
         type="text/javascript"></script>
-<script src="/static/global/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-multiselect/js/bootstrap-multiselect.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="/static/pages/scripts/table-datatables-managed.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"
+        type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js"
+        type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"
+        type="text/javascript"></script>
+<script src="/static/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"
+        type="text/javascript"></script>
+<script src="/static/pages/scripts/components-date-time-pickers.min.js" type="text/javascript"></script>
 
 <!-- END PAGE LEVEL SCRIPTS -->
 
@@ -245,8 +171,135 @@
     }
 
     $(document).ready(function () {
+        <!-- 公共函数 Start -->
 
-        <!-- proxy modal 相关事件处理  开始-->
+        // 获取当前日期时间串
+        function get_nowdate(formatDate) {
+            // todo 设置格式串，默认yyyy-mm-dd HH:MM:SS
+            var d = new Date();
+            var year = d.getFullYear();
+            var month = d.getMonth() + 1;
+            var day = d.getDate();
+            var hour = d.getHours();
+            var minute = d.getMinutes();
+            var second = d.getSeconds();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (day >= 0 && day <= 9) {
+                day = "0" + day;
+            }
+
+            return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second
+        }
+
+        // trigger相关信息验证
+        function trigger_validate(key, val) {
+            // 去除空格
+            val = val.replace(/(^s*)|(s*$)/g, "");
+            // 校验是否为空值
+            if (val == null || val == undefined || val == "") {
+                return false;
+            }
+
+            //校验trigger参数是否可行 todo
+            return true
+        }
+
+        // 构建Trigger对象
+        function Trigger(start_datetime, end_datetime, month, day, hour, minute, second, week, day_of_week) {
+            if (trigger_validate('start_datetime', start_datetime)) {
+                this.start_date = start_datetime;
+            }
+
+            if (trigger_validate('end_datetime', end_datetime)) {
+                this.end_date = end_datetime;
+            }
+
+            if (trigger_validate('month', month)) {
+                this.month = month;
+            }
+
+            if (trigger_validate('day', day)) {
+                this.day = day;
+            }
+
+            if (trigger_validate('hour', hour)) {
+                this.hour = hour;
+            }
+
+            if (trigger_validate('minute', minute)) {
+                this.minute = minute;
+            }
+
+            if (trigger_validate('second', second)) {
+                this.second = second;
+            }
+
+            if (trigger_validate('week', week)) {
+                this.week = week;
+            }
+
+            if (trigger_validate('day_of_week', day_of_week)) {
+                this.day_of_week = day_of_week;
+            }
+        }
+
+        <!-- 公共函数 End -->
+
+        // 时间选择器格式设置
+        $(".form-datetime").datetimepicker({
+            format: "yyyy-mm-dd hh:ii:ss",
+            weekStart: 1,
+            startView: "year",
+            todayBtn: true,
+            todayHighlight: true,//是否高亮当前时间
+            keyboardNavigation: true,//是否允许键盘选择时间
+            minuteStep: 5,//分钟的间隔
+            showMeridian: true, //是否加上网格
+            language: 'zh-CN',//选择语言，前提是该语言已导入
+            pickerPosition: "bottom-left",
+            forceParse: true,//当选择器关闭的时候，是否强制解析输入框中的值。也就是说，当用户在输入框中输入了不正确的日期，选择器将会尽量解析输入的值，并将解析后的正确值按照给定的格式format设置到输入框中
+            autoclose: true//当选择一个日期之后是否立即关闭此日期时间选择器
+        });
+
+        // 任务类型选择模块内容加载
+        $("select[name='task_type']").change(function () {
+            $.ajax({
+                type: "post",
+                url: "{% url 'get_task_module' %}",
+
+                dataType: "json",
+                data: {"task_type": $("select[name='task_type'] option:selected").val()},
+                success: function (data) {
+                    $("select[name='module_name']").empty();
+                    $.each(data, function (i, item) {
+                        $("select[name='module_name']").append("<option value=" + item.id + ">" + item.module_name + "</option>");
+                    });
+                }
+            });
+
+        });
+
+        // proxy选择加载主机信息
+        $("select[name='proxy']").change(function () {
+            $.ajax({
+                type: "post",
+                url: "{% url 'get_host_for_proxy' %}",
+
+                dataType: "json",
+                data: {"proxy_id": $("select[name='proxy'] option:selected").val()},
+                success: function (data) {
+                    $("#task_host").empty();
+                    $.each(data, function (i, item) {
+                        $("#task_host").append("<option value=" + item.id + ">" + item.name + "</option>");
+                    });
+                }
+            });
+
+        });
+
+        <!-- task modal 相关事件处理  开始-->
         $('#add-task').click(function () {
             //设置表单内容
             $.ajax({
@@ -257,92 +310,32 @@
                     // 设置表单select内容
                     // task_type options
                     var task_types = result.task_types;
-                    var task_type = $("select[name='task_type']");
-                    task_type.empty();
+                    $("select[name='task_type']").empty();
                     for (var i = 0; i < task_types.length; i++) {
-                        task_type.append("<option value='" + task_types[i][0] + "'>" + task_types[i][1] + "</option>");
+                        $("select[name='task_type']").append("<option value='" + task_types[i][0] + "'>" + task_types[i][1] + "</option>");
                     }
+                    // 初始化任务模块
+                    $("select[name='task_type']").trigger("change");
+
                     // proxy options
                     var proxys = result.proxys;
-                    var proxy = $("select[name='proxy']");
-                    proxy.empty();
+                    $("select[name='proxy']").empty();
                     for (var i = 0; i < proxys.length; i++) {
-                        proxy.append(("<option value='" + proxys[i].url + "'>" + proxys[i].proxy_name + "</option>"));
+                        $("select[name='proxy']").append(("<option value='" + proxys[i].id + "'>" + proxys[i].proxy_name + "</option>"));
                     }
+
+                    // 初始化任务主机内容
+                    $("select[name='proxy']").trigger("change");
+
+                    // 设置开始日期为当前日期
+                    $("input[name='start_datetime']").val(get_nowdate(''));
+
                     // show modal
                     $('#task').modal({backdrop: 'static', keyboard: false});
                 }
             });
         });
-
-        // 隐藏proxy modal事件
-        $('#proxy').on('hide.bs.modal', function () {
-            // 设置modal标题
-            $(".modal-title").html("添加代理");
-            // 清空form表单
-            $("#form_sample_1")[0].reset();
-            // 错误层，隐藏并清空
-            $("#err_info").html("").hide();
-            // 默认submit_type为add
-            $("#submit_type").val('add');
-        });
-
-        // 提交添加/修改proxy
-        $("#submit").click(function () {
-            // 控制提交与编辑proxy， 编辑时为edit
-            var url = "{% url 'proxy_add' %}";
-            if ($("#submit_type").val() == 'edit') {
-                url = "{% url 'proxy_edit' %}";
-            }
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: $("#form_sample_1").serialize(),
-                success: function (result) {
-                    result = $.parseJSON(result);
-                    if (result.flag) {
-                        //添加/编辑成功
-                        window.location.reload();
-                    } else {
-                        $("#err_info").html(result.content).show();
-                    }
-                }
-            });
-        });
-
-        <!-- proxy modal 相关事件处理  结束-->
-
-        $('.del').click(function () {
-            var row = $(this).closest('tr');
-            if (confirm("确定删除?")) {
-                $.get(
-                        $(this).attr('value'),
-                        {},
-                        function (data) {
-                            row.remove();
-                            alert(data);
-                        }
-                )
-            }
-        });
-
-        $('#del_btn').click(function () {
-            var check_array = [];
-            if (confirm("确定删除")) {
-                $(".gradeX input:checked").each(function () {
-                    check_array.push($(this).attr("value"))
-                });
-                $.get("{% url 'proxy_del' %}",
-                        {id: check_array.join(",")},
-                        function (result) {
-                            alert(result);
-                            $(".gradeX input:checked").closest("tr").remove();
-
-                        }
-                )
-            }
-        });
-
-    })
+        <!-- task modal 相关事件处理  结束-->
+    });
 </script>
 {% endblock %}

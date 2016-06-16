@@ -3,6 +3,7 @@ from django.db.models import Q
 from MagicStack.api import *
 from models import *
 from userManage.user_api import user_operator_record
+from assetManage.models import Asset
 from datetime import datetime
 import json
 
@@ -123,3 +124,20 @@ def proxy_del(request, res, *args):
         res['content'] += ' [%s]  ' % proxy.proxy_name
         proxy.delete()
     return HttpResponse(u'删除[%s]成功' % msg)
+
+
+@require_role('admin')
+def get_host_for_proxy(request):
+    """
+        根据proxyId，获取主机列表
+    """
+
+    proxy_id = request.POST.get('proxy_id')
+    assets = Asset.objects.all().filter(proxy=Proxy.objects.get(id=proxy_id)).order_by('id')
+    res = list()
+    for asset in assets:
+        res.append({
+            'id': asset.id,
+            'name': asset.name
+        })
+    return HttpResponse(json.dumps(res))

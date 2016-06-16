@@ -32,10 +32,10 @@ class Backup(models.Model):
         ('db', '数据库备份')
     )
 
-    backup_proxy = models.CharField(max_length=2000, unique=True, help_text='备份proxy')
-    backup_host = models.CharField(max_length=2000, unique=True, help_text='备份proxy')
+    backup_proxy = models.CharField(max_length=254, unique=True, help_text='备份proxy')
+    backup_host = models.CharField(max_length=254, unique=True, help_text='备份proxy')
     backup_type = models.CharField(max_length=2, choices=TYPES, default='file', help_text='备份类型')
-    backup_kwargs = models.CharField(max_length=2000, help_text='备份参数')
+    backup_kwargs = models.CharField(max_length=254, help_text='备份参数')
     backup_cycle = models.CharField(max_length=100, help_text='备份周期')
     backup_status = models.CharField(max_length=2, choices=STATUS, default='00', help_text='备份状态')
     task_uuid = models.CharField(max_length=100, help_text='备份任务ID')

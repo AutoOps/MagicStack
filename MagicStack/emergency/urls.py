@@ -19,5 +19,8 @@ urlpatterns = patterns('',
             url(r'^media/list$', media_list, name='media_list'),
             url(r'^media/add$', media_add, name='media_add'),
             url(r'^media/edit$', media_edit, name='media_edit'),
-            url(r'^media/del$', media_del, name='media_del')
+            url(r'^media/del$', media_del, name='media_del'),
+            url(r'^emergency/rule/$', emergency_rule, name='emergency_rule'),
+            url(r'^emergency/edit/$', emergency_edit, name='emergency_edit'),
+            url(r'^emergency/save/$', emergency_save, name='emergency_save'),
 )

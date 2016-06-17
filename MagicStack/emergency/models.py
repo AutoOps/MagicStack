@@ -14,6 +14,7 @@
 #   limitations under the License.
 
 from django.db import models
+from userManage.models import User
 
 MEDIA_TYPE = (
     (1, u'电子邮件'),
@@ -41,3 +42,37 @@ class EmergencyType(models.Model):
         return self.name
 
 
+class EmergencyRules(models.Model):
+
+    EMER_CONTENT = (
+        (1, u'用户变更'),
+        (2, u'资产变更'),
+        (3, u'应用变更'),
+        (4, u'任务变更'),
+        (5, u'备份变更'),
+        (6, u'授权变更'),
+        (7, u'代理变更')
+    )
+    TIME_TYPE = (
+        (1, u'全部'),
+        (2, u'工作日'),
+        (3, u'周末')
+    )
+
+    RULE_STATUS = (
+        (0, u'禁用'),
+        (1, u'启用')
+    )
+
+    name = models.CharField(max_length=100, verbose_name=u'规则名称')
+    content = models.IntegerField(choices=EMER_CONTENT, verbose_name=u'告警通知的内容')
+    staff = models.ManyToManyField(User, verbose_name=u'告警通知人员')
+    emergency_time = models.IntegerField(choices=TIME_TYPE, default=1)
+    media_type = models.ForeignKey(EmergencyType, null=True)
+    status = models.IntegerField(choices=RULE_STATUS, default=0)
+    is_add = models.BooleanField(default=1)
+    is_delete = models.BooleanField(default=1)
+    is_update = models.BooleanField(default=1)
+
+    def __unicode__(self):
+        return self.name

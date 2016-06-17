@@ -1,0 +1,341 @@
+{#{% extends 'base.html' %}#}
+{#{% load mytags %}#}
+{#{% block self_head_css_js %}#}
+{#        <!-- BEGIN PAGE LEVEL PLUGINS -->#}
+{#       <link href="/static/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />#}
+{#       <link href="/static/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />#}
+{#       <link href="/static/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />#}
+{#        <link href="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />#}
+{#        <!-- END PAGE LEVEL PLUGINS -->#}
+{#        <!-- BEGIN THEME GLOBAL STYLES -->#}
+{#        <link href="/static/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />#}
+{#        <link href="/static/global/css/plugins.min.css" rel="stylesheet" type="text/css" />#}
+{#        <!-- END THEME GLOBAL STYLES -->#}
+{#{% endblock %}#}
+{#{% block content %}#}
+{#{% include 'nav_cat_bar.html' %}#}
+{##}
+{#<div class="row">#}
+{#    <div class="col-md-12">#}
+{#        <!-- BEGIN EXAMPLE TABLE PORTLET-->#}
+{#        <div class="portlet light portlet-fit bordered">#}
+{#            <div class="portlet-body">#}
+{#                <div class="table-toolbar">#}
+{#                    <div class="row">#}
+{#                        <div class="col-md-6">#}
+{#                            <div class="btn-group">#}
+{#                                <button id="sample_editable_1_new" class="btn green"> 添加规则#}
+{#                                    <i class="fa fa-plus"></i>#}
+{#                                </button>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <table class="table table-striped table-hover table-bordered" id="sample_editable_1">#}
+{#                    <thead>#}
+{#                        <tr>#}
+{#                            <th> 规则名称 </th>#}
+{#                            <th> 告警内容 </th>#}
+{#                            <th> 用户 </th>#}
+{#                            <th> 告警时间 </th>#}
+{#                            <th> 告警方式 </th>#}
+{#                            <th> 状态 </th>#}
+{#                            <th> Edit </th>#}
+{#                        </tr>#}
+{#                    </thead>#}
+{#                    <tbody>#}
+{#                        {% for emer in emer_rules %}#}
+{#                        <tr>#}
+{#                            <td> {{ emer.name }} </td>#}
+{#                            <td> {{ emer.get_content_display }} </td>#}
+{#                            <td> {{ '' }} </td>#}
+{#                            <td> {{ emer.get_emergency_time_display }}</td>#}
+{#                            <td> {{ emer.get_media_type_display }}</td>#}
+{#                            <td> {{ emer.get_status_display }} </td>#}
+{#                            <td>#}
+{#                                <a class="edit" href="javascript:;"> Edit </a>#}
+{#                            </td>#}
+{#                        </tr>#}
+{#                        {% endfor %}#}
+{#                    </tbody>#}
+{#                </table>#}
+{#            </div>#}
+{#        </div>#}
+{#        <!-- END EXAMPLE TABLE PORTLET-->#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#{% endblock %}#}
+{#{% block self_footer_js %}#}
+{#    <!-- BEGIN PAGE LEVEL PLUGINS -->#}
+{#    <script src="/static/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>#}
+{#    <script src="/static/pages/scripts/components-select2.min.js" type="text/javascript"></script>#}
+{#    <script src="/static/global/scripts/datatable.js" type="text/javascript"></script>#}
+{#    <script src="/static/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>#}
+{#    <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>#}
+{#    <!-- END PAGE LEVEL PLUGINS -->#}
+{#    <!-- BEGIN PAGE LEVEL SCRIPTS -->#}
+{#    <script src="/static/pages/scripts/table-datatables-editable.min.js" type="text/javascript"></script>#}
+{#    <!-- END PAGE LEVEL SCRIPTS -->#}
+{#<script>#}
+{#      $(document).ready(function(){#}
+{##}
+{#      })#}
+{#</script>#}
+{#{% endblock %}#}
+
+{% extends 'base.html' %}
+{% load mytags %}
+{% block self_head_css_js %}
+        <!-- BEGIN PAGE LEVEL PLUGINS -->
+        <link href="/static/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+        <link href="/static/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="/static/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+        <link href="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+        <!-- END PAGE LEVEL PLUGINS -->
+        <link href="/static/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css" />
+        <!-- BEGIN THEME GLOBAL STYLES -->
+        <link href="/static/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+        <link href="/static/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+        <!-- END THEME GLOBAL STYLES -->
+{% endblock %}
+{% block content %}
+{% include 'nav_cat_bar.html' %}
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
+                    <thead>
+                        <tr>
+                            <th> 告警事件 </th>
+                            <th> 用户 </th>
+                            <th> 告警时间 </th>
+                            <th> 告警方式 </th>
+                            <th> 状态 </th>
+                            <th> Edit </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for emer in emer_rules %}
+                        <tr>
+                            <td> {{ emer.get_content_display }} </td>
+                            <td> {{ emer.staff.all | groups_name:'user' }} </td>
+                            <td> {{ emer.get_emergency_time_display }}</td>
+                            <td> {{ emer.media_type.name }}</td>
+                            <td> {{ emer.get_status_display }} </td>
+                            <td>
+                                <button type="button" class="btn green  btn-outline"  onclick="editRule('{{ emer.id }}')">
+                                   编辑
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">编辑规则</h4>
+      </div>
+      <div class="modal-body">
+           <form action="" id="form_sample_1" class="form-horizontal" method="post">
+               <input type="text" class="form-control hide" value="" name="rule_id"/>
+               <div class="form-group">
+                    <label class="control-label col-md-3">告警内容</label>
+                    <div class="col-md-4">
+                        <input name="content" type="text" class="form-control"  readonly/>
+                        <div class="mt-checkbox-inline" id="emer_operator">
+                            <label class="mt-checkbox">
+                                <input type="checkbox"  value="0" name="operator" id="op_add" checked="checked"> 添加
+                                <span></span>
+                            </label>
+                            <label class="mt-checkbox">
+                                <input type="checkbox" value="1" name="operator" id="op_update" checked="checked"> 更新
+                                <span></span>
+                            </label>
+                            <label class="mt-checkbox">
+                                <input type="checkbox"  value="2" name="operator" id="op_delete" checked="checked"> 删除
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+               </div>
+               <div class="form-group">
+                    <label for="multiple" class="col-md-3 control-label">告警人员</label>
+                    <div class="col-md-4">
+                        <select id="mutil_user"  name="emer_user" class="form-control select2-multiple" multiple>
+                            {% for user in users %}
+                                <option value="{{ user.id }}" >{{ user.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+               </div>
+               <div class="form-group">
+                    <label class="col-md-3 control-label">告警时间</label>
+                    <div class="col-md-4">
+                        <select class="form-control" name="emer_time" id="single_time">
+                            <option value="1">全部</option>
+                            <option value="2">工作日</option>
+                            <option value="3">周末</option>
+                        </select>
+                    </div>
+               </div>
+               <div class="form-group">
+                    <label class="col-md-3 control-label">告警媒介</label>
+                    <div class="col-md-4">
+                        <select class="form-control" name="media_type" id="single_type">
+                           {% for media in media_list %}
+                               <option value="{{ media.id }}">{{ media.name }}</option>
+                           {% endfor %}
+                        </select>
+                    </div>
+               </div>
+               <div class="form-group">
+                    <label class="col-md-3 control-label">告警状态</label>
+                    <div class="col-md-4">
+                        <select class="form-control" name="emer_status" id="single_status">
+                            <option value="0">禁用</option>
+                            <option value="1">启用</option>
+                        </select>
+                    </div>
+               </div>
+           </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn grey-salsa btn-outline" data-dismiss="modal">Close</button>
+        <button type="button" class="btn green" id="btn_save">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block self_footer_js %}
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="/static/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <script src="/static/pages/scripts/components-select2.min.js" type="text/javascript"></script>
+    <script src="/static/global/scripts/datatable.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="/static/pages/scripts/table-datatables-managed.min.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL SCRIPTS -->
+<script>
+      //编辑规则
+      function editRule(rule_id){
+             var url = '{% url "emergency_edit" %}?id=' + rule_id;
+             $.get(url, function(res){
+
+                $('input[name=content]').val(res.emer_content);
+                $('input[name=rule_id]').val(res.emer_id);
+                 //设置下拉框的值
+                var select_user = res.emer_user.split(',');
+                var mutil_select = document.getElementById('mutil_user');
+                var options = mutil_select.options;
+
+                for (var i=0; i<select_user.length; i++){
+                     for (var j=0; j<options.length; j++){
+                         if(options[j].value == select_user[i]){
+                             options[j].selected = true
+                         }
+                     }
+
+                }
+                $('#single_time').val(res.emer_time);
+                $('#single_type').val(res.media_type);
+                $('#single_status').val(res.emer_status);
+
+                //设置复选框的值
+                 if(res.is_add){
+                     document.getElementById('op_add').checked = true;
+                 }else{
+                     document.getElementById('op_add').checked = false;
+                 }
+
+                 if(res.is_updated){
+                     document.getElementById('op_update').checked = true;
+                 }else{
+                     document.getElementById('op_update').checked = false;
+                 }
+
+                 if(res.is_delete){
+                     document.getElementById('op_delete').checked = true;
+                 }else{
+                     document.getElementById('op_delete').checked = false;
+                 }
+
+                $('#myModal').modal();
+             })
+      }
+      $(document).ready(function(){
+          //保存
+          $('#btn_save').click(function(){
+              var emer_id = $('input[name=rule_id]').val();
+
+              //获取select框的值
+              var emer_user = $('#mutil_user').val();
+              var emer_time = $('#single_time').val();
+              var media_type = $('#single_type').val();
+              var emer_status = $('#single_status').val();
+
+              //获取复选框的值
+              var is_add = 0;
+              if(document.getElementById("op_add").checked){
+                   is_add = 1;
+              }
+
+              var is_update = 0 ;
+              if(document.getElementById('op_update').checked){
+                  is_update= 1;
+              }
+
+              var is_delete = 0;
+              if(document.getElementById('op_delete').checked){
+                  is_delete = 1;
+              }
+              var param = {
+                  'id':emer_id,
+                  'emer_user': emer_user,
+                  'emer_time': emer_time,
+                  'media_type': media_type,
+                  'emer_status': emer_status,
+                  'is_add': is_add,
+                  'is_update': is_update,
+                  'is_delete': is_delete
+              };
+              param = JSON.stringify(param);
+              $.post('{% url "emergency_save" %}', {'param': param}, function(res) {
+                      if (res.success == 'true') {
+                          $('#myModal').modal('toggle');
+                          window.location.reload();
+                      } else {
+                          alert(res.error)
+                      }
+              })
+          });
+
+      });
+
+      //每个10秒重现加载一下table
+{#      setInterval(function(){#}
+{#          $("#sample_1").load(document.URL + '#sample_1')#}
+{#      }, 2000)#}
+</script>
+{% endblock %}
+
+
+

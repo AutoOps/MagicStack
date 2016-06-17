@@ -12,12 +12,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-from django.db.models import Q
 from django.shortcuts import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
-from MagicStack.api import pages, my_render, require_role, CRYPTOR, ServerError, logger
+import json
+from MagicStack.api import  my_render, require_role, CRYPTOR, ServerError, logger
 from userManage.user_api import user_operator_record
-from emergency.models import EmergencyType
+from emergency.models import *
 
 MEDIA_TYPES = {'0': u'电子邮件', '1': u'微信', '2':u'短信'}
 
@@ -176,3 +176,78 @@ def media_del(request, res):
         res['content'] += u' [%s]  ' % media.name
         media.delete()
     return HttpResponse(u'删除[%s]成功' % msg)
+
+
+@require_role('admin')
+@user_operator_record
+def emergency_rule(request,res):
+    header_title, path1, path2 = u"告警规则设置", u"告警管理", u"告警规则"
+    emer_rules = EmergencyRules.objects.all()
+    users = User.objects.all()
+    media_list = EmergencyType.objects.all()
+    return my_render('emergency/emer_rules.html', locals(), request)
+
+@require_role('admin')
+@user_operator_record
+def emergency_edit(request, res):
+    response = {}
+    emer_content = {
+        '1': u'用户变更',
+        '2': u'资产变更',
+        '3': u'应用变更',
+        '4': u'任务变更',
+        '5': u'备份变更',
+        '6': u'授权变更',
+        '7': u'代理变更'
+    }
+    if request.method == "GET":
+        emer_id = request.GET.get('id')
+        if emer_id:
+            emer_rule = EmergencyRules.objects.get(id=int(emer_id))
+            response['emer_id'] = emer_id
+            response['emer_content'] = emer_content[str(emer_rule.content)]
+            response['emer_user'] = ','.join([str(user.id) for user in emer_rule.staff.all()])
+            response['emer_time'] = str(emer_rule.emergency_time)
+            response['media_type'] = str(emer_rule.media_type.id) if emer_rule.media_type else ''
+            response['emer_status'] = str(emer_rule.status)
+            response['is_add'] = emer_rule.is_add
+            response['is_updated'] = emer_rule.is_update
+            response['is_delete'] = emer_rule.is_delete
+            return HttpResponse(json.dumps(response), content_type="application/json")
+        else:
+            return HttpResponse(u'Not Found')
+
+
+@require_role('admin')
+@user_operator_record
+def emergency_save(request, res):
+    response = {'success':'false', 'error': ''}
+    if request.method == 'POST':
+        params = json.loads(request.POST.get('param', ''))
+        emer_id = params.get('id')
+        if emer_id:
+            try:
+                emer_rule = EmergencyRules.objects.get(id=int(emer_id))
+                select_user = params.get('emer_user', '')
+                emer_time = params.get('emer_time',1)
+                media_type_id = params.get('media_type', '1')
+                emer_status = params.get('emer_status',1)
+                is_add = params.get('is_add', 1)
+                is_update = params.get('is_update', 1)
+                is_delete = params.get('is_delete', 1)
+
+                emer_rule.staff = select_user
+                emer_rule.emergency_time = emer_time
+                emer_rule.media_type = EmergencyType.objects.get(id=int(media_type_id))
+                emer_rule.status = emer_status
+                emer_rule.is_add = is_add
+                emer_rule.is_delete = is_delete
+                emer_rule.is_update = is_update
+                emer_rule.save()
+                response['success'] = 'true'
+            except Exception as e:
+                response['error'] = e
+        else:
+            response['error'] = u'ID不存在'
+        return HttpResponse(json.dumps(response), content_type='application/json')
+

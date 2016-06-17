@@ -7,9 +7,9 @@ import urllib
 from django.db.models import Count
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponseNotFound
+
 from django.http import HttpResponse
-import paramiko
+
 from MagicStack.api import *
 from MagicStack.models import Setting
 from django.contrib.auth import authenticate, login, logout

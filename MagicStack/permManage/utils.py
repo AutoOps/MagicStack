@@ -8,7 +8,7 @@ from MagicStack.api import mkdir
 from uuid import uuid4
 from MagicStack.api import CRYPTOR
 
-from MagicStack.api import logger
+
 
 
 from MagicStack.settings import KEY_DIR

@@ -1,0 +1,93 @@
+[
+  {
+      "model": "emergency.EmergencyRules",
+      "pk": 1,
+      "fields": {
+        "content": 1,
+        "emergency_time": 1,
+        "media_type_id":6,
+        "status":0,
+        "is_add":true,
+        "is_delete":true,
+        "is_update":true
+      }
+  },
+  {
+      "model": "emergency.EmergencyRules",
+      "pk": 2,
+      "fields": {
+        "content": 2,
+        "emergency_time": 1,
+        "media_type_id":6,
+        "status":0,
+        "is_add":true,
+        "is_delete":true,
+        "is_update":true
+      }
+  },
+  {
+      "model": "emergency.EmergencyRules",
+      "pk": 3,
+      "fields": {
+        "content": 3,
+        "emergency_time": 1,
+        "media_type_id":6,
+        "status":0,
+        "is_add":true,
+        "is_delete":true,
+        "is_update":true
+      }
+  },
+  {
+      "model": "emergency.EmergencyRules",
+      "pk": 4,
+      "fields": {
+        "content": 4,
+        "emergency_time": 1,
+        "media_type_id":6,
+        "status":0,
+        "is_add":true,
+        "is_delete":true,
+        "is_update":true
+      }
+  },
+  {
+      "model": "emergency.EmergencyRules",
+      "pk": 5,
+      "fields": {
+        "content": 5,
+        "emergency_time": 1,
+        "media_type_id":6,
+        "status":0,
+        "is_add":true,
+        "is_delete":true,
+        "is_update":true
+      }
+  },
+  {
+      "model": "emergency.EmergencyRules",
+      "pk": 6,
+      "fields": {
+        "content": 6,
+        "emergency_time": 1,
+        "media_type_id":6,
+        "status":0,
+        "is_add":true,
+        "is_delete":true,
+        "is_update":true
+      }
+  },
+  {
+      "model": "emergency.EmergencyRules",
+      "pk": 7,
+      "fields": {
+        "content": 7,
+        "emergency_time": 1,
+        "media_type_id":6,
+        "status":0,
+        "is_add":true,
+        "is_delete":true,
+        "is_update":true
+      }
+  }
+]

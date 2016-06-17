@@ -532,22 +532,4 @@ if __name__ == "__main__":
     cmd = Command(resource)
     print cmd.run('ls')
 
-    # resource = [{"hostname": "192.168.10.148", "port": "22", "username": "root", "password": "xxx"}]
-    # task = Tasks(resource)
-    # print task.get_host_info()
-
-#   playbook = MyPlaybook(resource)
-#   playbook.run('test.yml')
-#   print playbook.raw_results
-
-#    task = Tasks(resource)
-    # print task.add_user('test', 'mypass')
-#   print task.del_user('test')
-#   print task.push_key('root', '/root/.ssh/id_rsa.pub')
-#   print task.del_key('root', '/root/.ssh/id_rsa.pub')
-
-#   task = Tasks(resource)
-#   print task.add_init_users()
-#   print task.del_init_users()
-
 

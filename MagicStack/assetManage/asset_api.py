@@ -5,8 +5,8 @@ import xlsxwriter
 from django.db.models import AutoField
 from MagicStack.api import *
 from assetManage.models import ASSET_STATUS, ASSET_TYPE, ASSET_ENV, IDC, AssetRecord
-from permManage.ansible_api import MyRunner
-from permManage.perm_api import gen_resource
+
+
 from MagicStack.templatetags.mytags import get_disk_info
 from common.interface import APIRequest
 from django.db.models.query import QuerySet

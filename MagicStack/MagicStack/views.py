@@ -17,7 +17,7 @@ from django.contrib.auth.decorators import login_required
 from logManage.models import Log, FileLog
 from permManage.perm_api import get_group_user_perm, gen_resource,user_have_perm
 from assetManage.models import Asset, IDC
-from permManage.ansible_api import MyRunner
+
 
 
 def getDaysByNum(num):
@@ -237,85 +237,85 @@ def setting(request):
     return my_render('setting.html', locals(), request)
 
 
-@login_required(login_url='/login')
-def upload(request):
-    user = request.user
-    assets = get_group_user_perm(user).get('asset').keys()
-    asset_select = []
-    if request.method == 'POST':
-        remote_ip = request.META.get('REMOTE_ADDR')
-        asset_ids = request.POST.getlist('asset_ids', '')
-        upload_files = request.FILES.getlist('file[]', None)
-        date_now = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-        upload_dir = get_tmp_dir()
-        for asset_id in asset_ids:
-            asset_select.append(get_object(Asset, id=asset_id))
+# @login_required(login_url='/login')
+# def upload(request):
+#     user = request.user
+#     assets = get_group_user_perm(user).get('asset').keys()
+#     asset_select = []
+#     if request.method == 'POST':
+#         remote_ip = request.META.get('REMOTE_ADDR')
+#         asset_ids = request.POST.getlist('asset_ids', '')
+#         upload_files = request.FILES.getlist('file[]', None)
+#         date_now = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+#         upload_dir = get_tmp_dir()
+#         for asset_id in asset_ids:
+#             asset_select.append(get_object(Asset, id=asset_id))
+#
+#         if not set(asset_select).issubset(set(assets)):
+#             illegal_asset = set(asset_select).issubset(set(assets))
+#             return HttpResponse('没有权限的服务器 %s' % ','.join([asset.name for asset in illegal_asset]))
+#
+#         for upload_file in upload_files:
+#             file_path = '%s/%s' % (upload_dir, upload_file.name)
+#             with open(file_path, 'w') as f:
+#                 for chunk in upload_file.chunks():
+#                     f.write(chunk)
+#
+#         res = gen_resource({'user': user, 'asset': asset_select})
+#         runner = MyRunner(res)
+#         runner.run('copy', module_args='src=%s dest=%s directory_mode'
+#                                         % (upload_dir, '/tmp'), pattern='*')
+#         ret = runner.results
+#         logger.debug(ret)
+#         FileLog(user=request.user.username, host=' '.join([asset.name for asset in asset_select]),
+#                 filename=' '.join([f.name for f in upload_files]), type='upload', remote_ip=remote_ip,
+#                 result=ret).save()
+#         if ret.get('failed'):
+#             error = u'上传目录: %s <br> 上传失败: [ %s ] <br>上传成功 [ %s ]' % (upload_dir,
+#                                                                                ','.join(ret.get('failed').keys()),
+#                                                                                 ','.join(ret.get('ok').keys()))
+#             return HttpResponse(error, status=500)
+#         msg = u'上传目录: %s <br> 传送成功 [ %s ]' % (upload_dir, ', '.join(ret.get('ok').keys()))
+#         return HttpResponse(msg)
+#     return my_render('upload.html', locals(), request)
 
-        if not set(asset_select).issubset(set(assets)):
-            illegal_asset = set(asset_select).issubset(set(assets))
-            return HttpResponse('没有权限的服务器 %s' % ','.join([asset.name for asset in illegal_asset]))
 
-        for upload_file in upload_files:
-            file_path = '%s/%s' % (upload_dir, upload_file.name)
-            with open(file_path, 'w') as f:
-                for chunk in upload_file.chunks():
-                    f.write(chunk)
-
-        res = gen_resource({'user': user, 'asset': asset_select})
-        runner = MyRunner(res)
-        runner.run('copy', module_args='src=%s dest=%s directory_mode'
-                                        % (upload_dir, '/tmp'), pattern='*')
-        ret = runner.results
-        logger.debug(ret)
-        FileLog(user=request.user.username, host=' '.join([asset.name for asset in asset_select]),
-                filename=' '.join([f.name for f in upload_files]), type='upload', remote_ip=remote_ip,
-                result=ret).save()
-        if ret.get('failed'):
-            error = u'上传目录: %s <br> 上传失败: [ %s ] <br>上传成功 [ %s ]' % (upload_dir,
-                                                                                ','.join(ret.get('failed').keys()),
-                                                                                ','.join(ret.get('ok').keys()))
-            return HttpResponse(error, status=500)
-        msg = u'上传目录: %s <br> 传送成功 [ %s ]' % (upload_dir, ', '.join(ret.get('ok').keys()))
-        return HttpResponse(msg)
-    return my_render('upload.html', locals(), request)
-
-
-@login_required(login_url='/login')
-def download(request):
-    user = request.user
-    assets = get_group_user_perm(user).get('asset').keys()
-    asset_select = []
-    if request.method == 'POST':
-        remote_ip = request.META.get('REMOTE_ADDR')
-        asset_ids = request.POST.getlist('asset_ids', '')
-        file_path = request.POST.get('file_path')
-        date_now = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-        upload_dir = get_tmp_dir()
-        for asset_id in asset_ids:
-            asset_select.append(get_object(Asset, id=asset_id))
-
-        if not set(asset_select).issubset(set(assets)):
-            illegal_asset = set(asset_select).issubset(set(assets))
-            return HttpResponse(u'没有权限的服务器 %s' % ','.join([asset.name for asset in illegal_asset]))
-
-        res = gen_resource({'user': user, 'asset': asset_select})
-        runner = MyRunner(res)
-        runner.run('fetch', module_args='src=%s dest=%s' % (file_path, upload_dir), pattern='*')
-        FileLog(user=request.user.username, host=' '.join([asset.name for asset in asset_select]),
-                filename=file_path, type='download', remote_ip=remote_ip, result=runner.results).save()
-        logger.debug(runner.results)
-        os.chdir('/tmp')
-        tmp_dir_name = os.path.basename(upload_dir)
-        tar_file = '%s.tar.gz' % upload_dir
-        bash('tar czf %s %s' % (tar_file, tmp_dir_name))
-        f = open(tar_file)
-        data = f.read()
-        f.close()
-        response = HttpResponse(data, content_type='application/octet-stream')
-        response['Content-Disposition'] = 'attachment; filename=%s' % os.path.basename(tar_file)
-        return response
-
-    return render_to_response('download.html', locals(), context_instance=RequestContext(request))
+# @login_required(login_url='/login')
+# def download(request):
+#     user = request.user
+#     assets = get_group_user_perm(user).get('asset').keys()
+#     asset_select = []
+#     if request.method == 'POST':
+#         remote_ip = request.META.get('REMOTE_ADDR')
+#         asset_ids = request.POST.getlist('asset_ids', '')
+#         file_path = request.POST.get('file_path')
+#         date_now = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+#         upload_dir = get_tmp_dir()
+#         for asset_id in asset_ids:
+#             asset_select.append(get_object(Asset, id=asset_id))
+#
+#         if not set(asset_select).issubset(set(assets)):
+#             illegal_asset = set(asset_select).issubset(set(assets))
+#             return HttpResponse(u'没有权限的服务器 %s' % ','.join([asset.name for asset in illegal_asset]))
+#
+#         res = gen_resource({'user': user, 'asset': asset_select})
+#         runner = MyRunner(res)
+#         runner.run('fetch', module_args='src=%s dest=%s' % (file_path, upload_dir), pattern='*')
+#         FileLog(user=request.user.username, host=' '.join([asset.name for asset in asset_select]),
+#                 filename=file_path, type='download', remote_ip=remote_ip, result=runner.results).save()
+#         logger.debug(runner.results)
+#         os.chdir('/tmp')
+#         tmp_dir_name = os.path.basename(upload_dir)
+#         tar_file = '%s.tar.gz' % upload_dir
+#         bash('tar czf %s %s' % (tar_file, tmp_dir_name))
+#         f = open(tar_file)
+#         data = f.read()
+#         f.close()
+#         response = HttpResponse(data, content_type='application/octet-stream')
+#         response['Content-Disposition'] = 'attachment; filename=%s' % os.path.basename(tar_file)
+#         return response
+#
+#     return render_to_response('download.html', locals(), context_instance=RequestContext(request))
 
 
 @login_required(login_url='/login')

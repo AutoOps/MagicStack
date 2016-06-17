@@ -39,8 +39,6 @@ nosetests.xml
 .pydevproject
 .settings
 *.log
-logs/*
 keys/*
-magicstack.conf
 nohup.out
 tmp/*

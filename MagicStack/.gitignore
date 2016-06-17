@@ -38,7 +38,6 @@ nosetests.xml
 .project
 .pydevproject
 .settings
-*.log
 keys/*
 nohup.out
 tmp/*

@@ -2,14 +2,7 @@
 from tempfile import NamedTemporaryFile
 import os.path
 import json
-from ansible.inventory.group import Group
-from ansible.inventory.host import Host
-from ansible.inventory import Inventory
-from ansible.runner import Runner
-from ansible.playbook import PlayBook
-from ansible import callbacks
-from ansible import utils
-import ansible.constants as C
+
 from passlib.hash import sha512_crypt
 from django.template.loader import get_template
 from django.template import Context

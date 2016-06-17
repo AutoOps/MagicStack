@@ -312,21 +312,6 @@ def get_role_push_host(role):
     return asset_pushed, asset_no_push
 
 
-def get_permpush_info(role_id):
-    """
-    获取推送用户所需的信息 role,asset, assetgroup
-    :return:
-    """
-    info = None
-    try:
-        api = APIRequest('http://172.16.30.69:8100/v1.0/permission/role/{0}'.format(role_id), 'test', '123456')
-        result, codes = api.req_get()
-        info = result['messege']
-    except Exception as e:
-        logger.error(e)
-
-    return info
-
 
 def save_or_delete(obj_name, data, proxy_list, obj_id='all', action='save'):
     """

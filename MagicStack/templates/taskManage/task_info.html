@@ -1,8 +1,10 @@
 <div class="form-group">
-    <label class="control-label col-md-3">任务模块
-        <span class="required"> * </span>
-    </label>
-    <div class="col-md-8">
+    <label class="control-label col-md-3">任务模块</label>
+    <div class="col-md-4">
+        <select class="bs-select form-control" name="group_name">
+        </select>
+    </div>
+    <div class="col-md-4">
         <select class="bs-select form-control" name="module_name">
         </select>
         <select class="display-hide" name="task_type" >
@@ -10,15 +12,19 @@
     </div>
 </div>
 <div class="form-group">
-    <label class="control-label col-md-3">任务参数
-        <span class="required"> * </span>
-    </label>
+    <label class="control-label col-md-3">任务参数</label>
 
     <div class="col-md-8">
-        <input type="text" name="task_kwargs" data-required="1" class="form-control"/>
-
+        <input type="text" name="task_kwargs" class="form-control"/>
     </div>
 </div>
+<div class="form-group">
+    <label class="control-label col-md-3">参数说明</label>
+    <div class="col-md-8">
+        <textarea class="form-control" rows="3" data-required="1" name="module_desc" id="module_desc" style="resize:none" readonly></textarea>
+    </div>
+</div>
+
 <div class="form-group">
     <label class="control-label col-md-3">备注&nbsp;&nbsp;</label>
 

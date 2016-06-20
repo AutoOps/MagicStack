@@ -44,7 +44,7 @@ class Task(models.Model):
     trigger_kwargs = models.BinaryField(help_text="触发器参数") # 字典
     channal = models.CharField(max_length=4, choices=CHANNEL, help_text="任务渠道")
     create_time = models.DateField(help_text="创建时间")
-    comment = models.TextField(blank=True, help_text="备注")
+    comment = models.TextField(blank=True, null=True, help_text="备注")
     task_uuid = models.CharField(max_length=100, help_text="任务ID")
 
 
@@ -53,7 +53,8 @@ class Module(models.Model):
         ('00', '启用'),
         ('01', '停用'),
     )
-    task_type = models.CharField(max_length=20, help_text="任务类型")
+    task_type = models.CharField(max_length=20, help_text="任务类型，一个任务可能包含多个组")
+    group_name = models.CharField(max_length=20, help_text="组名称，一个组包含多个模块")
     module_name = models.CharField(max_length=50, help_text="模块名称")
     module_statu = models.CharField(max_length=2, choices=STATUS, default='00', help_text="模块状态")
     module_validation = models.CharField(max_length=100, help_text="模块参数校验函数")

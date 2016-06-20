@@ -97,9 +97,10 @@
 <link href="/static/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 <link href="/static/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
 <link href="/static/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<link href="/static/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
-<link href="/static/global/plugins/bootstrap-multiselect/css/bootstrap-multiselect.css" rel="stylesheet"
-      type="text/css"/>
+<link href="/static/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet"
+      type="text/css"/>ylesheet"
+type="text/css"/>
+
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 <link href="/static/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css"/>
@@ -130,7 +131,9 @@
 <script src="/static/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"
         type="text/javascript"></script>
-<script src="/static/global/plugins/bootstrap-multiselect/js/bootstrap-multiselect.js" type="text/javascript"></script>
+<script src="/static/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="/static/pages/scripts/form-validation.min.js" type="text/javascript"></script>
+
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="/static/pages/scripts/table-datatables-managed.min.js" type="text/javascript"></script>
@@ -144,198 +147,248 @@
 <script src="/static/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"
         type="text/javascript"></script>
 <script src="/static/pages/scripts/components-date-time-pickers.min.js" type="text/javascript"></script>
-
 <!-- END PAGE LEVEL SCRIPTS -->
 
+<!-- start custom define scripts-->
 <script>
-    // 编辑proxy
-    function edit_proxy(proxy_id) {
-        $.ajax({
-            type: 'GET',
-            url: "{% url 'proxy_edit' %}?id=" + proxy_id,
-            success: function (result) {
-                result = $.parseJSON(result);
-                // 设置表单内容
-                $("input[name='proxy_id']").val(result.proxy_id);
-                $("input[name='proxy_name']").val(result.proxy_name);
-                $("input[name='user_name']").val(result.username);
-                $("input[name='user_password']").val(result.password);
-                $("input[name='proxy_url']").val(result.proxy_url);
-                $("input[name='comment']").val(result.comment);
-                // show modal
-                $(".modal-title").html("编辑代理");
-                $("#submit_type").val("edit");
-                $('#proxy').modal({backdrop: 'static', keyboard: false});
-            }
-        });
+$(document).ready(function () {
+    <!-- 公共函数 Start -->
+
+    // 获取当前日期时间串
+    function get_nowdate(formatDate) {
+        // todo 设置格式串，默认yyyy-mm-dd HH:MM:SS
+        var d = new Date();
+        var year = d.getFullYear();
+        var month = d.getMonth() + 1;
+        var day = d.getDate();
+        var hour = d.getHours();
+        var minute = d.getMinutes();
+        var second = d.getSeconds();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (day >= 0 && day <= 9) {
+            day = "0" + day;
+        }
+
+        return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second
     }
 
-    $(document).ready(function () {
-        <!-- 公共函数 Start -->
-
-        // 获取当前日期时间串
-        function get_nowdate(formatDate) {
-            // todo 设置格式串，默认yyyy-mm-dd HH:MM:SS
-            var d = new Date();
-            var year = d.getFullYear();
-            var month = d.getMonth() + 1;
-            var day = d.getDate();
-            var hour = d.getHours();
-            var minute = d.getMinutes();
-            var second = d.getSeconds();
-            if (month >= 1 && month <= 9) {
-                month = "0" + month;
-            }
-            if (day >= 0 && day <= 9) {
-                day = "0" + day;
-            }
-
-            return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second
+    // trigger相关信息验证
+    function trigger_validate(key, val) {
+        // 去除空格
+        val = val.replace(/(^s*)|(s*$)/g, "");
+        // 校验是否为空值
+        if (val == null || val == undefined || val == "") {
+            return false;
         }
 
-        // trigger相关信息验证
-        function trigger_validate(key, val) {
-            // 去除空格
-            val = val.replace(/(^s*)|(s*$)/g, "");
-            // 校验是否为空值
-            if (val == null || val == undefined || val == "") {
-                return false;
-            }
+        //校验trigger参数是否可行 todo
+        return true
+    }
 
-            //校验trigger参数是否可行 todo
-            return true
+    // 构建Trigger对象
+    function Trigger(start_datetime, end_datetime, month, day, hour, minute, second, week, day_of_week) {
+        if (trigger_validate('start_datetime', start_datetime)) {
+            this.start_date = start_datetime;
         }
 
-        // 构建Trigger对象
-        function Trigger(start_datetime, end_datetime, month, day, hour, minute, second, week, day_of_week) {
-            if (trigger_validate('start_datetime', start_datetime)) {
-                this.start_date = start_datetime;
-            }
-
-            if (trigger_validate('end_datetime', end_datetime)) {
-                this.end_date = end_datetime;
-            }
-
-            if (trigger_validate('month', month)) {
-                this.month = month;
-            }
-
-            if (trigger_validate('day', day)) {
-                this.day = day;
-            }
-
-            if (trigger_validate('hour', hour)) {
-                this.hour = hour;
-            }
-
-            if (trigger_validate('minute', minute)) {
-                this.minute = minute;
-            }
-
-            if (trigger_validate('second', second)) {
-                this.second = second;
-            }
-
-            if (trigger_validate('week', week)) {
-                this.week = week;
-            }
-
-            if (trigger_validate('day_of_week', day_of_week)) {
-                this.day_of_week = day_of_week;
-            }
+        if (trigger_validate('end_datetime', end_datetime)) {
+            this.end_date = end_datetime;
         }
 
-        <!-- 公共函数 End -->
+        if (trigger_validate('month', month)) {
+            this.month = month;
+        }
 
-        // 时间选择器格式设置
-        $(".form-datetime").datetimepicker({
-            format: "yyyy-mm-dd hh:ii:ss",
-            weekStart: 1,
-            startView: "year",
-            todayBtn: true,
-            todayHighlight: true,//是否高亮当前时间
-            keyboardNavigation: true,//是否允许键盘选择时间
-            minuteStep: 5,//分钟的间隔
-            showMeridian: true, //是否加上网格
-            language: 'zh-CN',//选择语言，前提是该语言已导入
-            pickerPosition: "bottom-left",
-            forceParse: true,//当选择器关闭的时候，是否强制解析输入框中的值。也就是说，当用户在输入框中输入了不正确的日期，选择器将会尽量解析输入的值，并将解析后的正确值按照给定的格式format设置到输入框中
-            autoclose: true//当选择一个日期之后是否立即关闭此日期时间选择器
-        });
+        if (trigger_validate('day', day)) {
+            this.day = day;
+        }
 
-        // 任务类型选择模块内容加载
-        $("select[name='task_type']").change(function () {
-            $.ajax({
-                type: "post",
-                url: "{% url 'get_task_module' %}",
+        if (trigger_validate('hour', hour)) {
+            this.hour = hour;
+        }
 
-                dataType: "json",
-                data: {"task_type": $("select[name='task_type'] option:selected").val()},
-                success: function (data) {
-                    $("select[name='module_name']").empty();
-                    $.each(data, function (i, item) {
-                        $("select[name='module_name']").append("<option value=" + item.id + ">" + item.module_name + "</option>");
-                    });
-                }
-            });
+        if (trigger_validate('minute', minute)) {
+            this.minute = minute;
+        }
 
-        });
+        if (trigger_validate('second', second)) {
+            this.second = second;
+        }
 
-        // proxy选择加载主机信息
-        $("select[name='proxy']").change(function () {
-            $.ajax({
-                type: "post",
-                url: "{% url 'get_host_for_proxy' %}",
+        if (trigger_validate('week', week)) {
+            this.week = week;
+        }
 
-                dataType: "json",
-                data: {"proxy_id": $("select[name='proxy'] option:selected").val()},
-                success: function (data) {
-                    $("#task_host").empty();
-                    $.each(data, function (i, item) {
-                        $("#task_host").append("<option value=" + item.id + ">" + item.name + "</option>");
-                    });
-                }
-            });
+        if (trigger_validate('day_of_week', day_of_week)) {
+            this.day_of_week = day_of_week;
+        }
+    }
 
-        });
+    <!-- 公共函数 End -->
 
-        <!-- task modal 相关事件处理  开始-->
-        $('#add-task').click(function () {
-            //设置表单内容
-            $.ajax({
-                type: 'GET',
-                url: "{% url 'task_add' %}",
-                success: function (result) {
-                    result = $.parseJSON(result);
-                    // 设置表单select内容
-                    // task_type options
-                    var task_types = result.task_types;
-                    $("select[name='task_type']").empty();
-                    for (var i = 0; i < task_types.length; i++) {
-                        $("select[name='task_type']").append("<option value='" + task_types[i][0] + "'>" + task_types[i][1] + "</option>");
-                    }
-                    // 初始化任务模块
-                    $("select[name='task_type']").trigger("change");
-
-                    // proxy options
-                    var proxys = result.proxys;
-                    $("select[name='proxy']").empty();
-                    for (var i = 0; i < proxys.length; i++) {
-                        $("select[name='proxy']").append(("<option value='" + proxys[i].id + "'>" + proxys[i].proxy_name + "</option>"));
-                    }
-
-                    // 初始化任务主机内容
-                    $("select[name='proxy']").trigger("change");
-
-                    // 设置开始日期为当前日期
-                    $("input[name='start_datetime']").val(get_nowdate(''));
-
-                    // show modal
-                    $('#task').modal({backdrop: 'static', keyboard: false});
-                }
-            });
-        });
-        <!-- task modal 相关事件处理  结束-->
+    // 时间选择器格式设置
+    $(".form-datetime").datetimepicker({
+        format: "yyyy-mm-dd hh:ii:ss",
+        weekStart: 1,
+        startView: "year",
+        todayBtn: true,
+        todayHighlight: true,//是否高亮当前时间
+        keyboardNavigation: true,//是否允许键盘选择时间
+        minuteStep: 5,//分钟的间隔
+        showMeridian: true, //是否加上网格
+        language: 'zh-CN',//选择语言，前提是该语言已导入
+        pickerPosition: "bottom-left",
+        forceParse: true,//当选择器关闭的时候，是否强制解析输入框中的值。也就是说，当用户在输入框中输入了不正确的日期，选择器将会尽量解析输入的值，并将解析后的正确值按照给定的格式format设置到输入框中
+        autoclose: true//当选择一个日期之后是否立即关闭此日期时间选择器
     });
+
+    // 任务类型选择模块所属组加载
+    $("select[name='task_type']").change(function () {
+        $.ajax({
+            type: "post",
+            url: "{% url 'get_task_group' %}",
+            dataType: "json",
+            data: {"task_type": $("select[name='task_type'] option:selected").val()},
+            success: function (data) {
+                $("select[name='group_name']").empty();
+                $.each(data, function (i, item) {
+                    $("select[name='group_name']").append("<option value=" + item.group_name + ">" + item.group_name + "</option>");
+                });
+                $("select[name='group_name']").trigger('change');
+            }
+        });
+
+    });
+
+    // 任务所属组选择加载模块
+    $("select[name='group_name']").change(function () {
+        $.ajax({
+            type: "post",
+            url: "{% url 'get_task_module' %}",
+
+            dataType: "json",
+            data: {"group_name": $("select[name='group_name'] option:selected").val()},
+            success: function (data) {
+                $("select[name='module_name']").empty();
+                $.each(data, function (i, item) {
+                    $("select[name='module_name']").append("<option value=" + item.id + ">" + item.module_name + "</option>");
+                });
+                $("select[name='module_name']").trigger('change');
+            }
+        });
+
+    });
+
+    // 任务类型选择模块内容加载
+    $("select[name='module_name']").change(function () {
+        $.ajax({
+            type: "post",
+            url: "{% url 'get_module_comment' %}",
+            dataType: "json",
+            data: {"module_id": $("select[name='module_name'] option:selected").val()},
+            success: function (data) {
+                $("#module_desc").val(data);
+            }
+        });
+
+    });
+
+    // proxy选择加载主机信息
+    $("select[name='proxy']").change(function () {
+        $.ajax({
+            type: "post",
+            url: "{% url 'get_host_for_proxy' %}",
+            dataType: "json",
+            data: {"proxy_id": $("select[name='proxy'] option:selected").val()},
+            success: function (data) {
+                $("select[name='task_host']").empty();
+                $.each(data, function (i, item) {
+                    $("select[name='task_host']").append("<option value=" + item.id + ">" + item.name + "</option>");
+                });
+            }
+        });
+
+    });
+
+    <!-- task modal 相关事件处理  开始-->
+    $('#add-task').click(function () {
+        //设置表单内容
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'task_add' %}",
+            success: function (result) {
+                result = $.parseJSON(result);
+                // 设置表单select内容
+                // task_type options
+                var task_types = result.task_types;
+                $("select[name='task_type']").empty();
+                for (var i = 0; i < task_types.length; i++) {
+                    $("select[name='task_type']").append("<option value='" + task_types[i][0] + "'>" + task_types[i][1] + "</option>");
+                }
+                // 初始化任务模块
+                $("select[name='task_type']").trigger("change");
+
+                // proxy options
+                var proxys = result.proxys;
+                $("select[name='proxy']").empty();
+                for (var i = 0; i < proxys.length; i++) {
+                    $("select[name='proxy']").append(("<option value='" + proxys[i].id + "'>" + proxys[i].proxy_name + "</option>"));
+                }
+
+                // 初始化任务主机内容
+                $("select[name='proxy']").trigger("change");
+
+                // 设置开始日期为当前日期
+                $("input[name='start_datetime']").val(get_nowdate(''));
+
+                // show modal
+                $('#task').modal({backdrop: 'static', keyboard: false});
+            }
+        });
+    });
+    <!-- task modal 相关事件处理  结束-->
+
+    $("#submit").click(function () {
+        var start_datetime = $("input[name='start_datetime']").val();
+        var end_datetime = $("input[name='end_datetime']").val();
+        var month = $("input[name='trigger_month']").val();
+        var day = $("input[name='trigger_day']").val();
+        var week = $("input[name='trigger_week']").val();
+        var day_of_week = $("input[name='trigger_day_of_week']").val();
+        var hour = $("input[name='trigger_hour']").val();
+        var minute = $("input[name='trigger_minute']").val();
+        var second = $("input[name='trigger_second']").val();
+        var task_host = $("input[name='task_host']").val();
+        var trigger = new Trigger(start_datetime, end_datetime, month, day, hour, minute, second, week, day_of_week);
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'task_add' %}",
+            dataType: "json",
+            data: {
+                "trigger": JSON.stringify(trigger),
+                "module_name": $("select[name='module_name']").val(),
+                "task_type": $("select[name='task_type']").val(),
+                "task_kwargs": $("select[name='task_kwargs']").val(),
+                "proxy": $("select[name='proxy']").val(),
+                "task_host": $("select[name='task_host']").val(),
+                "comment" : $("select[name='comment']").val()
+            },
+            success: function (result) {
+                console.log(result);
+                console.log(result.flag);
+                console.log(result.content);
+                if(result.flag){
+                    window.location.reload();
+                }else{
+                    alert(result.content);
+                }
+            }
+
+        });
+    });
+});
+
 </script>
 {% endblock %}

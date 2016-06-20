@@ -23,5 +23,7 @@ urlpatterns = patterns("",
     url("^list/$", task_list, name="task_list"),
     url("^add/$", task_add, name="task_add"),
     url("^edit/$", task_add, name="task_edit"),
+    url("^groups/$", task_group, name="get_task_group"),
     url("^modules/$", task_modules, name="get_task_module"),
+    url("^module/$", task_module, name="get_module_comment"),
 )

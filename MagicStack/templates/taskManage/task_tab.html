@@ -6,8 +6,12 @@
                 <h4 class="modal-title">添加任务</h4>
             </div>
             <div class="modal-body">
-                <form action="" id="form_sample_1" class="form-horizontal" method="post">
+                <form action="#" id="form_sample_1" class="form-horizontal" method="post">
                     <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button> You have some form errors. Please check below. </div>
+                        <div class="alert alert-success display-hide">
+                            <button class="close" data-close="alert"></button> Your form validation is successful! </div>
                         <div id="taskTab">
                             <ul class="nav nav-tabs">
                                 <li class="active"><a href="#task_tab" data-toggle="tab">任务</a></li>
@@ -38,7 +42,6 @@
                 <!-- END FORM-->
             </div>
             <div class="modal-footer">
-                <input type="hidden" value="" id="submit_type"/>
                 <button type="button" class="btn green" id="submit">提交</button>
                 <button type="button" class="btn dark btn-outline" data-dismiss="modal">取消</button>
             </div>

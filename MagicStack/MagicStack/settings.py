@@ -127,7 +127,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -148,4 +148,5 @@ BOOTSTRAP_COLUMN_COUNT = 10
 CRONJOBS = [
     ('0 1 * * *', 'assetManage.asset_api.asset_ansible_update_all'),
     ('*/10 * * * *', 'logManage.log_api.kill_invalid_connection'),
+    ('*/2 * * * *', 'emergency.cron.get_emergency_event')
 ]

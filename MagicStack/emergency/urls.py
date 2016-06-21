@@ -23,4 +23,5 @@ urlpatterns = patterns('',
             url(r'^emergency/rule/$', emergency_rule, name='emergency_rule'),
             url(r'^emergency/edit/$', emergency_edit, name='emergency_edit'),
             url(r'^emergency/save/$', emergency_save, name='emergency_save'),
+            url(r'^emergency/event/$', emergency_event, name='emergency_event'),
 )

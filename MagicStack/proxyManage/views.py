@@ -34,6 +34,7 @@ def proxy_add(request, res, *args):
     error = msg = ''
     header_title, path1, path2 = u'添加代理', u'代理管理', u'添加代理'
     res['operator'] = path2
+    res['emer_content'] = 7
     if request.method == 'POST':
         proxy_name = request.POST.get('proxy_name', '')
         user_name = request.POST.get('user_name', '')
@@ -51,15 +52,15 @@ def proxy_add(request, res, *args):
             error = e.message
             res['flag'] = False
             res['content'] = error
+            res['emer_status'] = u"添加proxy[%s]失败:%s"%(proxy_name,error)
         else:
-
             create_time = datetime.now()
             Proxy.objects.create(proxy_name=proxy_name, username=user_name, password=encrypt,
                                  url=proxy_url, comment=comment, create_time=create_time)
             msg = u'添加Proxy[%s]成功' % proxy_name
             res['flag'] = True
             res['content'] = msg
-            # return HttpResponseRedirect(reverse('proxy_list'))
+            res['emer_status'] = msg
         return HttpResponse(json.dumps(res))
 
     return my_render('proxyManage/proxy_add.html', locals(), request)
@@ -70,6 +71,7 @@ def proxy_add(request, res, *args):
 def proxy_edit(request, res, *args):
     header_title, path1, path2 = u'编辑代理', u'代理管理', u'编辑代理'
     res['operator'] = path2
+    res['emer_content'] = 7
     id = request.GET.get('id', request.POST.get('proxy_id'))
     proxy = get_object(Proxy, id=id)
     if request.method == 'POST':
@@ -89,6 +91,7 @@ def proxy_edit(request, res, *args):
         except ServerError, e:
             res['flag'] = 'false'
             res['content'] = e.message
+            res['emer_status'] = u"编辑proxy[%s]失败:%s"%(proxy.proxy_name, e.message)
         else:
             proxy.proxy_name = proxy_name
             proxy.username = user_name
@@ -98,6 +101,7 @@ def proxy_edit(request, res, *args):
             proxy.save()
             msg = u'编辑Proxy[%s]成功' % proxy_name
             res['content'] = msg
+            res['emer_status'] = msg
         return HttpResponse(json.dumps(res))
 
     res['proxy_id'] = proxy.id
@@ -107,7 +111,6 @@ def proxy_edit(request, res, *args):
     res['proxy_url'] = proxy.url
     res['comment'] = proxy.comment
     return HttpResponse(json.dumps(res))
-    # return my_render('proxyManage/proxy_edit.html', locals(), request)
 
 
 @require_role('admin')
@@ -116,14 +119,23 @@ def proxy_del(request, res, *args):
     msg = ''
     res['operator'] = u'删除代理'
     res['content'] = u'删除代理'
-    proxy_id = request.GET.get('id')
+    res['emer_content'] = 7
+    proxy_id = request.POST.get('id')
     id_list = proxy_id.split(',')
-    for pid in id_list:
-        proxy = get_object(Proxy, id=int(pid))
-        msg += '  %s  ' % proxy.proxy_name
-        res['content'] += ' [%s]  ' % proxy.proxy_name
-        proxy.delete()
-    return HttpResponse(u'删除[%s]成功' % msg)
+    if id_list:
+        for pid in id_list:
+            proxy = get_object(Proxy, id=int(pid))
+            res['content'] += ' [%s]  ' % proxy.proxy_name
+            proxy.delete()
+        msg = res['content'] + u"成功"
+        res['emer_status'] = msg
+
+    else:
+        msg = u"删除代理失败:ID不存在"
+        res['flag'] = 'false'
+        res['content'] = msg
+        res['emer_status'] = msg
+    return HttpResponse(msg)
 
 
 @require_role('admin')

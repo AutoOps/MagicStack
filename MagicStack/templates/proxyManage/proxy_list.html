@@ -83,7 +83,7 @@
                                         <a data-toggle="modal" href="#" onclick="edit_proxy('{{ proxy.id }}')">编辑</a>
                                     </li>
                                     <li>
-                                        <a value="{% url 'proxy_del' %}?id={{ proxy.id }}" class="del">删除</a>
+                                        <a name="{% url 'proxy_del' %}?id={{ proxy.id }}" class="del">删除</a>
                                     </li>
                                 </ul>
                             </div>
@@ -280,10 +280,12 @@
 
         $('.del').click(function () {
             var row = $(this).closest('tr');
+            var href_url = $(this).attr('name').split('?')[0];
+            var del_id = $(this).attr('name').split('?')[1].split('=')[1];
             if (confirm("确定删除?")) {
-                $.get(
-                        $(this).attr('value'),
-                        {},
+                $.post(
+                        href_url,
+                        {'id': del_id},
                         function (data) {
                             row.remove();
                             alert(data);

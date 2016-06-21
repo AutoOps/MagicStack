@@ -7,7 +7,7 @@
 <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
 <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
 <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-    <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+    <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 0px">
         <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
         <li class="sidebar-toggler-wrapper hide">
             <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
@@ -19,9 +19,9 @@
         <li class="nav-item start active open">
             <li class="nav-item  ">
                 <a href="{% url 'index' %}" class="nav-link nav-toggle">
-                    <i class="icon-diamond"></i>
-                    <span class="title">Dashboard</span>
-                    <span class="arrow"></span>
+                    <i class="icon-home"></i>
+                    <span class="title">全局概览</span>
+{#                    <span class="arrow"></span>#}
                 </a>
             </li>
         </li>
@@ -77,12 +77,12 @@
             <ul class="sub-menu">
                 <li class="nav-item  ">
                     <a href="#" class="nav-link ">
-                        <span class="title">脚本</span>
+                        <span class="title">模块剧本</span>
                     </a>
                 </li>
                 <li class="nav-item  ">
                     <a href="#" class="nav-link ">
-                        <span class="title">Docker FIle</span>
+                        <span class="title">容器部署</span>
                     </a>
                 </li>
             </ul>
@@ -115,12 +115,17 @@
             <ul class="sub-menu">
                 <li class="nav-item  ">
                     <a href="#" class="nav-link ">
-                        <span class="title">1</span>
+                        <span class="title">文件备份</span>
                     </a>
                 </li>
                 <li class="nav-item  ">
                     <a href="#" class="nav-link ">
-                        <span class="title">2</span>
+                        <span class="title">目录备份</span>
+                    </a>
+                </li>
+                <li class="nav-item  ">
+                    <a href="#" class="nav-link ">
+                        <span class="title">数据库备份</span>
                     </a>
                 </li>
             </ul>
@@ -134,7 +139,7 @@
             <ul class="sub-menu">
                 <li class="nav-item  ">
                     <a href="{% url 'sudo_list' %}" class="nav-link ">
-                        <span class="title">SUDO</span>
+                        <span class="title">Sudo</span>
                     </a>
                 </li>
                 <li class="nav-item  ">
@@ -188,18 +193,6 @@
                 <span class="title">全局设置</span>
                 <span class="arrow"></span>
             </a>
-            <ul class="sub-menu">
-                <li class="nav-item  ">
-                    <a href="#" class="nav-link ">
-                        <span class="title">1</span>
-                    </a>
-                </li>
-                <li class="nav-item  ">
-                    <a href="#" class="nav-link ">
-                        <span class="title">2</span>
-                    </a>
-                </li>
-            </ul>
         </li>
     </ul>
 </div>

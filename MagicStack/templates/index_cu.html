@@ -47,7 +47,6 @@
                                                 <img alt="image" class="img-circle" src="/static/img/{{ session_role_id | to_avatar }}.png">
                                             </a>
                                             <div class="media-body ">
-{#                                                <small class="pull-right">{{ log.start_time|time_delta }}</small>#}
                                                 <small class="pull-right">{{ log.start_time }}</small>
                                                 <strong>{{ log.user }}</strong> 登录了 <span class="text-navy">{{ log.host }}. </span><br>
                                                 <small class="text-muted">{{ log.start_time|date:"Y-m-d H:i:s" }}</small>
@@ -72,7 +71,6 @@
                                             </a>
                                             <div class="media-body ">
                                                 <small class="pull-right">{{ log.start_time }}</small>
-{#                                                <small class="pull-right">{{ log.start_time|time_delta }}</small>#}
                                                 <strong>{{ log.user }}</strong> 登录了 <span class="text-navy">{{ log.host }}. </span><br>
                                                 <small class="text-muted">{{ log.start_time|date:"Y-m-d H:i:s" }}</small>
                                             </div>

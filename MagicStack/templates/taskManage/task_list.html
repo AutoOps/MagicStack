@@ -37,8 +37,10 @@
                                 <span></span>
                             </label>
                         </th>
-                        <th>代理地址</th>
-                        <th>任务类型</th>
+                        <th>代理名称</th>
+                        <th>模块名称</th>
+                        <th>任务配置</th>
+                        <th>最后执行时间</th>
                         <th>任务状态</th>
                         <th>备注</th>
                         <th>操作</th>
@@ -54,16 +56,22 @@
                             </label>
                         </td>
                         <td>
-                            {{ task.task_proxy }}
+                            {{ task.task_proxy.proxy_name }}
                         </td>
                         <td>
-                            {{ task.task_type }}
+                            {{ task.module.module_name }}
                         </td>
                         <td>
-                            {{ task.task_statu }}
+                            {{ task.trigger_kwargs }}
                         </td>
                         <td>
-                            {{ task.comment }}
+                            {{ task.last_exec_time }}
+                        </td>
+                        <td>
+                            {{ d_states|get_from_dict_by_key:task.task_statu }}
+                        </td>
+                        <td>
+                            {{ task.comment|default_if_none:"" }}
                         </td>
                         <td>
                             <div class="btn-group">
@@ -72,11 +80,20 @@
                                     <i class="fa fa-angle-down"></i>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
+                                    {% if task.task_statu == '00'%}
                                     <li>
-                                        <a data-toggle="modal" href="#">编辑</a>
+                                        <a href="#" name="disable">禁用</a>
+                                    </li>
+                                    {% else %}
+                                    <li>
+                                        <a href="#" name="enable">启用</a>
+                                    </li>
+                                    {% endif %}
+                                    <li>
+                                        <a data-toggle="modal" href="#" name="edit">编辑</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="del">删除</a>
+                                        <a href="#" name="del">删除</a>
                                     </li>
                                 </ul>
                             </div>
@@ -131,6 +148,7 @@ type="text/css"/>
 <script src="/static/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"
         type="text/javascript"></script>
+<script src="/static/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 <script src="/static/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
 <script src="/static/pages/scripts/form-validation.min.js" type="text/javascript"></script>
 
@@ -147,6 +165,7 @@ type="text/css"/>
 <script src="/static/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"
         type="text/javascript"></script>
 <script src="/static/pages/scripts/components-date-time-pickers.min.js" type="text/javascript"></script>
+<script src="/static/pages/scripts/ui-bootbox.min.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 
 <!-- start custom define scripts-->
@@ -370,24 +389,134 @@ $(document).ready(function () {
                 "trigger": JSON.stringify(trigger),
                 "module_name": $("select[name='module_name']").val(),
                 "task_type": $("select[name='task_type']").val(),
-                "task_kwargs": $("select[name='task_kwargs']").val(),
+                "task_kwargs": $("input[name='task_kwargs']").val(),
                 "proxy": $("select[name='proxy']").val(),
                 "task_host": $("select[name='task_host']").val(),
-                "comment" : $("select[name='comment']").val()
+                "comment": $("input[name='comment']").val()
             },
             success: function (result) {
-                console.log(result);
-                console.log(result.flag);
-                console.log(result.content);
-                if(result.flag){
+                if (result.flag) {
                     window.location.reload();
-                }else{
+                } else {
                     alert(result.content);
                 }
             }
 
         });
     });
+
+    <!-- 单个删除 -->
+    $("a[name='del']").click(function () {
+
+        var del_btn = $(this);
+        // 弹框确认
+        bootbox.confirm({
+            message: "确定删除?",
+            callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "{% url 'task_del' %}",
+                        dataType: "json",
+                        data: { "task_id": del_btn.parents('tr').find("input[type='checkbox']").val()},
+                        success: function (result) {
+                            if (result.flag) {
+                                window.location.reload();
+                            } else {
+                                alert(result.content);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+    <!-- 批量删除 -->
+    $("#del_btn").click(function () {
+
+        var check_array = [];
+        $(".gradeX input[type='checkbox']:checked").each(function(){
+            check_array.push($(this).val());
+        });
+        if(check_array.length >0){
+            bootbox.confirm({
+                message: "确定删除选中对象?",
+                callback: function (result) {
+                    if (result) {
+                        $.ajax({
+                            type: 'POST',
+                            url: "{% url 'task_del' %}",
+                            dataType: "json",
+                            data: { "task_id": check_array.join(',')},
+                            success: function (result) {
+                                if (result.flag) {
+                                    window.location.reload();
+                                } else {
+                                    alert(result.content);
+                                    window.location.reload();
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    });
+
+    <!-- 编辑 -->
+    $("a[name='edit']").click(function () {
+
+
+    });
+
+    <!-- 启用 -->
+    $("a[name='enable']").click(function () {
+        // 获取当期任务ID
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'task_action' %}",
+            dataType: "json",
+            data: {
+                "task_id": $(this).parents('tr').find("input[type='checkbox']").val(),
+                "action": 'resume'
+            },
+            success: function (result) {
+                if (result.flag) {
+                    window.location.reload();
+                } else {
+                    alert(result.content);
+                }
+            }
+
+        });
+
+    });
+
+    <!-- 禁用 -->
+    $("a[name='disable']").click(function () {
+        // 获取当期任务ID
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'task_action' %}",
+            dataType: "json",
+            data: {
+                "task_id": $(this).parents('tr').find("input[type='checkbox']").val(),
+                "action": 'pause'
+            },
+            success: function (result) {
+                if (result.flag) {
+                    window.location.reload();
+                } else {
+                    alert(result.content);
+                }
+            }
+
+        });
+
+
+    });
+
 });
 
 </script>

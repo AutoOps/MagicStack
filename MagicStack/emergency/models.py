@@ -17,9 +17,9 @@ from django.db import models
 from userManage.models import User
 
 MEDIA_TYPE = (
-    (1, u'电子邮件'),
-    (2, u'微信'),
-    (3, u'短信')
+    (0, u'电子邮件'),
+    (1, u'微信'),
+    (2, u'短信')
 )
 
 
@@ -76,3 +76,18 @@ class EmergencyRules(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class EmergencyEvent(models.Model):
+    EMER_RESULT = (
+        (0, u'未执行'),
+        (1, u'已执行')
+    )
+    emer_time = models.DateTimeField(verbose_name=u'告警时间')
+    emer_user = models.CharField(max_length=100, verbose_name=u'事件操作用户')
+    emer_event = models.ForeignKey(EmergencyRules, verbose_name=u'告警事件')
+    emer_info = models.CharField(max_length=500, verbose_name=u'事件信息')
+    emer_result = models.BooleanField(choices=EMER_RESULT, verbose_name=u'告警结果', default=0)
+
+    class Meta:
+        ordering = ['-emer_time']

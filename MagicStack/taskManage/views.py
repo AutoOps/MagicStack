@@ -35,7 +35,6 @@ from proxyManage.models import Proxy
 from datetime import datetime
 import json
 
-logger
 @require_role('admin')
 def task_list(request):
     """
@@ -149,6 +148,8 @@ def task_action(request, res, *args, **kwargs):
         action = request.POST.get('action')
         task = Task.objects.get(id=task_id)
         try:
+            # TODO 先获取记录是否存在，存在的话就是新建
+
             # 构建参数
             param = {'action': action}
 

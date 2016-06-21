@@ -83,7 +83,7 @@ def perm_rule_detail(request):
 
     return my_render('permManage/perm_rule_detail.html', locals(), request)
 
-
+@require_role('admin')
 @user_operator_record
 def perm_rule_add(request, res, *args):
     """
@@ -92,6 +92,7 @@ def perm_rule_add(request, res, *args):
     """
     header_title, path1, path2 = "授权规则", "规则管理", "添加规则"
     res['operator'] = path2
+    res['emer_content'] = 6
     # 渲染数据, 获取所有 用户,用户组,资产,资产组,用户角色, 用于添加授权规则
     users = User.objects.all()
     user_groups = UserGroup.objects.all()
@@ -151,13 +152,15 @@ def perm_rule_add(request, res, *args):
             rule.role = roles_obj
             rule.save()
 
-            msg = u"添加授权规则：%s" % rule.name
+            msg = u"添加授权规则：[%s]" % rule.name
             res['content'] = msg
+            res['emer_status'] = msg + u"成功"
             return HttpResponseRedirect(reverse('rule_list'))
         except ServerError, e:
             error = e
             res['flag'] = 'false'
             res['content'] = e
+            res['emer_status'] = u"添加授权规则[{0}]失败:{1}".format(rule_name,e)
     return my_render('permManage/perm_rule_add.html', locals(), request)
 
 
@@ -170,9 +173,10 @@ def perm_rule_edit(request, res, *args):
     # 渲染数据
     header_title, path1, path2 = "授权规则", "规则管理", "编辑授权规则"
     res['operator'] = path2
+    res['emer_content'] = 6
     rule_id = request.GET.get("id")
     rule = get_object(PermRule, id=rule_id)
-
+    rule_name_old = rule.name
     # 渲染数据, 获取所选的rule对象
 
     users = User.objects.all()
@@ -225,13 +229,15 @@ def perm_rule_edit(request, res, *args):
             rule.name = rule_name
             rule.comment = rule_comment
             rule.save()
-            msg = u"更新授权规则：%s成功" % rule.name
+            msg = u"编辑授权规则[%s]成功" % rule_name_old
             res['content'] = msg
+            res['emer_status'] = msg
             return HttpResponseRedirect(reverse('rule_list'))
         except ServerError, e:
             error = e
             res['flag'] = 'false'
             res['content'] = e
+            res['emer_status'] = u"编辑授权规则[{0}]失败:{1}".format(rule_name_old,e)
 
     return my_render('permManage/perm_rule_edit.html', locals(), request)
 
@@ -241,19 +247,20 @@ def perm_rule_edit(request, res, *args):
 def perm_rule_delete(request, res, *args):
     """
     use to delete rule
-    :param request:
-    :return:
     """
     res['operator'] = '删除授权规则'
+    res['emer_content'] = 6
     if request.method == 'POST':
         rule_id = request.POST.get("id")
         rule_obj = PermRule.objects.get(id=rule_id)
-        res['content'] = '删除授权规则[%s]' % rule_obj.name
+        res['content'] = u'删除授权规则[%s]' % rule_obj.name
+        res['emer_status'] = u"删除授权规则[{0}]成功".format(rule_obj.name)
         rule_obj.delete()
-        return HttpResponse(u"删除授权规则：%s" % rule_obj.name)
+        return HttpResponse(u"删除授权规则：%s 成功" % rule_obj.name)
     else:
         res['flag'] = 'false'
         res['content'] = '删除授权规则失败'
+        res['emer_status'] = u"删除授权规则失败:{0}".format(u"不支持该操作")
         return HttpResponse(u"不支持该操作")
 
 
@@ -289,6 +296,7 @@ def perm_role_add(request, res, *args):
     """
     header_title, path1, path2 = "系统用户", "系统用户管理", "添加系统用户"
     res['operator'] = path2
+    res['emer_content'] = 6
     sudos = PermSudo.objects.all()
 
     if request.method == "POST":
@@ -328,8 +336,9 @@ def perm_role_add(request, res, *args):
             message = save_or_delete('PermRole', data, proxy_list)
             flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
             if flag:
-                msg = u"添加系统用户: %s" % name
+                msg = u"添加系统用户[%s]" % name
                 res['content'] = msg
+                res['emer_status'] = msg + u"成功"
                 # 将数据保存到magicstack上
                 role = PermRole(name=name, comment=comment, password=encrypt_pass, key_path=key_path)
                 role.save()
@@ -339,6 +348,7 @@ def perm_role_add(request, res, *args):
             error = e
             res['flag'] = 'false'
             res['content'] = e
+            res['emer_status'] = u"添加系统用户[{0}]失败:{1}".format(name, e)
     return my_render('permManage/perm_role_add.html', locals(), request)
 
 
@@ -349,6 +359,7 @@ def perm_role_delete(request, res, *args):
     delete role page
     """
     res['operator'] = '删除系统用户'
+    res['emer_content'] = 6
     if request.method == "GET":
         try:
             # 获取参数删除的role对象
@@ -411,16 +422,19 @@ def perm_role_delete(request, res, *args):
             message = save_or_delete('PermRole', {}, proxy_list, obj_id=role_id, action='delete')
             flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
             if flag:
-                res['content'] = "删除系统用户: %s成功" % role.name
+                res['content'] = u"删除系统用户[%s]成功" % role.name
+                res['emer_status'] = u"删除系统用户[%s]成功" % role.name
                 role.delete()
             else:
-                res['content'] = "删除系统用户: %s失败" % role.name
+                res['content'] = u"删除系统用户[%s]失败" % role.name
+                res['emer_status'] = u"删除系统用户[%s]失败" % role.name
                 res['flag'] = 'false'
 
             return HttpResponse(u"删除系统用户: %s" % role.name)
         except ServerError, e:
             res['flag'] = 'false'
-            res['content'] = "删除系统用户失败: %s" %e
+            res['content'] = u"删除系统用户失败: %s" %e
+            res['emer_status'] = u"删除系统用户失败:%s" %e
             return HttpResponseBadRequest(u"删除失败, 原因：　%s" % e)
     return HttpResponseNotAllowed(u"仅支持POST")
 
@@ -469,6 +483,7 @@ def perm_role_edit(request, res, *args):
     # 渲染数据
     header_title, path1, path2 = "系统用户", "系统用户管理", "系统用户编辑"
     res['operator'] = path2
+    res['emer_content'] = 6
     # 渲染数据
     role_id = request.GET.get("id")
     role = PermRole.objects.get(id=role_id)
@@ -516,8 +531,9 @@ def perm_role_edit(request, res, *args):
             message = save_or_delete('PermRole', data, proxy_list, role_id, 'update')
             flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
             if flag:
-                msg = u"更新系统用户： %s成功" % role.name
+                msg = u"更新系统用户[%s]成功" % role.name
                 res['content'] = msg
+                res['emer_status'] = msg
                 # 只有proxy上的数据库保存完成后,才会写入本地数据库
                 role.name = role_name
                 role.comment = role_comment
@@ -526,17 +542,19 @@ def perm_role_edit(request, res, *args):
             else:
                 msg = u"更新系统用户： %s失败" % role.name
                 res['content'] = msg
+                res['emer_status'] = msg
                 res['flag'] = 'false'
                 return my_render('permManage/perm_role_edit.html', locals(), request)
         except ServerError, e:
             error = e
             res['flag'] = 'false'
             res['content'] = e
+            res['emer_status'] = u"编辑系统用户失败:%s"%(e)
             return my_render('permManage/perm_role_edit.html', locals(), request)
     return HttpResponseRedirect(reverse('role_list'))
 
+
 @require_role('admin')
-@user_operator_record
 def perm_role_push(request, res, *args):
     """
     the role push page
@@ -727,6 +745,7 @@ def perm_sudo_add(request, res, *args):
     # 渲染数据
     header_title, path1, path2 = "Sudo命令", "别名管理", "添加别名"
     res['operator'] = path2
+    res['emer_content'] = 6
     try:
         if request.method == "POST":
             # 获取参数： name, comment
@@ -756,20 +775,22 @@ def perm_sudo_add(request, res, *args):
             message = save_or_delete('PermSudo', data, proxy_list)
             flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
             if flag:
-                msg = u"添加Sudo命令别名: %s成功" % name
+                msg = u"添加Sudo命令别名[%s]成功" % name
                 res['content'] = msg
+                res['emer_status'] = msg
                 sudo = PermSudo(name=name.strip(), comment=comment, commands=commands)
                 sudo.save()
                 return HttpResponseRedirect(reverse('sudo_list'))
             else:
-                msg = u"添加Sudo命令别名: %s失败" % name
+                msg = u"添加Sudo命令别名[%s]失败" % name
                 res['flag'] = 'false'
                 res['content'] = msg
-
+                res['emer_status'] = msg
     except ServerError, e:
         error = e
         res['flag'] = 'false'
         res['content'] = error
+        res['emer_status'] = u"添加Sudo命令别名失败:%s" % (e)
     return my_render('permManage/perm_sudo_add.html', locals(), request)
 
 
@@ -778,15 +799,13 @@ def perm_sudo_add(request, res, *args):
 def perm_sudo_edit(request, res, *args):
     """
     list sudo commands alias
-    :param request:
-    :return:
     """
     # 渲染数据
     header_title, path1, path2 = "Sudo命令", "别名管理", "编辑别名"
     res['operator'] = path2
+    res['emer_content'] = 6
     sudo_id = request.GET.get("id")
     sudo = PermSudo.objects.get(id=sudo_id)
-
     try:
         if request.method == "POST":
             name = request.POST.get("sudo_name").upper()
@@ -809,20 +828,23 @@ def perm_sudo_edit(request, res, *args):
             message = save_or_delete('PermSudo', data, proxy_list, sudo_id, 'update')
             flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
             if flag :
-                msg = u"添加Sudo命令别名: %s成功" % sudo.name
+                msg = u"添加Sudo命令别名[%s]成功" % sudo.name
                 res['content'] = msg
+                res['emer_status'] = msg
                 sudo.name = name.strip()
                 sudo.commands = commands
                 sudo.comment = comment
                 sudo.save()
             else:
-                msg = u"添加Sudo命令别名: %s失败" % sudo.name
+                msg = u"添加Sudo命令别名[%s]失败" % sudo.name
                 res['flag'] = 'false'
                 res['content'] = msg
+                res['emer_status'] = msg
     except ServerError, e:
         error = e
         res['flag'] = 'false'
         res['content'] = e
+        res['emer_status'] = u"添加Sudo命令别名失败:%s"%(e)
     return my_render('permManage/perm_sudo_edit.html', locals(), request)
 
 
@@ -831,10 +853,9 @@ def perm_sudo_edit(request, res, *args):
 def perm_sudo_delete(request, res, *args):
     """
     list sudo commands alias
-    :param request:
-    :return:
     """
     res['operator'] = '删除别名'
+    res['emer_content'] = 6
     if request.method == "POST":
         # 获取参数删除的role对象
         sudo_id = request.POST.get("id")
@@ -845,14 +866,17 @@ def perm_sudo_delete(request, res, *args):
         flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
         if flag :
             res['content'] = u'删除Sudo别名[%s]成功'% sudo.name
+            res['emer_status'] = u'删除Sudo别名[%s]成功'% sudo.name
             sudo.delete()
         else:
             res['flag'] = 'false'
             res['content'] = u'删除Sudo别名[%s]失败'% sudo.name
+            res['emer_status'] = u'删除Sudo别名[%s]失败'% sudo.name
         return HttpResponse(u"删除Sudo别名: %s" % sudo.name)
     else:
         res['flag'] = 'false'
-        res['content'] = '不支持该操作'
+        res['content'] = u'不支持该操作'
+        res['emer_status'] = u"删除Sudo别名失败:不支持该操作"
         return HttpResponse(u"不支持该操作")
 
 

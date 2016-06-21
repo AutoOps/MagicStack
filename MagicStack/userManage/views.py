@@ -21,6 +21,7 @@ def group_add(request,res, *args):
     msg = ''
     header_title, path1, path2 = u'添加用户组', u'用户管理', u'添加用户组'
     res['operator'] = path2
+    res['emer_content'] = 1
     user_all = User.objects.all()
 
     if request.method == 'POST':
@@ -40,13 +41,16 @@ def group_add(request,res, *args):
         except ServerError:
             res['flag'] = 'false'
             res['content'] = error
-        except TypeError:
-            error = u'添加小组失败'
+            res['emer_status'] = u"添加用户组[%s]失败:%s"%(group_name, error)
+        except Exception as e:
             res['flag'] = 'false'
-            res['content'] = error
+            res['content'] = e
+            res['emer_status'] = u"添加用户组[%s]失败:%s"%(group_name,e)
+
         else:
             msg = u'添加用户组 %s ' % group_name
             res['content'] = msg
+            res['emer_status'] = u"添加用户组[%s]成功"% group_name
             return HttpResponseRedirect(reverse('user_group_list'))
 
     return my_render('userManage/group_add.html', locals(), request)
@@ -80,14 +84,24 @@ def group_del(request,res, *args):
     """
     res['operator'] = u'删除用户组'
     res['content'] = u'删除用户组'
-    group_ids = request.GET.get('id', '')
+    res['emer_content'] = 1
+    group_ids = request.POST.get('id', '')
     group_id_list = group_ids.split(',')
-    for group_id in group_id_list:
-        group = UserGroup.objects.get(id=group_id)
-        res['content'] += "%s   "% group.name
-        group.delete()
-
-    return HttpResponse(u'删除成功')
+    if group_id_list:
+        try:
+            for group_id in group_id_list:
+                group = UserGroup.objects.get(id=group_id)
+                res['content'] += "%s   "% group.name
+                group.delete()
+            msg = res['content'] + u'成功'
+            res['emer_status'] = msg
+        except Exception as e:
+            msg = e
+            res['emer_status'] = u"删除用户组失败:{0}".format(e)
+    else:
+        msg = u"删除用户组失败:ID不存在!"
+        res['emer_status'] = msg
+    return HttpResponse(msg)
 
 
 @require_role(role='super')
@@ -97,18 +111,19 @@ def group_edit(request, res, *args):
     msg = ''
     header_title, path1, path2 = u'编辑用户组', u'用户管理', u'编辑用户组'
     res['operator'] = path2
+    res['emer_content'] = 1
     if request.method == 'GET':
         group_id = request.GET.get('id', '')
         user_group = get_object(UserGroup, id=group_id)
         users_selected = User.objects.filter(group=user_group)
         users_all = User.objects.all()
-
     elif request.method == 'POST':
         group_id = request.GET.get('id', '')
         group_name = request.POST.get('name', '')
         comment = request.POST.get('comment', '')
         users_selected = request.POST.getlist('select_multi')
         user_group = get_object(UserGroup, id=group_id)
+        group_name_old = user_group.name
         try:
             if '' in [group_id, group_name]:
                 raise ServerError(u'组名不能为空')
@@ -128,10 +143,11 @@ def group_edit(request, res, *args):
             error = e
             res['flag'] = 'false'
             res['comment'] = e
+            res['emer_status'] = u"编辑用户组[{0}]失败:{1}".format(group_name_old, e)
 
         if not error:
-            res['content'] = u'添加用户组%s' % group_name
-
+            res['content'] = u'编辑用户组%s' % group_name
+            res['emer_status'] = u"编辑用户组[{0}]成功!".format(group_name_old)
             return HttpResponseRedirect(reverse('user_group_list'))
         else:
             users_all = User.objects.all()
@@ -147,13 +163,13 @@ def user_add(request, res, *args):
     msg = ''
     header_title, path1, path2 = u'添加用户', u'用户管理', u'添加用户'
     res['operator'] = path2
+    res['emer_content'] = 1
     user_role = {'SU': u'超级管理员', 'CU': u'普通用户'}
     group_all = UserGroup.objects.all()
 
     if request.method == 'POST':
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
-        # encrypt_password = CRYPTOR.encrypt(password)
         name = request.POST.get('name', '')
         email = request.POST.get('email', '')
         groups = request.POST.getlist('groups', [])
@@ -176,6 +192,7 @@ def user_add(request, res, *args):
         except ServerError:
                 res['flag'] = 'false'
                 res['content'] = error
+                res['emer_status'] = u"添加用户[{0}]失败:{1}".format(username, error)
         else:
             try:
                 user = db_add_user(username=username, name=name,
@@ -195,6 +212,7 @@ def user_add(request, res, *args):
                 error = u'添加用户 %s 失败 %s ' % (username, e)
                 res['flag'] = 'false'
                 res['content'] = error
+                res['emer_status'] = u"添加用户[{0}]失败:{1}".format(username, e)
                 try:
                     db_del_user(username)
                 except Exception:
@@ -206,6 +224,7 @@ def user_add(request, res, *args):
                         return my_render('userManage/user_add.html', locals(), request)
                     user_add_mail(user, default_email, kwargs=locals())
                 res['content'] = u'添加用户 %s' % username
+                res['emer_status'] = u"添加用户[{0}]成功".format(username)
                 return HttpResponseRedirect(reverse('user_list'))
     return my_render('userManage/user_add.html', locals(), request)
 
@@ -243,29 +262,23 @@ def user_detail(request):
 @user_operator_record
 def user_del(request, res, *args):
     res['operator'] = u'删除用户'
-    if request.method == "GET":
-        user_ids = request.GET.get('id', '')
-        user_id_list = user_ids.split(',')
-    elif request.method == "POST":
-        user_ids = request.POST.get('id', '')
-        user_id_list = user_ids.split(',')
-    else:
-        res['flag'] = 'false'
-        res['content'] = u'错误请求'
-        return HttpResponse(u'错误请求')
-
+    user_ids = request.POST.get('id', '')
+    user_id_list = user_ids.split(',')
     res['content'] = u'删除用户'
+    res['emer_content'] = 1
     for user_id in user_id_list:
         try:
             user = get_object(User, id=user_id)
             if user and user.username != 'admin':
-                logger.debug(u"删除用户 %s " % user.username)
                 res['content'] += "%s   "%user.username
                 user.delete()
+            msg = res['content'] + u"成功"
+            res['emer_status'] = msg
         except Exception, e:
             res['flag'] = 'false'
             res['content'] = e
-    return HttpResponse(u'删除成功')
+            msg = u"删除用户失败:{0}".format(e)
+    return HttpResponse(msg)
 
 
 @require_role('admin')
@@ -357,6 +370,7 @@ def user_edit(request,res, *args):
     msg = error = ''
     header_title, path1, path2 = u'编辑用户', u'用户管理', u'编辑用户'
     res['operator'] = path2
+    res['emer_content'] = 1
     if request.method == 'GET':
         user_id = request.GET.get('id', '')
         if not user_id:
@@ -386,9 +400,11 @@ def user_edit(request,res, *args):
 
             if user_id:
                 user = get_object(User, id=user_id)
+                username_old = user.username
             else:
                 res['flag'] = 'false'
                 res['content'] = u'用户不存在!'
+                res['emer_satus'] = u"编辑用户失败:{1}".format(u'用户不存在!')
                 return HttpResponseRedirect(reverse('user_list'))
 
             db_update_user(user_id=user_id,
@@ -401,6 +417,7 @@ def user_edit(request,res, *args):
                            is_active=is_active)
 
             res['content'] = u'编辑用户%s' % user.username
+            res['emer_status'] = u"编辑用户[{0}]成功".format(username_old)
             if email_need:
                 emsg = u"""
                 Hi %s:
@@ -421,6 +438,7 @@ def user_edit(request,res, *args):
         except Exception as e:
             logger.error(e)
             error = e
+            res['emer_status'] = u"编辑用户失败:{0}".format(e)
     return my_render('userManage/user_edit.html', locals(), request)
 
 

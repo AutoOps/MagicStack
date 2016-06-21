@@ -18,6 +18,7 @@ import json
 from MagicStack.api import  my_render, require_role, CRYPTOR, ServerError, logger
 from userManage.user_api import user_operator_record
 from emergency.models import *
+from emergency.emer_api import send_email
 
 MEDIA_TYPES = {'0': u'电子邮件', '1': u'微信', '2':u'短信'}
 
@@ -179,17 +180,18 @@ def media_del(request, res):
 
 
 @require_role('admin')
-@user_operator_record
-def emergency_rule(request,res):
+def emergency_rule(request):
     header_title, path1, path2 = u"告警规则设置", u"告警管理", u"告警规则"
+    emer_content = request.GET.get('content', '')
     emer_rules = EmergencyRules.objects.all()
+    if emer_content:
+        emer_rules = EmergencyRules.objects.filter(content=emer_content)
     users = User.objects.all()
     media_list = EmergencyType.objects.all()
     return my_render('emergency/emer_rules.html', locals(), request)
 
 @require_role('admin')
-@user_operator_record
-def emergency_edit(request, res):
+def emergency_edit(request):
     response = {}
     emer_content = {
         '1': u'用户变更',
@@ -222,6 +224,7 @@ def emergency_edit(request, res):
 @user_operator_record
 def emergency_save(request, res):
     response = {'success':'false', 'error': ''}
+    res['operator'] = u"编辑告警规则"
     if request.method == 'POST':
         params = json.loads(request.POST.get('param', ''))
         emer_id = params.get('id')
@@ -245,9 +248,23 @@ def emergency_save(request, res):
                 emer_rule.is_update = is_update
                 emer_rule.save()
                 response['success'] = 'true'
+                res['content'] = u"编辑告警规则成功"
             except Exception as e:
                 response['error'] = e
+                res['flag'] = 'false'
+                res['content'] = e
         else:
             response['error'] = u'ID不存在'
+            res['flag'] = 'false'
+            res['content'] = response['error']
         return HttpResponse(json.dumps(response), content_type='application/json')
+
+
+@require_role('admin')
+def emergency_event(request):
+    header_title, path1, path2 = u"告警事件", u'告警管理', u'告警事件'
+    emer_events = EmergencyEvent.objects.all()
+    return my_render('emergency/emer_event.html', locals(), request)
+
+
 

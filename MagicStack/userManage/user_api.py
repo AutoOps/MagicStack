@@ -5,6 +5,7 @@ from MagicStack.api import *
 from MagicStack.settings import BASE_DIR
 import functools
 from emergency.emer_api import send_email
+from emergency.models import EmergencyEvent, EmergencyRules
 
 def group_add_user(group, user_id=None, username=None):
     """
@@ -192,22 +193,32 @@ def get_display_msg(user, password='', send_mail_need=False):
 
 
 def user_operator_record(func):
-    res = {'operator':'', 'flag':'success', 'content':''}
+    res = {'operator':'', 'flag':'success', 'content':'', 'emer_content':'', 'emer_status': ''}
     @functools.wraps(func)
     def wrapper(request, *args):
         response = func(request,res,*args)
-        logger.debug('用户操作记录:')
         if request.method == 'POST':
+            logger.debug('用户操作记录:')
             user_record = UserOperatorRecord()
             start_time = datetime.datetime.now()
             user_record.username = request.user.username
             user_record.operator = res['operator']
-            logger.debug('operator:%s'%res['operator'])
             user_record.op_time = start_time
             user_record.content = res['content']
-            logger.debug(u'content:%s'%res['content'])
             user_record.result = res['flag']
+            logger.info(res['content'])
             user_record.save()
             logger.debug('用户操作记录写入成功！')
+
+            if res['emer_content'] in [1, 6, 7]:
+                logger.info('告警事件记录:')
+                emer_event = EmergencyEvent()
+                emer_event.emer_time = datetime.datetime.now()
+                emer_event.emer_user = request.user.username
+                emer_event.emer_event = EmergencyRules.objects.get(content=res['emer_content'])
+                emer_event.emer_info = res['emer_status']
+                logger.info(res['emer_status'])
+                emer_event.save()
+                logger.info('告警事件写入成功!')
         return response
     return wrapper

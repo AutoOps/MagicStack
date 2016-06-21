@@ -35,7 +35,7 @@ from proxyManage.models import Proxy
 from datetime import datetime
 import json
 
-
+logger
 @require_role('admin')
 def task_list(request):
     """
@@ -43,8 +43,8 @@ def task_list(request):
     """
     header_title, path1, path2 = u'常规任务', u'任务管理', u'常规任务'
     keyword = request.GET.get('search', '')
-    task_lists = Task.objects.all().exclude(task_statu='02').order_by('create_time')
-
+    task_lists = Task.objects.all().exclude(task_statu='02').order_by('-id')
+    d_states = dict(Task.STATUS)
     if keyword:
         task_lists = task_lists.filter(Q(task_type__icontains=keyword) | Q(create_time__icontains=keyword))
 
@@ -66,12 +66,24 @@ def task_add(request, res, *args):
         proxy = request.POST.get('proxy')
         comment = request.POST.get('comment')
         try:
+            # 构建trigger
+            trigger_kwargs = json.loads(trigger_kwargs)
+            start_date = trigger_kwargs.pop('start_date')
+            if not trigger_kwargs:
+                start_date_2_date = datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S')
+                trigger_kwargs['year'] = start_date_2_date.year
+                trigger_kwargs['month'] = start_date_2_date.month
+                trigger_kwargs['day'] = start_date_2_date.day
+                trigger_kwargs['hour'] = start_date_2_date.hour
+                trigger_kwargs['minute'] = start_date_2_date.minute
+                trigger_kwargs['second'] = start_date_2_date.second
+            trigger_kwargs['start_date'] = start_date
+            param['trigger_kwargs'] = trigger_kwargs
 
             hosts = []
             # 没有选中主机，则认为是全选，取选中proxy下的所有
             proxy_obj = Proxy.objects.get(id=proxy)
             module_obj = Module.objects.get(id=module_name)
-            param['trigger_kwargs'] = json.loads(trigger_kwargs)
             param['task_name'] = task_name
             task_kwargs = {}
             task_kwargs['module_name'] = module_obj.module_name
@@ -105,11 +117,11 @@ def task_add(request, res, *args):
                              CRYPTOR.decrypt(proxy_obj.password))
             result, code = api.req_post(json.dumps(param))
             if code != 200:
-                raise ServerError(result)
+                raise ServerError(result['messege'])
             else:
-                task = Task(task_type=task_name, task_proxy=proxy, task_kwargs=json.dumps(task_kwargs),
+                task = Task(task_type=task_name, task_proxy=proxy_obj, task_kwargs=json.dumps(task_kwargs),
                             trigger_kwargs=json.dumps(trigger_kwargs), channal='00', comment=comment,
-                            task_uuid=result['job']['job_id'], create_time=datetime.now())
+                            task_uuid=result['job']['job_id'], create_time=datetime.now(), module=module_obj)
                 task.save()
         except ServerError, e:
             error = e.message
@@ -127,6 +139,87 @@ def task_add(request, res, *args):
         res['task_types'] = Task.TYPES
         return HttpResponse(json.dumps(res))
 
+
+@require_role('admin')
+@user_operator_record
+def task_action(request, res, *args, **kwargs):
+    if request.method == 'POST':
+
+        task_id = request.POST.get('task_id')
+        action = request.POST.get('action')
+        task = Task.objects.get(id=task_id)
+        try:
+            # 构建参数
+            param = {'action': action}
+
+            # 调用proxy接口，
+            api = APIRequest('{0}/v1.0/job/{1}/action/'.format(task.task_proxy.url, task.task_uuid),
+                             task.task_proxy.username,
+                             CRYPTOR.decrypt(task.task_proxy.password))
+            result, code = api.req_post(json.dumps(param))
+            if code != 200:
+                raise ServerError(result['messege'])
+            else:
+                if action == 'pause':
+                    task.task_statu = '01'
+                else:
+                    task.task_statu = '00'
+                task.save()
+        except ServerError, e:
+            error = e.message
+            res['flag'] = False
+            res['content'] = error
+        except Exception, e:
+            res['flag'] = False
+            res['content'] = e[1]
+        else:
+            res['flag'] = True
+        return HttpResponse(json.dumps(res))
+    elif request.method == "GET":
+        proxy_list = [proxy.to_dict() for proxy in Proxy.objects.all().order_by('create_time')]
+        res['proxys'] = proxy_list
+        res['task_types'] = Task.TYPES
+        return HttpResponse(json.dumps(res))
+
+
+@require_role('admin')
+@user_operator_record
+def task_del(request, res, *args, **kwargs):
+    if request.method == 'POST':
+        task_ids = request.POST.get('task_id')
+        logger.info("task_id   %s" % task_ids)
+        res['flag'] = True
+        success = []
+        fail = []
+        # 循环删除
+        for task_id in task_ids.split(','):
+            task = Task.objects.get(id=task_id)
+            try:
+                # 调用proxy接口，
+                api = APIRequest('{0}/v1.0/job/{1}'.format(task.task_proxy.url, task.task_uuid),
+                                 task.task_proxy.username,
+                                 CRYPTOR.decrypt(task.task_proxy.password))
+                result, code = api.req_del(json.dumps({}))
+                if code != 200:
+                    raise ServerError(result['messege'])
+                else:
+                    task.task_statu = '02'
+                    task.save()
+            except ServerError, e:
+                fail.append( task )
+                error = e.message
+                res['flag'] = False
+                res['content'] = error
+            except Exception, e:
+                fail.append( task )
+                res['flag'] = False
+                res['content'] = e[1]
+            else:
+                success.append( task )
+        if len(success) + len(fail) > 1:
+            res['content'] = 'success [%d] fail [%d]' % (len(success), len(fail))
+
+        return HttpResponse(json.dumps(res))
 
 # 查询类定义
 @require_role('admin')

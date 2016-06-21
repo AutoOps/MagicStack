@@ -354,3 +354,11 @@ def groups_name(groups, type=None):
         return ','.join([group.username for group in groups])
     else:
         return ','.join([group.name for group in groups])
+
+
+@register.filter(name='get_from_dict_by_key')
+def get_from_dict_by_key(dict_, key):
+    """
+        根据key值获取字典value
+    """
+    return dict_.get(key)

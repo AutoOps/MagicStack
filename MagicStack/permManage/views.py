@@ -857,9 +857,8 @@ def perm_sudo_delete(request, res, *args):
     res['operator'] = '删除别名'
     res['emer_content'] = 6
     if request.method == "POST":
-        # 获取参数删除的role对象
         sudo_id = request.POST.get("id")
-        sudo = PermSudo.objects.get(id=sudo_id)
+        sudo = PermSudo.objects.get(id=int(sudo_id))
         # 数据库里删除记录
         proxy_list = Proxy.objects.all()
         message = save_or_delete('PermSudo',{}, proxy_list , obj_id=sudo_id, action='delete')

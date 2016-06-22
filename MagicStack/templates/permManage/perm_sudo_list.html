@@ -89,10 +89,12 @@
 
           $('.del').click(function(){
               var row = $(this).closest('tr');
+              var url_r = $(this).attr('name').split('?')[0];
+              var sudo_id = $(this).attr('name').split('?')[1].split('=')[1];
               if (confirm("确定删除?")) {
                 $.post(
-                    $(this).attr('name'),
-                    {},
+                    url_r,
+                    {'id': sudo_id},
                     function(data){
                         row.remove();
                         alert(data);

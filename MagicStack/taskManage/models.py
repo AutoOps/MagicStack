@@ -61,6 +61,7 @@ class Task(models.Model):
         ('02', '备份中心'),
     )
 
+
     task_proxy = models.ForeignKey(Proxy, help_text="proxy")
     task_type = models.CharField(max_length=20, choices=TYPES, help_text="任务类型")
     task_kwargs = models.BinaryField(help_text="任务参数") # 字典
@@ -72,6 +73,11 @@ class Task(models.Model):
     comment = models.TextField(blank=True, null=True, help_text="备注")
     task_uuid = models.CharField(max_length=100, help_text="任务ID")
     last_exec_time = models.CharField(max_length=25, help_text="最后执行时间")
+    is_get_last = models.CharField(max_length=4, default='00', help_text="是否获取最后执行时间")
+    ext1 = models.CharField(max_length=2000, help_text="扩展字段1")
+    ext2 = models.CharField(max_length=2000, help_text="扩展字段2")
+    ext3 = models.CharField(max_length=2000, help_text="扩展字段3")
+
 
     def to_dict(self):
         d = dict()

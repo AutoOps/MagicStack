@@ -20,10 +20,10 @@ var Login = function() {
 
             messages: {
                 username: {
-                    required: "Username is required."
+                    required: "用户名不能为空"
                 },
                 password: {
-                    required: "Password is required."
+                    required: "密码不能为空"
                 }
             },
 
@@ -67,6 +67,10 @@ var Login = function() {
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",
             rules: {
+                //username: {
+                //    required: true,
+                //    username: true
+                //},
                 email: {
                     required: true,
                     email: true
@@ -74,8 +78,12 @@ var Login = function() {
             },
 
             messages: {
+                //username: {
+                //    required: "用户名不能为空"
+                //},
+
                 email: {
-                    required: "Email is required."
+                    required: "邮箱地址不能为空"
                 }
             },
 

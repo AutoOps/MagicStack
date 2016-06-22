@@ -45,7 +45,7 @@
             <!-- BEGIN LOGIN FORM -->
             <form class="login-form" action="" method="post">
 
-                <h3 class="form-title font-green">Sign In</h3>
+                <h3 class="form-title font-green">账户登录</h3>
                 {% if error %}
 -               <div class="alert alert-danger text-center">{{ error }}</div>
 -               {% endif %}
@@ -54,36 +54,43 @@
                     <label class="control-label visible-ie8 visible-ie9">Username</label>
                     <div class="input-icon">
                         <i class="fa fa-user"></i>
-                        <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username" /> </div>
+                        <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="用户名" name="username" />
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label visible-ie8 visible-ie9">Password</label>
                     <div class="input-icon">
                         <i class="fa fa-lock"></i>
-                        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" /> </div>
+                        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="用户密码" name="password" />
+                    </div>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn green uppercase">Login</button>
+                    <button type="submit" class="btn green uppercase">登陆</button>
                     <label class="rememberme check mt-checkbox mt-checkbox-outline">
-                        <input type="checkbox" name="remember" value="1" />Remember
+                        <input type="checkbox" name="remember" value="1" />记住密码
                         <span></span>
                     </label>
-                    <a href="javascript:;" id="forget-password" class="forget-password">Forgot Password?</a>
+                    <a href="javascript:;" id="forget-password" class="forget-password">忘记密码?</a>
                 </div>
             </form>
             <!-- END LOGIN FORM -->
             <!-- BEGIN FORGOT PASSWORD FORM -->
             <form class="forget-form" action="{% url 'password_forget' %}" method="post">
-                <h3 class="font-green">Forget Password ?</h3>
-                <p> Enter your e-mail address below to reset your password. </p>
+                <h3 class="font-green">忘记密码 ?</h3>
+                <p> 请输入密码以便重置密码 </p>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Username</label>
-                    <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username" /> </div>
-                <div class="form-group">
-                    <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="email" /> </div>
+                    <div class="input-icon">
+                        <i class="fa fa-user"></i>
+                        <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="用户名" name="username" /> </div>
+                </div>
+                 <div class="form-group">
+                    <div class="input-icon">
+                        <i class="fa fa-envelope"></i>
+                        <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="用户注册邮箱" name="email" /> </div>
+                </div>
                 <div class="form-actions">
-                    <button type="button" id="back-btn" class="btn green btn-outline">Back</button>
-                    <button type="submit" class="btn btn-success uppercase pull-right">Submit</button>
+                    <button type="button" id="back-btn" class="btn red btn-outline">返回 </button>
+                    <button type="submit" class="btn btn-success uppercase pull-right"> 确认 </button>
                 </div>
             </form>
             <!-- END FORGOT PASSWORD FORM -->

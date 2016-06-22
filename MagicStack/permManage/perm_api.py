@@ -4,6 +4,7 @@ from django.db.models.query import QuerySet
 from MagicStack.api import *
 from permManage.models import PermRole, PermPush, PermRule
 from common.interface import APIRequest
+from assetManage.models import Asset
 
 def get_group_user_perm(ob):
     """

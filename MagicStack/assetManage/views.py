@@ -3,7 +3,6 @@
 from django.db.models import Q
 from assetManage.asset_api import *
 from MagicStack.api import *
-from MagicStack.models import Setting
 from assetManage.forms import AssetForm, IdcForm,NetWorkingForm,NetWorkingGlobalForm,PowerManageForm
 from assetManage.models import *
 from permManage.perm_api import get_group_asset_perm, get_group_user_perm
@@ -578,90 +577,6 @@ def asset_event(request):
         except Exception as e:
             response['error'] = e
             return HttpResponse(json.dumps(response), content_type='application/json')
-
-
-
-@require_role('admin')
-@user_operator_record
-def asset_edit_batch(request, res, *args):
-    res['operator'] = res['content'] =u'修改主机'
-    af = AssetForm()
-    name = request.user.username
-    asset_group_all = AssetGroup.objects.all()
-
-    if request.method == 'POST':
-        env = request.POST.get('env', '')
-        idc_id = request.POST.get('idc', '')
-        port = request.POST.get('port', '')
-        use_default_auth = request.POST.get('use_default_auth', '')
-        username = request.POST.get('username', '')
-        password = request.POST.get('password', '')
-        group = request.POST.getlist('group', [])
-        cabinet = request.POST.get('cabinet', '')
-        comment = request.POST.get('comment', '')
-        asset_id_all = unicode(request.GET.get('asset_id_all', ''))
-        asset_id_all = asset_id_all.split(',')
-        for asset_id in asset_id_all:
-            alert_list = []
-            asset = get_object(Asset, id=asset_id)
-            if asset:
-                if env:
-                    if asset.env != env:
-                        asset.env = env
-                        alert_list.append([u'运行环境', asset.env, env])
-                if idc_id:
-                    idc = get_object(IDC, id=idc_id)
-                    name_old = asset.idc.name if asset.idc else u''
-                    if idc and idc.name != name_old:
-                        asset.idc = idc
-                        alert_list.append([u'机房', name_old, idc.name])
-                if port:
-                    if unicode(asset.port) != port:
-                        asset.port = port
-                        alert_list.append([u'端口号', asset.port, port])
-
-                if use_default_auth:
-                    if use_default_auth == 'default':
-                        asset.use_default_auth = 1
-                        asset.username = ''
-                        asset.password = ''
-                        alert_list.append([u'使用默认管理账号', asset.use_default_auth, u'默认'])
-                    elif use_default_auth == 'user_passwd':
-                        asset.use_default_auth = 0
-                        asset.username = username
-                        password_encode = CRYPTOR.encrypt(password)
-                        asset.password = password_encode
-                        alert_list.append([u'使用默认管理账号', asset.use_default_auth, username])
-                if group:
-                    group_new, group_old, group_new_name, group_old_name = [], asset.group.all(), [], []
-                    for group_id in group:
-                        g = get_object(AssetGroup, id=group_id)
-                        if g:
-                            group_new.append(g)
-                    if not set(group_new) < set(group_old):
-                        group_instance = list(set(group_new) | set(group_old))
-                        for g in group_instance:
-                            group_new_name.append(g.name)
-                        for g in group_old:
-                            group_old_name.append(g.name)
-                        asset.group = group_instance
-                        alert_list.append([u'主机组', ','.join(group_old_name), ','.join(group_new_name)])
-                if cabinet:
-                    if asset.cabinet != cabinet:
-                        asset.cabinet = cabinet
-                        alert_list.append([u'机柜号', asset.cabinet, cabinet])
-                if comment:
-                    if asset.comment != comment:
-                        asset.comment = comment
-                        alert_list.append([u'备注', asset.comment, comment])
-                asset.save()
-                res['content'] += '[%s]   ' % asset.name
-            if alert_list:
-                recode_name = unicode(name) + ' - ' + u'批量'
-                AssetRecord.objects.create(asset=asset, username=recode_name, content=alert_list)
-        return my_render('assetManage/asset_update_status.html', locals(), request)
-
-    return my_render('assetManage/asset_edit_batch.html', locals(), request)
 
 
 @require_role('admin')

@@ -14,16 +14,12 @@ import logging
 
 from settings import *
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse
 from django.template import RequestContext
 from userManage.models import User, UserGroup
-from logManage.models import Log, TtyLog
-from assetManage.models import Asset, AssetGroup
-from permManage.models import PermRule, PermRole
-from MagicStack.models import Setting
+from logManage.models import Log
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
-from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 
 

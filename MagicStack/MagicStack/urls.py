@@ -18,13 +18,11 @@ from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('MagicStack.views',
     url(r'^$', 'index', name='index'),
-    url(r'^skin_config/$', 'skin_config', name='skin_config'),
     url(r'^login/$', 'Login', name='login'),
     url(r'^logout/$', 'Logout', name='logout'),
     url(r'^exec_cmd/$', 'exec_cmd', name='exec_cmd'),
 #    url(r'^file/upload/$', 'upload', name='file_upload'),
 #    url(r'^file/download/$', 'download', name='file_download'),
-    url(r'^setting', 'setting', name='setting'),
     url(r'^terminal/$', 'web_terminal', name='terminal'),
     url(r'^user/', include('userManage.urls')),
     url(r'^asset/', include('assetManage.urls')),

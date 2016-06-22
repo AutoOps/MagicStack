@@ -2,10 +2,6 @@
 
 from django.db.models.query import QuerySet
 from MagicStack.api import *
-import uuid
-import re
-
-from MagicStack.models import Setting
 from permManage.models import PermRole, PermPush, PermRule
 from common.interface import APIRequest
 

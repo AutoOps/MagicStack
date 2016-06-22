@@ -30,7 +30,7 @@
                        id="sample_1">
                     <thead>
                     <tr>
-                        <td style=" width:60px;">
+                        <th>
                             <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                 <input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes"
                                        id="select_all" name="select_all"/>
@@ -40,7 +40,7 @@
                         <th>代理名称</th>
                         <th>模块名称</th>
                         <th>任务配置</th>
-                        <th>最后执行时间</th>
+                        <th>最后执行时间状态</th>
                         <th>任务状态</th>
                         <th>备注</th>
                         <th>操作</th>
@@ -80,6 +80,9 @@
                                     <i class="fa fa-angle-down"></i>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="#" name="view">查看明细</a>
+                                    </li>
                                     {% if task.task_statu == '00'%}
                                     <li>
                                         <a href="#" name="disable">禁用</a>
@@ -108,6 +111,7 @@
     </div>
 </div>
 {% include 'taskManage/task_tab.html' %}
+{% include 'taskManage/task_exec_detail.html' %}
 {% endblock %}
 
 {% block self_head_css_js %}
@@ -166,6 +170,7 @@ type="text/css"/>
         type="text/javascript"></script>
 <script src="/static/pages/scripts/components-date-time-pickers.min.js" type="text/javascript"></script>
 <script src="/static/pages/scripts/ui-bootbox.min.js" type="text/javascript"></script>
+<script src="/static/js/layer/layer.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 
 <!-- start custom define scripts-->
@@ -436,10 +441,10 @@ $(document).ready(function () {
     $("#del_btn").click(function () {
 
         var check_array = [];
-        $(".gradeX input[type='checkbox']:checked").each(function(){
+        $(".gradeX input[type='checkbox']:checked").each(function () {
             check_array.push($(this).val());
         });
-        if(check_array.length >0){
+        if (check_array.length > 0) {
             bootbox.confirm({
                 message: "确定删除选中对象?",
                 callback: function (result) {
@@ -513,10 +518,72 @@ $(document).ready(function () {
             }
 
         });
-
-
     });
 
+    <!-- 查看明细 -->
+    $("a[name='view']").click(function () {
+        // 打开modal
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'task_exec_info' %}",
+            dataType: "json",
+            data: {
+                "task_id": $(this).parents('tr').find("input[type='checkbox']").val(),
+                "page": 1,
+                "limit": 5
+            },
+            success: function (result) {
+                /**
+                 将查询结果添加到表中
+                 1. 清空的#modal_task_detail下的tbody
+                 2. 将tobody中新增上内容
+                 **/
+                if (result.flag) {
+                    // 填充表格
+                    if (result.tasks.length > 0) {
+                        var my_tbody = $('#modal_task_detail tbody').empty();
+
+                        $.each(result.tasks, function (i, item) {
+                            var tr_obj = '<tr class="gradeX">';
+                            tr_obj += "<td>" + item.start_time + "</td>";
+                            tr_obj += "<td>" + item.end_time + "</td>";
+                            var state = '失败';
+                            if (item.status == 'running') {
+                                state = '执行中';
+                            } else if (item.status == 'complete') {
+                                state = '完成';
+                            }
+                            tr_obj += "<td>" + state + "</td>";
+                            tr_obj += "<td><a href='#' class='btn btn-link' name='replay' value=\"{% url 'task_exec_replay' %}?task_id=" + item.id+ "&job_id="+ item.job_id +"\">回放</a></td>";
+                            tr_obj += "</tr>"
+                            my_tbody.append(tr_obj);
+                        });
+                    }
+                    // 显示modal
+                    $('#modal_task_detail').modal({backdrop: 'static', keyboard: false});
+                } else {
+                    alert(result.content);
+                }
+            }
+        });
+    });
+
+    <!-- 动态添加元素绑定事件方式 -->
+    $('body').on('click',"a[name='replay']",function(){
+        var start_time = $(this).parents('tr').find('td').eq(0).html();
+        var end_time = $(this).parents('tr').find('td').eq(1).html();
+        var div_time = ' 时间: ' + '<span class="text-info">'+start_time +'</span>' +' - <span class="text-info">' + end_time + '</span>';
+        var title = 'MagicStack录像回放 ' + div_time;
+        layer.open({
+            type: 2,
+            title: title,
+            maxmin: true,
+            shade: false,
+            area: ['625px', '450px'],
+            content: $(this).attr('value')
+        });
+        return false;
+    });
 });
 
 </script>

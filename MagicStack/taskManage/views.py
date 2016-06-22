@@ -16,6 +16,7 @@
 #   limitations under the License.
 
 import json
+import urllib2
 from django.db.models import Q
 
 from MagicStack.api import *
@@ -27,6 +28,8 @@ from models import *
 
 # -*- coding:utf-8 -*-
 from django.db.models import Q
+from django.shortcuts import render
+
 from MagicStack.api import *
 from models import *
 from common.interface import APIRequest
@@ -34,6 +37,7 @@ from userManage.user_api import user_operator_record
 from proxyManage.models import Proxy
 from datetime import datetime
 import json
+
 
 @require_role('admin')
 def task_list(request):
@@ -207,20 +211,77 @@ def task_del(request, res, *args, **kwargs):
                     task.task_statu = '02'
                     task.save()
             except ServerError, e:
-                fail.append( task )
+                fail.append(task)
                 error = e.message
                 res['flag'] = False
                 res['content'] = error
             except Exception, e:
-                fail.append( task )
+                fail.append(task)
                 res['flag'] = False
                 res['content'] = e[1]
             else:
-                success.append( task )
+                success.append(task)
         if len(success) + len(fail) > 1:
             res['content'] = 'success [%d] fail [%d]' % (len(success), len(fail))
 
         return HttpResponse(json.dumps(res))
+
+
+@require_role('admin')
+@user_operator_record
+def task_exec_info(request, res, *args, **kwargs):
+    if request.method == 'POST':
+        task_id = request.POST.get('task_id')
+        page = request.POST.get('page')
+        limit = request.POST.get('limit')
+        task = Task.objects.get(id=task_id)
+        try:
+            # 调用proxy接口，
+            api = APIRequest('{0}/v1.0/job_task/{1}'.format(task.task_proxy.url, task.task_uuid),
+                             task.task_proxy.username,
+                             CRYPTOR.decrypt(task.task_proxy.password))
+            result, code = api.req_get()
+            if code != 200:
+                raise ServerError(result['messege'])
+            else:
+                tasks = result['result']['tasks']
+        except ServerError, e:
+            error = e.message
+            res['flag'] = False
+            res['content'] = error
+        except Exception, e:
+            res['flag'] = False
+            res['content'] = e[1]
+        else:
+            res['flag'] = True
+            res['tasks'] = tasks
+
+        return HttpResponse(json.dumps(res))
+
+
+@require_role('admin')
+def task_exec_replay(request):
+    """
+        task 回放
+    """
+    if request.method == "POST":
+        try:
+            task_id = request.REQUEST.get('task_id', None)
+            job_id = request.REQUEST.get('job_id', None)
+            job = Task.objects.filter(task_uuid=job_id).first()
+            url = '{0}/v1.0/job_task_replay/{1}'.format(job.task_proxy.url, task_id)
+            content = json.load(urllib2.urlopen(url)).get('content')
+            return HttpResponse(content)
+        except:
+            import traceback
+
+            logger.error(traceback.format_exc())
+            return HttpResponse({})
+    elif request.method == 'GET':
+        return render(request, 'logManage/record.html')
+
+    else:
+        return HttpResponse("ERROR METHOD!")
 
 # 查询类定义
 @require_role('admin')
@@ -257,4 +318,6 @@ def task_module(request):
     module_id = request.POST.get('module_id')
     module = Module.objects.get(id=module_id)
     return HttpResponse(json.dumps(module.comment))
+
+
 

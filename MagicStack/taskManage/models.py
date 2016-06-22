@@ -72,7 +72,7 @@ class Task(models.Model):
     create_time = models.DateField(help_text="创建时间")
     comment = models.TextField(blank=True, null=True, help_text="备注")
     task_uuid = models.CharField(max_length=100, help_text="任务ID")
-    last_exec_time = models.CharField(max_length=25, help_text="最后执行时间")
+    last_exec_time = models.CharField(max_length=100, help_text="最后执行时间")
     is_get_last = models.CharField(max_length=4, default='00', help_text="是否获取最后执行时间")
     ext1 = models.CharField(max_length=2000, help_text="扩展字段1")
     ext2 = models.CharField(max_length=2000, help_text="扩展字段2")

@@ -35,9 +35,7 @@ def get_emergency_event():
             continue
 
         # 邮件信息
-        email_msg = u"""
-                    用户 %s 于 %s %s.告警编号[%s]
-                    """ %(item.emer_user, item.emer_time, item.emer_info, item.id)
+        email_msg = u"用户 %s 于 %s %s.告警编号[%s]"%(item.emer_user, item.emer_time, item.emer_info, item.id)
         # 微信消息
         wx_mail = u"[告警信息]用户 %s 于 %s %s.告警编号[%s]"%(item.emer_user, item.emer_time, item.emer_info, item.id)
         wx_mail = wx_mail.encode('utf-8')

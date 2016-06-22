@@ -5,7 +5,6 @@
       "fields": {
         "content": 1,
         "emergency_time": 1,
-        "media_type_id":6,
         "status":0,
         "is_add":true,
         "is_delete":true,
@@ -18,7 +17,6 @@
       "fields": {
         "content": 2,
         "emergency_time": 1,
-        "media_type_id":6,
         "status":0,
         "is_add":true,
         "is_delete":true,
@@ -31,7 +29,6 @@
       "fields": {
         "content": 3,
         "emergency_time": 1,
-        "media_type_id":6,
         "status":0,
         "is_add":true,
         "is_delete":true,
@@ -44,7 +41,6 @@
       "fields": {
         "content": 4,
         "emergency_time": 1,
-        "media_type_id":6,
         "status":0,
         "is_add":true,
         "is_delete":true,
@@ -57,7 +53,6 @@
       "fields": {
         "content": 5,
         "emergency_time": 1,
-        "media_type_id":6,
         "status":0,
         "is_add":true,
         "is_delete":true,
@@ -70,7 +65,6 @@
       "fields": {
         "content": 6,
         "emergency_time": 1,
-        "media_type_id":6,
         "status":0,
         "is_add":true,
         "is_delete":true,
@@ -83,7 +77,6 @@
       "fields": {
         "content": 7,
         "emergency_time": 1,
-        "media_type_id":6,
         "status":0,
         "is_add":true,
         "is_delete":true,

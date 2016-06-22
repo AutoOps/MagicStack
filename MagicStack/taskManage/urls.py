@@ -28,4 +28,6 @@ urlpatterns = patterns("",
     url("^groups/$", task_group, name="get_task_group"),
     url("^modules/$", task_modules, name="get_task_module"),
     url("^module/$", task_module, name="get_module_comment"),
+    url("^exec_info/$", task_exec_info, name="task_exec_info"),
+    url("^exec_replay/$", task_exec_replay, name="task_exec_replay"),
 )

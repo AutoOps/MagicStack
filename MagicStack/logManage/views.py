@@ -146,6 +146,10 @@ def log_record(request):
             proxy_log_id = loginfo.proxy_log_id
             proxy = Proxy.objects.get(proxy_name=proxy_name)
             proxy_content = json.load(urllib2.urlopen('{0}/v1.0/replay/{1}'.format(proxy.url, proxy_log_id)))
+            # proxy_content = json.load(urllib2.urlopen('{0}/v1.0/job_task_replay/411391'.format(proxy.url)))
+
+            logger.info(proxy_content.get('content'))
+            logger.info(type(proxy_content.get('content')))
             return HttpResponse(proxy_content.get('content'))
         else:
             return HttpResponse("ERROR")

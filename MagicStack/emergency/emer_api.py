@@ -18,6 +18,7 @@ from email.mime.text import MIMEText
 from email.header import Header
 import requests
 import json
+import urllib
 from MagicStack.api import logger, CRYPTOR
 
 
@@ -45,23 +46,12 @@ def send_email(email_config,email_title, email_to, email_msg):
         server.quit()
 
 
-def send_wx_mail(corpid, corpsecret,param):
+def send_wx_mail(corpid, corpsecret, param):
     get_token = requests.get('https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={0}&corpsecret={1}'.format(corpid, corpsecret),verify=False)
     res_token = get_token.json()
     if 'access_token' in res_token:
         access_token = res_token['access_token']
-        param = {
-            "touser": "@all",
-            "toparty": "1",
-            "totag": "@all",
-            "msgtype": "text",
-            "agentid": 1,
-            "text": {
-                "content": "hello world"
-            },
-            "safe": "0"
-        }
-        body = json.dumps(param)
+        body = json.dumps(param, ensure_ascii=False)
         res = requests.post('https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={0}'.format(access_token),
                             data=body, verify=False)
         rest = res.json()    #{'errcode':0, 'errmsg':'ok'}

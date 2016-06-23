@@ -10,6 +10,7 @@ from userManage.user_api import user_operator_record
 from assetManage.models import Asset, AssetGroup
 from permManage.models import PermRole, PermRule, PermSudo, PermPush
 import Queue
+import re
 from permManage.utils import gen_keys, trans_all
 from permManage.ansible_api import MyTask
 from permManage.perm_api import get_role_info, get_role_push_host,query_event
@@ -157,10 +158,10 @@ def perm_rule_add(request, res, *args):
             res['emer_status'] = msg + u"成功"
             return HttpResponseRedirect(reverse('rule_list'))
         except ServerError, e:
-            error = e
+            error = e.message
             res['flag'] = 'false'
-            res['content'] = e
-            res['emer_status'] = u"添加授权规则[{0}]失败:{1}".format(rule_name,e)
+            res['content'] = error
+            res['emer_status'] = u"添加授权规则[{0}]失败:{1}".format(rule_name,error)
     return my_render('permManage/perm_rule_add.html', locals(), request)
 
 
@@ -393,7 +394,7 @@ def perm_role_delete(request, res, *args):
             if recycle_assets:
                 asset_proxys = gen_asset_proxy(recycle_assets)
                 for key, value in asset_proxys.items():
-                    proxy = Proxy.objects.filter(proxy_name=key)
+                    proxy = Proxy.objects.filter(proxy_name=key)[0]
                     recycle_resource = gen_resource(value)
                     host_list = [asset.networking.all()[0].ip_address for asset in value]
                     task = MyTask(recycle_resource, host_list)
@@ -555,7 +556,7 @@ def perm_role_edit(request, res, *args):
 
 
 @require_role('admin')
-def perm_role_push(request, res, *args):
+def perm_role_push(request, *args):
     """
     the role push page
     """

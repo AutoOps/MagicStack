@@ -520,8 +520,10 @@ $(document).ready(function () {
         });
     });
 
-    <!-- 查看明细 -->
-    $("a[name='view']").click(function () {
+    <!-- 查看明细v1.0 -->
+    /**
+     $("a[name='view']").click(function () {
+
         // 打开modal
         $.ajax({
             type: 'POST',
@@ -533,11 +535,9 @@ $(document).ready(function () {
                 "limit": 5
             },
             success: function (result) {
-                /**
-                 将查询结果添加到表中
-                 1. 清空的#modal_task_detail下的tbody
-                 2. 将tobody中新增上内容
-                 **/
+            //将查询结果添加到表中
+            //1. 清空的#modal_task_detail下的tbody
+            //2. 将tobody中新增上内容
                 if (result.flag) {
                     // 填充表格
                     if (result.tasks.length > 0) {
@@ -554,7 +554,7 @@ $(document).ready(function () {
                                 state = '完成';
                             }
                             tr_obj += "<td>" + state + "</td>";
-                            tr_obj += "<td><a href='#' class='btn btn-link' name='replay' value=\"{% url 'task_exec_replay' %}?task_id=" + item.id+ "&job_id="+ item.job_id +"\">回放</a></td>";
+                            tr_obj += "<td><a href='#' class='btn btn-link' name='replay' value=\"{% url 'task_exec_replay' %}?task_id=" + item.id + "&job_id=" + item.job_id + "\">回放</a></td>";
                             tr_obj += "</tr>"
                             my_tbody.append(tr_obj);
                         });
@@ -567,12 +567,117 @@ $(document).ready(function () {
             }
         });
     });
+     **/
+
+    <!-- 查看明细v2.0 -->
+    $("a[name='view']").click(function () {
+        /**
+         *  1. 初始化datatables
+         *  2. 初始化modal
+         *  3. show modal
+         * **/
+        var task_id = $(this).parents('tr').find("input[type='checkbox']").val();
+        // init datatables
+        var datatab = $("#tab_task_exec_detail").dataTable({
+//            "retrieve": true,                     //不重复初始化，类似单例模式
+            "destroy": true,                        //如果这个tab初始化过，将会先销毁再初始化
+            "bAutoWidth": false,                    //不自动计算列宽度
+            "aoColumns": [                          //设定各列宽度
+                {
+                    "mData": "start_time",           //指定列名，在后台程序回显时，根据名字查找
+                    "sWidth": "30%",
+                    "bSortable": false
+                },
+                {
+                    "mData": "end_time",
+                    "sWidth": "30%",
+                    "bSortable": false
+                },
+                {
+                    "mData": "status",
+                    "sWidth": "20%",
+                    "bSortable": false
+                },
+                {
+                    "mData": "id",
+                    "sWidth": "20%",
+                    "bSortable": false
+                }
+            ],
+            "aaSorting": [
+                [0, "desc"]
+            ], //默认排序
+            "bProcessing": true,                    //加载数据时显示正在加载信息
+            "bServerSide": true,                    //指定从服务器端获取数据
+            "bFilter": false,                       //不使用过滤功能
+            "bLengthChange": false,                 //用户不可改变每页显示数量
+            "iDisplayLength": 5,                    //每页显示5条数据
+            "sAjaxSource": "{% url 'task_exec_info' %}",//获取数据的url
+            //获取数据的处理函数
+            "fnServerData": function (sSource, aoData, fnCallback, oSettings) {
+                aoData.push({"name": "task_id", "value": task_id});
+                $.ajax({
+                    type: 'POST',
+                    url: sSource,
+                    dataType: "json",
+                    data: aoData,
+                    success: function (resp) {
+                        fnCallback(resp);
+                    }
+                });
+            },
+            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+
+                // 翻译状态
+                if (aData.status == 'running') {
+                    $('td:eq(2)', nRow).html("执行中");
+                } else if (aData.status == 'complete') {
+                    $('td:eq(2)', nRow).html("完成");
+                } else {
+                    $('td:eq(2)', nRow).html("失败");
+                }
+
+                // 设置操作连接
+                $('td:eq(3)', nRow).html("<a href='#' class='btn btn-link' name='replay' value=\"{% url 'task_exec_replay' %}?task_id=" + aData.id + "&job_id=" + aData.job_id + "\">回放</a>");
+
+            },
+
+            // 此处参考的是table-datables-managed.min.js
+            language: {
+                aria: {
+                    sortAscending: ": activate to sort column ascending",
+                    sortDescending: ": activate to sort column descending"
+                },
+                emptyTable: "No data available in table",
+                info: "Showing _START_ to _END_ of _TOTAL_ records",
+                infoEmpty: "No records found",
+                infoFiltered: "(filtered1 from _MAX_ total records)",
+                lengthMenu: "Show _MENU_",
+                search: "Search:",
+                zeroRecords: "No matching records found",
+                paginate: {
+                    previous: "Prev",
+                    next: "Next",
+                    last: "Last",
+                    first: "First"
+                }
+            },
+            pagingType: "bootstrap_full_number"
+        });
+
+        // 刷新Datatable，会自动激发retrieveData
+        // datatab.fnDraw();
+
+        // show modal
+        $('#modal_task_detail').modal({backdrop: 'static', keyboard: false});
+
+    });
 
     <!-- 动态添加元素绑定事件方式 -->
-    $('body').on('click',"a[name='replay']",function(){
+    $('body').on('click', "a[name='replay']", function () {
         var start_time = $(this).parents('tr').find('td').eq(0).html();
         var end_time = $(this).parents('tr').find('td').eq(1).html();
-        var div_time = ' 时间: ' + '<span class="text-info">'+start_time +'</span>' +' - <span class="text-info">' + end_time + '</span>';
+        var div_time = ' 时间: ' + '<span class="text-info">' + start_time + '</span>' + ' - <span class="text-info">' + end_time + '</span>';
         var title = 'MagicStack录像回放 ' + div_time;
         layer.open({
             type: 2,
@@ -584,6 +689,7 @@ $(document).ready(function () {
         });
         return false;
     });
+
 });
 
 </script>

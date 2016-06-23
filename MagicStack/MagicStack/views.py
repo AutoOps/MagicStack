@@ -16,6 +16,7 @@ from django.contrib.auth.decorators import login_required
 from logManage.models import Log, FileLog
 from permManage.perm_api import get_group_user_perm, gen_resource,user_have_perm
 from assetManage.models import Asset, IDC
+from permManage.models import PermRole
 
 
 

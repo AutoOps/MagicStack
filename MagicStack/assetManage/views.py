@@ -222,7 +222,7 @@ def asset_add(request,res, *args):
                 result, codes = api.req_post(data)
             except Exception as e:
                 res['flag'] = 'false'
-                error = e
+                error = e.message
                 res['content'] = error
             else:
                 if codes == 200:
@@ -291,6 +291,7 @@ def asset_add(request,res, *args):
                 else:
                     res['flag'] = 'false'
                     error = u"创建机器失败:%s"%result['messege']
+                    res['content'] = error
         except ServerError as e:
             res['flag'] = 'false'
             res['content'] = e.message
@@ -455,7 +456,7 @@ def asset_edit(request, res, *args):
             res['content'] = error
         else:
             name = request.POST.get('name')
-            res['content'] = 'edit %s success' % name
+            res['content'] = u'编辑资产[%s]成功' % name
 
             fields = {
                 'id_unique': id_unique,

@@ -17,16 +17,8 @@
 
 import json
 import urllib2
-from django.db.models import Q
+import traceback
 
-from MagicStack.api import *
-from userManage.user_api import user_operator_record
-
-from datetime import datetime
-from models import *
-
-
-# -*- coding:utf-8 -*-
 from django.db.models import Q
 from django.shortcuts import render
 
@@ -36,7 +28,6 @@ from common.interface import APIRequest
 from userManage.user_api import user_operator_record
 from proxyManage.models import Proxy
 from datetime import datetime
-import json
 
 
 @require_role('admin')
@@ -65,7 +56,7 @@ def task_add(request, res, *args):
         task_name = request.POST.get('task_type')
         module_name = request.POST.get('module_name')
         module_args = request.POST.get('task_kwargs') or ""
-        task_host = request.POST.get('task_host')
+        task_host = request.POST.getlist('task_host[]') # 前端上送list时
         proxy = request.POST.get('proxy')
         comment = request.POST.get('comment')
         try:
@@ -105,12 +96,16 @@ def task_add(request, res, *args):
             resource = []
             # 构建inventory 和 构建主机list
             for host in hosts:
+                # logger.info("host>>>>>>")
+                # logger.info(host)
                 host_list.append(host.networking.all()[0].ip_address)
                 tmp_d = dict()
                 tmp_d['hostname'] = host.networking.all()[0].ip_address
                 tmp_d['port'] = host.port
                 tmp_d['username'] = host.username
                 tmp_d['password'] = CRYPTOR.decrypt(host.password)
+                # 用于前端确定选择的asset
+                tmp_d['id'] = host.id
                 resource.append(tmp_d)
             task_kwargs['host_list'] = host_list
             task_kwargs['resource'] = resource
@@ -131,6 +126,9 @@ def task_add(request, res, *args):
             res['flag'] = False
             res['content'] = error
         except Exception, e:
+            import traceback
+
+            logger.info(traceback.format_exc())
             res['flag'] = False
             res['content'] = e[1]
         else:
@@ -140,6 +138,84 @@ def task_add(request, res, *args):
         proxy_list = [proxy.to_dict() for proxy in Proxy.objects.all().order_by('create_time')]
         res['proxys'] = proxy_list
         res['task_types'] = Task.TYPES
+        return HttpResponse(json.dumps(res))
+
+
+@require_role('admin')
+@user_operator_record
+def task_edit(request, res, *args, **kwargs):
+    if request.method == 'POST':
+        param = {}
+        # 触发器
+        trigger_kwargs = request.POST.get('trigger')
+        comment = request.POST.get('comment')
+        task_id = request.POST.get('task_id')
+        try:
+            task = Task.objects.get(task_id)
+            # 构建trigger
+            trigger_kwargs = json.loads(trigger_kwargs)
+            start_date = trigger_kwargs.pop('start_date')
+            end_date = trigger_kwargs.get('end_date')
+            if end_date:
+                trigger_kwargs.pop('end_date')
+
+            if not trigger_kwargs:
+                start_date_2_date = datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S')
+                trigger_kwargs['year'] = start_date_2_date.year
+                trigger_kwargs['month'] = start_date_2_date.month
+                trigger_kwargs['day'] = start_date_2_date.day
+                trigger_kwargs['hour'] = start_date_2_date.hour
+                trigger_kwargs['minute'] = start_date_2_date.minute
+                trigger_kwargs['second'] = start_date_2_date.second
+            trigger_kwargs['start_date'] = start_date
+            if end_date:
+                trigger_kwargs['start_date'] = end_date
+            param['trigger_kwargs'] = trigger_kwargs
+            if task.is_get_last != '00':
+                param['job_id'] = task.task_uuid
+                param['task_name'] = task.task_type
+                param['task_kwargs'] = json.loads(task.task_kwargs)
+                # 任务已经完全结束，再次编辑时，proxy端需要重新创建
+                api = APIRequest('{0}/v1.0/job'.format(task.task_proxy.url), task.task_proxy.username,
+                                 CRYPTOR.decrypt(task.task_proxy.password))
+                result, code = api.req_post(json.dumps(param))
+                if code != 200:
+                    raise ServerError(result['messege'])
+                else:
+                    task.trigger_kwargs = json.dumps(trigger_kwargs)
+                    task.comment = comment
+                    task.is_get_last = '00'
+                    task.save()
+            else:
+                api = APIRequest('{0}/v1.0/job/{1}'.format(task.task_proxy.url), task.task_proxy.username,
+                                 CRYPTOR.decrypt(task.task_proxy.password))
+                result, code = api.req_put(json.dumps(param))
+                if code != 200:
+                    raise ServerError(result['messege'])
+                else:
+                    task.trigger_kwargs = json.dumps(trigger_kwargs)
+                    task.comment = comment
+                    task.save()
+        except ServerError, e:
+            error = e.message
+            res['flag'] = False
+            res['content'] = error
+        except Exception, e:
+            res['flag'] = False
+            res['content'] = e[1]
+        else:
+            res['flag'] = True
+        return HttpResponse(json.dumps(res))
+    elif request.method == "GET":
+        task_id = request.GET.get('task_id')
+        task = Task.objects.get(id=task_id).to_dict()
+        proxy_list = [proxy.to_dict() for proxy in Proxy.objects.all().order_by('create_time')]
+        task['module'] = task['module'].to_dict()
+        task['task_proxy'] = task['task_proxy'].to_dict()
+        res['task'] = task
+        res['proxys'] = proxy_list
+        res['task_types'] = Task.TYPES
+        logger.info("res>>>> {0}".format(res))
         return HttpResponse(json.dumps(res))
 
 
@@ -229,7 +305,14 @@ def task_del(request, res, *args, **kwargs):
 
 @require_role('admin')
 @user_operator_record
-def task_exec_info(request, res, *args, **kwargs):
+def task_exec_info_v1(request, res, *args, **kwargs):
+    """
+        获取任务执行信息
+
+        前端使用jquery plugin datatables进行分页
+        后端根据前端规则组合数据
+    """
+
     if request.method == 'POST':
         task_id = request.POST.get('task_id')
         page = request.POST.get('page')
@@ -257,6 +340,66 @@ def task_exec_info(request, res, *args, **kwargs):
             res['tasks'] = tasks
 
         return HttpResponse(json.dumps(res))
+
+
+@require_role('admin')
+@user_operator_record
+def task_exec_info(request, res, *args, **kwargs):
+    """
+        获取任务执行信息
+
+        前端使用jquery plugin datatables进行分页
+        后端根据前端规则组合数据
+    """
+
+    if request.method == 'POST':
+        # 初始化返回结果
+        return_obj = {
+            "sEcho": request.POST.get('sEcho', 0), # 前端上传原样返回
+            "iTotalRecords": 0, # 总记录数
+            "iTotalDisplayRecords": 0, # 过滤后总记录数
+            "aaData": [] # 返回前端数据，json格式
+        }
+
+        # 获取过滤条件
+        task_id = request.POST.get('task_id')
+        # 前端datatable上传每页显示数据
+        limit = request.POST.get('iDisplayLength', 0)
+        # 前端datatable上送从第几条开始展示
+        offset = request.POST.get('iDisplayStart', 5)
+        task = Task.objects.get(id=task_id)
+
+        # 获取数据
+        try:
+            # 调用proxy接口，
+            api = APIRequest(
+                '{0}/v1.0/job_task/{1}?limit={2}&offset={3}'.format(task.task_proxy.url, task.task_uuid, limit, offset),
+                task.task_proxy.username,
+                CRYPTOR.decrypt(task.task_proxy.password))
+            result, code = api.req_get()
+            if code != 200:
+                raise ServerError(result['messege'])
+            else:
+                tasks = result['result']['tasks']
+                total_count = result['result']['total_count']
+                display_lsit = []
+                for task in tasks:
+                    display_lsit.append({
+                        'start_time': task.get('start_time'),
+                        'end_time': task.get('end_time'),
+                        'status': task.get('status'),
+                        'id': task.get('id'),
+                        'job_id': task.get('job_id')
+                    })
+
+                return_obj['aaData'] = display_lsit
+                return_obj['iTotalRecords'] = total_count
+                return_obj['iTotalDisplayRecords'] = total_count
+                logger.info(">>>>>>{0}".format(return_obj))
+        except:
+            logger.error("GET TASK EXEC INFO ERROR\n {0}".format(traceback.format_exc()))
+
+        return HttpResponse(json.dumps(return_obj))
 
 
 @require_role('admin')

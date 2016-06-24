@@ -176,6 +176,9 @@ type="text/css"/>
 <!-- start custom define scripts-->
 <script>
 $(document).ready(function () {
+    <!-- 初始化首页表单数据 -->
+
+
     <!-- 公共函数 Start -->
 
     // 获取当前日期时间串
@@ -269,7 +272,7 @@ $(document).ready(function () {
     });
 
     // 任务类型选择模块所属组加载
-    $("select[name='task_type']").change(function () {
+    $("select[name='task_type']").change(function (even, module) {
         $.ajax({
             type: "post",
             url: "{% url 'get_task_group' %}",
@@ -277,17 +280,30 @@ $(document).ready(function () {
             data: {"task_type": $("select[name='task_type'] option:selected").val()},
             success: function (data) {
                 $("select[name='group_name']").empty();
-                $.each(data, function (i, item) {
-                    $("select[name='group_name']").append("<option value=" + item.group_name + ">" + item.group_name + "</option>");
-                });
-                $("select[name='group_name']").trigger('change');
+                if (module == undefined) {
+                    $.each(data, function (i, item) {
+                        $("select[name='group_name']").append("<option value=" + item.group_name + ">" + item.group_name + "</option>");
+                    });
+
+                    $("select[name='group_name']").trigger('change');
+                } else {
+                    $.each(data, function (i, item) {
+                        if (module.group_name == item.group_name) {
+                            $("select[name='group_name']").append("<option selected value=" + item.group_name + ">" + item.group_name + "</option>");
+                        } else {
+                            $("select[name='group_name']").append("<option value=" + item.group_name + ">" + item.group_name + "</option>");
+                        }
+
+                    });
+                    $("select[name='group_name']").trigger('change', module.id);
+                }
             }
         });
 
     });
 
     // 任务所属组选择加载模块
-    $("select[name='group_name']").change(function () {
+    $("select[name='group_name']").change(function (even, module_id) {
         $.ajax({
             type: "post",
             url: "{% url 'get_task_module' %}",
@@ -296,9 +312,20 @@ $(document).ready(function () {
             data: {"group_name": $("select[name='group_name'] option:selected").val()},
             success: function (data) {
                 $("select[name='module_name']").empty();
-                $.each(data, function (i, item) {
-                    $("select[name='module_name']").append("<option value=" + item.id + ">" + item.module_name + "</option>");
-                });
+                if (module_id == undefined) {
+                    $.each(data, function (i, item) {
+                        $("select[name='module_name']").append("<option value=" + item.id + ">" + item.module_name + "</option>");
+                    });
+
+                } else {
+                    $.each(data, function (i, item) {
+                        if (module_id == item.id) {
+                            $("select[name='module_name']").append("<option selected value=" + item.id + ">" + item.module_name + "</option>");
+                        } else {
+                            $("select[name='module_name']").append("<option value=" + item.id + ">" + item.module_name + "</option>");
+                        }
+                    });
+                }
                 $("select[name='module_name']").trigger('change');
             }
         });
@@ -320,7 +347,7 @@ $(document).ready(function () {
     });
 
     // proxy选择加载主机信息
-    $("select[name='proxy']").change(function () {
+    $("select[name='proxy']").change(function (even, assets) {
         $.ajax({
             type: "post",
             url: "{% url 'get_host_for_proxy' %}",
@@ -328,9 +355,27 @@ $(document).ready(function () {
             data: {"proxy_id": $("select[name='proxy'] option:selected").val()},
             success: function (data) {
                 $("select[name='task_host']").empty();
-                $.each(data, function (i, item) {
-                    $("select[name='task_host']").append("<option value=" + item.id + ">" + item.name + "</option>");
-                });
+                if(assets == undefined){
+                    $.each(data, function (i, item) {
+                        $("select[name='task_host']").append("<option value=" + item.id + ">" + item.name + "</option>");
+                    });
+                }else{
+                    $.each(data, function (i, item) {
+                        var is_selected = false;
+                        $.each(assets.resource, function(j, asset){
+                            if(asset.id == item.id){
+                                is_selected = true;
+                            }
+                        });
+
+                        if(is_selected){
+                            $("select[name='task_host']").append("<option selected value=" + item.id + ">" + item.name + "</option>");
+                        }else{
+                            $("select[name='task_host']").append("<option value=" + item.id + ">" + item.name + "</option>");
+                        }
+                    });
+                }
+
             }
         });
 
@@ -344,6 +389,25 @@ $(document).ready(function () {
             url: "{% url 'task_add' %}",
             success: function (result) {
                 result = $.parseJSON(result);
+                // 初始化表单内容
+                $("#form_sample_1")[0].reset();
+                // 设置modal titile
+                $("#task .modal-title").text('添加任务');
+                // 设置隐藏sbtype 为add
+                $("#sbtype").val('add');
+                // 激活第一个tab页
+                $("#taskTab ul li").attr('class', '');
+                $("#taskTab ul li:eq(0)").attr('class', 'active');
+                $("#taskTab .tab-content div.tab-pane").attr('class', 'tab-pane');
+                $("#taskTab .tab-content div.tab-pane:eq(0)").attr('class', 'tab-pane active');
+                // 因和编辑共用，需要指定部分域为非只读
+                $("select[name='group_name']").removeAttr('disabled');
+                $("select[name='module_name']").removeAttr('disabled');
+                $("input[name='task_kwargs']").removeAttr('readonly');
+                $("select[name='proxy']").removeAttr('disabled');
+                $("select[name='task_host']").removeAttr('disabled');
+
+
                 // 设置表单select内容
                 // task_type options
                 var task_types = result.task_types;
@@ -375,39 +439,43 @@ $(document).ready(function () {
     <!-- task modal 相关事件处理  结束-->
 
     $("#submit").click(function () {
-        var start_datetime = $("input[name='start_datetime']").val();
-        var end_datetime = $("input[name='end_datetime']").val();
-        var month = $("input[name='trigger_month']").val();
-        var day = $("input[name='trigger_day']").val();
-        var week = $("input[name='trigger_week']").val();
-        var day_of_week = $("input[name='trigger_day_of_week']").val();
-        var hour = $("input[name='trigger_hour']").val();
-        var minute = $("input[name='trigger_minute']").val();
-        var second = $("input[name='trigger_second']").val();
-        var task_host = $("input[name='task_host']").val();
-        var trigger = new Trigger(start_datetime, end_datetime, month, day, hour, minute, second, week, day_of_week);
-        $.ajax({
-            type: 'POST',
-            url: "{% url 'task_add' %}",
-            dataType: "json",
-            data: {
-                "trigger": JSON.stringify(trigger),
-                "module_name": $("select[name='module_name']").val(),
-                "task_type": $("select[name='task_type']").val(),
-                "task_kwargs": $("input[name='task_kwargs']").val(),
-                "proxy": $("select[name='proxy']").val(),
-                "task_host": $("select[name='task_host']").val(),
-                "comment": $("input[name='comment']").val()
-            },
-            success: function (result) {
-                if (result.flag) {
-                    window.location.reload();
-                } else {
-                    alert(result.content);
+        var sbtype = $("#sbtype").val();
+        if (sbtype == 'add') {
+            var start_datetime = $("input[name='start_datetime']").val();
+            var end_datetime = $("input[name='end_datetime']").val();
+            var month = $("input[name='trigger_month']").val();
+            var day = $("input[name='trigger_day']").val();
+            var week = $("input[name='trigger_week']").val();
+            var day_of_week = $("input[name='trigger_day_of_week']").val();
+            var hour = $("input[name='trigger_hour']").val();
+            var minute = $("input[name='trigger_minute']").val();
+            var second = $("input[name='trigger_second']").val();
+            var task_host = $("input[name='task_host']").val();            var trigger = new Trigger(start_datetime, end_datetime, month, day, hour, minute, second, week, day_of_week);
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'task_add' %}",
+                dataType: "json",
+                data: {
+                    "trigger": JSON.stringify(trigger),
+                    "module_name": $("select[name='module_name']").val(),
+                    "task_type": $("select[name='task_type']").val(),
+                    "task_kwargs": $("input[name='task_kwargs']").val(),
+                    "proxy": $("select[name='proxy']").val(),
+                    "task_host": $("select[name='task_host']").val(),
+                    "comment": $("input[name='comment']").val()
+                },
+                success: function (result) {
+                    if (result.flag) {
+                        window.location.reload();
+                    } else {
+                        alert(result.content);
+                    }
                 }
-            }
 
-        });
+            });
+        } else if (sbtype == 'edit') {
+            console.log('edit ...')
+        }
     });
 
     <!-- 单个删除 -->
@@ -471,8 +539,105 @@ $(document).ready(function () {
 
     <!-- 编辑 -->
     $("a[name='edit']").click(function () {
+        /**
+         * 1. 读取数据库原有数据
+         * 2. 清空表单内容
+         * 3. 填充表单内容，并设置相应单元
+         * **/
+            // 清空表单
+        $("#form_sample_1")[0].reset();
+
+        // 设置modal titile
+        $("#task .modal-title").text('编辑任务');
+
+        // 设置提交类型
+        $("#sbtype").val('edit');
+
+        // 激活第一个tab页
+        $("#taskTab ul li").attr('class', '');
+        $("#taskTab ul li:eq(0)").attr('class', 'active');
+        $("#taskTab .tab-content div.tab-pane").attr('class', 'tab-pane');
+        $("#taskTab .tab-content div.tab-pane:eq(0)").attr('class', 'tab-pane active');
+
+        // 编辑时，设置某些内容只可读
+        $("select[name='group_name']").attr('disabled', 'disabled');
+        $("select[name='module_name']").attr('disabled', 'disabled');
+        $("input[name='task_kwargs']").attr('readonly', 'true');
+        $("select[name='proxy']").attr('disabled', 'disabled');
+        $("select[name='task_host']").attr('disabled', 'disabled');
+
+        // ajax 数据获取
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'task_edit' %}",
+            dataType: "json",
+            data: {
+                "task_id": $(this).parents('tr').find("input[type='checkbox']").val()
+            },
+            success: function (result) {
+
+                var task_types = result.task_types;
+                var task = result.task;
+                var task_trigger = $.parseJSON(task.trigger_kwargs);
+                var task_kwargs = $.parseJSON(task.task_kwargs);
+                $("select[name='task_type']").empty();
+                for (var i = 0; i < task_types.length; i++) {
+                    if (task.task_type == task_types[i][0]) {
+                        $("select[name='task_type']").append("<option selected value='" + task_types[i][0] + "'>" + task_types[i][1] + "</option>");
+                    } else {
+                        $("select[name='task_type']").append("<option value='" + task_types[i][0] + "'>" + task_types[i][1] + "</option>");
+                    }
+                }
+                // 初始化任务模块，并传递参数
+                $("select[name='task_type']").trigger("change", task.module);
+
+                // proxy options
+                var proxys = result.proxys;
+                $("select[name='proxy']").empty();
+                for (var i = 0; i < proxys.length; i++) {
+                    if(task.task_proxy.id == proxys[i].id){
+                        $("select[name='proxy']").append(("<option selected value='" + proxys[i].id + "'>" + proxys[i].proxy_name + "</option>"));
+                    }else{
+                        $("select[name='proxy']").append(("<option value='" + proxys[i].id + "'>" + proxys[i].proxy_name + "</option>"));
+                    }
+
+                }
+                // 初始化任务主机内容
+                $("select[name='proxy']").trigger("change", task_kwargs);
 
 
+                // 初始化触发器内容
+                $("input[name='start_datetime']").val(task_trigger.start_date);
+                if(task_trigger.end_date != undefined){
+                    $("input[name='end_datetime']").val(task_trigger.end_date);
+                }
+                if(task_trigger.end_date != undefined){
+                    $("input[name='trigger_month']").val(task_trigger.month);
+                }
+
+                if(task_trigger.day!=undefined){
+                    $("input[name='trigger_day']").val(task_trigger.day);
+                }
+                if(task_trigger.week!=undefined){
+                    $("input[name='trigger_week']").val(task_trigger.week);
+                }
+                if(task_trigger.day_of_week!=undefined){
+                    $("input[name='trigger_day_of_week']").val(task_trigger.day_of_week);
+                }
+                if(task_trigger.hour!=undefined){
+                    $("input[name='trigger_hour']").val(task_trigger.hour);
+                }
+                if(task_trigger.minute!=undefined){
+                    $("input[name='trigger_minute']").val(task_trigger.minute);
+                }
+                if(task_trigger.second!=undefined){
+                    $("input[name='trigger_second']").val(task_trigger.second);
+                }
+            }
+
+        });
+        // show modal
+        $('#task').modal({backdrop: 'static', keyboard: false});
     });
 
     <!-- 启用 -->

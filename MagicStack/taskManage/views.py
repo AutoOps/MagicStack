@@ -56,7 +56,7 @@ def task_add(request, res, *args):
         task_name = request.POST.get('task_type')
         module_name = request.POST.get('module_name')
         module_args = request.POST.get('task_kwargs') or ""
-        task_host = request.POST.get('task_host')
+        task_host = request.POST.getlist('task_host[]') # 前端上送list时
         proxy = request.POST.get('proxy')
         comment = request.POST.get('comment')
         try:
@@ -96,12 +96,16 @@ def task_add(request, res, *args):
             resource = []
             # 构建inventory 和 构建主机list
             for host in hosts:
+                # logger.info("host>>>>>>")
+                # logger.info(host)
                 host_list.append(host.networking.all()[0].ip_address)
                 tmp_d = dict()
                 tmp_d['hostname'] = host.networking.all()[0].ip_address
                 tmp_d['port'] = host.port
                 tmp_d['username'] = host.username
                 tmp_d['password'] = CRYPTOR.decrypt(host.password)
+                # 用于前端确定选择的asset
+                tmp_d['id'] = host.id
                 resource.append(tmp_d)
             task_kwargs['host_list'] = host_list
             task_kwargs['resource'] = resource
@@ -122,6 +126,9 @@ def task_add(request, res, *args):
             res['flag'] = False
             res['content'] = error
         except Exception, e:
+            import traceback
+
+            logger.info(traceback.format_exc())
             res['flag'] = False
             res['content'] = e[1]
         else:
@@ -131,6 +138,84 @@ def task_add(request, res, *args):
         proxy_list = [proxy.to_dict() for proxy in Proxy.objects.all().order_by('create_time')]
         res['proxys'] = proxy_list
         res['task_types'] = Task.TYPES
+        return HttpResponse(json.dumps(res))
+
+
+@require_role('admin')
+@user_operator_record
+def task_edit(request, res, *args, **kwargs):
+    if request.method == 'POST':
+        param = {}
+        # 触发器
+        trigger_kwargs = request.POST.get('trigger')
+        comment = request.POST.get('comment')
+        task_id = request.POST.get('task_id')
+        try:
+            task = Task.objects.get(task_id)
+            # 构建trigger
+            trigger_kwargs = json.loads(trigger_kwargs)
+            start_date = trigger_kwargs.pop('start_date')
+            end_date = trigger_kwargs.get('end_date')
+            if end_date:
+                trigger_kwargs.pop('end_date')
+
+            if not trigger_kwargs:
+                start_date_2_date = datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S')
+                trigger_kwargs['year'] = start_date_2_date.year
+                trigger_kwargs['month'] = start_date_2_date.month
+                trigger_kwargs['day'] = start_date_2_date.day
+                trigger_kwargs['hour'] = start_date_2_date.hour
+                trigger_kwargs['minute'] = start_date_2_date.minute
+                trigger_kwargs['second'] = start_date_2_date.second
+            trigger_kwargs['start_date'] = start_date
+            if end_date:
+                trigger_kwargs['start_date'] = end_date
+            param['trigger_kwargs'] = trigger_kwargs
+            if task.is_get_last != '00':
+                param['job_id'] = task.task_uuid
+                param['task_name'] = task.task_type
+                param['task_kwargs'] = json.loads(task.task_kwargs)
+                # 任务已经完全结束，再次编辑时，proxy端需要重新创建
+                api = APIRequest('{0}/v1.0/job'.format(task.task_proxy.url), task.task_proxy.username,
+                                 CRYPTOR.decrypt(task.task_proxy.password))
+                result, code = api.req_post(json.dumps(param))
+                if code != 200:
+                    raise ServerError(result['messege'])
+                else:
+                    task.trigger_kwargs = json.dumps(trigger_kwargs)
+                    task.comment = comment
+                    task.is_get_last = '00'
+                    task.save()
+            else:
+                api = APIRequest('{0}/v1.0/job/{1}'.format(task.task_proxy.url), task.task_proxy.username,
+                                 CRYPTOR.decrypt(task.task_proxy.password))
+                result, code = api.req_put(json.dumps(param))
+                if code != 200:
+                    raise ServerError(result['messege'])
+                else:
+                    task.trigger_kwargs = json.dumps(trigger_kwargs)
+                    task.comment = comment
+                    task.save()
+        except ServerError, e:
+            error = e.message
+            res['flag'] = False
+            res['content'] = error
+        except Exception, e:
+            res['flag'] = False
+            res['content'] = e[1]
+        else:
+            res['flag'] = True
+        return HttpResponse(json.dumps(res))
+    elif request.method == "GET":
+        task_id = request.GET.get('task_id')
+        task = Task.objects.get(id=task_id).to_dict()
+        proxy_list = [proxy.to_dict() for proxy in Proxy.objects.all().order_by('create_time')]
+        task['module'] = task['module'].to_dict()
+        task['task_proxy'] = task['task_proxy'].to_dict()
+        res['task'] = task
+        res['proxys'] = proxy_list
+        res['task_types'] = Task.TYPES
+        logger.info("res>>>> {0}".format(res))
         return HttpResponse(json.dumps(res))
 
 

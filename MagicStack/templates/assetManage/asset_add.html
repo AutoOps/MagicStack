@@ -21,7 +21,7 @@ $(function(){
                         <button class="btn grey-salsa btn-outline" type="reset" id="btn_reset"> 取消 </button>
                       </div>
                   {% if error %}
-                      <div class="alert alert-warning text-center">{{ error }}</div>
+                      <div class="alert alert-danger text-center">{{ error }}</div>
                   {% endif %}
                   {% if msg %}
                       <div class="alert alert-success text-center">{{ msg }}</div>
@@ -38,19 +38,25 @@ $(function(){
                         <div role="tabpanel" class="tab-pane active" id="general">
                             <div class="ibox-content">
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">名字</label>
+                                    <label class="col-md-3 control-label">名字
+                                        <span class="required"> * </span>
+                                    </label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="name">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">端口号</label>
+                                    <label class="col-md-3 control-label">端口号
+                                        <span class="required"> * </span>
+                                    </label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="port">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">管理用户名</label>
+                                    <label class="col-md-3 control-label">管理用户名
+                                        <span class="required"> * </span>
+                                    </label>
                                     <div class="col-md-6">
                                         <div class="input-group">
                                             <span class="input-group-addon">
@@ -60,7 +66,9 @@ $(function(){
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">密码</label>
+                                    <label class="col-md-3 control-label">密码
+                                        <span class="required"> * </span>
+                                    </label>
                                     <div class="col-md-6">
                                         <div class="input-group">
                                             <span class="input-group-addon">
@@ -70,7 +78,9 @@ $(function(){
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">所属代理</label>
+                                    <label class="col-md-3 control-label">所属代理
+                                        <span class="required"> * </span>
+                                    </label>
                                     <div class="col-md-6">
                                         <select name="proxy" id="proxy" data-placeholder="请选择代理" class="form-control" onChange="redirec(document.assetForm.proxy.options.selectedIndex)">
                                             <option value="请选择proxy">请选择proxy</option>
@@ -81,7 +91,9 @@ $(function(){
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label  class="col-md-3 control-label">用户配置文件</label>
+                                    <label  class="col-md-3 control-label">用户配置文件
+                                        <span class="required"> * </span>
+                                    </label>
                                     <div class="col-md-6">
                                         <select name="profile" id="profile" data-placeholder="请选择profile" class="form-control">
                                             <option value="请选择profile" selected>请选择profile</option>
@@ -191,7 +203,9 @@ $(function(){
                         <div role="tabpanel" class="tab-pane" id="networkingglobal">
                            <div class="ibox-content">
                                  <div class="form-group">
-                                    <label class="col-md-3 control-label">主机名</label>
+                                    <label class="col-md-3 control-label">主机名
+                                        <span class="required"> * </span>
+                                    </label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="hostname">
                                     </div>
@@ -219,7 +233,9 @@ $(function(){
                                     </div>
                                 </div>
                               <div class="form-group">
-                                    <label class="col-md-3 control-label">MAC地址</label>
+                                    <label class="col-md-3 control-label">MAC地址
+                                        <span class="required"> * </span>
+                                    </label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="mac_address">
                                     </div>
@@ -231,7 +247,9 @@ $(function(){
                                     </div>
                                 </div>
                                  <div class="form-group">
-                                    <label class="col-md-3 control-label">IP地址</label>
+                                    <label class="col-md-3 control-label">IP地址
+                                        <span class="required"> * </span>
+                                    </label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="ip_address">
                                     </div>
@@ -284,13 +302,17 @@ $(function(){
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">电源管理地址</label>
+                                    <label class="col-md-3 control-label">电源管理地址
+                                        <span class="required"> * </span>
+                                    </label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" name="power_address">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">电源管理用户名</label>
+                                    <label class="col-md-3 control-label">电源管理用户名
+                                        <span class="required"> * </span>
+                                    </label>
                                     <div class="col-md-6">
                                         <div class="input-group">
                                             <span class="input-group-addon">
@@ -300,7 +322,9 @@ $(function(){
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">电源管理用户密码</label>
+                                    <label class="col-md-3 control-label">电源管理用户密码
+                                        <span class="required"> * </span>
+                                    </label>
                                     <div class="col-md-6">
                                         <div class="input-group">
                                             <span class="input-group-addon">
@@ -360,7 +384,7 @@ $(function(){
     $(document).ready(function(){
         $('#btn_reset').click(function(){
             window.location.href = '{% url 'asset_list' %}'
-        })
+        });
     })
 
 </script>

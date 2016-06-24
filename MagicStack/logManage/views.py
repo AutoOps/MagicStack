@@ -8,6 +8,7 @@ from MagicStack.settings import LOG_DIR
 from userManage.models import UserOperatorRecord
 from proxyManage.models import Proxy
 from common.interface import APIRequest
+from assetManage.models import Asset
 import zipfile
 import json
 import pyte

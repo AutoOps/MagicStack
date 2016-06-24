@@ -5,7 +5,7 @@ from assetManage.asset_api import *
 from MagicStack.api import *
 from assetManage.forms import AssetForm, IdcForm,NetWorkingForm,NetWorkingGlobalForm,PowerManageForm
 from assetManage.models import *
-from permManage.perm_api import get_group_asset_perm, get_group_user_perm
+from permManage.perm_api import get_group_asset_perm, get_group_user_perm, gen_resource
 from userManage.user_api import user_operator_record
 from common.interface import APIRequest
 from common.models import Task
@@ -24,6 +24,7 @@ ASSET_TYPE = {
     '7': u"其他"
 }
 POWER_TYPE = {
+    'ipmilan': 'ipmilan',
     'drac5': 'drac5',
     'idrac': 'idrac',
     'ilo': 'ilo',
@@ -31,7 +32,6 @@ POWER_TYPE = {
     'ilo3': 'ilo3',
     'ilo4': 'ilo4',
     'intelmodular': 'intelmodular',
-    'ipmilan': 'ipmilan',
 }
 
 @require_role('admin')
@@ -174,7 +174,21 @@ def asset_add(request,res, *args):
             if Asset.objects.filter(name=unicode(hostname)):
                 error = u'该主机名 %s 已存在!' % hostname
                 raise ServerError(error)
+
             name = request.POST.get('name')
+            port = request.POST.get('port')
+            username = request.POST.get('username')
+            pwd = request.POST.get('password')
+            hostname = request.POST.get('hostname', '')
+            power_address = request.POST.get('power_address')
+            power_username = request.POST.get('power_username')
+            ency_password = request.POST.get('power_password')
+            mac_address = request.POST.get('mac_address')
+            ip_address = request.POST.get('ip_address')
+
+            if '' in [name, port, username, pwd, hostname, power_address, power_username, ency_password, mac_address, ip_address]:
+                raise ServerError(u'必要参数为空')
+
             timestamp = int(time.time())
             id_unique = name + '_'+ str(timestamp)
             fields = {
@@ -220,8 +234,8 @@ def asset_add(request,res, *args):
                     asset_info.profile = request.POST.get('profile', '')
                     asset_info.status = request.POST.get('status', '1')
                     asset_info.kickstart = request.POST.get('kickstart', '')
-                    asset_info.port = request.POST.get('port',22)
-                    asset_info.username = request.POST.get('username', 'rooot')
+                    asset_info.port = int(request.POST.get('port',22))
+                    asset_info.username = request.POST.get('username', 'root')
                     pwd = request.POST.get('password', '')
                     asset_info.password = CRYPTOR.encrypt(pwd)
                     asset_info.idc_id = int(request.POST.get('idc', '1'))
@@ -276,10 +290,11 @@ def asset_add(request,res, *args):
                         asset_info.group.add(group)
                 else:
                     res['flag'] = 'false'
-                    error = "创建机器失败:%s"%result['messege']
-        except ServerError:
+                    error = u"创建机器失败:%s"%result['messege']
+        except ServerError as e:
             res['flag'] = 'false'
-            res['content'] = error
+            res['content'] = e.message
+            error = e.message
 
     return my_render('assetManage/asset_add.html', locals(), request)
 
@@ -387,7 +402,7 @@ def asset_edit(request, res, *args):
             asset_info.name = request.POST.get('name', '')
             asset_info.profile = request.POST.get('profile', '')
             asset_info.kickstart = request.POST.get('kickstart', '')
-            asset_info.port = request.POST.get('port',22)
+            asset_info.port = int(request.POST.get('port',22))
             asset_info.username = request.POST.get('username', 'root')
             pwd = request.POST.get('password', '')
             asset_info.password = CRYPTOR.encrypt(pwd)

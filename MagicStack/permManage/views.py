@@ -705,9 +705,10 @@ def push_role_event(request):
                     msg = u'系统用户 %s 推送成功[ %s ]' % (role.name, ','.join(success_asset.keys()))
                     response['message'] = msg
                 else:
-                    intersection = set(success_asset)&set(failed_asset)
+                    intersection = set(success_asset.keys())&set(failed_asset.keys())
                     if intersection:
-                        success_asset = list(set(success_asset) - intersection)
+                        for item in intersection:
+                            success_asset.pop(item)
                         error = u'系统用户 %s 推送失败 [ %s ], 推送成功 [ %s ] 进入系统用户详情，查看失败原因' % (role.name,
                                                                         ','.join(failed_asset.keys()),
                                                                         ','.join(success_asset.keys()))

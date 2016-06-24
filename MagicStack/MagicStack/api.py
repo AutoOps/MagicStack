@@ -241,7 +241,7 @@ def get_object(model, **kwargs):
     except model.DoesNotExist:
         return None
     except model.MultipleObjectsReturned:
-        the_object = model.objects.get(**kwargs)[0]
+        the_object = model.objects.filter(**kwargs)[0]
     return the_object
 
 

@@ -33,42 +33,39 @@ class APIRequest(object):
         return headers
 
     def req_get(self):
-        msg = ''
-        codes = 200
         try:
             req = requests.get(self.url, headers=self.header)
             msg = req.json()
             codes = req.status_code
         except Exception as e:
                 logger.error(e)
+                codes = 500
+                msg = e.message
         return msg, codes
 
     def req_post(self, data):
-        msg = ''
-        codes = 200
         try:
             req = requests.post(self.url, headers=self.header, data=data)
             msg = req.json()
             codes = req.status_code
         except Exception as e:
                 logger.error(e)
+                codes = 500
+                msg = e.message
         return msg, codes
 
     def req_put(self, data):
-        msg = ''
-        codes = 200
         try:
             req = requests.put(self.url, headers=self.header, data=data)
             codes = req.status_code
             msg = req.json()
-            logger.debug("msg:%s    status_codes:%s" % (msg, codes))
         except Exception as e:
                 logger.error(e)
+                codes = 500
+                msg = e.message
         return msg, codes
 
     def req_del(self, data):
-        msg = ''
-        codes = 200
         try:
             req = requests.delete(self.url, headers=self.header, data=data)
             codes = req.status_code
@@ -76,5 +73,7 @@ class APIRequest(object):
             logger.debug("msg:%s    status_codes:%s" % (msg, codes))
         except Exception as e:
                 logger.error(e)
+                codes = 500
+                msg = e.message
         return msg, codes
 

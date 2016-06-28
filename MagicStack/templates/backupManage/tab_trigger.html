@@ -1,0 +1,73 @@
+<div class="form-group">
+    <label class="control-label col-md-4">开始时间</label>
+
+    <div class="col-md-6">
+        <input type="text" name="start_datetime" size="16" readonly class="form-control form-datetime">
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4">结束时间</label>
+
+    <div class="col-md-6">
+        <input type="text" name="end_datetime" size="16" readonly class="form-control form-datetime">
+    </div>
+
+</div>
+<div class="form-group">
+    <label class="control-label col-md-4">重复周期</label>
+
+    <div class="col-md-6">
+        <select name="trigger_cycle" class="form-control">
+            <option value="1">一次性活动</option>
+            <option value="2">每天</option>
+            <option value="3">每周</option>
+            <option value="4">每月</option>
+            <option value="5">自定义</option>
+        </select>
+        <input type="hidden" id="cycle_val"/>
+    </div>
+</div>
+
+<div class="form-group display-hide" id="div_define">
+    <label class="control-label col-md-4">重复类型</label>
+    <div class="col-md-3">
+        <select name="cycle_type" class="form-control">
+            <option value="1">星期</option>
+            <option value="2">月</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select name="cycle_type_val" class="form-control"  multiple="multiple">
+            <option value="1">星期日</option>
+            <option value="2">星期一</option>
+            <option value="3">星期二</option>
+            <option value="4">星期三</option>
+            <option value="5">星期四</option>
+            <option value="6">星期五</option>
+            <option value="7">星期六</option>
+        </select>
+    </div>
+</div>
+
+
+<div class="form-group display-hide" id="div_hour">
+    <label class="control-label col-md-4">时</label>
+    <div class="col-md-6">
+        <input type="text" class="form-control" name="trigger_hour"/>
+    </div>
+</div>
+
+<div class="form-group display-hide" id="div_minute">
+    <label class="control-label col-md-4">分</label>
+    <div class="col-md-6">
+        <input type="text" class="form-control" name="trigger_minute"/>
+    </div>
+</div>
+<div class="form-group display-hide" id="div_second">
+    <label class="control-label col-md-4">秒</label>
+
+    <div class="col-md-6">
+        <input type="text" class="form-control" name="trigger_second"/>
+    </div>
+</div>

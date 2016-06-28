@@ -353,6 +353,7 @@ def task_exec_info(request, res, *args, **kwargs):
     """
 
     if request.method == 'POST':
+        logger.info(">>>>>>>{0}".format(request.POST))
         # 初始化返回结果
         return_obj = {
             "sEcho": request.POST.get('sEcho', 0), # 前端上传原样返回
@@ -409,8 +410,8 @@ def task_exec_replay(request):
     """
     if request.method == "POST":
         try:
-            task_id = request.REQUEST.get('task_id', None)
-            job_id = request.REQUEST.get('job_id', None)
+            task_id = request.GET.get('task_id', None)
+            job_id = request.GET.get('job_id', None)
             job = Task.objects.filter(task_uuid=job_id).first()
             url = '{0}/v1.0/job_task_replay/{1}'.format(job.task_proxy.url, task_id)
             content = json.load(urllib2.urlopen(url)).get('content')

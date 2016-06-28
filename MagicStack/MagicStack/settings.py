@@ -68,6 +68,7 @@ INSTALLED_APPS = (
     'taskManage',
     'common',
     'emergency',
+    'backupManage',
 
 )
 

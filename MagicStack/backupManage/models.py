@@ -16,6 +16,8 @@
 #   limitations under the License.
 
 
+import datetime
+import json
 from django.db import models
 
 
@@ -32,17 +34,27 @@ class Backup(models.Model):
         ('db', '数据库备份')
     )
 
-    backup_proxy = models.CharField(max_length=254, unique=True, help_text='备份proxy')
-    backup_host = models.CharField(max_length=254, unique=True, help_text='备份proxy')
-    backup_type = models.CharField(max_length=2, choices=TYPES, default='file', help_text='备份类型')
-    backup_kwargs = models.CharField(max_length=254, help_text='备份参数')
-    backup_cycle = models.CharField(max_length=100, help_text='备份周期')
-    backup_status = models.CharField(max_length=2, choices=STATUS, default='00', help_text='备份状态')
-    task_uuid = models.CharField(max_length=100, help_text='备份任务ID')
-    create_time = models.DateField(help_text='创建时间')
-    comment = models.TextField(blank=True, help_text='备注')
+    proxy = models.CharField(max_length=254, help_text='备份proxy')
+    type = models.CharField(max_length=2, choices=TYPES, default='file', help_text='备份类型')
+    kwargs = models.CharField(max_length=2000, help_text='备份参数')
+    status = models.CharField(max_length=2, choices=STATUS, default='00', help_text='备份状态')
+    b_trigger = models.CharField(max_length=100, help_text='备份触发器')
+    create_time = models.DateField(help_text='创建时间', null=True)
+    comment = models.TextField(blank=True, null=True, help_text='备注')
 
-    def __unicode__(self):
-        return self.proxy_name
+    task_uuid = models.CharField(max_length=100, null=True, help_text='备份任务ID')
+    last_exec_time = models.CharField(max_length=100, null=True, help_text="最后执行时间")
+    is_get_last = models.CharField(max_length=4, default='00', help_text="是否获取最后执行时间")
+
+    ext1 = models.CharField(max_length=2000, null=True, help_text="扩展字段1")
+    ext2 = models.CharField(max_length=2000, null=True, help_text="扩展字段2")
+    ext3 = models.CharField(max_length=2000, null=True, help_text="扩展字段3")
 
 
+    def to_dict(self):
+        d = dict()
+        for f in self._meta.fields:
+            d[f.name] = getattr(self, f.name, None)
+            if isinstance(d[f.name], (datetime.datetime, datetime.date)):
+                d[f.name] = getattr(self, f.name, None).strftime('%Y-%m-%d %H:%M:%S')
+        return d

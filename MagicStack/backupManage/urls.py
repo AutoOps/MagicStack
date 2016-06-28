@@ -21,6 +21,7 @@ from backupManage.views import *
 
 urlpatterns = patterns('',
    url(r'^dbbackup_list/$', dbbackup_list, name='dbbackup_list'),
-   url(r'^dbbackup_list/$', dbbackup_list, name='filebackup_list'),
-   url(r'^dbbackup_list/$', dbbackup_list, name='pathbackup_list'),
+   url(r'^filebackup_list/$', dbbackup_list, name='filebackup_list'),
+   url(r'^pathbackup_list/$', dbbackup_list, name='pathbackup_list'),
+   url(r'^dbbackup_add/$', dbbackup_add, name='dbbackup_add'),
 )

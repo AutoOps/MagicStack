@@ -25,6 +25,7 @@ urlpatterns = patterns('',
     url(r'^pathbackup_list/$', dbbackup_list, name='pathbackup_list'),
     url(r'^dbbackup_add/$', dbbackup_add, name='dbbackup_add'),
     url(r'^dbbackup_del/$', dbbackup_del, name='dbbackup_del'),
+    url(r'^dbbackup_edit/$', dbbackup_edit, name='dbbackup_edit'),
 
     # 备份回放公共部分
     url(r'^backup_exec_replay/$', backup_exec_replay, name='backup_exec_replay'),

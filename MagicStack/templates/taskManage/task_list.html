@@ -474,7 +474,40 @@ $(document).ready(function () {
 
             });
         } else if (sbtype == 'edit') {
-            console.log('edit ...')
+            var start_datetime = $("input[name='start_datetime']").val();
+            var end_datetime = $("input[name='end_datetime']").val();
+            var month = $("input[name='trigger_month']").val();
+            var day = $("input[name='trigger_day']").val();
+            var week = $("input[name='trigger_week']").val();
+            var day_of_week = $("input[name='trigger_day_of_week']").val();
+            var hour = $("input[name='trigger_hour']").val();
+            var minute = $("input[name='trigger_minute']").val();
+            var second = $("input[name='trigger_second']").val();
+            var task_host = $("input[name='task_host']").val();
+            var trigger = new Trigger(start_datetime, end_datetime, month, day, hour, minute, second, week, day_of_week);
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'task_edit' %}",
+                dataType: "json",
+                data: {
+                    "task_id": $("#edit_task_id").val(),
+                    "trigger": JSON.stringify(trigger),
+                    "module_name": $("select[name='module_name']").val(),
+                    "task_type": $("select[name='task_type']").val(),
+                    "task_kwargs": $("input[name='task_kwargs']").val(),
+                    "proxy": $("select[name='proxy']").val(),
+                    "task_host": $("select[name='task_host']").val(),
+                    "comment": $("input[name='comment']").val()
+                },
+                success: function (result) {
+                    if (result.flag) {
+                        window.location.reload();
+                    } else {
+                        alert(result.content);
+                    }
+                }
+
+            });
         }
     });
 
@@ -566,6 +599,7 @@ $(document).ready(function () {
         $("select[name='proxy']").attr('disabled', 'disabled');
         $("select[name='task_host']").attr('disabled', 'disabled');
 
+        $("#edit_task_id").val($(this).parents('tr').find("input[type='checkbox']").val());
         // ajax 数据获取
         $.ajax({
             type: 'GET',

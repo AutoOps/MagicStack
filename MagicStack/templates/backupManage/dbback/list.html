@@ -107,20 +107,27 @@ $(document).ready(function () {
         $("#div_define").attr('class', "form-group display-hide");
 
         // 清空隐藏字段内容
-        $('input[name="trigger_hour"]').val("");
-        $('input[name="trigger_minute"]').val("");
-        $('input[name="trigger_second"]').val("");
+        if (opt == undefined && $("#sbtype").val() == 'add') {
+            $('input[name="trigger_hour"]').val("");
+            $('input[name="trigger_minute"]').val("");
+            $('input[name="trigger_second"]').val("");
+        }
+
 
         if (sel_val == "1") {
             $("#div_hour").attr('class', "form-group display-hide");
             $("#div_minute").attr('class', "form-group display-hide");
-            //$("#div_second").attr('class', "form-group display-hide");
         } else if (sel_val == "3") {
             $("#cycle_val").val(new Date().getDay());
         } else if (sel_val == "4") {
             $("#cycle_val").val(new Date().getDate());
         } else if (sel_val == "5") {
             $("#div_define").attr('class', 'form-group');
+        } else {
+            if (opt == 'edit') {
+                // 编辑时，当时已选的情况
+                $("#cycle_val").val($("#old_cycle_val").val());
+            }
         }
     });
 
@@ -133,16 +140,29 @@ $(document).ready(function () {
             $.each(arr, function (i, item) {
                 type_val.append("<option value=" + (i - 1) + ">" + item + "</option>");
             });
+
         } else {
             var arr = new Array(31);
             $.each(arr, function (i, item) {
                 type_val.append("<option value=" + (i + 1) + ">" + (i + 1) + "日</option>");
             });
         }
+
+        // 编辑时用到
+        if (opt != undefined) {
+            $("select[name='cycle_type_val']").val(opt);
+        }
+
+        if ($("#sbtype").val() == 'edit') {
+            // old 判断
+            $.each($("#old_cycle_type_val").val().split(","), function (i, item) {
+                $("select[name='cycle_type_val'] option[value='" + item + "']").attr('selected', true);
+            });
+        }
     });
 
     // proxy选择加载主机信息
-    $("select[name='proxy']").change(function (even, assets) {
+    $("select[name='proxy']").change(function (even, asset_id) {
         $.ajax({
             type: "post",
             url: "{% url 'get_host_for_proxy' %}",
@@ -150,24 +170,15 @@ $(document).ready(function () {
             data: {"proxy_id": $("select[name='proxy'] option:selected").val()},
             success: function (data) {
                 $("select[name='proxy_host']").empty();
-                if (assets == undefined) {
+                if (asset_id == undefined) {
                     $.each(data, function (i, item) {
                         $("select[name='proxy_host']").append("<option value=" + item.id + ">" + item.name + "</option>");
                     });
                 } else {
-                    $.each(data, function (i, item) {
-                        var is_selected = false;
-                        $.each(assets.resource, function (j, asset) {
-                            if (asset.id == item.id) {
-                                is_selected = true;
-                            }
-                        });
 
-                        if (is_selected) {
-                            $("select[name='proxy_host']").append("<option selected value=" + item.id + ">" + item.name + "</option>");
-                        } else {
-                            $("select[name='proxy_host']").append("<option value=" + item.id + ">" + item.name + "</option>");
-                        }
+                    $.each(data, function (i, item) {
+                        var t = item.id == asset_id ? " selected" : "";
+                        $("select[name='proxy_host']").append("<option" + t + " value='" + item.id + "'>" + item.name + "</option>");
                     });
                 }
 
@@ -224,6 +235,9 @@ $(document).ready(function () {
         $("#dbTab .tab-content div.tab-pane:eq(0)").attr('class', 'tab-pane active');
         // 设置开始日期为当前日期
         $("input[name='start_datetime']").val(get_nowdate(''));
+        // 因和编辑共用，需要指定部分域为非只读
+        $("select[name='proxy']").removeAttr('disabled');
+        $("select[name='proxy_host']").removeAttr('disabled');
 
         // 获取proxy信息
         $.ajax({
@@ -285,6 +299,9 @@ $(document).ready(function () {
         var trigger_second = $("input[name='trigger_second']").val();
         var cycle_val = $("#cycle_val").val();
         var dest = $("input[name='dest']").val();
+        var old_trigger_cycle = $("#old_trigger_cycle").val();
+        var old_cycle_val = $("#old_cycle_val").val();
+        var old_cycle_type_val = $("#old_cycle_type_val").val();
 
         if (sbtype == 'add') {
             $.ajax({
@@ -325,7 +342,46 @@ $(document).ready(function () {
                 }
             });
         } else if (sbtype == 'edit') {
-            console.log('edit ...')
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'dbbackup_edit' %}",
+                dataType: "json",
+                data: {
+                    'backup_id': $("#edit_backup_id").val(),
+                    'old_trigger_cycle': old_trigger_cycle,
+                    'old_cycle_val': old_cycle_val,
+                    'old_cycle_type_val': old_cycle_type_val,
+                    'db_user_name': db_user_name,
+                    'db_password': db_password,
+                    'db_host': db_host,
+                    'db_port': db_port,
+                    'db_backups': db_backups,
+                    'comment': $("input[name='comment']").val(),
+                    'ftp_user_name': ftp_user_name,
+                    'ftp_password': ftp_password,
+                    'ftp_host': ftp_host,
+                    'ftp_port': ftp_port,
+                    'proxy': proxy,
+                    'cycle_val': cycle_val,
+                    'proxy_host': proxy_host,
+                    'start_datetime': start_datetime,
+                    'end_datetime': end_datetime,
+                    'trigger_cycle': trigger_cycle,
+                    'cycle_type': cycle_type,
+                    'cycle_type_val': cycle_type_val,
+                    'trigger_hour': trigger_hour,
+                    'trigger_minute': trigger_minute,
+                    'trigger_second': trigger_second,
+                    'dest': dest
+                },
+                success: function (result) {
+                    if (result.flag) {
+                        window.location.reload();
+                    } else {
+                        alert(result.content);
+                    }
+                }
+            });
         }
     });
 
@@ -410,17 +466,17 @@ $(document).ready(function () {
             } else {
                 $('td:eq(3)', nRow).html("销毁");
                 $('td:eq(0)', nRow).html(
-                    '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">' +
-                            '    <input type="checkbox" disabled="disabled" class="checkboxes" value="' + aData.id + '"/>' +
-                            '    <span></span> ' +
-                            '</label>'
+                        '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">' +
+                                '    <input type="checkbox" disabled="disabled" class="checkboxes" value="' + aData.id + '"/>' +
+                                '    <span></span> ' +
+                                '</label>'
                 );
             }
 
             // 设置操作连接
-            var del_a = aData.status == '00' ?'    <li>' +
-                        '        <a href="#" name="del">删除</a>' +
-                        '    </li>' : '';
+            var del_a = aData.status == '00' ? '    <li>' +
+                    '        <a href="#" name="del">删除</a>' +
+                    '    </li>' : '';
             var op_div = '<div class="btn-group">' +
                     '<button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> ' +
                     'Actions ' +
@@ -471,7 +527,7 @@ $(document).ready(function () {
         var e = jQuery(this).attr("data-set"),
                 t = jQuery(this).is(":checked");
         jQuery(e).each(function (i, item) {
-            if(!$(item).attr('disabled')){
+            if (!$(item).attr('disabled')) {
                 t ? ($(this).prop("checked", !0), $(this).parents("tr").addClass("active")) : ($(this).prop("checked", !1), $(this).parents("tr").removeClass("active"));
             }
         });
@@ -505,6 +561,128 @@ $(document).ready(function () {
                 }
             }
         });
+    });
+
+
+    <!-- 编辑 -->
+    table_back.on('click', "a[name='edit']", function () {
+        /**
+         * 1. 读取数据库原有数据
+         * 2. 清空表单内容
+         * 3. 填充表单内容，并设置相应单元
+         * **/
+            // 清空表单
+        $("#form_sample_1")[0].reset();
+
+        // 设置modal titile
+        $("#dbbackup_modal .modal-title").text('编辑数据库备份');
+
+        // 设置提交类型
+        $("#sbtype").val('edit');
+
+        // 激活第一个tab页
+        $("#dbTab ul li").attr('class', '');
+        $("#dbTab ul li:eq(0)").attr('class', 'active');
+        $("#dbTab .tab-content div.tab-pane").attr('class', 'tab-pane');
+        $("#dbTab .tab-content div.tab-pane:eq(0)").attr('class', 'tab-pane active');
+
+        // 编辑时，设置某些内容只可读
+        $("select[name='proxy']").attr('disabled', 'disabled');
+        $("select[name='proxy_host']").attr('disabled', 'disabled');
+
+        $("#edit_backup_id").val($(this).parents('tr').find("input[type='checkbox']").val());
+        // ajax 数据获取
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'dbbackup_edit' %}",
+            dataType: "json",
+            data: {
+                "backup_id": $(this).parents('tr').find("input[type='checkbox']").val()
+            },
+            success: function (result) {
+                var backup = result.backup;
+                var init_kwargs = $.parseJSON(backup.ext1);
+                var proxys = result.proxys;
+                $("input[name='comment']").val(init_kwargs.comment);
+                /* 初始化数据库信息 */
+                $("input[name='db_user_name']").val(init_kwargs.db_user_name);
+                $("input[name='db_password']").val(init_kwargs.db_password);
+                $("input[name='db_host']").val(init_kwargs.db_host);
+                $("input[name='db_port']").val(init_kwargs.db_port);
+                $("input[name='db_backups']").val(init_kwargs.db_backups);
+                /* 初始化FTP信息 */
+                $("input[name='ftp_user_name']").val(init_kwargs.ftp_user_name);
+                $("input[name='ftp_password']").val(init_kwargs.ftp_password);
+                $("input[name='ftp_host']").val(init_kwargs.ftp_host);
+                $("input[name='ftp_port']").val(init_kwargs.ftp_port);
+                /* 初始化proxy信息 */
+                $("select[name='proxy']").empty();
+                $.each(proxys, function (i, item) {
+                    var t = item.id == init_kwargs.proxy;
+                    t ? $("select[name='proxy']").append(("<option selected value='" + item.id + "'>" + item.proxy_name + "</option>"))
+                            : $("select[name='proxy']").append(("<option value='" + item.id + "'>" + item.proxy_name + "</option>"));
+                });
+                $("select[name='proxy']").trigger("change", init_kwargs.proxy_host);
+
+                /* 初始化触发器信息 */
+                var trigger_obj = $("select[name='trigger_cycle']").empty();
+                var c_week = "周" + "日一二三四五六".split("")[new Date().getDay()];
+                trigger_obj.append("<option value='1'>一次性活动</option>");
+                trigger_obj.append("<option value='2'>每天</option>");
+                trigger_obj.append("<option value='3'>每周（" + c_week + "）</option>");
+                trigger_obj.append("<option value='4'>每月（" + new Date().getDate() + "日）</option>");
+                trigger_obj.append("<option value='5'>自定义</option>");
+
+                $("select[name='trigger_cycle']").val(init_kwargs.trigger_cycle);
+
+                if (init_kwargs.trigger_cycle == '1') {
+                    // 一次性活动
+
+                } else if (init_kwargs.trigger_cycle == '2') {
+                    // 每天
+
+                } else if (init_kwargs.trigger_cycle == '3') {
+                    // 每周x日
+                    // 若，当时选择非当日，则增加一个选项
+                    if (init_kwargs.cycle_val != new Date().getDay()) {
+                        var t = "周" + "日一二三四五六".split("")[parseInt(init_kwargs.cycle_val)];
+                        trigger_obj.append("<option selected value='6'>每周（" + t + " 当前选择）</option>");
+                        // 提交后台时，后台做验证及处理
+                        $("select[name='trigger_cycle']").val('6');
+                    }
+
+                } else if (init_kwargs.trigger_cycle == '4') {
+                    // 每月x日
+
+                    if (init_kwargs.cycle_val != new Date().getDate()) {
+                        trigger_obj.append("<option selected value='6'>每月（" + init_kwargs.cycle_val + "日 当前选择）</option>");
+                        // 提交后台时，后台做验证及处理
+                        $("select[name='trigger_cycle']").val('6');
+                        // 显示层
+                    }
+                } else {
+                    // 自定义
+                }
+                $("input[name='start_datetime']").val(init_kwargs.start_datetime);
+                $("input[name='end_datetime']").val(init_kwargs.end_datetime);
+                $("select[name='cycle_type']").val(init_kwargs.cycle_type);
+                $("select[name='cycle_type']").trigger('change', init_kwargs.cycle_type_val);
+                $("select[name='cycle_type_val']").val(init_kwargs.cycle_type_val);
+                $("#old_cycle_type_val").val(init_kwargs.cycle_type_val);
+                $("input[name='trigger_hour']").val(init_kwargs.trigger_hour);
+                $("input[name='trigger_minute']").val(init_kwargs.trigger_minute);
+                $("input[name='trigger_second']").val(init_kwargs.trigger_second);
+                $("#cycle_val").val(init_kwargs.cycle_val);
+                $("#old_cycle_val").val(init_kwargs.cycle_val);
+                $("#old_trigger_cycle").val(init_kwargs.trigger_cycle);
+                $("input[name='dest']").val(init_kwargs.dest);
+                // 手工change
+                $("select[name='trigger_cycle']").trigger('change', 'edit');
+            }
+        });
+
+        // show modal
+        $('#dbbackup_modal').modal({backdrop: 'static', keyboard: false});
     });
 
     <!-- 查看明细 -->

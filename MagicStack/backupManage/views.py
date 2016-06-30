@@ -94,7 +94,7 @@ def dbbackup_add(request, res, *args):
                 trigger_kwargs['day'] = '*'
             elif trigger_cycle == 3:
                 # 每星期x
-                trigger_kwargs['day_of_week '] = int(cycle_val)
+                trigger_kwargs['day_of_week'] = int(cycle_val)
             elif trigger_cycle == 4:
                 # 每月x号
                 trigger_kwargs['day'] = int(cycle_val)
@@ -106,7 +106,7 @@ def dbbackup_add(request, res, *args):
                     cycle_type_val = cycle_type_val[0]
                 if cycle_type == 1:
                     # 按照星期定义
-                    trigger_kwargs['day_of_week '] = cycle_type_val
+                    trigger_kwargs['day_of_week'] = cycle_type_val
                 else:
                     # 按照月定义
                     trigger_kwargs['day'] = cycle_type_val
@@ -179,7 +179,171 @@ def dbbackup_add(request, res, *args):
 @require_role('admin')
 @user_operator_record
 def dbbackup_edit(request, res, *args):
-    pass
+    if request.method == 'GET':
+        back_id = request.GET.get('backup_id')
+        backup = Backup.objects.get(id=back_id).to_dict()
+        proxy_list = [proxy.to_dict() for proxy in Proxy.objects.all().order_by('create_time')]
+        backup['proxy'] = backup['proxy'].to_dict()
+        res['backup'] = backup
+        res['proxys'] = proxy_list
+        return HttpResponse(json.dumps(res))
+    elif request.method == 'POST':
+        try:
+            back_id = request.POST.get('backup_id')
+            backup = Backup.objects.get(id=back_id)
+            init_kwargs = dict()
+            init_kwargs['db_user_name'] = db_user_name = request.POST.get('db_user_name')
+            init_kwargs['db_password'] = db_password = request.POST.get('db_password')
+            init_kwargs['db_host'] = db_host = request.POST.get('db_host')
+            init_kwargs['db_port'] = db_port = request.POST.get('db_port', 3306)
+            init_kwargs['db_backups'] = db_backups = request.POST.get('db_backups')
+            init_kwargs['comment'] = comment = request.POST.get('comment')
+            init_kwargs['ftp_user_name'] = ftp_user_name = request.POST.get('ftp_user_name')
+            init_kwargs['ftp_password'] = ftp_password = request.POST.get('ftp_password')
+            init_kwargs['ftp_host'] = ftp_host = request.POST.get('ftp_host')
+            init_kwargs['ftp_port'] = ftp_port = request.POST.get('ftp_port', 21)
+            init_kwargs['proxy'] = proxy = request.POST.get('proxy')
+            init_kwargs['proxy_host'] = proxy_host = request.POST.get('proxy_host')
+            init_kwargs['start_datetime'] = start_datetime = request.POST.get('start_datetime')
+            init_kwargs['end_datetime'] = end_datetime = request.POST.get('end_datetime')
+            init_kwargs['trigger_cycle'] = trigger_cycle = int(request.POST.get('trigger_cycle'))
+            init_kwargs['old_trigger_cycle'] = old_trigger_cycle = int(request.POST.get('old_trigger_cycle'))
+            init_kwargs['cycle_val'] = cycle_val = request.POST.get('cycle_val')
+            init_kwargs['old_cycle_val'] = old_cycle_val = request.POST.get('old_cycle_val')
+            init_kwargs['cycle_type'] = cycle_type = int(request.POST.get('cycle_type'))
+            init_kwargs['cycle_type_val'] = cycle_type_val = request.POST.getlist('cycle_type_val[]')
+            init_kwargs['old_cycle_type_val'] = old_cycle_type_val = request.POST.get('old_cycle_type_val')
+            init_kwargs['trigger_hour'] = trigger_hour = request.POST.get('trigger_hour')
+            init_kwargs['trigger_minute'] = trigger_minute = request.POST.get('trigger_minute')
+            init_kwargs['trigger_second'] = trigger_second = request.POST.get('trigger_second')
+            init_kwargs['dest'] = dest = request.POST.get('dest')
+            trigger_kwargs = {}
+
+            start_date_2_date = datetime.strptime(start_datetime, '%Y-%m-%d %H:%M:%S')
+            # 构造触发器结构
+            trigger_kwargs['start_date'] = start_datetime
+            # 结束时间设置
+            if end_datetime:
+                trigger_kwargs['end_date'] = end_datetime
+
+            if trigger_hour:
+                trigger_kwargs['hour'] = trigger_hour
+            else:
+                trigger_kwargs['hour'] = start_date_2_date.hour
+
+            if trigger_minute:
+                trigger_kwargs['minute'] = trigger_minute
+            else:
+                trigger_kwargs['minute'] = start_date_2_date.minute
+
+            # 前台不再展示秒级粒度，全部默认是0秒开始执行
+            if trigger_second:
+                trigger_kwargs['second'] = trigger_second
+            else:
+                trigger_kwargs['second'] = start_date_2_date.second
+
+            if trigger_cycle == 1:
+                # 一次性任务
+                trigger_kwargs['year'] = start_date_2_date.year
+                trigger_kwargs['month'] = start_date_2_date.month
+                trigger_kwargs['day'] = start_date_2_date.day
+            elif trigger_cycle == 2:
+                # 每天
+                trigger_kwargs['day'] = '*'
+            elif trigger_cycle == 3:
+                # 每星期x
+                trigger_kwargs['day_of_week'] = int(cycle_val)
+            elif trigger_cycle == 4:
+                # 每月x号
+                trigger_kwargs['day'] = int(cycle_val)
+            elif trigger_cycle == 5:
+                # 自定义
+                if len(cycle_type_val) > 1:
+                    cycle_type_val = ','.join(cycle_type_val)
+                else:
+                    cycle_type_val = cycle_type_val[0]
+                if cycle_type == 1:
+                    # 按照星期定义
+                    trigger_kwargs['day_of_week'] = cycle_type_val
+                else:
+                    # 按照月定义
+                    trigger_kwargs['day'] = cycle_type_val
+            else:
+                # 编辑时，还是保留原来的方式，特指 每周或每月
+                if old_trigger_cycle == 3:
+                    trigger_kwargs['day_of_week'] = int(old_cycle_val)
+                else:
+                    trigger_kwargs['day'] = int(old_cycle_val)
+
+            # 构造ansible扩展模块backup数据
+            backup_args = {
+                'backup_type': 'database',
+                # 备份信息
+                'login_user': ftp_user_name,
+                'login_password': ftp_password,
+                'login_host': ftp_host,
+                'login_port': ftp_port,
+                # 数据库信息
+                'db_login_host': db_host,
+                'db_login_user': db_user_name,
+                'db_login_password': db_password,
+                'db_login_port': db_port,
+                'name': db_backups,
+                'dest': dest
+            }
+            module_args = " ".join(['{0}={1}'.format(k, v) for k, v in backup_args.items()])
+            proxy_obj = Proxy.objects.get(id=proxy)
+            asset_obj = Asset.objects.get(id=proxy_host)
+
+            # 构造访问proxy数据
+            task_kwargs = {
+                'module_name': 'backup',
+                'module_args': module_args,
+                'host_list': [asset_obj.networking.all()[0].ip_address],
+                'resource': [{
+                                 "hostname": asset_obj.networking.all()[0].ip_address,
+                                 "port": asset_obj.port,
+                                 "username": asset_obj.username,
+                                 "password": CRYPTOR.decrypt(asset_obj.password)
+                             }]
+            }
+
+            params = {
+                'task_name': 'ansible',
+                'task_kwargs': task_kwargs,
+                'trigger_kwargs': trigger_kwargs,
+            }
+
+            # 因为apscheduler接口不支持修改参数，所以需要先删除，创建
+            # 调用proxy接口，
+            api = APIRequest('{0}/v1.0/job/{1}'.format(backup.proxy.url, backup.task_uuid),
+                             backup.proxy.username,
+                             CRYPTOR.decrypt(backup.proxy.password))
+            result, code = api.req_del(json.dumps({}))
+            if code != 200:
+                raise ServerError(result['messege'])
+            else:
+                params['job_id'] = backup.task_uuid
+                api = APIRequest('{0}/v1.0/job'.format(backup.proxy.url), backup.proxy.username,
+                             CRYPTOR.decrypt(backup.proxy.password))
+                result, code = api.req_post(json.dumps(params))
+                if code != 200:
+                    raise ServerError(result['messege'])
+                else:
+                    backup.ext1 = json.dumps(init_kwargs)
+                    backup.b_trigger = json.dumps(trigger_kwargs)
+                    backup.kwargs = json.dumps(params)
+                    backup.comment = comment
+                    backup.is_get_last = '00'
+                    backup.save()
+            res['flag'] = True
+        except:
+            logger.error(traceback.format_exc())
+            res['flag'] = False
+        return HttpResponse(json.dumps(res))
+    else:
+        pass
+
 
 @require_role('admin')
 @user_operator_record
@@ -349,7 +513,7 @@ def get_backup_list(request, backup_type='db'):
         # 非选择全部时，有过滤
         if limit > -1:
             objs = objs[offset:offset + limit]
-        # 组织数据库查询数据
+            # 组织数据库查询数据
         for obj in objs:
             return_obj["aaData"].append({
                 'proxy': obj.proxy.id,
@@ -380,6 +544,7 @@ def dbbackup_list(request):
 
     else:
         pass
+
 
 @require_role('admin')
 def backup_exec_info(request):
@@ -436,6 +601,7 @@ def backup_exec_info(request):
             logger.error("GET BACKUP TAST EXEC INFO ERROR\n {0}".format(traceback.format_exc()))
 
         return HttpResponse(json.dumps(return_obj))
+
 
 @require_role('admin')
 def backup_exec_replay(request):

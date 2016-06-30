@@ -145,9 +145,9 @@ def task_edit(request, res, *args, **kwargs):
         # 触发器
         trigger_kwargs = request.POST.get('trigger')
         comment = request.POST.get('comment')
-        task_id = request.POST.get('task_id')
+        task_id = int(request.POST.get('task_id'))
         try:
-            task = Task.objects.get(task_id)
+            task = Task.objects.get(id=task_id)
             # 构建trigger
             trigger_kwargs = json.loads(trigger_kwargs)
             start_date = trigger_kwargs.pop('start_date')
@@ -183,7 +183,7 @@ def task_edit(request, res, *args, **kwargs):
                     task.is_get_last = '00'
                     task.save()
             else:
-                api = APIRequest('{0}/v1.0/job/{1}'.format(task.task_proxy.url), task.task_proxy.username,
+                api = APIRequest('{0}/v1.0/job/{1}'.format(task.task_proxy.url, task.task_uuid), task.task_proxy.username,
                                  CRYPTOR.decrypt(task.task_proxy.password))
                 result, code = api.req_put(json.dumps(param))
                 if code != 200:
@@ -192,13 +192,10 @@ def task_edit(request, res, *args, **kwargs):
                     task.trigger_kwargs = json.dumps(trigger_kwargs)
                     task.comment = comment
                     task.save()
-        except ServerError, e:
-            error = e.message
+        except:
+            logger.error(traceback.format_exc())
             res['flag'] = False
-            res['content'] = error
-        except Exception, e:
-            res['flag'] = False
-            res['content'] = e[1]
+            res['content'] = "update error"
         else:
             res['flag'] = True
         return HttpResponse(json.dumps(res))

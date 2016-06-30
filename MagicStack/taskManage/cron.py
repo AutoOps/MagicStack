@@ -67,7 +67,6 @@ def get_task_exec_info():
                 logger.error("get_task_info_erro [%s]\n[%s]" % (task.task_uuid, e.message))
         logger.info("end get task exec info <<<<<<")
     except:
-
         logger.error("get task exec info error\n [%s]" % ( traceback.format_exc() ))
 
 

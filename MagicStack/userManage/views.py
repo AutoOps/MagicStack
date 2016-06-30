@@ -159,13 +159,9 @@ def group_edit(request, res, *args):
 @require_role(role='super')
 @user_operator_record
 def user_add(request, res, *args):
-    error = ''
-    msg = ''
-    header_title, path1, path2 = u'添加用户', u'用户管理', u'添加用户'
-    res['operator'] = path2
+    response = {'success': False, 'error': ''}
+    res['operator'] = u'添加用户'
     res['emer_content'] = 1
-    user_role = {'SU': u'超级管理员', 'CU': u'普通用户'}
-    group_all = UserGroup.objects.all()
 
     if request.method == 'POST':
         username = request.POST.get('username', '')
@@ -175,58 +171,47 @@ def user_add(request, res, *args):
         groups = request.POST.getlist('groups', [])
         admin_groups = request.POST.getlist('admin_groups', [])
         role = request.POST.get('role', 'CU')
-        uuid_r = uuid.uuid4().get_hex()
-        ssh_key_pwd = PyCrypt.gen_rand_pass(16)
         extra = request.POST.getlist('extra', [])
         is_active = False if '0' in extra else True
         send_mail_need = True if '1' in extra else False
 
         try:
-            if '' in [username, password, ssh_key_pwd, name, role]:
-                error = u'带*内容不能为空'
-                raise ServerError
+            if '' in [username, password, name, role]:
+                raise ServerError(u'带*内容不能为空')
             check_user_is_exist = User.objects.filter(username=username)
             if check_user_is_exist:
-                error = u'用户 %s 已存在' % username
-                raise ServerError
-        except ServerError:
+                raise ServerError(u'用户 %s 已存在' % username)
+        except ServerError as e:
                 res['flag'] = 'false'
-                res['content'] = error
-                res['emer_status'] = u"添加用户[{0}]失败:{1}".format(username, error)
+                res['content'] = e.message
+                res['emer_status'] = u"添加用户[{0}]失败:{1}".format(username, e.message)
+                response['error'] = res['emer_status']
         else:
             try:
                 user = db_add_user(username=username, name=name,
                                    password=password,
-                                   email=email, role=role, uuid=uuid_r,
+                                   email=email, role=role,
                                    groups=groups, admin_groups=admin_groups,
-                                   ssh_key_pwd=ssh_key_pwd,
                                    is_active=is_active,
                                    date_joined=datetime.datetime.now())
-                user = get_object(User, username=username)
-                if groups:
-                    user_groups = []
-                    for user_group_id in groups:
-                        user_groups.extend(UserGroup.objects.filter(id=user_group_id))
-
             except IndexError, e:
                 error = u'添加用户 %s 失败 %s ' % (username, e)
                 res['flag'] = 'false'
                 res['content'] = error
                 res['emer_status'] = u"添加用户[{0}]失败:{1}".format(username, e)
-                try:
-                    db_del_user(username)
-                except Exception:
-                    pass
+                response['error'] = res['emer_status']
+                db_del_user(username)
             else:
                 if send_mail_need:
                     if not default_email:
                         error = u"没有邮件服务器信息,请先到告警管理配置邮件服务器,谢谢!"
-                        return my_render('userManage/user_add.html', locals(), request)
+                        return HttpResponse(error)
                     user_add_mail(user, default_email, kwargs=locals())
                 res['content'] = u'添加用户 %s' % username
                 res['emer_status'] = u"添加用户[{0}]成功".format(username)
-                return HttpResponseRedirect(reverse('user_list'))
-    return my_render('userManage/user_add.html', locals(), request)
+                response['success'] = True
+                response['error'] = res['emer_status']
+    return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role(role='super')
@@ -234,6 +219,8 @@ def user_list(request):
     user_role = {'SU': u'超级管理员', 'GA': u'组管理员', 'CU': u'普通用户'}
     header_title, path1, path2 = u'查看用户', u'用户管理', u'用户列表'
     users_list = User.objects.all().order_by('username')
+    group_all = UserGroup.objects.all()
+    user_role = {'SU': u'超级管理员', 'CU': u'普通用户'}
     return my_render('userManage/user_list.html', locals(), request)
 
 
@@ -367,24 +354,29 @@ def reset_password(request):
 @require_role(role='super')
 @user_operator_record
 def user_edit(request,res, *args):
-    msg = error = ''
-    header_title, path1, path2 = u'编辑用户', u'用户管理', u'编辑用户'
-    res['operator'] = path2
+    res['operator'] = u'编辑用户'
     res['emer_content'] = 1
     if request.method == 'GET':
+        rest = {}
         user_id = request.GET.get('id', '')
         if not user_id:
             return HttpResponseRedirect(reverse('index'))
-
-        user_role = {'SU': u'超级管理员', 'CU': u'普通用户'}
         user = get_object(User, id=user_id)
-        group_all = UserGroup.objects.all()
-        select_groups = user.group.all()
         if user:
-            groups_str = ' '.join([str(group.id) for group in user.group.all()])
+            groups_str = ','.join([str(group.id) for group in user.group.all()])
             admin_groups_str = ' '.join([str(admin_group.group.id) for admin_group in user.admingroup_set.all()])
-
+            is_super = True if user.role == 'SU' else False
+            rest['Id'] = user.id
+            rest['username'] = user.username
+            rest['name'] = user.name
+            rest['password'] = user.password
+            rest['email'] = user.email
+            rest['is_active'] = user.is_active
+            rest['user_group'] = groups_str
+            rest['is_super'] = is_super
+            return HttpResponse(json.dumps(rest), content_type='application/json')
     else:
+        response = {'success': False, 'error': ''}
         try:
             user_id = request.GET.get('id', '')
             password = request.POST.get('password', '')
@@ -394,7 +386,7 @@ def user_edit(request,res, *args):
             role_post = request.POST.get('role', 'CU')
             admin_groups = request.POST.getlist('admin_groups', [])
             extra = request.POST.getlist('extra', [])
-            is_active = True if '0' in extra else False
+            is_active = False if '0' in extra else True
             email_need = True if '1' in extra else False
             user_role = {'SU': u'超级管理员', 'GA': u'部门管理员', 'CU': u'普通用户'}
 
@@ -418,6 +410,8 @@ def user_edit(request,res, *args):
 
             res['content'] = u'编辑用户%s' % user.username
             res['emer_status'] = u"编辑用户[{0}]成功".format(username_old)
+            response['success'] = True
+            response['error'] = res['emer_status']
             if email_need:
                 emsg = u"""
                 Hi %s:
@@ -431,15 +425,14 @@ def user_edit(request,res, *args):
 
                 if not default_email:
                     error = u"没有邮件服务器信息,请先到告警管理配置邮件服务器,谢谢!"
-                    return my_render('userManage/user_edit.html', locals(), request)
+                    return HttpResponse(error)
                 send_email(default_email, u'您的信息已修改',[email], emsg)
-
-            return HttpResponseRedirect(reverse('user_list'))
         except Exception as e:
             logger.error(e)
-            error = e
-            res['emer_status'] = u"编辑用户失败:{0}".format(e)
-    return my_render('userManage/user_edit.html', locals(), request)
+            res['flag'] = 'false'
+            error_info = u"编辑用户失败:{0}".format(e.message)
+            res['content'] = res['emer_status'] = response['error'] = error_info
+        return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role('user')

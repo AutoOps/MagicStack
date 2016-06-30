@@ -68,6 +68,7 @@ def db_add_user(**kwargs):
             group = UserGroup.objects.filter(id=group_id)
             group_select.extend(group)
         user.group = group_select
+        user.save()
 
     if admin_groups and role == 'GA':  # 如果是组管理员就要添加组管理员和组到管理组中
         for group_id in admin_groups:

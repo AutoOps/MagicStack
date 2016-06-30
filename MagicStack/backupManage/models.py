@@ -20,6 +20,8 @@ import datetime
 import json
 from django.db import models
 
+from proxyManage.models import Proxy
+
 
 class Backup(models.Model):
     STATUS = (
@@ -34,7 +36,7 @@ class Backup(models.Model):
         ('db', '数据库备份')
     )
 
-    proxy = models.CharField(max_length=254, help_text='备份proxy')
+    proxy = models.ForeignKey(Proxy, help_text="proxy")
     type = models.CharField(max_length=2, choices=TYPES, default='file', help_text='备份类型')
     kwargs = models.CharField(max_length=2000, help_text='备份参数')
     status = models.CharField(max_length=2, choices=STATUS, default='00', help_text='备份状态')

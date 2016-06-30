@@ -96,8 +96,6 @@ def task_add(request, res, *args):
             resource = []
             # 构建inventory 和 构建主机list
             for host in hosts:
-                # logger.info("host>>>>>>")
-                # logger.info(host)
                 host_list.append(host.networking.all()[0].ip_address)
                 tmp_d = dict()
                 tmp_d['hostname'] = host.networking.all()[0].ip_address
@@ -126,9 +124,7 @@ def task_add(request, res, *args):
             res['flag'] = False
             res['content'] = error
         except Exception, e:
-            import traceback
-
-            logger.info(traceback.format_exc())
+            logger.error(traceback.format_exc())
             res['flag'] = False
             res['content'] = e[1]
         else:
@@ -149,9 +145,9 @@ def task_edit(request, res, *args, **kwargs):
         # 触发器
         trigger_kwargs = request.POST.get('trigger')
         comment = request.POST.get('comment')
-        task_id = request.POST.get('task_id')
+        task_id = int(request.POST.get('task_id'))
         try:
-            task = Task.objects.get(task_id)
+            task = Task.objects.get(id=task_id)
             # 构建trigger
             trigger_kwargs = json.loads(trigger_kwargs)
             start_date = trigger_kwargs.pop('start_date')
@@ -187,7 +183,7 @@ def task_edit(request, res, *args, **kwargs):
                     task.is_get_last = '00'
                     task.save()
             else:
-                api = APIRequest('{0}/v1.0/job/{1}'.format(task.task_proxy.url), task.task_proxy.username,
+                api = APIRequest('{0}/v1.0/job/{1}'.format(task.task_proxy.url, task.task_uuid), task.task_proxy.username,
                                  CRYPTOR.decrypt(task.task_proxy.password))
                 result, code = api.req_put(json.dumps(param))
                 if code != 200:
@@ -196,13 +192,10 @@ def task_edit(request, res, *args, **kwargs):
                     task.trigger_kwargs = json.dumps(trigger_kwargs)
                     task.comment = comment
                     task.save()
-        except ServerError, e:
-            error = e.message
+        except:
+            logger.error(traceback.format_exc())
             res['flag'] = False
-            res['content'] = error
-        except Exception, e:
-            res['flag'] = False
-            res['content'] = e[1]
+            res['content'] = "update error"
         else:
             res['flag'] = True
         return HttpResponse(json.dumps(res))
@@ -215,7 +208,6 @@ def task_edit(request, res, *args, **kwargs):
         res['task'] = task
         res['proxys'] = proxy_list
         res['task_types'] = Task.TYPES
-        logger.info("res>>>> {0}".format(res))
         return HttpResponse(json.dumps(res))
 
 
@@ -268,7 +260,6 @@ def task_action(request, res, *args, **kwargs):
 def task_del(request, res, *args, **kwargs):
     if request.method == 'POST':
         task_ids = request.POST.get('task_id')
-        logger.info("task_id   %s" % task_ids)
         res['flag'] = True
         success = []
         fail = []
@@ -353,7 +344,6 @@ def task_exec_info(request, res, *args, **kwargs):
     """
 
     if request.method == 'POST':
-        logger.info(">>>>>>>{0}".format(request.POST))
         # 初始化返回结果
         return_obj = {
             "sEcho": request.POST.get('sEcho', 0), # 前端上传原样返回
@@ -396,7 +386,6 @@ def task_exec_info(request, res, *args, **kwargs):
                 return_obj['aaData'] = display_lsit
                 return_obj['iTotalRecords'] = total_count
                 return_obj['iTotalDisplayRecords'] = total_count
-                logger.info(">>>>>>{0}".format(return_obj))
         except:
             logger.error("GET TASK EXEC INFO ERROR\n {0}".format(traceback.format_exc()))
 
@@ -417,8 +406,6 @@ def task_exec_replay(request):
             content = json.load(urllib2.urlopen(url)).get('content')
             return HttpResponse(content)
         except:
-            import traceback
-
             logger.error(traceback.format_exc())
             return HttpResponse({})
     elif request.method == 'GET':

@@ -34,7 +34,7 @@ def group_add(request,res, *args):
                 error = u'组名 不能为空'
                 raise ServerError(error)
 
-            if UserGroup.objects.filter(name=group_name):
+            if UserGroup.objects.filter(name=group_name).count() > 1:
                 error = u'组名已存在'
                 raise ServerError(error)
             db_add_group(name=group_name, users_id=users_selected, comment=comment)

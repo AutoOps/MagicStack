@@ -135,7 +135,7 @@
                             <span class="input-group-addon">
                                 <i class="fa fa-user"></i>
                             </span>
-                            <input type="text" name="username" data-required="1" class="form-control" placeholder="Username">
+                            <input type="text" name="username" data-required="1" class="form-control" >
                         </div>
                     </div>
                 </div>
@@ -144,7 +144,7 @@
                         <span class="required"> * </span>
                     </label>
                     <div class="col-md-6">
-                        <input type="text" name="name" data-required="1" class="form-control" placeholder="Name"/> </div>
+                        <input type="text" name="name" data-required="1" class="form-control" /> </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">密码&nbsp;&nbsp;</label>
@@ -153,8 +153,9 @@
                             <span class="input-group-addon">
                                 <i class="fa fa-lock fa-fw"></i>
                             </span>
-                            <input type="password" class="form-control" name="password" placeholder="Password">
+                            <input type="password" class="form-control" name="password">
                         </div>
+                        <span class="help-block display-hide" id="help_block"> 不修改请留空 </span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -178,7 +179,7 @@
                             <span class="input-group-addon">
                                 <i class="fa fa-envelope"></i>
                             </span>
-                            <input type="email" name="email" class="form-control" placeholder="Email Address"> </div>
+                            <input type="email" name="email" class="form-control" > </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -238,6 +239,8 @@
     function editUser(id){
         var url = "{% url 'user_edit' %}?id=" + id ;
         $.get(url, function(res){
+            $("#help_block").show();
+
             //设置操作类型 add or edit
             $("input[name=operator_type]").val('edit');
 
@@ -246,7 +249,7 @@
 
             $("input[name=username]").val(res.username);
             $("input[name=name]").val(res.name);
-            $("input[name=password]").val(res.password);
+            $("input[name=password]").val('');      //不修改密码留空
             $("input[name=email]").val(res.email);
             $("input[name=comment]").val(res.comment);
 
@@ -293,10 +296,13 @@
         //添加用户
         $("#btn_add").click(function(){
             document.getElementById("form_add_user").reset();
-            $("#addModal").modal({
+            $("#help_block").hide();
+            var modal = $("#addModal");
+             modal.find(".modal-title").text("添加用户");
+             modal.modal({
                  'keyboard': false,
                  'backdrop': 'static'
-            })
+             })
         });
 
          //modal 关闭事件

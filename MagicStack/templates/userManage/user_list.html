@@ -23,7 +23,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-                                <button id="add_user" class="btn sbold green" data-toggle="modal" data-target="#addModal">添加用户
+                                <button id="btn_add" class="btn sbold green" >添加用户
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
@@ -290,6 +290,15 @@
     }
 
     $(document).ready(function(){
+        //添加用户
+        $("#btn_add").click(function(){
+            document.getElementById("form_add_user").reset();
+            $("#addModal").modal({
+                 'keyboard': false,
+                 'backdrop': 'static'
+            })
+        });
+
          //modal 关闭事件
          $("#addModal").on('hidden.bs.modal', function(){
              $("#error_info").hide()

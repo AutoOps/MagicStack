@@ -272,20 +272,8 @@ def perm_role_list(request):
     """
     # 渲染数据
     header_title, path1, path2 = "系统用户", "系统用户管理", "查看系统用户"
-
-    # 获取所有系统角色
     roles_list = PermRole.objects.all()
-    role_id = request.GET.get('id')
-    # TODO: 搜索和分页
-    keyword = request.GET.get('search', '')
-    if keyword:
-        roles_list = roles_list.filter(Q(name=keyword))
-
-    if role_id:
-        roles_list = roles_list.filter(id=role_id)
-
-    roles_list, p, roles, page_range, current_page, show_first, show_end = pages(roles_list, request)
-
+    sudos = PermSudo.objects.all()
     return my_render('permManage/perm_role_list.html', locals(), request)
 
 
@@ -295,11 +283,9 @@ def perm_role_add(request, res, *args):
     """
     add role page
     """
-    header_title, path1, path2 = "系统用户", "系统用户管理", "添加系统用户"
-    res['operator'] = path2
+    response = {'success': False, 'error': ''}
+    res['operator'] = u"添加系统用户"
     res['emer_content'] = 6
-    sudos = PermSudo.objects.all()
-
     if request.method == "POST":
         name = request.POST.get("role_name", "").strip()
         comment = request.POST.get("role_comment", "")
@@ -318,7 +304,7 @@ def perm_role_add(request, res, *args):
             else:
                 encrypt_pass = CRYPTOR.encrypt(CRYPTOR.gen_rand_pass(20))
             # 生成随机密码，生成秘钥对
-            sudos_obj = [get_object(PermSudo, id=sudo_id) for sudo_id in sudo_ids]
+            sudos_obj = [get_object(PermSudo, id=int(sudo_id)) for sudo_id in sudo_ids]
             if key_content:
                 try:
                     key_path = gen_keys(key=key_content)
@@ -327,7 +313,7 @@ def perm_role_add(request, res, *args):
             else:
                 key_path = gen_keys()
             proxy_list = Proxy.objects.all()
-            #将数据同时保存到proxy上
+            # 将数据同时保存到proxy上
             data = {'name': name,
                     'password': encrypt_pass,
                     'comment': comment,
@@ -337,20 +323,20 @@ def perm_role_add(request, res, *args):
             message = save_or_delete('PermRole', data, proxy_list)
             flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
             if flag:
-                msg = u"添加系统用户[%s]" % name
-                res['content'] = msg
-                res['emer_status'] = msg + u"成功"
                 # 将数据保存到magicstack上
                 role = PermRole(name=name, comment=comment, password=encrypt_pass, key_path=key_path)
-                role.save()
                 role.sudo = sudos_obj
-            return HttpResponseRedirect(reverse('role_list'))
+                role.save()
+                res['content'] = u"添加系统用户[%s]" % name
+                res['emer_status'] = u"添加系统用户[%s]成功" % name
+                response['success'] = True
+                response['error'] = u"添加系统用户[%s]成功" % name
         except ServerError, e:
-            error = e
             res['flag'] = 'false'
-            res['content'] = e
-            res['emer_status'] = u"添加系统用户[{0}]失败:{1}".format(name, e)
-    return my_render('permManage/perm_role_add.html', locals(), request)
+            res['content'] = e.message
+            res['emer_status'] = u"添加系统用户[{0}]失败:{1}".format(name, e.message)
+            response['error'] = u"添加系统用户[{0}]失败:{1}".format(name, e.message)
+    return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role('admin')
@@ -482,26 +468,31 @@ def perm_role_edit(request, res, *args):
     edit role page
     """
     # 渲染数据
-    header_title, path1, path2 = "系统用户", "系统用户管理", "系统用户编辑"
-    res['operator'] = path2
+    res['operator'] = u"编辑系统用户"
     res['emer_content'] = 6
-    # 渲染数据
-    role_id = request.GET.get("id")
-    role = PermRole.objects.get(id=role_id)
-    role_pass = CRYPTOR.decrypt(role.password)
-    sudo_all = PermSudo.objects.all()
-    role_sudos = role.sudo.all()
-    sudo_all = PermSudo.objects.all()
     if request.method == "GET":
-        return my_render('permManage/perm_role_edit.html', locals(), request)
-
-    if request.method == "POST":
-        # 获取 POST 数据
+        role_id = request.GET.get("id")
+        role = PermRole.objects.get(id=int(role_id))
+        if not role:
+            return HttpResponse(u'系统用户不存在')
+        rest = {}
+        rest['Id'] = role.id
+        rest['role_name'] = role.name
+        rest['role_password'] = role.password
+        rest['role_comment'] = role.comment
+        rest['sudos'] = ','.join([str(item.id) for item in role.sudo.all()])
+        return HttpResponse(json.dumps(rest), content_type='application/json')
+    else:
+        response = {'success': False, 'error': ''}
+        role_id = request.GET.get("id", '')
+        role = PermRole.objects.get(id=int(role_id))
+        if not role:
+            return HttpResponse(u'系统用户不存在')
         role_name = request.POST.get("role_name")
         role_password = request.POST.get("role_password")
         role_comment = request.POST.get("role_comment")
         role_sudo_names = request.POST.getlist("sudo_name")
-        role_sudos = [PermSudo.objects.get(id=sudo_id) for sudo_id in role_sudo_names]
+        role_sudos = [PermSudo.objects.get(id=int(sudo_id)) for sudo_id in role_sudo_names]
         key_content = request.POST.get("role_key", "")
 
         try:
@@ -519,7 +510,7 @@ def perm_role_edit(request, res, *args):
                 try:
                     key_path = gen_keys(key=key_content, key_path_dir=role.key_path)
                 except SSHException:
-                    raise ServerError('输入的密钥不合法')
+                    raise ServerError(u'输入的密钥不合法')
                 logger.debug('Recreate role key: %s' % role.key_path)
 
             data = {'name': role_name,
@@ -532,27 +523,31 @@ def perm_role_edit(request, res, *args):
             message = save_or_delete('PermRole', data, proxy_list, role_id, 'update')
             flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
             if flag:
-                msg = u"更新系统用户[%s]成功" % role.name
-                res['content'] = msg
-                res['emer_status'] = msg
-                # 只有proxy上的数据库保存完成后,才会写入本地数据库
+                # TODO 只有proxy上的数据库保存完成后,才会写入本地数据库
                 role.name = role_name
                 role.comment = role_comment
                 role.sudo = role_sudos
                 role.save()
+
+                # TODO 用户操作记录
+                res['content'] = u"编辑系统用户[%s]成功" % role.name
+                # TODO 告警事件记录
+                res['emer_status'] = u"编辑系统用户[%s]成功" % role.name
+                # TODO 页面返回信息
+                response['success'] = True
+                response['error'] = u"编辑系统用户[%s]成功" % role.name
+
             else:
-                msg = u"更新系统用户： %s失败" % role.name
-                res['content'] = msg
-                res['emer_status'] = msg
+                res['content'] = u"编辑系统用户： %s失败" % role.name
+                res['emer_status'] = u"编辑系统用户： %s失败" % role.name
                 res['flag'] = 'false'
-                return my_render('permManage/perm_role_edit.html', locals(), request)
+                response['error'] = u"编辑系统用户： %s失败" % role.name
         except ServerError, e:
-            error = e
             res['flag'] = 'false'
-            res['content'] = e
-            res['emer_status'] = u"编辑系统用户失败:%s"%(e)
-            return my_render('permManage/perm_role_edit.html', locals(), request)
-    return HttpResponseRedirect(reverse('role_list'))
+            res['content'] = e.message
+            res['emer_status'] = u"编辑系统用户失败:%s"%(e.message)
+            response['error'] = u"编辑系统用户失败:%s"%(e.message)
+        return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role('admin')

@@ -2,6 +2,8 @@
 {% load mytags %}
 {% block self_head_css_js %}
         <!-- BEGIN PAGE LEVEL PLUGINS -->
+        <link href="/static/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+        <link href="/static/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="/static/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
         <link href="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
         <!-- END PAGE LEVEL PLUGINS -->
@@ -23,7 +25,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-                                <button id="add_groups" class="btn sbold green">添加系统用户
+                                <button id="btn_add" class="btn sbold green">添加系统用户
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
@@ -40,7 +42,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                            {% for role in roles %}
+                            {% for role in roles_list %}
                             <tr class="gradeX">
                                 <td> <a href="{% url 'role_detail' %}?id={{ role.id }}">{{ role.name }} </a> </td>
                                 <td> {{ role | role_contain_which_sudos }} </td>
@@ -52,7 +54,7 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
-                                                <a href="{% url 'role_edit' %}?id={{ role.id }}" >
+                                                <a href="#" onclick="editRole('{{ role.id }}')">
                                                     编辑 </a>
                                             </li>
                                             <li>
@@ -76,9 +78,87 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">添加系统用户</h4>
+              </div>
+              <div class="modal-body">
+                  <form action="" id="form_role" class="form-horizontal" method="post">
+                    <div class="form-body">
+                        <div class="alert alert-danger text-center display-hide" id="error_info" ></div>
+                        <input type="text" class="form-control hide" value="" name="role_id"/>
+                        <input type="text" class="form-control hide" value="add" name="operator_type">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">用户名
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                    <input type="text" name="role_name" data-required="1" class="form-control" placeholder="Username">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">密码&nbsp;&nbsp;</label>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-lock fa-fw"></i>
+                                    </span>
+                                    <input type="password" class="form-control" name="role_password" placeholder="Password">
+                                </div>
+                                <span class="help-block"> 如果不添加密码，会自动生成 </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">秘钥&nbsp;&nbsp;</label>
+                            <div class="col-md-6">
+                                <textarea name="role_key" type="text" class="form-control" ></textarea>
+                                <span class="help-block"> 如果不添加密钥，会自动生成</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="multiple" class="col-md-3 control-label">关联SUDO</label>
+                            <div class="col-md-6">
+                                <select id="role_sudos"  name="sudo_name" class="form-control select2-multiple" multiple>
+                                    {% for sudo in sudos %}
+                                        <option value="{{ sudo.id }}">{{ sudo.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">备注&nbsp;&nbsp;</label>
+                            <div class="col-md-6">
+                                <input name="role_comment" type="text" class="form-control" />
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn grey-salsa btn-outline" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn green" id="btn_save">保存</button>
+              </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 {% block self_footer_js %}
     <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="/static/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <script src="/static/pages/scripts/components-select2.min.js" type="text/javascript"></script>
     <script src="/static/global/scripts/datatable.js" type="text/javascript"></script>
     <script src="/static/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
     <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
@@ -89,9 +169,81 @@
     <script src="/static/pages/scripts/ui-toastr.min.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL SCRIPTS -->
 <script>
+    //编辑系统用户
+    function editRole(id){
+        var url = "{% url 'role_edit' %}?id=" + id ;
+        $.get(url, function(res){
+            //设置操作类型 add or edit
+            $("input[name=operator_type]").val('edit');
+
+            //设置用户ID
+            $("input[name=role_id]").val(res.Id);
+
+            $("input[name=role_name]").val(res.role_name);
+            $("input[name=role_password]").val(res.role_password);
+            $("input[name=role_comment]").val(res.role_comment);
+
+            //设置下拉框的值
+            var select_user = res.sudos.split(',');
+            var mutil_select = document.getElementById('role_sudos');
+            var options = mutil_select.options;
+
+            for (var i=0; i<select_user.length; i++){
+                 for (var j=0; j<options.length; j++){
+                     if(options[j].value == select_user[i]){
+                         options[j].selected = true
+                     }
+                 }
+            }
+
+             var modal = $("#myModal");
+             modal.find(".modal-title").text("编辑资产组");
+             modal.modal({
+                 'keyboard': false,
+                 'backdrop': 'static'
+             })
+
+        })
+    }
+
       $(document).ready(function(){
-          $('#add_groups').click(function(){
-              window.location.href = "{% url 'role_add' %}"
+          //添加系统用户
+          $("#btn_add").click(function(){
+                document.getElementById("form_role").reset();
+                var modal = $("#myModal");
+                 modal.find(".modal-title").text("添加系统用户");
+                 modal.modal({
+                     'keyboard': false,
+                     'backdrop': 'static'
+                 })
+          });
+
+          //modal 关闭事件
+          $("#myModal").on('hidden.bs.modal', function(){
+             $("#error_info").hide()
+          });
+
+          //modal save
+          $("#btn_save").click(function(){
+                var operator_type = $('input[name=operator_type]').val();
+                var role_id = $('input[name=role_id]').val();
+                var save_url = "{% url 'role_add' %}";
+                if (operator_type == 'edit'){
+                    save_url = "{% url 'role_edit' %}?id="+ role_id ;
+                }
+                $.ajax({
+                    method: 'POST',
+                    url: save_url,
+                    data: $('#form_role').serialize(),
+                    success:function(res){
+                        if(res.success){
+                            $("#myModal").modal('hide');
+                            window.location.reload()
+                        }else{
+                            $("#error_info").text(res.error).show()
+                        }
+                    }
+                })
           });
 
           $('.del').click(function(){

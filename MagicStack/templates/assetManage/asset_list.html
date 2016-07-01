@@ -10,9 +10,7 @@
         <link href="/static/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
         <link href="/static/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
 {% endblock %}
-
 {% block content %}
-
 
 <div class="row">
     <div class="col-md-12">
@@ -109,7 +107,7 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
-                                                <a href="{% url 'asset_edit' %}?id={{ asset.id }}">
+                                                <a href="#" onclick="editAsset('{{ asset.id }}')">
                                                     编辑 </a>
                                             </li>
                                             <li>
@@ -131,6 +129,343 @@
         <!-- END EXAMPLE TABLE PORTLET-->
     </div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">添加资产</h4>
+              </div>
+              <div class="modal-body">
+                  <form id="form_asset" method="post" class="form-horizontal" name="assetForm">
+                    <div class="alert alert-danger text-center display-hide" id="error_info" ></div>
+                    <input type="text" class="form-control hide" value="" name="asset_id"/>
+                    <input type="text" class="form-control hide" value="add" name="operator_type">
+                    <div id="myTabs">
+                      <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#general" aria-controls="home" role="tab" data-toggle="tab">常规</a></li>
+                            <li role="presentation"><a href="#networkingglobal" aria-controls="profile" role="tab" data-toggle="tab">全局网络管理</a></li>
+                            <li role="presentation"><a href="#networking" aria-controls="messages" role="tab" data-toggle="tab">网络</a></li>
+                            <li role="presentation"><a href="#powermanage" aria-controls="settings" role="tab" data-toggle="tab">电源管理</a></li>
+                      </ul>
+
+                      <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="general">
+                                <div class="ibox-content">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">名字
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">端口号
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="port">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">管理用户名
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </span>
+                                                <input type="text" class="form-control" name="username"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">密码
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-lock fa-fw"></i>
+                                                </span>
+                                                <input type="password" class="form-control" name="password"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">所属代理
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <select name="proxy" id="proxy" data-placeholder="请选择代理" class="form-control" onChange="redirec(document.assetForm.proxy.options.selectedIndex)">
+                                                <option value="请选择proxy">请选择proxy</option>
+                                                {% for proxy in proxys %}
+                                                    <option value="{{ proxy.id }}">{{ proxy.proxy_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label  class="col-md-3 control-label">用户配置文件
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <select name="profile" id="profile" data-placeholder="请选择profile" class="form-control">
+                                                <option value="请选择profile" selected>请选择profile</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">创建元数据</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="kickstart">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">网络引导</label>
+                                        <div class="col-md-9">
+                                            <div class="mt-radio-inline">
+                                                <label class="mt-radio">
+                                                    <input type="radio" name="is_enabled" value="1" checked> 激活
+                                                    <span></span>
+                                                </label>
+                                                <label class="mt-radio">
+                                                    <input type="radio" name="is_enabled"  value="0" > 禁用
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">所属主机组
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <select class="form-control" name="group" id="asset_group" multiple>
+                                                {% for item in group_all %}
+                                                <option value="{{ item.id }}">{{ item.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">所属机房</label>
+                                        <div class="col-md-6">
+                                            <select class="form-control" name="idc">
+                                                {% for item in idc_all %}
+                                                     <option value="{{ item.id }}">{{ item.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">机柜号</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="cabinet">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">资产编号</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="number">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">机器状态</label>
+                                        <div class="col-md-6">
+                                            <select class="form-control" name="machine_status">
+                                                {% for k,v in asset_status.items %}
+                                                     <option value="{{ k }}">{{ v }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">主机类型</label>
+                                        <div class="col-md-6">
+                                            <select class="form-control" name="asset_type">
+                                                {% for k,v in asset_type.items %}
+                                                     <option value="{{ k }}">{{ v }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">是否激活</label>
+                                        <div class="col-md-9">
+                                            <div class="mt-radio-inline">
+                                                <label class="mt-radio">
+                                                    <input type="radio" name="is_active" value="1" checked> 激活
+                                                    <span></span>
+                                                </label>
+                                                <label class="mt-radio">
+                                                    <input type="radio" name="is_active"  value="0" > 禁用
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">备注</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="comment">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="networkingglobal">
+                               <div class="ibox-content">
+                                     <div class="form-group">
+                                        <label class="col-md-3 control-label">主机名
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="hostname">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">网关</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="gateway">
+                                        </div>
+                                    </div>
+                                     <div class="form-group">
+                                        <label class="col-md-3 control-label">域名服务器</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="name_servers">
+                                        </div>
+                                    </div>
+                               </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="networking">
+                              <div class="ibox-content">
+                                   <div class="form-group">
+                                        <label class="col-md-3 control-label">添加网卡</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="net_name">
+                                        </div>
+                                    </div>
+                                  <div class="form-group">
+                                        <label class="col-md-3 control-label">MAC地址
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="mac_address">
+                                        </div>
+                                    </div>
+                                   <div class="form-group">
+                                        <label class="col-md-3 control-label">最大传输单元</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="mtu">
+                                        </div>
+                                    </div>
+                                     <div class="form-group">
+                                        <label class="col-md-3 control-label">IP地址
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="ip_address">
+                                        </div>
+                                    </div>
+                                     <div class="form-group">
+                                        <label class="col-md-3 control-label">static</label>
+                                        <div class="col-md-9">
+                                            <label class="mt-checkbox">
+                                                <input type="checkbox" name="static" value="1" checked>
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                     </div>
+                                      <div class="form-group">
+                                        <label class="col-md-3 control-label">子网掩码</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="subnet_mask">
+                                        </div>
+                                    </div>
+                                     <div class="form-group">
+                                        <label class="col-md-3 control-label">默认网关</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="per_gateway">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">DNS名称</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="dns_name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">静态路由</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="static_routes">
+                                        </div>
+                                    </div>
+                              </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="powermanage">
+                                <div class="ibox-content">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">电源管理类型</label>
+                                        <div class="col-md-6">
+                                            <select class="form-control" name="power_type">
+                                                {% for k,v in power_type.items %}
+                                                     <option value="{{ k }}">{{ v }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">电源管理地址
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="power_address">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">电源管理用户名
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </span>
+                                                <input type="text" class="form-control" name="power_username"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">电源管理用户密码
+                                            <span class="required"> * </span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-lock fa-fw"></i>
+                                                </span>
+                                                <input type="password" class="form-control" name="power_password"> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                           </div>
+                       </div>
+                  </div>
+              </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn grey-salsa btn-outline" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn green" id="btn_save">保存</button>
+              </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block self_footer_js %}
@@ -141,6 +476,138 @@
     <script src="/static/js/layer/layer.js" type="text/javascript"></script>
     <script src="/static/js/base.js" type="text/javascript"></script>
 <script>
+    //获取一级菜单长度
+    var select1_len = document.assetForm.proxy.options.length;
+    var select2 = new Array(select1_len);
+    //把一级菜单都设为数组
+    for (i = 0; i < select1_len; i++) {
+        select2[i] = new Array();
+    }
+    select2[0][0] = new Option('请选择profile','');
+    var pcount = 1;
+    {% for proxy in proxys %}
+        var mcount = 0;
+        {% for k , v in proxy_profiles.items %}
+            {% ifequal k proxy.proxy_name %}
+                {% for item in v %}
+                    select2[pcount][mcount] = new Option('{{ item }}', '{{ item }}');
+                    mcount += 1;
+                {% endfor %}
+            {% endifequal %}
+        {% endfor %}
+        pcount += 1;
+    {% endfor %}
+
+    //联动函数
+    function redirec(x) {
+        var temp = document.assetForm.profile;
+        for (var i=0; i < select2[x].length; i++) {
+            temp.options[i] = new Option(select2[x][i].text, select2[x][i].value);
+        }
+        temp.options[0].selected = true;
+    }
+
+    //编辑资产
+    function editAsset(id){
+        var url = "{% url 'asset_edit' %}?id=" + id ;
+        $.get(url, function(res){
+            //设置操作类型 add or edit
+            $("input[name=operator_type]").val('edit');
+
+            //设置资产ID
+            $("input[name=asset_id]").val(res.Id);
+
+            $("input[name=name]").val(res.name);
+            $("input[name=port]").val(res.port);
+            $("input[name=username]").val(res.username);
+            $("input[name=password]").val(res.password);
+            $("input[name=kickstart]").val(res.kickstart);
+            $("input[name=cabinet]").val(res.cabinet);
+            $("input[name=number]").val(res.number);
+            $("input[name=hostname]").val(res.hostname);
+            $("input[name=gateway]").val(res.gateway);
+            $("input[name=name_servers]").val(res.name_servers);
+            $("input[name=net_name]").val(res.net_name);
+            $("input[name=mac_address]").val(res.mac_address);
+            $("input[name=mtu]").val(res.mtu);
+            $("input[name=ip_address]").val(res.ip_address);
+            $("input[name=subnet_mask]").val(res.subnet_mask);
+            $("input[name=per_gateway]").val(res.per_gateway);
+            $("input[name=dns_name]").val(res.dns_name);
+            $("input[name=static_routes]").val(res.static_routes);
+            $("input[name=power_address]").val(res.power_address);
+            $("input[name=power_username]").val(res.power_username);
+            $("input[name=power_password]").val(res.power_password);
+            $("input[name=comment]").val(res.comment);
+
+            //设置单选下拉框的值
+            $("#proxy").val(res.proxy_id);
+
+            //设置profile的值
+            var sele_profile = document.getElementById("profile");
+            var sele_opt = document.createElement('option');
+            sele_opt.text = res.profile;
+            sele_opt.value = res.profile;
+            sele_profile.add(sele_opt);
+            $("#profile").val(res.profile);
+
+            document.getElementsByName('idc')[0].value = res.idc;
+            document.getElementsByName('machine_status')[0].value = res.machine_status;
+            document.getElementsByName('asset_type')[0].value = res.asset_type;
+            document.getElementsByName('power_type')[0].value = res.power_type;
+
+
+            //设置radio的值
+            var radios = document.getElementsByName('is_enabled');
+            if(res.netboot_enabled){
+                radios[0].checked = true;
+                radios[1].checked = false;
+            }else{
+                radios[0].checked = false;
+                radios[1].checked = true;
+            }
+
+            var radios_1 = document.getElementsByName('is_active');
+            if(res.is_active){
+                radios_1[0].checked = true;
+                radios_1[1].checked = false;
+            }else{
+                radios_1[0].checked = false;
+                radios_1[1].checked = true;
+            }
+
+            //设置checkbox的值
+            var checkbox = document.getElementsByName('static');
+            if(res.static){
+                checkbox[0].checked = true;
+            }else{
+                checkbox[0].checked = false;
+            }
+
+
+            //设置多选框的值
+            var select_user = res.group.split(',');
+            var mutil_select = document.getElementById('asset_group');
+            var options = mutil_select.options;
+
+            for (var i=0; i<select_user.length; i++){
+                 for (var j=0; j<options.length; j++){
+                     if(options[j].value == select_user[i]){
+                         options[j].selected = true
+                     }
+                 }
+            }
+
+             var modal = $("#myModal");
+             modal.find(".modal-title").text("编辑资产");
+             modal.modal({
+                 'keyboard': false,
+                 'backdrop': 'static'
+             })
+
+        })
+    }
+
     $(document).ready(function(){
         //删除单个资产
         $('.del').click(function(){
@@ -176,8 +643,49 @@
             }
         });
 
-        $('#add_asset').click(function(){
-              window.location.href = "{% url 'asset_add' %}"
+        //添加资产
+        $("#add_asset").click(function(){
+            //清空profile
+            var sele_profile = document.getElementById("profile");
+            if(sele_profile.length >1){
+                sele_profile.remove(sele_profile.length-1);
+            }
+
+            document.getElementById("form_asset").reset();
+            var modal = $("#myModal");
+             modal.find(".modal-title").text("添加资产");
+             modal.modal({
+                 'keyboard': false,
+                 'backdrop': 'static'
+             })
+        });
+
+        //modal 关闭事件
+         $("#myModal").on('hidden.bs.modal', function(){
+             $("#error_info").hide()
+         });
+
+        //modal save
+        $("#btn_save").click(function(){
+            var operator_type = $('input[name=operator_type]').val();
+            var asset_id = $('input[name=asset_id]').val();
+            var save_url = "{% url 'asset_add' %}";
+            if (operator_type == 'edit'){
+                save_url = "{% url 'asset_edit' %}?id="+ asset_id ;
+            }
+            $.ajax({
+                method: 'POST',
+                url: save_url,
+                data: $('#form_asset').serialize(),
+                success:function(res){
+                    if(res.success){
+                        $("#myModal").modal('hide');
+                        window.location.reload()
+                    }else{
+                        $("#error_info").text(res.error).show()
+                    }
+                }
+            })
         });
 
         //连接

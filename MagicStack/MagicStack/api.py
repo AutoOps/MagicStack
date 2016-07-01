@@ -466,7 +466,7 @@ def get_tmp_dir():
 
 def defend_attack(func):
     def _deco(request, *args, **kwargs):
-        if int(request.session.get('visit', 1)) > 10:
+        if int(request.session.get('visit', 1)) > 20:
             logger.debug('请求次数: %s' % request.session.get('visit', 1))
             return HttpResponse('Forbidden', status=403)
         request.session['visit'] = request.session.get('visit', 1) + 1

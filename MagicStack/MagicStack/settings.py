@@ -69,7 +69,6 @@ INSTALLED_APPS = (
     'common',
     'emergency',
     'backupManage',
-
 )
 
 MIDDLEWARE_CLASSES = (
@@ -150,5 +149,6 @@ CRONJOBS = [
     ('0 1 * * *', 'assetManage.asset_api.asset_ansible_update_all'),
     ('*/10 * * * *', 'logManage.log_api.kill_invalid_connection'),
     ('*/2 * * * *', 'emergency.cron.get_emergency_event'),
-    ('*/10 * * * *', 'taskManage.log_api.kill_invalid_connection'),
+    ('*/10 * * * *', 'taskManage.cron.get_task_exec_info'),
+    ('*/10 * * * *', 'backupManage.cron.get_backup_exec_info'),
 ]

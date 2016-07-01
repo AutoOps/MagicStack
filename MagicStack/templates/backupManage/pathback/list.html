@@ -11,8 +11,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-                                <button id="add-dbbackup" class="btn sbold green" data-toggle="modal">
-                                    添加数据库备份
+                                <button id="add-pathbackup" class="btn sbold green" data-toggle="modal">
+                                    添加目录备份
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
@@ -27,12 +27,12 @@
                     </div>
                 </div>
                 <table class="table table-striped table-bordered table-hover table-checkable order-column"
-                       id="table_dbback">
+                       id="table_pathback">
                     <thead>
                     <tr>
                         <th>
                             <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                <input type="checkbox" data-set="#table_dbback .checkboxes" class="group-checkable"
+                                <input type="checkbox" data-set="#table_pathback .checkboxes" class="group-checkable"
                                        id="select_all" name="select_all"/>
                                 <span></span>
                             </label>
@@ -53,16 +53,16 @@
         <!-- END EXAMPLE TABLE PORTLET-->
     </div>
 </div>
-{% include 'backupManage/dbback/tab.html' %}
+{% include 'backupManage/pathback/tab.html' %}
 {% include 'backupManage/backup_exec_detail.html' %}
 
 {% endblock %}
 {% block self_head_css_js %}
-{% include 'backupManage/dbback/css.html' %}
+{% include 'backupManage/pathback/css.html' %}
 {% endblock %}
 
 {% block self_footer_js %}
-{% include 'backupManage/dbback/js.html' %}
+{% include 'backupManage/pathback/js.html' %}
 <!-- start custom define scripts-->
 <script>
 $(document).ready(function () {
@@ -138,7 +138,7 @@ $(document).ready(function () {
         if (sel_val == 1) {
             var arr = new Array("星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日");
             $.each(arr, function (i, item) {
-                type_val.append("<option value=" + (i ) + ">" + item + "</option>");
+                type_val.append("<option value=" + (i) + ">" + item + "</option>");
             });
 
         } else {
@@ -162,7 +162,7 @@ $(document).ready(function () {
     });
 
     // proxy选择加载主机信息
-    $("select[name='proxy']").change(function (even, asset_id) {
+    $("select[name='proxy']").change(function (even, assets) {
         $.ajax({
             type: "post",
             url: "{% url 'get_host_for_proxy' %}",
@@ -170,15 +170,20 @@ $(document).ready(function () {
             data: {"proxy_id": $("select[name='proxy'] option:selected").val()},
             success: function (data) {
                 $("select[name='proxy_host']").empty();
-                if (asset_id == undefined) {
+                if (assets == undefined) {
                     $.each(data, function (i, item) {
                         $("select[name='proxy_host']").append("<option value=" + item.id + ">" + item.name + "</option>");
                     });
                 } else {
-
                     $.each(data, function (i, item) {
-                        var t = item.id == asset_id ? " selected" : "";
-                        $("select[name='proxy_host']").append("<option" + t + " value='" + item.id + "'>" + item.name + "</option>");
+                        var is_selected = false;
+                        $.each(assets.proxy_host, function(j, asset){
+                            if (asset == item.id){
+                                is_selected = true;
+                            }
+                        });
+                        var t = is_selected ? "selected" : "";
+                        $("select[name='proxy_host']").append("<option " + t + " value='" + item.id + "'>" + item.name + "</option>");
                     });
                 }
 
@@ -201,7 +206,7 @@ $(document).ready(function () {
                     if (result) {
                         $.ajax({
                             type: 'POST',
-                            url: "{% url 'dbbackup_del' %}",
+                            url: "{% url 'pathbackup_del' %}",
                             dataType: "json",
                             data: { "back_id": check_array.join(',')},
                             success: function (result) {
@@ -220,19 +225,19 @@ $(document).ready(function () {
     });
 
 
-    <!-- 添加数据库备份 -->
-    $("#add-dbbackup").click(function () {
+    <!-- 添加目录备份 -->
+    $("#add-pathbackup").click(function () {
         // 初始化表单内容
         $("#form_sample_1")[0].reset();
         // 设置modal titile
-        $("#dbbackup_modal .modal-title").text('添加数据库备份');
+        $("#pathbackup_modal .modal-title").text('添加目录备份');
         // 设置隐藏sbtype 为add
         $("#sbtype").val('add');
         // 激活第一个tab页
-        $("#dbTab ul li").attr('class', '');
-        $("#dbTab ul li:eq(0)").attr('class', 'active');
-        $("#dbTab .tab-content div.tab-pane").attr('class', 'tab-pane');
-        $("#dbTab .tab-content div.tab-pane:eq(0)").attr('class', 'tab-pane active');
+        $("#pathTab ul li").attr('class', '');
+        $("#pathTab ul li:eq(0)").attr('class', 'active');
+        $("#pathTab .tab-content div.tab-pane").attr('class', 'tab-pane');
+        $("#pathTab .tab-content div.tab-pane:eq(0)").attr('class', 'tab-pane active');
         // 设置开始日期为当前日期
         $("input[name='start_datetime']").val(get_nowdate(''));
         // 因和编辑共用，需要指定部分域为非只读
@@ -242,7 +247,7 @@ $(document).ready(function () {
         // 获取proxy信息
         $.ajax({
             type: 'GET',
-            url: "{% url 'dbbackup_add' %}",
+            url: "{% url 'pathbackup_add' %}",
             success: function (result) {
                 result = $.parseJSON(result);
                 // 初始化proxy信息
@@ -266,7 +271,7 @@ $(document).ready(function () {
                 trigger_obj.append("<option value='5'>自定义</option>");
 
                 // 显示modal
-                $('#dbbackup_modal').modal({backdrop: 'static', keyboard: false});
+                $('#pathbackup_modal').modal({backdrop: 'static', keyboard: false});
             }
         });
 
@@ -274,12 +279,6 @@ $(document).ready(function () {
 
     $("#submit").click(function () {
         var sbtype = $("#sbtype").val();
-        /* 数据库相关 */
-        var db_user_name = $("input[name='db_user_name']").val();
-        var db_password = $("input[name='db_password']").val();
-        var db_host = $("input[name='db_host']").val();
-        var db_port = $("input[name='db_port']").val();
-        var db_backups = $("input[name='db_backups']").val();
         /* ftp相关 */
         var ftp_user_name = $("input[name='ftp_user_name']").val();
         var ftp_password = $("input[name='ftp_password']").val();
@@ -298,7 +297,6 @@ $(document).ready(function () {
         var trigger_minute = $("input[name='trigger_minute']").val();
         var trigger_second = $("input[name='trigger_second']").val();
         var cycle_val = $("#cycle_val").val();
-        var dest = $("input[name='dest']").val();
         var old_trigger_cycle = $("#old_trigger_cycle").val();
         var old_cycle_val = $("#old_cycle_val").val();
         var old_cycle_type_val = $("#old_cycle_type_val").val();
@@ -306,14 +304,11 @@ $(document).ready(function () {
         if (sbtype == 'add') {
             $.ajax({
                 type: 'POST',
-                url: "{% url 'dbbackup_add' %}",
+                url: "{% url 'pathbackup_add' %}",
                 dataType: "json",
                 data: {
-                    'db_user_name': db_user_name,
-                    'db_password': db_password,
-                    'db_host': db_host,
-                    'db_port': db_port,
-                    'db_backups': db_backups,
+                    'dest': $("input[name='dest']").val(),
+                    'src': $("input[name='src']").val(),
                     'comment': $("input[name='comment']").val(),
                     'ftp_user_name': ftp_user_name,
                     'ftp_password': ftp_password,
@@ -329,8 +324,7 @@ $(document).ready(function () {
                     'cycle_type_val': cycle_type_val,
                     'trigger_hour': trigger_hour,
                     'trigger_minute': trigger_minute,
-                    'trigger_second': trigger_second,
-                    'dest': dest
+                    'trigger_second': trigger_second
                 },
                 success: function (result) {
 
@@ -344,19 +338,16 @@ $(document).ready(function () {
         } else if (sbtype == 'edit') {
             $.ajax({
                 type: 'POST',
-                url: "{% url 'dbbackup_edit' %}",
+                url: "{% url 'pathbackup_edit' %}",
                 dataType: "json",
                 data: {
                     'backup_id': $("#edit_backup_id").val(),
+                    'comment': $("input[name='comment']").val(),
+                    'dest': $("input[name='dest']").val(),
+                    'src': $("input[name='src']").val(),
                     'old_trigger_cycle': old_trigger_cycle,
                     'old_cycle_val': old_cycle_val,
                     'old_cycle_type_val': old_cycle_type_val,
-                    'db_user_name': db_user_name,
-                    'db_password': db_password,
-                    'db_host': db_host,
-                    'db_port': db_port,
-                    'db_backups': db_backups,
-                    'comment': $("input[name='comment']").val(),
                     'ftp_user_name': ftp_user_name,
                     'ftp_password': ftp_password,
                     'ftp_host': ftp_host,
@@ -371,8 +362,7 @@ $(document).ready(function () {
                     'cycle_type_val': cycle_type_val,
                     'trigger_hour': trigger_hour,
                     'trigger_minute': trigger_minute,
-                    'trigger_second': trigger_second,
-                    'dest': dest
+                    'trigger_second': trigger_second
                 },
                 success: function (result) {
                     if (result.flag) {
@@ -386,7 +376,7 @@ $(document).ready(function () {
     });
 
     <!-- 初始化首页表单数据 -->
-    var table_back = $("#table_dbback").dataTable({
+    var table_back = $("#table_pathback").dataTable({
         "destroy": true,                        //如果这个tab初始化过，将会先销毁再初始化
         "bAutoWidth": false,                    //不自动计算列宽度
         "aoColumns": [                          //设定各列宽度
@@ -437,7 +427,7 @@ $(document).ready(function () {
         "bServerSide": true,                    //指定从服务器端获取数据
         "bFilter": true,                       //不使用过滤功能
         "bLengthChange": true,                 //改变每页显示数量
-        "sAjaxSource": "{% url 'dbbackup_list' %}",//获取数据的url
+        "sAjaxSource": "{% url 'pathbackup_list' %}",//获取数据的url
         //获取数据的处理函数
         "fnServerData": function (sSource, aoData, fnCallback, oSettings) {
             $.ajax({
@@ -549,7 +539,7 @@ $(document).ready(function () {
                 if (result) {
                     $.ajax({
                         type: 'POST',
-                        url: "{% url 'dbbackup_del' %}",
+                        url: "{% url 'pathbackup_del' %}",
                         dataType: "json",
                         data: { "back_id": del_btn.parents('tr').find("input[type='checkbox']").val()},
                         success: function (result) {
@@ -577,16 +567,16 @@ $(document).ready(function () {
         $("#form_sample_1")[0].reset();
 
         // 设置modal titile
-        $("#dbbackup_modal .modal-title").text('编辑数据库备份');
+        $("#pathbackup_modal .modal-title").text('编辑目录备份');
 
         // 设置提交类型
         $("#sbtype").val('edit');
 
         // 激活第一个tab页
-        $("#dbTab ul li").attr('class', '');
-        $("#dbTab ul li:eq(0)").attr('class', 'active');
-        $("#dbTab .tab-content div.tab-pane").attr('class', 'tab-pane');
-        $("#dbTab .tab-content div.tab-pane:eq(0)").attr('class', 'tab-pane active');
+        $("#pathTab ul li").attr('class', '');
+        $("#pathTab ul li:eq(0)").attr('class', 'active');
+        $("#pathTab .tab-content div.tab-pane").attr('class', 'tab-pane');
+        $("#pathTab .tab-content div.tab-pane:eq(0)").attr('class', 'tab-pane active');
 
         // 编辑时，设置某些内容只可读
         $("select[name='proxy']").attr('disabled', 'disabled');
@@ -596,7 +586,7 @@ $(document).ready(function () {
         // ajax 数据获取
         $.ajax({
             type: 'GET',
-            url: "{% url 'dbbackup_edit' %}",
+            url: "{% url 'pathbackup_edit' %}",
             dataType: "json",
             data: {
                 "backup_id": $(this).parents('tr').find("input[type='checkbox']").val()
@@ -605,13 +595,8 @@ $(document).ready(function () {
                 var backup = result.backup;
                 var init_kwargs = $.parseJSON(backup.ext1);
                 var proxys = result.proxys;
+
                 $("input[name='comment']").val(init_kwargs.comment);
-                /* 初始化数据库信息 */
-                $("input[name='db_user_name']").val(init_kwargs.db_user_name);
-                $("input[name='db_password']").val(init_kwargs.db_password);
-                $("input[name='db_host']").val(init_kwargs.db_host);
-                $("input[name='db_port']").val(init_kwargs.db_port);
-                $("input[name='db_backups']").val(init_kwargs.db_backups);
                 /* 初始化FTP信息 */
                 $("input[name='ftp_user_name']").val(init_kwargs.ftp_user_name);
                 $("input[name='ftp_password']").val(init_kwargs.ftp_password);
@@ -624,7 +609,8 @@ $(document).ready(function () {
                     t ? $("select[name='proxy']").append(("<option selected value='" + item.id + "'>" + item.proxy_name + "</option>"))
                             : $("select[name='proxy']").append(("<option value='" + item.id + "'>" + item.proxy_name + "</option>"));
                 });
-                $("select[name='proxy']").trigger("change", init_kwargs.proxy_host);
+
+                $("select[name='proxy']").trigger("change", init_kwargs);
 
                 /* 初始化触发器信息 */
                 var trigger_obj = $("select[name='trigger_cycle']").empty();
@@ -678,13 +664,14 @@ $(document).ready(function () {
                 $("#old_cycle_val").val(init_kwargs.cycle_val);
                 $("#old_trigger_cycle").val(init_kwargs.trigger_cycle);
                 $("input[name='dest']").val(init_kwargs.dest);
+                $("input[name='src']").val(init_kwargs.src);
                 // 手工change
                 $("select[name='trigger_cycle']").trigger('change', 'edit');
             }
         });
 
         // show modal
-        $('#dbbackup_modal').modal({backdrop: 'static', keyboard: false});
+        $('#pathbackup_modal').modal({backdrop: 'static', keyboard: false});
     });
 
     <!-- 查看明细 -->

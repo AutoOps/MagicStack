@@ -37,7 +37,7 @@ class Backup(models.Model):
     )
 
     proxy = models.ForeignKey(Proxy, help_text="proxy")
-    type = models.CharField(max_length=2, choices=TYPES, default='file', help_text='备份类型')
+    type = models.CharField(max_length=4, choices=TYPES, default='file', help_text='备份类型')
     kwargs = models.CharField(max_length=2000, help_text='备份参数')
     status = models.CharField(max_length=2, choices=STATUS, default='00', help_text='备份状态')
     b_trigger = models.CharField(max_length=100, help_text='备份触发器')

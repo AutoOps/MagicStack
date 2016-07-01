@@ -21,15 +21,25 @@ from backupManage.views import *
 
 urlpatterns = patterns('',
     url(r'^dbbackup_list/$', dbbackup_list, name='dbbackup_list'),
-    url(r'^filebackup_list/$', dbbackup_list, name='filebackup_list'),
-    url(r'^pathbackup_list/$', dbbackup_list, name='pathbackup_list'),
     url(r'^dbbackup_add/$', dbbackup_add, name='dbbackup_add'),
     url(r'^dbbackup_del/$', dbbackup_del, name='dbbackup_del'),
     url(r'^dbbackup_edit/$', dbbackup_edit, name='dbbackup_edit'),
+
+    url(r'^filebackup_list/$', filebackup_list, name='filebackup_list'),
+    url(r'^filebackup_add/$', filebackup_add, name='filebackup_add'),
+    url(r'^filebackup_del/$', filebackup_del, name='filebackup_del'),
+    url(r'^filebackup_edit/$', filebackup_edit, name='filebackup_edit'),
+
+
+    url(r'^pathbackup_list/$', pathbackup_list, name='pathbackup_list'),
+    url(r'^pathbackup_add/$', pathbackup_add, name='pathbackup_add'),
+    url(r'^pathbackup_del/$', pathbackup_del, name='pathbackup_del'),
+    url(r'^pathbackup_edit/$',pathbackup_edit, name='pathbackup_edit'),
 
     # 备份回放公共部分
     url(r'^backup_exec_replay/$', backup_exec_replay, name='backup_exec_replay'),
     url(r'^backup_exec_info/$', backup_exec_info, name='backup_exec_info'),
 
-
+    # 下载
+    url(r'^backup/download/$', backup_download, name='backup_download'),
 )

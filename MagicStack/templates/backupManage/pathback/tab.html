@@ -1,0 +1,54 @@
+<div class="modal fade" id="pathbackup_modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">添加目录备份</h4>
+            </div>
+            <div class="modal-body">
+                <form action="#" id="form_sample_1" class="form-horizontal" method="post">
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button> You have some form errors. Please check below. </div>
+                        <div class="alert alert-success display-hide">
+                            <button class="close" data-close="alert"></button> Your form validation is successful! </div>
+                        <div id="pathTab">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#backup_tab" data-toggle="tab">备份信息</a></li>
+                                <li><a href="#proxy_tab" data-toggle="tab">代理</a></li>
+                                <li><a href="#trigger_tab" data-toggle="tab">触发器</a></li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div class="tab-pane" id="backup_tab">
+                                    <div class="ibox-content">
+                                        {% include 'backupManage/pathback/tab_ftp.html' %}
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="proxy_tab">
+                                    <div class="ibox-content">
+                                        {% include 'backupManage/pathback/tab_proxy.html' %}
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="trigger_tab">
+                                   <div class="ibox-content">
+                                        {% include 'backupManage/tab_trigger.html' %}
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" value="" id="sbtype"/>
+                <input type="hidden" value="" id="edit_backup_id"/>
+                <button type="button" class="btn green" id="submit">提交</button>
+                <button type="button" class="btn dark btn-outline" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

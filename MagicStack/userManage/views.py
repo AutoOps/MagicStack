@@ -159,8 +159,11 @@ def group_edit(request, res, *args):
 @require_role(role='super')
 @user_operator_record
 def user_add(request, res, *args):
+    # TODO 返回页面信息
     response = {'success': False, 'error': ''}
+    # TODO 用户操作记录
     res['operator'] = u'添加用户'
+    # TODO 告警事件记录
     res['emer_content'] = 1
 
     if request.method == 'POST':
@@ -397,7 +400,7 @@ def user_edit(request,res, *args):
                 res['flag'] = 'false'
                 res['content'] = u'用户不存在!'
                 res['emer_satus'] = u"编辑用户失败:{1}".format(u'用户不存在!')
-                return HttpResponseRedirect(reverse('user_list'))
+                response['error'] = u"编辑用户失败:{1}".format(u'用户不存在!')
 
             db_update_user(user_id=user_id,
                            password=password,

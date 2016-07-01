@@ -18,7 +18,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-                                <button id="add_groups" class="btn sbold green">添加资产组
+                                <button class="btn sbold green" id="btn_add">添加资产组
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
@@ -40,7 +40,7 @@
                                     <input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" id="select_all" name="select_all"/>
                                     <span></span>
                                 </label>
-                            </th>
+                            </td>
                             <th> 主机组名 </th>
                             <th> 主机数量 </th>
                             <th> 备注 </th>
@@ -72,11 +72,11 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
-                                                <a href="{% url 'asset_group_edit' %}?id={{ group.id }}">
+                                                <a href="#"  onclick="editGroup('{{ group.id }}')">
                                                     编辑 </a>
                                             </li>
                                             <li>
-                                                <a name="{% url 'asset_group_del' %}?id={{ group.id }}" class="group_del">
+                                                <a name="{% url 'asset_group_del' %}?id={{ group.id }}" class="del">
                                                      删除 </a>
                                             </li>
                                         </ul>
@@ -92,7 +92,58 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">添加资产组</h4>
+              </div>
+              <div class="modal-body">
+                  <form action="" id="form_asset_group" class="form-horizontal" method="post">
+                    <div class="form-body">
+                        <div class="alert alert-danger text-center display-hide" id="error_info" ></div>
+                        <input type="text" class="form-control display-hide" value="" name="group_id"/>
+                        <input type="text" class="form-control display-hide" value="add" name="operator_type">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">组名
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-6">
+                                <input type="text" name="name" data-required="1" class="form-control" /> </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">主机名
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-6">
+                                <select class="form-control" name="select_multi" id="asset_group" multiple>
+                                    {% for item in asset_all %}
+                                    <option value="{{ item.id }}">{{ item.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">备注&nbsp;&nbsp;</label>
+                            <div class="col-md-6">
+                                <input name="comment" type="text" class="form-control" />
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn grey-salsa btn-outline" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn green" id="btn_save">保存</button>
+              </div>
+        </div>
+    </div>
+</div>
 
+<!-->
 {% endblock %}
 
 {% block self_footer_js %}
@@ -101,20 +152,100 @@
     <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
     <script src="/static/pages/scripts/table-datatables-managed.min.js" type="text/javascript"></script>
 <script>
-    $(document).ready(function(){
-        $('.group_del').click(function(){
-            var row = $(this).closest('tr');
-            if (confirm('确定删除')) {
-                $.get(
-                        $(this).attr('name'),
-                        {},
-                        function (data) {
-                            row.remove();
-                        }
-                )
+    //编辑资产组
+    function editGroup(id){
+        var url = "{% url 'asset_group_edit' %}?id=" + id ;
+        $.get(url, function(res){
+            //设置操作类型 add or edit
+            $("input[name=operator_type]").val('edit');
+
+            //设置用户ID
+            $("input[name=group_id]").val(res.Id);
+
+            $("input[name=name]").val(res.name);
+            $("input[name=comment]").val(res.comment);
+
+            //设置下拉框的值
+            var select_user = res.asset_group.split(',');
+            var mutil_select = document.getElementById('asset_group');
+            var options = mutil_select.options;
+
+            for (var i=0; i<select_user.length; i++){
+                 for (var j=0; j<options.length; j++){
+                     if(options[j].value == select_user[i]){
+                         options[j].selected = true
+                     }
+                 }
             }
+
+             var modal = $("#myModal");
+             modal.find(".modal-title").text("编辑资产组");
+             modal.modal({
+                 'keyboard': false,
+                 'backdrop': 'static'
+             })
+
+        })
+    }
+
+
+    $(document).ready(function(){
+        //删除单个资产组
+        $('.del').click(function(){
+              var row = $(this).closest('tr');
+              if (confirm("确定删除?")) {
+                $.get(
+                    $(this).attr('name'),
+                    {},
+                    function(data){
+                        alert(data);
+                        row.remove();
+                    }
+                )
+              }
         });
 
+        //添加资产组
+        $("#btn_add").click(function(){
+            document.getElementById("form_asset_group").reset();
+            var modal = $("#myModal");
+             modal.find(".modal-title").text("添加资产组");
+             modal.modal({
+                 'keyboard': false,
+                 'backdrop': 'static'
+             })
+        });
+
+        //modal 关闭事件
+         $("#myModal").on('hidden.bs.modal', function(){
+             $("#error_info").hide()
+         });
+
+        //modal save
+        $("#btn_save").click(function(){
+            var operator_type = $('input[name=operator_type]').val();
+            var group_id = $('input[name=group_id]').val();
+            var save_url = "{% url 'asset_group_add' %}";
+            if (operator_type == 'edit'){
+                save_url = "{% url 'asset_group_edit' %}?id="+ group_id ;
+            }
+            $.ajax({
+                method: 'POST',
+                url: save_url,
+                data: $('#form_asset_group').serialize(),
+                success:function(res){
+                    if(res.success){
+                        $("#myModal").modal('hide');
+                        window.location.reload()
+                    }else{
+                        $("#error_info").text(res.error).show()
+                    }
+                }
+            })
+        });
+
+
+        //删除所选
         $('#del_btn').click(function(){
             var check_array = [];
             if (confirm('确定删除')){
@@ -125,16 +256,13 @@
                         '{% url "asset_group_del" %}',
                         {id: check_array.join(',')},
                         function(data){
+                            alert(data);
                             $('tr.gradeX input:checked').closest('tr').remove();
+
                         }
                 )
-
             }
         });
-
-        $('#add_groups').click(function(){
-            window.location.href = "{% url 'asset_group_add' %}"
-        })
     });
 </script>
 

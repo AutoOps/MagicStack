@@ -41,10 +41,8 @@ def group_add(request, res,*args):
     Group add view
     添加资产组
     """
-    header_title, path1, path2 = u'添加资产组', u'资产管理', u'添加资产组'
-    res['operator'] = path2
-    asset_all = Asset.objects.all()
-
+    response = {'success': False, 'error': ''}
+    res['operator'] = u'添加资产组'
     if request.method == 'POST':
         name = request.POST.get('name', '')
         asset_select = request.POST.getlist('select_multi', [])
@@ -52,26 +50,25 @@ def group_add(request, res,*args):
 
         try:
             if not name:
-                error = u'组名不能为空'
-                raise ServerError(error)
+                raise ServerError(u'组名不能为空')
 
             asset_group_test = get_object(AssetGroup, name=name)
             if asset_group_test:
-                error = u"该组名 %s 已存在" % name
-                raise ServerError(error)
+                raise ServerError(u"组名 %s 已存在" % name)
 
         except ServerError as e:
-            error = e
             res['flag'] = 'false'
-            res['content'] = e
+            res['content'] = e.message
+            response['error'] = e.message
 
         else:
             db_add_group(name=name, comment=comment, asset_select=asset_select)
-            smg = u"主机组 %s 添加成功" % name
+            smg = u"添加主机组[%s]成功" % name
             res['content'] = smg
-            return HttpResponseRedirect(reverse('asset_group_list'))
+            response['success'] = True
+            response['error'] = smg
 
-    return my_render('assetManage/group_add.html', locals(), request)
+    return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role('admin')
@@ -81,44 +78,52 @@ def group_edit(request,res, *args):
     Group edit view
     编辑资产组
     """
-    header_title, path1, path2 = u'编辑主机组', u'资产管理', u'编辑主机组'
-    res['operator'] = path2
-    group_id = request.GET.get('id', '')
-    group = get_object(AssetGroup, id=group_id)
-
-    asset_all = Asset.objects.all()
-    asset_select = Asset.objects.filter(group=group)
-
-    if request.method == 'POST':
+    res['operator'] = u'编辑主机组'
+    if request.method == 'GET':
+        try:
+            group_id = request.GET.get('id', '')
+            if not group_id:
+                return HttpResponse(u'资产组ID为空')
+            group = get_object(AssetGroup, id=int(group_id))
+            if group:
+                rest = dict()
+                rest["Id"] = group.id
+                rest["name"] = group.name
+                rest["comment"] = group.comment
+                rest["asset_group"] = ','.join([str(item.id) for item in group.asset_set.all()])
+                return HttpResponse(json.dumps(rest), content_type='application/json')
+            else:
+                return HttpResponse(u'资产组不存在')
+        except Exception as e:
+            logger.error(e)
+            return HttpResponse(e)
+    else:
+        response = {'success': False, 'error': ''}
+        group_id = request.GET.get('id', '')
+        if not group_id:
+            return HttpResponse(u'资产组ID为空')
+        group = AssetGroup.objects.get(id=int(group_id))
         name = request.POST.get('name', '')
         asset_select = request.POST.getlist('select_multi', [])
         comment = request.POST.get('comment', '')
 
         try:
             if not name:
-                error = u'组名不能为空'
-                raise ServerError(error)
+                raise ServerError(u'组名不能为空')
 
-            if group.name != name:
-                asset_group_test = get_object(AssetGroup, name=name)
-                if asset_group_test:
-                    error = u"该组名 %s 已存在" % name
-                    raise ServerError(error)
-
+            if AssetGroup.objects.filter(name=name).count() > 1:
+                raise ServerError(u"该组名 %s 已存在" % name)
         except ServerError as e:
-            error = e
             res['flag'] = 'false'
             res['content'] = e
-
+            response['error'] = u"添加资产组失败:%s" % e.message
         else:
             group.asset_set.clear()
             db_update_group(id=group_id, name=name, comment=comment, asset_select=asset_select)
             smg = u"主机组 %s 添加成功" % name
-            res['content'] = smg
-
-        return HttpResponseRedirect(reverse('asset_group_list'))
-
-    return my_render('assetManage/group_edit.html', locals(), request)
+            response['success'] = True
+            res['content'] = response['error'] = smg
+        return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role('admin')
@@ -129,6 +134,7 @@ def group_list(request):
     """
     header_title, path1, path2 = u'查看资产组', u'资产管理', u'查看资产组'
     asset_group_list = AssetGroup.objects.all()
+    asset_all = Asset.objects.all()
     return my_render('assetManage/group_list.html', locals(), request)
 
 
@@ -144,7 +150,7 @@ def group_del(request,res, *args):
     group_ids = request.GET.get('id', '')
     group_id_list = group_ids.split(',')
     for group_id in group_id_list:
-        asset_group = AssetGroup.objects.get(id=group_id)
+        asset_group = AssetGroup.objects.get(id=int(group_id))
         res['content'] += '%s   ' % asset_group.name
         asset_group.delete()
 

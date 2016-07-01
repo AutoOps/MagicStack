@@ -4,13 +4,10 @@ import xlrd
 import xlsxwriter
 from django.db.models import AutoField
 from MagicStack.api import *
-from assetManage.models import ASSET_STATUS, ASSET_TYPE, ASSET_ENV, IDC, AssetRecord
-
-
+from assetManage.models import ASSET_STATUS, ASSET_TYPE, ASSET_ENV, IDC, AssetRecord, Asset, AssetGroup
 from MagicStack.templatetags.mytags import get_disk_info
 from common.interface import APIRequest
 from django.db.models.query import QuerySet
-
 import traceback
 
 
@@ -102,37 +99,6 @@ def get_tuple_diff(asset_tuple, field_name, value):
     new_name = get_tuple_name(asset_tuple, int(value[1])) if value[1] else u''
     alert_info = [field_name, old_name, new_name]
     return alert_info
-
-
-def asset_diff(before, after):
-    """
-    asset change before and after
-    """
-    alter_dic = {}
-    before_dic, after_dic = before, dict(after.iterlists())
-    for k, v in before_dic.items():
-        after_dic_values = after_dic.get(k, [])
-        if k == 'group':
-            after_dic_value = after_dic_values if len(after_dic_values) > 0 else u''
-            uv = v if v is not None else u''
-        else:
-            after_dic_value = after_dic_values[0] if len(after_dic_values) > 0 else u''
-            uv = unicode(v) if v is not None else u''
-        if uv != after_dic_value:
-            alter_dic.update({k: [uv, after_dic_value]})
-
-    for k, v in alter_dic.items():
-        if v == [None, u'']:
-            alter_dic.pop(k)
-
-    return alter_dic
-
-
-def asset_diff_one(before, after):
-    print before.__dict__, after.__dict__
-    fields = Asset._meta.get_all_field_names()
-    for field in fields:
-        print before.field, after.field
 
 
 def db_asset_alert(asset, username, alert_dic):

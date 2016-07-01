@@ -300,12 +300,6 @@ def asset_add(request,res, *args):
 
 
 @require_role('admin')
-def asset_add_batch(request):
-    header_title, path1, path2 = u'添加资产', u'资产管理', u'批量添加'
-    return my_render('assetManage/asset_add_batch.html', locals(), request)
-
-
-@require_role('admin')
 @user_operator_record
 def asset_del(request,res, *args):
     """
@@ -801,24 +795,3 @@ def idc_del(request,res, *args):
         idc.delete()
     return HttpResponseRedirect(reverse('idc_list'))
 
-
-@require_role('admin')
-@user_operator_record
-def asset_upload(request,res, *args):
-    """
-    Upload asset excel file view
-    """
-    res['operator'] = u'批量添加主机'
-    if request.method == 'POST':
-        excel_file = request.FILES.get('file_name', '')
-        ret, asset_name_list = excel_to_db(excel_file)
-        if ret:
-            smg = u'批量添加成功'
-            for item in asset_name_list:
-                res['content'] += " [%s] " % item
-
-        else:
-            emg = u'批量添加失败,请检查格式.'
-            res['flag'] = 'false'
-            res['content'] = emg
-    return my_render('assetManage/asset_add_batch.html', locals(), request)

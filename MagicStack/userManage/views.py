@@ -44,7 +44,6 @@ def group_add(request,res, *args):
             res['emer_status'] = u"添加用户组[%s]成功"% group_name
             response['success'] = True
         return HttpResponse(json.dumps(response), content_type='application/json')
-    # return my_render('userManage/group_add.html', locals(), request)
 
 
 @require_role(role='super')
@@ -54,16 +53,8 @@ def group_list(request):
     用户组列表
     """
     header_title, path1, path2 = u'查看用户组', u'用户管理', u'查看用户组'
-    keyword = request.GET.get('search', '')
     user_group_list = UserGroup.objects.all().order_by('name')
-    group_id = request.GET.get('id', '')
     user_all = User.objects.all()
-
-    if keyword:
-        user_group_list = user_group_list.filter(Q(name__icontains=keyword) | Q(comment__icontains=keyword))
-
-    if group_id:
-        user_group_list = user_group_list.filter(id=int(group_id))
     return my_render('userManage/group_list.html', locals(), request)
 
 
@@ -99,16 +90,13 @@ def group_del(request,res, *args):
 @require_role(role='super')
 @user_operator_record
 def group_edit(request, res, *args):
-    error = ''
-    msg = ''
-    # header_title, path1, path2 = u'编辑用户组', u'用户管理', u'编辑用户组'
+
     res['operator'] = u'编辑用户组'
     res['emer_content'] = 1
     if request.method == 'GET':
         group_id = request.GET.get('id', '')
         user_group = get_object(UserGroup, id=group_id)
         users_selected = User.objects.filter(group=user_group)
-        users_all = User.objects.all()
         rest = dict()
         rest["Id"] = user_group.id
         rest["name"] = user_group.name
@@ -138,23 +126,18 @@ def group_edit(request, res, *args):
             user_group.name = group_name
             user_group.comment = comment
             user_group.save()
-        except ServerError, e:
+
+            res['content'] = u'编辑用户组%s' % group_name
+            res['emer_status'] = u"编辑用户组[{0}]成功!".format(group_name_old)
+            response['success'] = True
+        except ServerError as e:
             error = e
             res['flag'] = 'false'
             res['comment'] = e
             res['emer_status'] = u"编辑用户组[{0}]失败:{1}".format(group_name_old, error)
             response['error'] = res['emer_status']
 
-
-        if not error:
-            res['content'] = u'编辑用户组%s' % group_name
-            res['emer_status'] = u"编辑用户组[{0}]成功!".format(group_name_old)
-            response['success'] = True
-            return HttpResponse(json.dumps(response), content_type='application/json')
-        else:
-            users_all = User.objects.all()
-            users_selected = User.objects.filter(group=user_group)
-    return HttpResponse(json.dumps(response), content_type='application/json')
+        return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role(role='super')

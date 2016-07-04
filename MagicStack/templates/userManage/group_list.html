@@ -23,7 +23,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-                                <button id="add_groups" class="btn sbold green">添加用户组
+                                <button class="btn sbold green" id="btn_add">添加用户组
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
@@ -75,8 +75,8 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
-                                                <a href="{% url 'user_group_edit' %}?id={{ group.id }}">
-                                                    编辑 </a>
+                                                <a href="#" onclick="editGroup('{{ group.id }}')">编辑</a>
+
                                             </li>
                                             <li>
                                                 <a name="{% url 'user_group_del' %}?id={{ group.id }}" class="del">
@@ -95,6 +95,64 @@
     </div>
 </div>
 
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">添加用户组</h4>
+              </div>
+              <div class="modal-body">
+                  <form action="" id="form_group" class="form-horizontal" method="post">
+                    <div class="form-body">
+                        <div class="alert alert-danger text-center display-hide" id="error_info" ></div>
+                        <input type="text" class="form-control display-hide" value="" name="group_id"/>
+                        <input type="text" class="form-control display-hide" value="add" name="operator_type">
+                       <div class="form-group">
+                            <label class="control-label col-md-3">组名
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <input type="text" name="name" data-required="1" class="form-control" /> </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">用户名
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <select class="form-control" name="select_multi" id="selected" multiple>
+                                    {% for item in user_all %}
+                                    <option value="{{ item.id }}">{{ item.username }}</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="help-block"> select max 10 options, min 1 option </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">备注&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <input name="comment" type="text" class="form-control" />
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn grey-salsa btn-outline" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn green" id="btn_save">保存</button>
+              </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block self_footer_js %}
@@ -107,10 +165,83 @@
     <script src="/static/pages/scripts/table-datatables-managed.min.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL SCRIPTS -->
 <script>
+     //编辑资产组
+    function editGroup(id){
+        var url = "{% url 'user_group_edit' %}?id=" + id ;
+        $.get(url, function(res){
+            //设置操作类型 add or edit
+            $("input[name=operator_type]").val('edit');
+
+            //设置用户ID
+            $("input[name=group_id]").val(res.Id);
+
+            $("input[name=name]").val(res.name);
+            $("input[name=comment]").val(res.comment);
+
+            //设置下拉框的值
+            var select_user = res.user_group.split(',');
+            var mutil_select = document.getElementById('selected');
+            var options = mutil_select.options;
+
+            for (var i=0; i<select_user.length; i++){
+                 for (var j=0; j<options.length; j++){
+                     if(options[j].value == select_user[i]){
+                         options[j].selected = true
+                     }
+                 }
+            }
+
+             var modal = $("#myModal");
+             modal.find(".modal-title").text("编辑用户组");
+             modal.modal({
+                 'keyboard': false,
+                 'backdrop': 'static'
+             })
+
+        })
+    }
+
+
       $(document).ready(function(){
-          $('#add_groups').click(function(){
-              window.location.href = "{% url 'user_group_add' %}"
-          });
+           //添加用户组
+        $("#btn_add").click(function(){
+            document.getElementById("form_group").reset();
+            var modal = $("#myModal");
+             modal.find(".modal-title").text("添加用户组");
+             modal.modal({
+                 'keyboard': false,
+                 'backdrop': 'static'
+             })
+        });
+
+        //modal 关闭事件
+         $("#myModal").on('hidden.bs.modal', function(){
+             $("#error_info").hide()
+         });
+
+        //modal save
+        $("#btn_save").click(function(){
+            var operator_type = $('input[name=operator_type]').val();
+            var group_id = $('input[name=group_id]').val();
+            var save_url = "{% url 'user_group_add' %}";
+            if (operator_type == 'edit'){
+                save_url = "{% url 'user_group_edit' %}?id="+ group_id ;
+            }
+
+            $.ajax({
+                method: 'POST',
+                url: save_url,
+                data: $('#form_group').serialize(),
+                success:function(res){
+                    if(res.success){
+                        $("#myModal").modal('hide');
+                        window.location.reload()
+                    }else{
+                        $("#error_info").text(res.error).show()
+                    }
+                }
+            })
+        });
 
           $('.del').click(function(){
               var row = $(this).closest('tr');

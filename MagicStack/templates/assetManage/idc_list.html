@@ -18,14 +18,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-                                <button id="add_groups" class="btn sbold green">添加机房
+                                <button class="btn sbold green" id="btn_add">添加机房
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
                        <div class="col-md-6">
                             <div class="btn-group pull-right">
-                                <button class="btn green  btn-outline " id="del_btn">删除所选资产组
+                                <button class="btn green  btn-outline " id="del_btn">删除所选机房
                                     <i class="fa fa-times"></i>
                                 </button>
                             </div>
@@ -80,11 +80,11 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
-                                                <a href="{% url 'idc_edit' %}?id={{ post.id }}" >
+                                               <a href="#"  onclick="edit_idc('{{post.id}}')">
                                                     编辑 </a>
                                             </li>
                                             <li>
-                                                <a name="{% url 'idc_del' %}?id={{ post.id }}" class="idc_del">
+                                                <a name="{% url 'idc_del' %}?id={{ post.id }}" class="del">
                                                      删除 </a>
                                             </li>
                                         </ul>
@@ -100,6 +100,89 @@
     </div>
 </div>
 
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">添加资产组</h4>
+              </div>
+              <div class="modal-body">
+                  <form action="" id="form_idc" class="form-horizontal" method="post">
+                    <div class="form-body">
+                        <div class="alert alert-danger text-center display-hide" id="error_info" ></div>
+                        <input type="text" class="form-control display-hide" value="" name="idc_id"/>
+                        <input type="text" class="form-control display-hide" value="add" name="operator_type">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">机房名称
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-4">
+                                <input type="text" name="name" data-required="1" class="form-control" /> </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">机房带宽&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <input name="bandwidth" type="text" class="form-control" />
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">运营商&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <input name="operator" type="text" class="form-control" />
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">联系人&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <input name="linkman" type="text" class="form-control" />
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">联系电话&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <input name="phone" type="text" class="form-control" />
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">机房地址&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <input name="address" type="text" class="form-control" />
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">IP地址段&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <textarea name="network" id="network" type="text" class="form-control" ></textarea>
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">备注&nbsp;&nbsp;</label>
+                            <div class="col-md-4">
+                                <input name="comment" type="text" class="form-control" />
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn grey-salsa btn-outline" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn green" id="btn_save">保存</button>
+              </div>
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}
 
 {% block self_footer_js %}
@@ -108,24 +191,96 @@
     <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
     <script src="/static/pages/scripts/table-datatables-managed.min.js" type="text/javascript"></script>
 <script>
+     function edit_idc(id){
+        var url = "{% url 'idc_edit' %}?id=" + id ;
+        $.get(url, function(res){
+            //设置操作类型 edit
+            $("input[name=operator_type]").val('edit');
+
+            //设置机房ID
+            $("input[name=idc_id]").val(res.Id);
+            $("input[name=name]").val(res.name);
+            $("input[name=bandwidth]").val(res.bandwidth);
+            $("input[name=operator]").val(res.operator);
+            $("input[name=linkman]").val(res.linkman);
+            $("input[name=phone]").val(res.phone);
+            $('input[name=address]').val(res.address);
+            $('input[name=comment]').val(res.comment);
+
+            document.getElementById("network").value = res.network;
+
+
+             var modal = $("#myModal");
+             modal.find(".modal-title").text("编辑机房");
+             modal.modal({
+                 'keyboard': false,
+                 'backdrop': 'static'
+             })
+
+        })
+    }
+
+
     $(document).ready(function(){
-        $('.idc_del').click(function(){
-            var row = $(this).closest('tr');
-            if (confirm('确定删除?')) {
+        //删除单个机房
+        $('.del').click(function(){
+              var row = $(this).closest('tr');
+              if (confirm("确定删除?")) {
                 $.get(
-                        $(this).attr('name'),
-                        {},
-                        function (data) {
-                            row.remove();
-                        }
-                );
-                return false
-            }
+                    $(this).attr('name'),
+                    {},
+                    function(data){
+                        alert(data);
+                        row.remove();
+                    }
+                )
+              }
         });
 
+        //添加资产组
+        $("#btn_add").click(function(){
+            document.getElementById("form_idc").reset();
+            var modal = $("#myModal");
+             modal.find(".modal-title").text("添加机房");
+             modal.modal({
+                 'keyboard': false,
+                 'backdrop': 'static'
+             })
+        });
+
+        //modal 关闭事件
+         $("#myModal").on('hidden.bs.modal', function(){
+             $("#error_info").hide()
+         });
+
+        //modal save
+        $("#btn_save").click(function(){
+            var operator_type = $('input[name=operator_type]').val();
+            var idc_id = $('input[name=idc_id]').val();
+            var save_url = "{% url 'idc_add' %}";
+            if (operator_type == 'edit'){
+                save_url = "{% url 'idc_edit' %}?id="+ idc_id ;
+            }
+            $.ajax({
+                method: 'POST',
+                url: save_url,
+                data: $('#form_idc').serialize(),
+                success:function(res){
+                    if(res.success){
+                        $("#myModal").modal('hide');
+                        window.location.reload()
+                    }else{
+                        $("#error_info").text(res.error).show()
+                    }
+                }
+            })
+        });
+
+
+        //删除所选
         $('#del_btn').click(function(){
             var check_array = [];
-            if (confirm('确定删除?')){
+            if (confirm('确定删除')){
                 $('tr.gradeX input:checked').each(function(){
                     check_array.push($(this).attr('value'))
                 });
@@ -133,16 +288,13 @@
                         '{% url "idc_del" %}',
                         {id: check_array.join(',')},
                         function(data){
+                            alert(data);
                             $('tr.gradeX input:checked').closest('tr').remove();
+
                         }
-                );
-                return false;
+                )
             }
         });
-
-        $('#add_groups').click(function(){
-            window.location.href = "{% url 'idc_add' %}"
-        })
     });
 </script>
 {% endblock %}

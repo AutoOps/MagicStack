@@ -721,26 +721,24 @@ def idc_add(request,res, *args):
     """
     IDC add view
     """
-    header_title, path1, path2 = u'添加IDC', u'资产管理', u'添加IDC'
-    res['operator'] = path2
+    res['operator'] = u'添加IDC'
     if request.method == 'POST':
+        response={'success':False,'error':''}
         idc_form = IdcForm(request.POST)
+
         if idc_form.is_valid():
             idc_name = idc_form.cleaned_data['name']
-
             if IDC.objects.filter(name=idc_name):
-                emg = u'添加失败, 此IDC [%s] 已存在!' % idc_name
-                res['flag'] = 'false'
-                res['content'] = emg
-                return my_render('assetManage/idc_add.html', locals(), request)
+                 response['error']=u'添加失败, 此IDC [%s] 已存在!' % idc_name
+
             else:
                 idc_form.save()
-                smg = u'IDC: [%s]添加成功' % idc_name
-                res['content'] = smg
-            return HttpResponseRedirect(reverse('idc_list'))
+                res['content'] = u'IDC: [%s]添加成功' % idc_name
+                response['success']=True
+            return HttpResponse(json.dumps(response), content_type='application/json')
     else:
         idc_form = IdcForm()
-    return my_render('assetManage/idc_add.html', locals(), request)
+    return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role('admin')
@@ -749,7 +747,7 @@ def idc_list(request):
     IDC list view
     """
     header_title, path1, path2 = u'查看IDC', u'资产管理', u'查看IDC'
-    posts = IDC.objects.all()
+    # posts = IDC.objects.all()
     keyword = request.GET.get('keyword', '')
     if keyword:
         posts = IDC.objects.filter(Q(name__contains=keyword) | Q(comment__contains=keyword))
@@ -765,18 +763,31 @@ def idc_edit(request, res, *args):
     """
     IDC edit view
     """
-    header_title, path1, path2 = u'编辑IDC', u'资产管理', u'编辑IDC'
-    res['operator'] = path2
+    res['operator'] = u'编辑IDC'
     idc_id = request.GET.get('id', '')
     idc = get_object(IDC, id=idc_id)
+    if request.method == 'GET':
+        rest={}
+        rest['Id'] = idc.id
+        rest['name'] = idc.name
+        rest['bandwidth'] = idc.bandwidth
+        rest['operator'] = idc.operator
+        rest['linkman'] = idc.linkman
+        rest['phone'] = idc.phone
+        rest['address'] = idc.address
+        rest['network'] = idc.network
+        rest['comment'] = idc.comment
+        return HttpResponse(json.dumps(rest), content_type='application/json')
     if request.method == 'POST':
+        response={'success':False,'error':''}
         idc_form = IdcForm(request.POST, instance=idc)
         if idc_form.is_valid():
             res['content'] = u'编辑IDC[%s]' % idc.name
             idc_form.save()
-            return HttpResponseRedirect(reverse('idc_list'))
+            response['success']=True
 
-    return my_render('assetManage/idc_edit.html', locals(), request)
+    return HttpResponse(json.dumps(response), content_type='application/json')
+
 
 
 @require_role('admin')
@@ -785,13 +796,16 @@ def idc_del(request,res, *args):
     """
     IDC delete view
     """
-
     res['operator'] = res['content'] = u'删除机房'
-    idc_ids = request.GET.get('id', '')
-    idc_id_list = idc_ids.split(',')
-    for idc_id in idc_id_list:
-        idc = IDC.objects.get(id=idc_id)
-        res['content'] += '  [%s]  ' % idc.name
-        idc.delete()
-    return HttpResponseRedirect(reverse('idc_list'))
+    try:
+        idc_ids = request.GET.get('id', '')
+        idc_id_list = idc_ids.split(',')
+        for idc_id in idc_id_list:
+            idc = IDC.objects.get(id=idc_id)
+            res['content'] += '  [%s]  ' % idc.name
+            idc.delete()
+    except Exception as e:
+        logger.error(e.message)
+        return HttpResponse(e.message)
+    return HttpResponse(u'机房删除成功')
 

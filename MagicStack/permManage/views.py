@@ -274,6 +274,10 @@ def perm_role_list(request):
     header_title, path1, path2 = "系统用户", "系统用户管理", "查看系统用户"
     roles_list = PermRole.objects.all()
     sudos = PermSudo.objects.all()
+
+    # TODO 推送系统用户所需的数据
+    assets = Asset.objects.all()
+    asset_groups = AssetGroup.objects.all()
     return my_render('permManage/perm_role_list.html', locals(), request)
 
 
@@ -281,7 +285,7 @@ def perm_role_list(request):
 @user_operator_record
 def perm_role_add(request, res, *args):
     """
-    add role page
+    添加系统用户
     """
     response = {'success': False, 'error': ''}
     res['operator'] = u"添加系统用户"
@@ -325,7 +329,7 @@ def perm_role_add(request, res, *args):
             message = save_or_delete('PermRole', data, proxy_list)
             flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
             if flag:
-                # 将数据保存到magicstack上
+                # TODO 将数据保存到magicstack上
                 role = PermRole.objects.create(name=name, comment=comment, password=encrypt_pass, key_path=key_path)
                 role.sudo = sudos_obj
                 role.save()
@@ -345,7 +349,7 @@ def perm_role_add(request, res, *args):
 @user_operator_record
 def perm_role_delete(request, res, *args):
     """
-    delete role page
+    删除系统用户
     """
     res['operator'] = '删除系统用户'
     res['emer_content'] = 6
@@ -467,7 +471,7 @@ def perm_role_detail(request):
 @user_operator_record
 def perm_role_edit(request, res, *args):
     """
-    edit role page
+    编辑系统用户
     """
     # 渲染数据
     res['operator'] = u"编辑系统用户"
@@ -555,89 +559,97 @@ def perm_role_edit(request, res, *args):
 @require_role('admin')
 def perm_role_push(request, *args):
     """
-    the role push page
+    推送系统用户
     """
-    # 渲染数据
-    header_title, path1, path2 = "系统用户", "系统用户管理", "系统用户推送"
-    role_id = request.GET.get('id')
-    asset_ids = request.GET.get('asset_id')
-    role = get_object(PermRole, id=int(role_id))
-    assets = Asset.objects.all()
-    asset_groups = AssetGroup.objects.all()
-    if asset_ids:
-        need_push_asset = [get_object(Asset, id=asset_id) for asset_id in asset_ids.split(',')]
+    if request.method == 'GET':
+        try:
+            rest = {}
+            role_id = request.GET.get('id')
+            role = get_object(PermRole, id=int(role_id))
+            rest['Id'] = role.id
+            rest['role_name'] = role.name
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+        except Exception as e:
+            logger.error(e)
+    else:
+        response = {'success': False, 'error': ''}
+        try:
+            role_id = request.GET.get('id')
+            role = get_object(PermRole, id=int(role_id))
+            asset_ids = request.POST.getlist("assets")
+            asset_group_ids = request.POST.getlist("asset_groups")
+            assets_obj = [Asset.objects.get(id=asset_id) for asset_id in asset_ids]
+            asset_groups_obj = [AssetGroup.objects.get(id=asset_group_id) for asset_group_id in asset_group_ids]
+            group_assets_obj = []
+            for asset_group in asset_groups_obj:
+                group_assets_obj.extend(asset_group.asset_set.all())
+            calc_assets = list(set(assets_obj) | set(group_assets_obj))
+            asset_proxys = gen_asset_proxy(calc_assets)
+            for key, value in asset_proxys.items():
+                proxy = Proxy.objects.get(proxy_name=key)
+                push_resource = gen_resource(value)
 
-    if request.method == "POST":
-        # 获取推荐角色的名称列表
-        # 计算出需要推送的资产列表
-        asset_ids = request.POST.getlist("assets")
-        asset_group_ids = request.POST.getlist("asset_groups")
-        assets_obj = [Asset.objects.get(id=asset_id) for asset_id in asset_ids]
-        asset_groups_obj = [AssetGroup.objects.get(id=asset_group_id) for asset_group_id in asset_group_ids]
-        group_assets_obj = []
-        for asset_group in asset_groups_obj:
-            group_assets_obj.extend(asset_group.asset_set.all())
-        calc_assets = list(set(assets_obj) | set(group_assets_obj))
-        asset_proxys = gen_asset_proxy(calc_assets)
-        for key, value in asset_proxys.items():
-            proxy = Proxy.objects.get(proxy_name=key)
-            push_resource = gen_resource(value)
-            # 调用Ansible API 进行推送
-            password_push = True if request.POST.get("use_password") else False
-            key_push = True if request.POST.get("use_publicKey") else False
-            host_list = [asset.networking.all()[0].ip_address for asset in value]
-            host_names = [asset.name for asset in value]
-            task = MyTask(push_resource, host_list)
-            ret = {}
+                # TODO 调用Ansible API 进行推送
+                password_push = True if request.POST.get("use_password") else False
+                key_push = True if request.POST.get("use_publicKey") else False
+                host_list = [asset.networking.all()[0].ip_address for asset in value]
+                host_names = [asset.name for asset in value]
+                task = MyTask(push_resource, host_list)
+                ret = {}
 
-            # 因为要先建立用户，而push key是在 password也完成的情况下的可选项
-            # 1. 以秘钥 方式推送角色
-            role_proxy = get_one_or_all('PermRole', proxy, role_id)
-            if key_push:
-                ret["pass_push"] = task.add_user(role.name, proxy)
-                ret["key_push"] = task.push_key(role.name, os.path.join(role_proxy['key_path'], 'id_rsa.pub'), proxy)
+                # 因为要先建立用户，而push key是在 password也完成的情况下的可选项
+                # 1. 以秘钥 方式推送角色
+                role_proxy = get_one_or_all('PermRole', proxy, role_id)
+                if key_push:
+                    ret["pass_push"] = task.add_user(role.name, proxy)
+                    ret["key_push"] = task.push_key(role.name, os.path.join(role_proxy['key_path'], 'id_rsa.pub'), proxy)
 
-            # 2. 推送账号密码 <为了安全 系统用户统一使用秘钥进行通信，不再提供密码方式的推送>
-            # elif password_push:
-            #     ret["pass_push"] = task.add_user(role.name, CRYPTOR.decrypt(role.password))
+                # 2. 推送账号密码 <为了安全 系统用户统一使用秘钥进行通信，不再提供密码方式的推送>
+                # 3. 推送sudo配置文件
+                if key_push:
+                    sudo_list = set([sudo for sudo in role.sudo.all()])  # set(sudo1, sudo2, sudo3)
+                    if sudo_list:
+                        ret['sudo'] = task.push_sudo_file([role], sudo_list, proxy)
+                logger.info('推送用户结果ret:%s'%ret)
 
-            # 3. 推送sudo配置文件
-            if key_push:
-                sudo_list = set([sudo for sudo in role.sudo.all()])  # set(sudo1, sudo2, sudo3)
-                if sudo_list:
-                    ret['sudo'] = task.push_sudo_file([role], sudo_list, proxy)
-            logger.info('推送用户结果ret:%s'%ret)
-            event_task_names = []
-            msg = 'running'
-            # 将事件放进queue
-            if ret.has_key('pass_push'):
-                tk_pass_push = ret['pass_push']['task_name']
-                event_task_names.append(tk_pass_push)
-            if ret.has_key('key_push'):
-                tk_key_push = ret['key_push']['task_name']
-                event_task_names.append(tk_key_push)
-            if ret.has_key('sudo'):
-                if 'task_name' in ret['sudo']:
-                    tk_sudo_push = ret['sudo']['task_name']
-                    event_task_names.append(tk_sudo_push)
-            event = dict(push_assets=host_names, role_name=role.name, password_push=password_push,
-                         key_push=key_push, task_proxy=proxy.proxy_name)
-            event['tasks'] = event_task_names
-            task_queue.put(event)
+                # TODO 将事件放进queue中
+                event_task_names = []
+                if ret.has_key('pass_push'):
+                    tk_pass_push = ret['pass_push']['task_name']
+                    event_task_names.append(tk_pass_push)
+                if ret.has_key('key_push'):
+                    tk_key_push = ret['key_push']['task_name']
+                    event_task_names.append(tk_key_push)
+                if ret.has_key('sudo'):
+                    if 'task_name' in ret['sudo']:
+                        tk_sudo_push = ret['sudo']['task_name']
+                        event_task_names.append(tk_sudo_push)
+                event = dict(push_assets=host_names, role_name=role.name, password_push=password_push,
+                             key_push=key_push, task_proxy=proxy.proxy_name)
+                event['tasks'] = event_task_names
+                task_queue.put(event)
 
-            #记录task事件
-            for item in event['tasks']:
-                tk = Task()
-                tk.task_name = item
-                tk.status = 'running'
-                tk.start_time = datetime.datetime.now()
-                tk.username = request.user.username
-                tk.save()
-    return my_render('permManage/perm_role_push.html', locals(), request)
+                # TODO 记录task事件
+                for item in event['tasks']:
+                    tk = Task()
+                    tk.task_name = item
+                    tk.status = 'running'
+                    tk.start_time = datetime.datetime.now()
+                    tk.username = request.user.username
+                    tk.save()
+                response['success'] = True
+                response['error'] = 'running ...'
+        except Exception as e:
+            response['error'] = e.message
+            logger.error(e.message)
+        return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role('admin')
 def push_role_event(request):
+    """
+    系统用户推送结果查询
+    """
     response = {'error': '', 'message':''}
     if request.method == 'GET':
         try:

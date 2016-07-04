@@ -58,7 +58,7 @@
                                                     编辑 </a>
                                             </li>
                                             <li>
-                                                <a href="{% url 'role_push' %}?id={{ role.id }}">
+                                                <a href="#" onclick="pushRole('{{ role.id }}')">
                                                     推送 </a>
                                             </li>
                                             <li>
@@ -89,11 +89,13 @@
                 <h4 class="modal-title" id="myModalLabel">添加系统用户</h4>
               </div>
               <div class="modal-body">
+                  <!-- 操作类型 add edit push -->
+                  <input type="text" class="form-control hide" value="add" name="operator_type" />
+                  <!-->
                   <form action="" id="form_role" class="form-horizontal" method="post">
                     <div class="form-body">
                         <div class="alert alert-danger text-center display-hide" id="error_info" ></div>
                         <input type="text" class="form-control hide" value="" name="role_id"/>
-                        <input type="text" class="form-control hide" value="add" name="operator_type">
                         <div class="form-group">
                             <label class="col-md-3 control-label">用户名
                                 <span class="required"> * </span>
@@ -145,6 +147,64 @@
                         </div>
                     </div>
                 </form>
+
+                <!-- PUSH ROLE FORM BEGIN -->
+                <form action="" id="form_role_push" class="form-horizontal" method="post" style="display: none">
+                    <div class="form-body">
+                        <div class="alert alert-danger text-center display-hide" id="push_error_info" ></div>
+                        <input type="text" name="push_role_id"  class="form-control display-hide"  value=""  />
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">系统用户
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                    <input type="text" name="push_role_name" data-required="1" class="form-control"  value=" " disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="multiple" class="col-md-3 control-label">资产</label>
+                            <div class="col-md-6">
+                                <select id="multiple"  name="assets" class="form-control select2-multiple" multiple>
+                                    {% for asset in assets %}
+                                        <option value="{{ asset.id }}" {% if asset in need_push_asset %}selected{% endif %}>{{ asset.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="multiple" class="col-md-3 control-label">资产组</label>
+                            <div class="col-md-6">
+                                <select id="multiple"  name="asset_groups" class="form-control select2-multiple" multiple>
+                                    {% for asset_group in asset_groups %}
+                                        <option value="{{ asset_group.id }}"{% if asset_group in pushed_asset_groups %}selected{% endif %}>{{ asset_group.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">使用秘钥</label>
+                            <div class="col-md-9">
+                                <label class="mt-checkbox">
+                                    <input type="checkbox" name="use_publicKey" value="1" checked>
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">备注&nbsp;&nbsp;</label>
+                            <div class="col-md-6">
+                                <input name="comment" type="text" class="form-control" />
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- PUSH　ROLE FORM END -->
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn grey-salsa btn-outline" data-dismiss="modal">关闭</button>
@@ -196,45 +256,80 @@
                  }
             }
 
-             var modal = $("#myModal");
-             modal.find(".modal-title").text("编辑资产组");
-             modal.modal({
+            var modal = $("#myModal");
+            modal.find(".modal-title").text("编辑资产组");
+            $("#btn_save").html('保存');
+            document.getElementById("form_role").style.display = 'block';
+            document.getElementById("form_role_push").style.display = 'none';
+            modal.modal({
                  'keyboard': false,
                  'backdrop': 'static'
-             })
+            })
 
         })
     }
 
-      $(document).ready(function(){
+    //推送系统用户
+    function pushRole(id){
+        var url = "{% url 'role_push' %}?id=" + id ;
+        $.get(url, function(res){
+            $("input[name=push_role_name]").val(res.role_name);
+            $("input[name=push_role_id]").val(res.Id);
+            $("input[name=operator_type]").val('push');
+        });
+
+        var modal = $("#myModal");
+        modal.find(".modal-title").text("推送系统用户");
+        $("#btn_save").html('推送');
+        document.getElementById("form_role").style.display = 'none';
+        document.getElementById("form_role_push").style.display = 'block';
+        modal.modal({
+             'keyboard': false,
+             'backdrop': 'static'
+        })
+    }
+
+
+    $(document).ready(function(){
           //添加系统用户
           $("#btn_add").click(function(){
+                document.getElementById("form_role").style.display = 'block';
+                document.getElementById("form_role_push").style.display = 'none';
+
                 document.getElementById("form_role").reset();
                 var modal = $("#myModal");
-                 modal.find(".modal-title").text("添加系统用户");
-                 modal.modal({
+                modal.find(".modal-title").text("添加系统用户");
+                $("#btn_save").html('保存');
+                modal.modal({
                      'keyboard': false,
                      'backdrop': 'static'
-                 })
+                })
           });
 
           //modal 关闭事件
           $("#myModal").on('hidden.bs.modal', function(){
-             $("#error_info").hide()
+             $("#error_info").hide();
+             $("#push_error_info").hide();
           });
 
           //modal save
           $("#btn_save").click(function(){
                 var operator_type = $('input[name=operator_type]').val();
-                var role_id = $('input[name=role_id]').val();
+                var role_id = $('input[name=role_id]').val();  //role id
+                var push_role_id = $('input[name=push_role_id]').val();
                 var save_url = "{% url 'role_add' %}";
+                var pData = $("#form_role").serialize();
                 if (operator_type == 'edit'){
                     save_url = "{% url 'role_edit' %}?id="+ role_id ;
+                }else if(operator_type == 'push'){
+                    save_url = "{% url 'role_push' %}?id=" + push_role_id ;
+                    pData = $("#form_role_push").serialize();
                 }
+
                 $.ajax({
                     method: 'POST',
                     url: save_url,
-                    data: $('#form_role').serialize(),
+                    data: pData,
                     success:function(res){
                         if(res.success){
                             $("#myModal").modal('hide');

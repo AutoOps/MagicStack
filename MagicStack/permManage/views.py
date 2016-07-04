@@ -298,6 +298,8 @@ def perm_role_add(request, res, *args):
                 raise ServerError(u'已经存在该用户 %s' % name)
             if name == "root":
                 raise ServerError(u'禁止使用root用户作为系统用户，这样非常危险！')
+            if name == "":
+                raise ServerError(u'系统用户名为空')
 
             if password:
                 encrypt_pass = CRYPTOR.encrypt(password)
@@ -324,7 +326,7 @@ def perm_role_add(request, res, *args):
             flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
             if flag:
                 # 将数据保存到magicstack上
-                role = PermRole(name=name, comment=comment, password=encrypt_pass, key_path=key_path)
+                role = PermRole.objects.create(name=name, comment=comment, password=encrypt_pass, key_path=key_path)
                 role.sudo = sudos_obj
                 role.save()
                 res['content'] = u"添加系统用户[%s]" % name
@@ -505,7 +507,7 @@ def perm_role_edit(request, res, *args):
             if role_password:
                 encrypt_pass = CRYPTOR.encrypt(role_password)
                 role.password = encrypt_pass
-            # 生成随机密码，生成秘钥对
+            # TODO 生成随机密码，生成秘钥对
             if key_content:
                 try:
                     key_path = gen_keys(key=key_content, key_path_dir=role.key_path)

@@ -44,7 +44,6 @@ def group_add(request,res, *args):
             res['emer_status'] = u"添加用户组[%s]成功"% group_name
             response['success'] = True
         return HttpResponse(json.dumps(response), content_type='application/json')
-    # return my_render('userManage/group_add.html', locals(), request)
 
 
 @require_role(role='super')
@@ -98,7 +97,6 @@ def group_edit(request, res, *args):
         group_id = request.GET.get('id', '')
         user_group = get_object(UserGroup, id=group_id)
         users_selected = User.objects.filter(group=user_group)
-        users_all = User.objects.all()
         rest = dict()
         rest["Id"] = user_group.id
         rest["name"] = user_group.name

@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load mytags %}
 {% block self_head_css_js %}
+        <link href="/static/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+        <link href="/static/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="/static/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
         <link href="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
         <link href="/static/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
@@ -16,7 +18,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="btn-group">
-                            <button id="add_groups" class="btn sbold green">添加规则
+                            <button id="btn_add" class="btn sbold green">添加规则
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
@@ -41,7 +43,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for rule in rules %}
+                    {% for rule in rules_list %}
                     <tr class="gradeX">
                         <td>{{ rule.name }}</td>
                         <td>{{ rule | rule_member_count:"user" }}</td>
@@ -61,7 +63,7 @@
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="{% url 'rule_edit' %}?id={{ rule.id }}" >
+                                        <a href="#" onclick="editRule('{{ rule.id }}')">
                                             编辑 </a>
                                     </li>
                                     <li>
@@ -81,39 +83,224 @@
 </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">添加授权规则</h4>
+            </div>
+            <div class="modal-body">
+                <form action="" id="form_rule" class="form-horizontal" method="post">
+                    <div class="form-body">
+                        <div class="alert alert-danger text-center display-hide" id="error_info" ></div>
+                        <input type="text" class="form-control display-hide" value="" name="rule_id"/>
+                        <input type="text" class="form-control display-hide" value="add" name="operator_type">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">授权规则名称
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                    <input type="text" name="name" data-required="1" class="form-control" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="multiple" class="col-md-3 control-label">用户</label>
+                            <div class="col-md-6">
+                                <select id="mult_user"  name="user" class="form-control select2-multiple" multiple>
+                                    {% for user in users %}
+                                        <option value="{{ user.id }}" >{{ user.name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="help-block"> 用户和用户组必选一个 </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="multiple" class="col-md-3 control-label">用户组</label>
+                            <div class="col-md-6">
+                                <select id="mult_user_group"  name="user_group" class="form-control select2-multiple" multiple>
+                                    {% for user_group in user_groups %}
+                                        <option value="{{ user_group.id }}">{{ user_group.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="help-block"> 用户和用户组必选一个 </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="multiple" class="col-md-3 control-label">资产</label>
+                            <div class="col-md-6">
+                                <select id="mult_asset"  name="asset" class="form-control select2-multiple" multiple>
+                                    {% for asset in assets %}
+                                        <option value="{{ asset.id }}" >{{ asset.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="help-block"> 资产和资产组必选一个 </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="multiple" class="col-md-3 control-label">资产组</label>
+                            <div class="col-md-6">
+                                <select id="mult_asset_group"  name="asset_group" class="form-control select2-multiple" multiple>
+                                    {% for asset_group in asset_groups %}
+                                        <option value="{{ asset_group.id }}" >{{ asset_group.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="help-block"> 资产和资产组必选一个 </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="multiple" class="col-md-3 control-label">系统用户</label>
+                            <div class="col-md-6">
+                                <select id="mult_role"  name="role" class="form-control select2-multiple" multiple>
+                                    {% for role in roles %}
+                                        <option value="{{ role.id }}">{{ role.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">备注&nbsp;&nbsp;</label>
+                            <div class="col-md-6">
+                                <input name="comment" type="text" class="form-control" />
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn grey-salsa btn-outline" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn green" id="btn_save" >保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 {% block self_footer_js %}
+    <script src="/static/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <script src="/static/pages/scripts/components-select2.min.js" type="text/javascript"></script>
     <script src="/static/global/scripts/datatable.js" type="text/javascript"></script>
     <script src="/static/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
     <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
     <script src="/static/pages/scripts/table-datatables-responsive.min.js" type="text/javascript"></script>
 <script>
-      $(document).ready(function(){
-          $('#add_groups').click(function(){
-              window.location.href = "{% url 'rule_add' %}"
-          });
+    //编辑授权规则
+    function editRule(id){
+        var url = "{% url 'rule_edit' %}?id=" + id ;
+        $.get(url, function(res){
+            //设置操作类型 add or edit
+            $("input[name='operator_type']").val('edit');
 
-          $('.del').click(function(){
-              var row = $(this).closest('tr');
-              var url_r = $(this).attr('name');
-              var rule_id = url_r.split('?')[1].split('=')[1];
-                  if (confirm("确认删除")) {
-                        $.ajax({
-                           type: "POST",
-                           url: "{% url 'rule_del' %}",
-                           data: "id=" + rule_id,
-                           success: function(msg){
-                               alert( "成功: " + msg );
-                               row.remove()
-                           },
-                           error: function (msg) {
-                               alert("失败: " + msg)
-                           }
-                        });
-                   }
-          });
+            //设置用户ID
+            $("input[name='rule_id']").val(res.Id);
 
-      })
+            $("input[name='name']").val(res.name);
+            $("input[name='comment']").val(res.comment);
+
+            //设置下拉框的值
+            var mutli_html = {'mult_user': res.user, 'mult_user_group': res.user_group, 'mult_asset':res.asset, 'mult_asset_group':res.asset_group, 'mult_role':res.role};
+            for( p in mutli_html){
+                var select_user = mutli_html[p].split(',');
+                var mutil_select = document.getElementById(p);
+                var options = mutil_select.options;
+
+                //赋值之前先清空之前的选择项
+                for(var k=0; k<options.length; k++){
+                    options[k].selected = false
+                }
+
+                //selected 赋值
+                for (var i=0; i<select_user.length; i++){
+                     for (var j=0; j<options.length; j++){
+                         if(options[j].value == select_user[i]){
+                             options[j].selected = 'selected'
+                         }
+                     }
+                }
+            }
+
+
+             var modal = $("#myModal");
+             modal.find(".modal-title").text("编辑授权规则");
+             modal.modal({
+                 'keyboard': false,
+                 'backdrop': 'static'
+             })
+
+        })
+    }
+
+    $(document).ready(function(){
+        //添加授权规则
+        $("#btn_add").click(function(){
+            document.getElementById("form_rule").reset();
+            var modal = $("#myModal");
+             modal.find(".modal-title").text("添加授权规则");
+             modal.modal({
+                 'keyboard': false,
+                 'backdrop': 'static'
+             })
+        });
+
+        //modal 关闭事件
+        $("#myModal").on('hidden.bs.modal', function(){
+             $("#error_info").hide()
+        });
+
+        //modal save
+        $("#btn_save").click(function(){
+            var operator_type = $('input[name=operator_type]').val();
+            var rule_id = $('input[name=rule_id]').val();
+            var save_url = "{% url 'rule_add' %}";
+            if (operator_type == 'edit'){
+                save_url = "{% url 'rule_edit' %}?id="+ rule_id ;
+            }
+            $.ajax({
+                method: 'POST',
+                url: save_url,
+                data: $('#form_rule').serialize(),
+                success:function(res){
+                    if(res.success){
+                        $("#myModal").modal('hide');
+                        window.location.reload()
+                    }else{
+                        $("#error_info").text(res.error).show()
+                    }
+                }
+            })
+        });
+
+
+        $('.del').click(function(){
+          var row = $(this).closest('tr');
+          var url_r = $(this).attr('name');
+          var rule_id = url_r.split('?')[1].split('=')[1];
+              if (confirm("确认删除")) {
+                    $.ajax({
+                       type: "POST",
+                       url: "{% url 'rule_del' %}",
+                       data: "id=" + rule_id,
+                       success: function(msg){
+                           alert( "成功: " + msg );
+                           row.remove()
+                       },
+                       error: function (msg) {
+                           alert("失败: " + msg)
+                       }
+                    });
+               }
+      });
+
+    })
 </script>
 {% endblock %}
 

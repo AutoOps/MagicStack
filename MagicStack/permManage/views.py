@@ -34,55 +34,14 @@ def perm_rule_list(request):
     """
     # 渲染数据
     header_title, path1, path2 = "授权规则", "规则管理", "查看规则"
-    # 获取所有规则
     rules_list = PermRule.objects.all()
-    rule_id = request.GET.get('id')
-    # TODO: 搜索和分页
-    keyword = request.GET.get('search', '')
-    if rule_id:
-        rules_list = rules_list.filter(id=rule_id)
-
-    if keyword:
-        rules_list = rules_list.filter(Q(name=keyword))
-
-    rules_list, p, rules, page_range, current_page, show_first, show_end = pages(rules_list, request)
-
+    users = User.objects.all()
+    user_groups = UserGroup.objects.all()
+    assets = Asset.objects.all()
+    asset_groups = AssetGroup.objects.all()
+    roles = PermRole.objects.all()
     return my_render('permManage/perm_rule_list.html', locals(), request)
 
-
-@require_role('admin')
-def perm_rule_detail(request):
-    """
-    rule detail page
-    授权详情
-    """
-    # 渲染数据
-    header_title, path1, path2 = "授权规则", "规则管理", "规则详情"
-
-    # 根据rule_id 取得rule对象
-    try:
-        if request.method == "GET":
-            rule_id = request.GET.get("id")
-            if not rule_id:
-                raise ServerError("Rule Detail - no rule id get")
-            rule_obj = PermRule.objects.get(id=rule_id)
-            user_obj = rule_obj.user.all()
-            user_group_obj = rule_obj.user_group.all()
-            asset_obj = rule_obj.asset.all()
-            asset_group_obj = rule_obj.asset_group.all()
-            roles_name = [role.name for role in rule_obj.role.all()]
-
-            # 渲染数据
-            roles_name = ','.join(roles_name)
-            rule = rule_obj
-            users = user_obj
-            user_groups = user_group_obj
-            assets = asset_obj
-            asset_groups = asset_group_obj
-    except ServerError, e:
-        logger.warning(e)
-
-    return my_render('permManage/perm_rule_detail.html', locals(), request)
 
 @require_role('admin')
 @user_operator_record
@@ -91,18 +50,10 @@ def perm_rule_add(request, res, *args):
     add rule page
     添加授权
     """
-    header_title, path1, path2 = "授权规则", "规则管理", "添加规则"
-    res['operator'] = path2
+    response = {'success': False, 'error': ''}
+    res['operator'] = "添加授权规则"
     res['emer_content'] = 6
-    # 渲染数据, 获取所有 用户,用户组,资产,资产组,用户角色, 用于添加授权规则
-    users = User.objects.all()
-    user_groups = UserGroup.objects.all()
-    assets = Asset.objects.all()
-    asset_groups = AssetGroup.objects.all()
-    roles = PermRole.objects.all()
-
     if request.method == 'POST':
-        # 获取用户选择的 用户,用户组,资产,资产组,用户角色
         users_select = request.POST.getlist('user', [])  # 需要授权用户
         user_groups_select = request.POST.getlist('user_group', [])  # 需要授权用户组
         assets_select = request.POST.getlist('asset', [])  # 需要授权资产
@@ -144,8 +95,7 @@ def perm_rule_add(request, res, *args):
                                       % (role.name, ','.join([asset.name for asset in need_push_asset])))
 
             # 仅授权成功的，写回数据库(授权规则,用户,用户组,资产,资产组,用户角色)
-            rule = PermRule(name=rule_name, comment=rule_comment)
-            rule.save()
+            rule = PermRule.objects.create(name=rule_name, comment=rule_comment)
             rule.user = users_obj
             rule.user_group = user_groups_obj
             rule.asset = assets_obj
@@ -153,16 +103,14 @@ def perm_rule_add(request, res, *args):
             rule.role = roles_obj
             rule.save()
 
-            msg = u"添加授权规则：[%s]" % rule.name
-            res['content'] = msg
-            res['emer_status'] = msg + u"成功"
-            return HttpResponseRedirect(reverse('rule_list'))
+            res['content'] = u"添加授权规则：[%s]" % rule.name
+            res['emer_status'] = u"添加授权规则：[%s]成功" % rule.name
+            response['success'] = True
         except ServerError, e:
-            error = e.message
             res['flag'] = 'false'
-            res['content'] = error
-            res['emer_status'] = u"添加授权规则[{0}]失败:{1}".format(rule_name,error)
-    return my_render('permManage/perm_rule_add.html', locals(), request)
+            res['content'] = e.message
+            res['emer_status'] = response['error'] = u"添加授权规则[{0}]失败:{1}".format(rule_name,e.message)
+        return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role('admin')
@@ -171,23 +119,32 @@ def perm_rule_edit(request, res, *args):
     """
     edit rule page
     """
-    # 渲染数据
-    header_title, path1, path2 = "授权规则", "规则管理", "编辑授权规则"
-    res['operator'] = path2
+    res['operator'] = "编辑授权规则"
     res['emer_content'] = 6
-    rule_id = request.GET.get("id")
-    rule = get_object(PermRule, id=rule_id)
-    rule_name_old = rule.name
-    # 渲染数据, 获取所选的rule对象
-
-    users = User.objects.all()
-    user_groups = UserGroup.objects.all()
-    assets = Asset.objects.all()
-    asset_groups = AssetGroup.objects.all()
-    roles = PermRole.objects.all()
-
-    if request.method == 'POST' and rule_id:
-        # 获取用户选择的 用户,用户组,资产,资产组,用户角色
+    if request.method == 'GET':
+        try:
+            rule_id = request.GET.get("id")
+            rule = get_object(PermRule, id=int(rule_id))
+            if rule:
+                rest = {}
+                rest['Id'] = rule.id
+                rest['name'] = rule.name
+                rest['comment'] = rule.comment
+                rest['asset'] = ','.join([str(item.id) for item in rule.asset.all()])
+                rest['asset_group'] = ','.join(str(item.id) for item in rule.asset_group.all())
+                rest['user'] = ','.join(str(item.id) for item in rule.user.all())
+                rest['user_group'] = ','.join(str(item.id) for item in rule.user_group.all())
+                rest['role'] = ','.join(str(item.id) for item in rule.role.all())
+                return HttpResponse(json.dumps(rest), content_type='application/json')
+            else:
+                return HttpResponse(u'授权规则不存在')
+        except Exception as e:
+            logger.error(e)
+    else:
+        response = {'success': False, 'error': ''}
+        rule_id = request.GET.get("id")
+        rule = get_object(PermRule, id=int(rule_id))
+        rule_name_old = rule.name
         rule_name = request.POST.get('name')
         rule_comment = request.POST.get("comment")
         users_select = request.POST.getlist('user', [])
@@ -230,17 +187,14 @@ def perm_rule_edit(request, res, *args):
             rule.name = rule_name
             rule.comment = rule_comment
             rule.save()
-            msg = u"编辑授权规则[%s]成功" % rule_name_old
-            res['content'] = msg
-            res['emer_status'] = msg
-            return HttpResponseRedirect(reverse('rule_list'))
-        except ServerError, e:
-            error = e
+            res['content'] = u"编辑授权规则[%s]成功" % rule_name_old
+            res['emer_status'] = u"编辑授权规则[%s]成功" % rule_name_old
+            response['success'] = True
+        except Exception, e:
             res['flag'] = 'false'
-            res['content'] = e
-            res['emer_status'] = u"编辑授权规则[{0}]失败:{1}".format(rule_name_old,e)
-
-    return my_render('permManage/perm_rule_edit.html', locals(), request)
+            res['content'] = e.message
+            res['emer_status'] = response['error'] = u"编辑授权规则[{0}]失败:{1}".format(rule_name_old,e.message)
+        return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role('admin')
@@ -726,11 +680,9 @@ def push_role_event(request):
                                                                         ','.join(failed_asset.keys()),
                                                                         ','.join(success_asset.keys()))
                     response['message'] = error
-
-                return HttpResponse(json.dumps(response), content_type='application/json')
         except Exception as e:
             response['message'] = e
-            return HttpResponse(json.dumps(response), content_type='application/json')
+        return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role('admin')

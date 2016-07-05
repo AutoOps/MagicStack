@@ -4,7 +4,6 @@ from permManage.views import *
 urlpatterns = patterns('permManage.views',
                        url(r'^rule/list/$', perm_rule_list, name='rule_list'),
                        url(r'^rule/add/$', perm_rule_add, name='rule_add'),
-                       url(r'^rule/detail/$', perm_rule_detail, name='rule_detail'),
                        url(r'^rule/edit/$', perm_rule_edit, name='rule_edit'),
                        url(r'^rule/del/$', perm_rule_delete, name='rule_del'),
                        url(r'^role/list/$', perm_role_list, name='role_list'),

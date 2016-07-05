@@ -29,7 +29,7 @@ def group_add(request,res, *args):
             if not group_name:
                 raise ServerError(u'组名 不能为空')
 
-            group_test = get_object(UserGroup, name = group_name)
+            group_test = get_object(UserGroup, name=group_name)
             if group_test:
                 raise ServerError(u'用户组已存在')
 

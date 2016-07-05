@@ -223,19 +223,23 @@
 
     $(document).ready(function(){
         //删除单个机房
-        $('.del').click(function(){
+
+         $('.del').click(function(){
               var row = $(this).closest('tr');
+              var href_url = $(this).attr('name').split('?')[0];
+              var del_id = $(this).attr('name').split('?')[1].split('=')[1];
               if (confirm("确定删除?")) {
-                $.get(
-                    $(this).attr('name'),
-                    {},
+                $.post(
+                    href_url,
+                    {'id': del_id },
                     function(data){
                         alert(data);
                         row.remove();
                     }
                 )
               }
-        });
+          });
+
 
         //添加资产组
         $("#btn_add").click(function(){
@@ -277,24 +281,22 @@
         });
 
 
-        //删除所选
-        $('#del_btn').click(function(){
+         $('#del_btn').click(function(){
             var check_array = [];
-            if (confirm('确定删除')){
-                $('tr.gradeX input:checked').each(function(){
-                    check_array.push($(this).attr('value'))
+            if (confirm("确定删除")) {
+                $(".gradeX input:checked").each(function() {
+                    check_array.push($(this).attr("value"))
                 });
-                $.get(
-                        '{% url "idc_del" %}',
-                        {id: check_array.join(',')},
-                        function(data){
-                            alert(data);
-                            $('tr.gradeX input:checked').closest('tr').remove();
+                $.post("{% url 'idc_del' %}",
+                    {id: check_array.join(",")},
+                    function(result){
+                        alert(result);
+                        $(".gradeX input:checked").closest("tr").remove();
 
-                        }
+                    }
                 )
             }
-        });
+          });
     });
 </script>
 {% endblock %}

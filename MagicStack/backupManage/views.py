@@ -1171,43 +1171,45 @@ def backup_order(objs, backup_type, request):
     """
         根据指定备份类型，进行排序，需要结合前台的各字段含义进行解析
     """
-    # 1. 查看是否有；排序的列
-    iSortingCols = int(request.POST.get('iSortingCols', 0))
-    if not iSortingCols:
-        return objs
-
-    # 2. 查看是否有可用的排序列
-    pattern = re.compile(r'bSortable_\d+') # 可排序列
-    columns = filter(lambda x: pattern.match(x), list(request.POST))
-    sort_columns = []
-
-    for col in columns:
-        if request.POST.get(col):
-            sort_columns.append(col)
-
-    if not sort_columns:
-        return objs
-
-    # 3. 根据不同备份类型，前台对应排序列有所区别
-    if backup_type == 'db':
-
-        for idx in range(0, iSortingCols):
-            # 得到排序列索引
-            sort_idx = request.POST.get('iSortCol_{0}'.format(idx))
-            # 得到排序方向
-            fx = request.POST.get('sSortDir_{0}'.format(idx))
-            # 得到排序列名字
-            cname = request.POST.get('mDataProp_{0}'.format(sort_idx))
-            if fx == 'desc':
-                objs = objs.order_by('-{0}'.format(cname))
-            else:
-                objs = objs.order_by(cname)
-    elif backup_type == 'file':
-        pass
-    elif backup_type == 'path':
-        pass
-
-    return objs
+    # todo 统一按照id倒叙排序
+    return objs.order_by('-id')
+    # # 1. 查看是否有；排序的列
+    # iSortingCols = int(request.POST.get('iSortingCols', 0))
+    # if not iSortingCols:
+    #     return objs
+    #
+    # # 2. 查看是否有可用的排序列
+    # pattern = re.compile(r'bSortable_\d+') # 可排序列
+    # columns = filter(lambda x: pattern.match(x), list(request.POST))
+    # sort_columns = []
+    #
+    # for col in columns:
+    #     if request.POST.get(col):
+    #         sort_columns.append(col)
+    #
+    # if not sort_columns:
+    #     return objs
+    #
+    # # 3. 根据不同备份类型，前台对应排序列有所区别
+    # if backup_type == 'db':
+    #
+    #     for idx in range(0, iSortingCols):
+    #         # 得到排序列索引
+    #         sort_idx = request.POST.get('iSortCol_{0}'.format(idx))
+    #         # 得到排序方向
+    #         fx = request.POST.get('sSortDir_{0}'.format(idx))
+    #         # 得到排序列名字
+    #         cname = request.POST.get('mDataProp_{0}'.format(sort_idx))
+    #         if fx == 'desc':
+    #             objs = objs.order_by('-{0}'.format(cname))
+    #         else:
+    #             objs = objs.order_by(cname)
+    # elif backup_type == 'file':
+    #     pass
+    # elif backup_type == 'path':
+    #     pass
+    #
+    # return objs
 
 
 def get_backup_list(request, backup_type='db'):
@@ -1309,6 +1311,62 @@ def pathbackup_list(request):
         pass
 
 
+def get_files(result):
+    r = json.loads(result)
+    r_str = ''
+    for k in sorted(r.keys()):
+        r_str += r[k].replace('\r\n', '')
+    p = re.compile(r'(?P<ip>\d+\.\d+\.\d+\.\d+) | (?P<result>SUCCESS|FAILED!) => (?P<info>{.*?})')
+    m = re.findall(p, r_str)
+    # 构造数据
+    res = []
+    for i, v in enumerate(m[:2]):
+        try:
+            content = m[i * 2 + 1]
+            if content[1] == 'SUCCESS':
+                res.extend(json.loads(content[2]).get('backup_success_file'))
+        except:
+            pass
+    return res
+
+
+@require_role('admin')
+def backup_download(request):
+    """
+        现在备份文件
+    """
+    backup_id = request.GET.get('backup_id', None)
+    job_id = request.GET.get('job_id', None)
+    ftp_file_info = request.GET.get('ftp_file_info', None)
+    backup = Backup.objects.filter(task_uuid=job_id).first()
+    link = ""
+    params = {}
+    # 调用proxy接口，
+    try:
+        init_kwargs = json.loads(backup.ext1)
+        params['action'] = 'download'
+        params['file_path'] = ftp_file_info
+        params['file_name'] = ftp_file_info.split(os.sep)[-1]
+        params['ftp_host'] = init_kwargs.get('ftp_host')
+        params['ftp_port'] = init_kwargs.get('ftp_port')
+        params['ftp_pwd'] = init_kwargs.get('ftp_password')
+        params['ftp_user'] = init_kwargs.get('ftp_user_name')
+        api = APIRequest(
+            '{0}/v1.0/download'.format(backup.proxy.url, backup.task_uuid),
+            backup.proxy.username,
+            CRYPTOR.decrypt(backup.proxy.password))
+        result, code = api.req_post(json.dumps(params))
+        if code != 200:
+            raise ServerError(result['messege'])
+        else:
+            link = result['link']
+    except:
+        logger.error("GET BACKUP TAST EXEC INFO ERROR\n {0}".format(traceback.format_exc()))
+        return HttpResponse("下载失败")
+
+    return HttpResponseRedirect("{0}/v1.0/download?link_id={1}".format(backup.proxy.url, link))
+
+
 @require_role('admin')
 def backup_exec_info(request):
     """
@@ -1348,13 +1406,15 @@ def backup_exec_info(request):
                 tasks = result['result']['tasks']
                 total_count = result['result']['total_count']
                 display_lsit = []
+
                 for task in tasks:
                     display_lsit.append({
                         'start_time': task.get('start_time'),
                         'end_time': task.get('end_time'),
                         'status': task.get('status'),
                         'id': task.get('id'),
-                        'job_id': task.get('job_id')
+                        'job_id': task.get('job_id'),
+                        'download_files': get_files(task.get('result'))
                     })
 
                 return_obj['aaData'] = display_lsit
@@ -1362,7 +1422,6 @@ def backup_exec_info(request):
                 return_obj['iTotalDisplayRecords'] = total_count
         except:
             logger.error("GET BACKUP TAST EXEC INFO ERROR\n {0}".format(traceback.format_exc()))
-
         return HttpResponse(json.dumps(return_obj))
 
 
@@ -1387,22 +1446,4 @@ def backup_exec_replay(request):
 
     else:
         return HttpResponse("ERROR METHOD!")
-
-
-def read_file(filename, buf_size=8192):
-    with open(filename, "rb") as f:
-        while True:
-            content = f.read(buf_size)
-            if content:
-                yield content
-            else:
-                break
-
-
-def backup_download(request):
-    logger.info(">>>>>>>>>>>>>>>>>>>")
-    filename = "/var/MagicStack/MagicStack/t2cloud.zip"
-    response = HttpResponse(read_file(filename))
-    return response
-
 

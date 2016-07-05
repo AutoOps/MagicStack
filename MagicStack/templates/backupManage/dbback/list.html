@@ -755,7 +755,16 @@ $(document).ready(function () {
                 }
 
                 // 设置操作连接
-                $('td:eq(3)', nRow).html("<a href='#' class='btn btn-link' name='replay' value=\"{% url 'backup_exec_replay' %}?backup_id=" + aData.id + "&job_id=" + aData.job_id + "\">回放</a>");
+
+                var td3_html = "";
+                if(aData.download_files.length > 0 ){
+                    $.each(aData.download_files, function (i, item) {
+                        td3_html += "<a href={% url 'backup_download' %}?backup_id=" + aData.id + "&job_id=" + aData.job_id + "&ftp_file_info=" + item + "  target='_blank' class='btn btn-link' name='download'\>" + item + "</a>"
+                    });
+                }else{
+                    td3_html = "<a href='#' class='btn btn-link' name='replay' value=\"{% url 'backup_exec_replay' %}?backup_id=" + aData.id + "&job_id=" + aData.job_id + "\">备份回放</a>";
+                }
+                $('td:eq(3)', nRow).html(td3_html);
 
             },
 

@@ -25,8 +25,8 @@ MEDIA_TYPE = (
 
 class EmergencyType(models.Model):
     name = models.CharField(max_length=100, verbose_name=u'告警媒介名字')
-    type = models.CharField(max_length=100, verbose_name=u'告警媒介类型')
-    status = models.CharField(max_length=20, verbose_name=u'使用状态')
+    type = models.CharField(max_length=10, verbose_name=u'告警媒介类型')
+    status = models.CharField(max_length=10, verbose_name=u'使用状态')
     detail = models.TextField(verbose_name=u'详情 ')
     smtp_server = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'发送邮件服务器')
     smtp_server_port = models.IntegerField(blank=True, null=True, verbose_name=u'服务器端口')

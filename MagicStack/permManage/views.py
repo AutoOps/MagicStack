@@ -706,8 +706,9 @@ def perm_sudo_add(request, res, *args):
     list sudo commands alias
     """
     # 渲染数据
-    header_title, path1, path2 = "Sudo命令", "别名管理", "添加别名"
-    res['operator'] = path2
+    # header_title, path1, path2 = "Sudo命令", "别名管理", "添加别名"
+    res['operator'] = u"添加别名"
+    response={'success':False,'error':''}
     res['emer_content'] = 6
     try:
         if request.method == "POST":
@@ -725,10 +726,9 @@ def perm_sudo_add(request, res, *args):
             commands = ', '.join(deal_all_commands)
             logger.debug(u'添加sudo %s: %s' % (name, commands))
 
-            if get_object(PermSudo, name=name):
-                error = 'Sudo别名 %s已经存在' % name
-                res['flag'] = 'false'
-                res['content'] = error
+            sudo_name_test = get_object(PermSudo, name=name)
+            if sudo_name_test:
+                raise ServerError(u"别名[%s]已存在" %name)
 
             proxy_list = Proxy.objects.all()
             data = {'name': name,
@@ -743,18 +743,19 @@ def perm_sudo_add(request, res, *args):
                 res['emer_status'] = msg
                 sudo = PermSudo(name=name.strip(), comment=comment, commands=commands)
                 sudo.save()
-                return HttpResponseRedirect(reverse('sudo_list'))
+                response['success'] = True
+                return HttpResponse(json.dumps(response), content_type='application/json')
             else:
-                msg = u"添加Sudo命令别名[%s]失败" % name
-                res['flag'] = 'false'
-                res['content'] = msg
-                res['emer_status'] = msg
-    except ServerError, e:
-        error = e
+                raise ServerError(u"添加Sudo命令别名[%s]失败" %name)
+
+    except ServerError as e:
         res['flag'] = 'false'
-        res['content'] = error
-        res['emer_status'] = u"添加Sudo命令别名失败:%s" % (e)
-    return my_render('permManage/perm_sudo_add.html', locals(), request)
+        res['content'] = e.message
+        res['emer_status'] = u"添加Sudo命令别名失败:%s" % (e.message)
+        response['error'] = e.message
+    return HttpResponse(json.dumps(response), content_type='application/json')
+
+
 
 
 @require_role('admin')
@@ -770,13 +771,35 @@ def perm_sudo_edit(request, res, *args):
     sudo_id = request.GET.get("id")
     sudo = PermSudo.objects.get(id=sudo_id)
     try:
+        if request.method == "GET":
+            sudo_id = request.GET.get("id")
+            sudo = PermSudo.objects.get(id=sudo_id)
+            rest = {}
+            rest['Id'] = sudo.id
+            rest['name'] = sudo.name
+            rest['commands'] = sudo.commands
+            rest['comment'] = sudo.comment
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+
         if request.method == "POST":
+            sudo_id = request.GET.get("id")
+            sudo = PermSudo.objects.get(id=int(sudo_id))
+            response = {'success':False,'error':''}
             name = request.POST.get("sudo_name").upper()
             commands = request.POST.get("sudo_commands")
             comment = request.POST.get("sudo_comment")
 
             if not name or not commands:
                 raise ServerError(u"sudo name 和 commands是必填项!")
+
+
+            old_name = sudo.name
+            if old_name == name:
+                if len(PermSudo.objects.filter(name=name)) > 1:
+                    raise ServerError(u'SUDO[%s]已存在' % name)
+            else:
+                if len(PermSudo.objects.filter(name=name)) > 0:
+                    raise ServerError(u'SUDO[%s]已存在' % name)
 
             pattern = re.compile(r'[\n,\r]')
             deal_space_commands = list_drop_str(pattern.split(commands), u'')
@@ -798,17 +821,18 @@ def perm_sudo_edit(request, res, *args):
                 sudo.commands = commands
                 sudo.comment = comment
                 sudo.save()
+                response['success'] = True
+
             else:
                 msg = u"添加Sudo命令别名[%s]失败" % sudo.name
-                res['flag'] = 'false'
-                res['content'] = msg
-                res['emer_status'] = msg
-    except ServerError, e:
-        error = e
+                raise ServerError(msg)
+
+    except ServerError as e:
         res['flag'] = 'false'
-        res['content'] = e
+        res['content'] = u'编辑别名失败:[%s]'%e.message
         res['emer_status'] = u"添加Sudo命令别名失败:%s"%(e)
-    return my_render('permManage/perm_sudo_edit.html', locals(), request)
+        response ['error'] = e.message
+    return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role('admin')

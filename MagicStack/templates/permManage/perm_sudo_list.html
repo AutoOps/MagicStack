@@ -1,14 +1,10 @@
 {% extends 'base.html' %}
 {% load mytags %}
 {% block self_head_css_js %}
-        <!-- BEGIN PAGE LEVEL PLUGINS -->
-        <link href="/static/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-        <link href="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
-        <!-- END PAGE LEVEL PLUGINS -->
-        <!-- BEGIN THEME GLOBAL STYLES -->
-        <link href="/static/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
-        <link href="/static/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
-        <!-- END THEME GLOBAL STYLES -->
+    <link href="/static/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="/static/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="/static/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
 
@@ -22,7 +18,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-                                <button id="add_groups" class="btn sbold green">添加别名
+                                <button class="btn sbold green" id="btn_add">添加别名
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
@@ -51,7 +47,7 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
-                                                <a href="{% url 'sudo_edit' %}?id={{ sudo.id }}">
+                                                 <a href="#"  onclick="edit_Sudo('{{ sudo.id }}')">
                                                     编辑 </a>
                                             </li>
                                             <li>
@@ -71,39 +67,147 @@
     </div>
 </div>
 
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">添加别名</h4>
+              </div>
+              <div class="modal-body">
+                  <form action="" id="form_sudo" class="form-horizontal" method="post">
+                    <div class="form-body">
+                        <div class="alert alert-danger text-center display-hide" id="error_info" ></div>
+                        <input type="text" class="form-control display-hide" value="" name="sudo_id"/>
+                        <input type="text" class="form-control display-hide" value="add" name="operator_type">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">命令别名
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-6">
+                                <input type="text" name="sudo_name" data-required="1" class="form-control" /> </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">系统命令
+                                <span class="required"> * </span>
+                            </label>
+                            <div class="col-md-6">
+                                <textarea name="sudo_commands" id="sudo_commands" data-required="1" class="form-control"  placeholder="/bin/grep, /bin/find"></textarea>
+                                <span class="help-block"> sudo命令，逗号分隔, 不支持换行 </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">备注&nbsp;&nbsp;</label>
+                            <div class="col-md-6">
+                                <input name="sudo_comment" type="text" class="form-control" />
+                                <span class="help-block"> optional field </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn grey-salsa btn-outline" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn green" id="btn_save">保存</button>
+              </div>
+        </div>
+    </div>
+</div>
+
+<!-->
+
+
+
 {% endblock %}
 {% block self_footer_js %}
-    <!-- BEGIN PAGE LEVEL PLUGINS -->
     <script src="/static/global/scripts/datatable.js" type="text/javascript"></script>
     <script src="/static/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
     <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-    <!-- END PAGE LEVEL PLUGINS -->
-    <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="/static/pages/scripts/table-datatables-managed.min.js" type="text/javascript"></script>
-    <!-- END PAGE LEVEL SCRIPTS -->
 <script>
-      $(document).ready(function(){
-          $('#add_groups').click(function(){
-              window.location.href = "{% url 'sudo_add' %}"
-          });
+      //编辑资产组
+    function edit_Sudo(id){
+        var url = "{% url 'sudo_edit' %}?id=" + id ;
+        $.get(url, function(res){
+            //设置操作类型 add or edit
+            $("input[name=operator_type]").val('edit');
 
-          $('.del').click(function(){
+            //设置SUDO ID
+            $("input[name=sudo_id]").val(res.Id);
+            $("input[name=sudo_name]").val(res.name);
+            $("input[name=sudo_comment]").val(res.comment);
+            document.getElementById("sudo_commands").value = res.commands;
+
+
+             var modal = $("#myModal");
+             modal.find(".modal-title").text("编辑SUDO");
+             modal.modal({
+                 'keyboard': false,
+                 'backdrop': 'static'
+             })
+
+        })
+    }
+
+
+    $(document).ready(function(){
+       $('.del').click(function(){
               var row = $(this).closest('tr');
-              var url_r = $(this).attr('name').split('?')[0];
-              var sudo_id = $(this).attr('name').split('?')[1].split('=')[1];
               if (confirm("确定删除?")) {
                 $.post(
-                    url_r,
-                    {'id': sudo_id},
+                    $(this).attr('name'),
+                    {},
                     function(data){
-                        row.remove();
                         alert(data);
+                        row.remove();
                     }
                 )
               }
-          });
-      })
+        });
+
+        //添加SUDO
+        $("#btn_add").click(function(){
+            document.getElementById("form_sudo").reset();
+            var modal = $("#myModal");
+             modal.find(".modal-title").text("添加别名");
+             modal.modal({
+                 'keyboard': false,
+                 'backdrop': 'static'
+             })
+        });
+
+        //modal 关闭事件
+         $("#myModal").on('hidden.bs.modal', function(){
+             $("#error_info").hide()
+         });
+
+        //modal save
+        $("#btn_save").click(function(){
+            var operator_type = $('input[name=operator_type]').val();
+            var sudo_id = $('input[name=sudo_id]').val();
+            var save_url = "{% url 'sudo_add' %}";
+            if (operator_type == 'edit'){
+                save_url = "{% url 'sudo_edit' %}?id="+ sudo_id ;
+            }
+            $.ajax({
+                method: 'POST',
+                url: save_url,
+                data: $('#form_sudo').serialize(),
+                success:function(res){
+                    if(res.success){
+                        $("#myModal").modal('hide');
+                        window.location.reload()
+                    }else{
+                        $("#error_info").text(res.error).show()
+                    }
+                }
+            })
+        });
+
+    });
 </script>
 {% endblock %}
-
-

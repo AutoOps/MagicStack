@@ -66,7 +66,7 @@ def perm_rule_add(request, res, *args):
             rule = get_object(PermRule, name=rule_name)
 
             if rule:
-                raise ServerError(u'授权规则 %s 已存在' % rule_name)
+                raise ServerError(u'授权规则名称已存在')
 
             if not rule_name or not roles_select:
                 raise ServerError(u'系统用户名称和规则名称不能为空')
@@ -156,6 +156,12 @@ def perm_rule_edit(request, res, *args):
         try:
             if not rule_name or not roles_select:
                 raise ServerError(u'系统用户和关联系统用户不能为空')
+            if rule_name_old == rule_name:
+                if len(PermRule.objects.filter(name=rule_name)) > 1:
+                    raise ServerError(u'授权规则名称已存在')
+            else:
+                if len(PermRule.objects.filter(name=rule_name)) > 0:
+                    raise ServerError(u'授权规则名称已存在')
 
             assets_obj = [Asset.objects.get(id=asset_id) for asset_id in assets_select]
             asset_groups_obj = [AssetGroup.objects.get(id=group_id) for group_id in asset_groups_select]
@@ -814,7 +820,7 @@ def perm_sudo_edit(request, res, *args):
             message = save_or_delete('PermSudo', data, proxy_list, sudo_id, 'update')
             flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
             if flag :
-                msg = u"添加Sudo命令别名[%s]成功" % sudo.name
+                msg = u"编辑Sudo命令别名[%s]成功" % sudo.name
                 res['content'] = msg
                 res['emer_status'] = msg
                 sudo.name = name.strip()
@@ -824,13 +830,13 @@ def perm_sudo_edit(request, res, *args):
                 response['success'] = True
 
             else:
-                msg = u"添加Sudo命令别名[%s]失败" % sudo.name
+                msg = u"编辑Sudo命令别名[%s]失败" % sudo.name
                 raise ServerError(msg)
 
     except ServerError as e:
         res['flag'] = 'false'
         res['content'] = u'编辑别名失败:[%s]'%e.message
-        res['emer_status'] = u"添加Sudo命令别名失败:%s"%(e)
+        res['emer_status'] = u"编辑Sudo命令别名失败:%s"%(e)
         response ['error'] = e.message
     return HttpResponse(json.dumps(response), content_type='application/json')
 

@@ -111,8 +111,14 @@ def group_edit(request,res, *args):
             if not name:
                 raise ServerError(u'组名不能为空')
 
-            if AssetGroup.objects.filter(name=name).count() > 1:
-                raise ServerError(u"该组名 %s 已存在" % name)
+            old_name =group.name
+            if old_name == name:
+                if len(AssetGroup.objects.filter(name=name)) > 1:
+                    raise ServerError(u'用户组[%s]已存在' % name)
+            else:
+                if len(AssetGroup.objects.filter(name=name)) > 0:
+                    raise ServerError(u'用户组[%s]已存在' % name)
+
         except ServerError as e:
             res['flag'] = 'false'
             res['content'] = e
@@ -812,8 +818,15 @@ def idc_edit(request, res, *args):
             if not idc_name:
                 raise ServerError(u'IDC不能为空')
 
-            if IDC.objects.filter(name=idc_name).count() > 1:
-                raise ServerError(u"IDC[%s]已存在" % idc_name)
+            old_name =idc.name
+            if old_name == idc_name:
+                if len(IDC.objects.filter(name=idc_name)) > 1:
+                    raise ServerError(u'IDC[%s]已存在' % idc_name)
+            else:
+                if len(IDC.objects.filter(name=idc_name)) > 0:
+                    raise ServerError(u'IDC[%s]已存在' % idc_name)
+            # if IDC.objects.filter(name=idc_name).count() > 1:
+            #     raise ServerError(u"IDC[%s]已存在" % idc_name)
 
             idc.name = idc_name
             idc.bandwidth = idc_bandwidth
@@ -830,8 +843,8 @@ def idc_edit(request, res, *args):
         except Exception as e:
             # logger.error(e.message)
             res['flag'] = 'false'
-            res['content'] = u'编辑IDC失败:[%s]'%e.message
-            response['error'] = e.message
+            res['content'] = u'编辑IDC失败:%s'%e.message
+            response['error'] =  res['content']
     return HttpResponse(json.dumps(response), content_type='application/json')
 
 

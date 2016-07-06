@@ -14,136 +14,6 @@ API_DIR = os.path.dirname(os.path.abspath(__file__))
 ANSIBLE_DIR = os.path.join(API_DIR, 'playbooks')
 
 
-
-class AnsibleError(StandardError):
-    """
-    the base AnsibleError which contains error(required),
-    data(optional) and message(optional).
-    存储所有Ansible 异常对象
-    """
-    def __init__(self, error, data='', message=''):
-        super(AnsibleError, self).__init__(message)
-        self.error = error
-        self.data = data
-        self.message = message
-
-
-class CommandValueError(AnsibleError):
-    """
-    indicate the input value has error or invalid. 
-    the data specifies the error field of input form.
-    输入不合法 异常对象
-    """
-    def __init__(self, field, message=''):
-        super(CommandValueError, self).__init__('value:invalid', field, message)
-
-
-
-
-
-    @property
-    def results(self):
-        """
-        {'failed': {'localhost': ''}, 'ok': {'jumpserver': ''}}
-        """
-        result = {'failed': {}, 'ok': {}}
-        dark = self.results_raw.get('dark')
-        contacted = self.results_raw.get('contacted')
-        if dark:
-            for host, info in dark.items():
-                result['failed'][host] = info.get('msg')
-
-        if contacted:
-            for host, info in contacted.items():
-                if info.get('invocation').get('module_name') in ['raw', 'shell', 'command', 'script']:
-                    if info.get('rc') == 0:
-                        result['ok'][host] = info.get('stdout') + info.get('stderr')
-                    else:
-                        result['failed'][host] = info.get('stdout') + info.get('stderr')
-                else:
-                    if info.get('failed'):
-                        result['failed'][host] = info.get('msg')
-                    else:
-                        result['ok'][host] = info.get('changed')
-        return result
-
-
-
-
-    @property
-    def result(self):
-        result = {}
-        for k, v in self.results_raw.items():
-            if k == 'dark':
-                for host, info in v.items():
-                    result[host] = {'dark': info.get('msg')}
-            elif k == 'contacted':
-                for host, info in v.items():
-                    result[host] = {}
-                    if info.get('stdout'):
-                        result[host]['stdout'] = info.get('stdout')
-                    elif info.get('stderr'):
-                        result[host]['stderr'] = info.get('stderr')
-        return result
-
-    @property
-    def state(self):
-        result = {}
-        if self.stdout:
-            result['ok'] = self.stdout
-        if self.stderr:
-            result['err'] = self.stderr
-        if self.dark:
-            result['dark'] = self.dark
-        return result
-
-    @property
-    def exec_time(self):
-        """
-        get the command execute time.
-        """
-        result = {}
-        all = self.results_raw.get("contacted")
-        for key, value in all.iteritems():
-            result[key] = {
-                    "start": value.get("start"),
-                    "end"  : value.get("end"),
-                    "delta": value.get("delta"),}
-        return result
-
-    @property
-    def stdout(self):
-        """
-        get the comamnd standard output.
-        """
-        result = {}
-        all = self.results_raw.get("contacted")
-        for key, value in all.iteritems():
-            result[key] = value.get("stdout")
-        return result
-
-    @property
-    def stderr(self):
-        """
-        get the command standard error.
-        """
-        result = {}
-        all = self.results_raw.get("contacted")
-        for key, value in all.iteritems():
-            if value.get("stderr") or value.get("warnings"):
-                result[key] = {
-                    "stderr": value.get("stderr"),
-                    "warnings": value.get("warnings"),}
-        return result
-
-    @property
-    def dark(self):
-        """
-        get the dark results.
-        """
-        return self.results_raw.get("dark")
-
-
 class MyTask(object):
     """
     this is a tasks object for include the common command.
@@ -287,8 +157,6 @@ class MyTask(object):
 
     @staticmethod
     def gen_sudo_script(role_list, sudo_list):
-        # receive role_list = [role1, role2] sudo_list = [sudo1, sudo2]
-        # return sudo_alias={'NETWORK': '/sbin/ifconfig, /ls'} sudo_user={'user1': ['NETWORK', 'SYSTEM']}
         sudo_alias = {}
         sudo_user = {}
         for sudo in sudo_list:
@@ -321,20 +189,6 @@ class MyTask(object):
         result, code = api.req_post(data)
         return result
 
-    @property
-    def raw_results(self):
-        """
-        get the raw results after playbook run.
-        """
-        return self.results
 
-
-
-if __name__ == "__main__":
-
-    resource = [{"hostname": "127.0.0.1", "port": "22", "username": "yumaojun", "password": "yusky0902",
-                 }]
-    cmd = Command(resource)
-    print cmd.run('ls')
 
 

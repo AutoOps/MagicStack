@@ -106,6 +106,7 @@ def group_edit(request, res, *args):
     elif request.method == 'POST':
         response = {'success': False, 'error': ''}
         group_id = request.GET.get('id', '')
+        group = UserGroup.objects.get(id=int(group_id))
         group_name = request.POST.get('name', '')
         comment = request.POST.get('comment', '')
         users_selected = request.POST.getlist('select_multi')
@@ -115,8 +116,14 @@ def group_edit(request, res, *args):
             if '' in [group_id, group_name]:
                 raise ServerError(u'组名不能为空')
 
-            if len(UserGroup.objects.filter(name=group_name)) > 1:
-                raise ServerError(u'%s 用户组已存在' % group_name)
+
+            old_name =group.name
+            if old_name == group_name:
+                if len(UserGroup.objects.filter(name=group_name)) > 1:
+                    raise ServerError(u'用户组存在')
+            else:
+                if len(UserGroup.objects.filter(name=group_name)) > 0:
+                    raise ServerError(u'用户组已存在')
 
             user_group.user_set.clear()
 
@@ -366,6 +373,8 @@ def user_edit(request,res, *args):
         response = {'success': False, 'error': ''}
         try:
             user_id = request.GET.get('id', '')
+            user = User.objects.get(id=int(user_id))
+            username=request.POST.get('username','')
             password = request.POST.get('password', '')
             name = request.POST.get('name', '')
             email = request.POST.get('email', '')
@@ -385,8 +394,16 @@ def user_edit(request,res, *args):
                 res['content'] = u'用户不存在!'
                 res['emer_satus'] = u"编辑用户失败:{1}".format(u'用户不存在!')
                 response['error'] = u"编辑用户失败:{1}".format(u'用户不存在!')
+            if username_old == username:
+                if len(User.objects.filter(nam = username)) > 1:
+                    raise ServerError(u'用户已存在')
+            else:
+                if len(User.objects.filter(name = username)) > 0:
+                    raise ServerError(u'用户已存在')
+
 
             db_update_user(user_id=user_id,
+                           username=username,
                            password=password,
                            name=name,
                            email=email,
@@ -417,7 +434,7 @@ def user_edit(request,res, *args):
         except Exception as e:
             logger.error(e)
             res['flag'] = 'false'
-            error_info = u"编辑用户失败:{0}".format(e.message)
+            error_info = u"编辑用户{0}失败:{1}".format(username ,e.message)
             res['content'] = res['emer_status'] = response['error'] = error_info
         return HttpResponse(json.dumps(response), content_type='application/json')
 

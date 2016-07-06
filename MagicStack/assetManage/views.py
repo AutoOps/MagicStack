@@ -111,8 +111,14 @@ def group_edit(request,res, *args):
             if not name:
                 raise ServerError(u'组名不能为空')
 
-            if AssetGroup.objects.filter(name=name).count() > 1:
-                raise ServerError(u"该组名 %s 已存在" % name)
+            old_name =group.name
+            if old_name == name:
+                if len(AssetGroup.objects.filter(name=name)) > 1:
+                    raise ServerError(u'用户组[%s]已存在' % name)
+            else:
+                if len(AssetGroup.objects.filter(name=name)) > 0:
+                    raise ServerError(u'用户组[%s]已存在' % name)
+
         except ServerError as e:
             res['flag'] = 'false'
             res['content'] = e
@@ -722,23 +728,44 @@ def idc_add(request,res, *args):
     IDC add view
     """
     res['operator'] = u'添加IDC'
+    response={'success':False,'error':''}
     if request.method == 'POST':
-        response={'success':False,'error':''}
-        idc_form = IdcForm(request.POST)
+        try:
+            idc_name = request.POST.get('name')
+            idc_bandwidth = request.POST.get('bandwidth')
+            idc_linkman = request.POST.get('linkman')
+            idc_phone = request.POST.get('phone')
+            idc_address = request.POST.get('address')
+            idc_network = request.POST.get('network')
+            idc_operator = request.POST.get('operator')
+            idc_comment = request.POST.get('comment')
 
-        if idc_form.is_valid():
-            idc_name = idc_form.cleaned_data['name']
-            if IDC.objects.filter(name=idc_name):
-                 response['error']=u'添加失败, 此IDC [%s] 已存在!' % idc_name
+            if not idc_name:
+                raise ServerError(u'IDC不能为空')
 
-            else:
-                idc_form.save()
-                res['content'] = u'IDC: [%s]添加成功' % idc_name
-                response['success']=True
-            return HttpResponse(json.dumps(response), content_type='application/json')
-    else:
-        idc_form = IdcForm()
+            idc_name_test = get_object(IDC, name=idc_name)
+            if idc_name_test:
+                raise ServerError(u"IDC[%s]已存在" %idc_name)
+
+            idc = IDC()
+            idc.name = idc_name
+            idc.bandwidth = idc_bandwidth
+            idc.linkman = idc_linkman
+            idc.phone = idc_phone
+            idc.address = idc_address
+            idc.network = idc_network
+            idc.operator = idc_operator
+            idc.comment = idc_comment
+            idc.save()
+            res['content'] = U'添加IDC[%s]成功'% idc_name
+            response['success'] = True
+        except Exception as e:
+            res['flag'] = 'false'
+            res['content'] = e.message
+            # logger.error(e.message)
+            response['error'] = e.message
     return HttpResponse(json.dumps(response), content_type='application/json')
+
 
 
 @require_role('admin')
@@ -747,13 +774,7 @@ def idc_list(request):
     IDC list view
     """
     header_title, path1, path2 = u'查看IDC', u'资产管理', u'查看IDC'
-    # posts = IDC.objects.all()
-    keyword = request.GET.get('keyword', '')
-    if keyword:
-        posts = IDC.objects.filter(Q(name__contains=keyword) | Q(comment__contains=keyword))
-    else:
-        posts = IDC.objects.exclude(name='ALL').order_by('id')
-    contact_list, p, contacts, page_range, current_page, show_first, show_end = pages(posts, request)
+    posts = IDC.objects.all()
     return my_render('assetManage/idc_list.html', locals(), request)
 
 
@@ -767,6 +788,8 @@ def idc_edit(request, res, *args):
     idc_id = request.GET.get('id', '')
     idc = get_object(IDC, id=idc_id)
     if request.method == 'GET':
+        idc_id = request.GET.get('id', '')
+        idc = get_object(IDC, id=int(idc_id))
         rest={}
         rest['Id'] = idc.id
         rest['name'] = idc.name
@@ -780,13 +803,50 @@ def idc_edit(request, res, *args):
         return HttpResponse(json.dumps(rest), content_type='application/json')
     if request.method == 'POST':
         response={'success':False,'error':''}
-        idc_form = IdcForm(request.POST, instance=idc)
-        if idc_form.is_valid():
-            res['content'] = u'编辑IDC[%s]' % idc.name
-            idc_form.save()
-            response['success']=True
+        try:
+            idc_id = request.GET.get('id', '')
+            idc = get_object(IDC, id=int(idc_id))
+            idc_name = request.POST.get('name')
+            idc_bandwidth = request.POST.get('bandwith')
+            idc_linkman = request.POST.get('linkman')
+            idc_phone = request.POST.get('phone')
+            idc_address = request.POST.get('address')
+            idc_network = request.POST.get('network')
+            idc_operator = request.POST.get('operator')
+            idc_comment = request.POST.get('comment')
 
+            if not idc_name:
+                raise ServerError(u'IDC不能为空')
+
+            old_name =idc.name
+            if old_name == idc_name:
+                if len(IDC.objects.filter(name=idc_name)) > 1:
+                    raise ServerError(u'IDC[%s]已存在' % idc_name)
+            else:
+                if len(IDC.objects.filter(name=idc_name)) > 0:
+                    raise ServerError(u'IDC[%s]已存在' % idc_name)
+            # if IDC.objects.filter(name=idc_name).count() > 1:
+            #     raise ServerError(u"IDC[%s]已存在" % idc_name)
+
+            idc.name = idc_name
+            idc.bandwidth = idc_bandwidth
+            idc.linkman = idc_linkman
+            idc.phone = idc_phone
+            idc.address = idc_address
+            idc.network = idc_network
+            idc.operator = idc_operator
+            idc.comment = idc_comment
+            idc.save()
+            res['content'] = U"编辑IDC[%s]成功"%idc_name
+            response['success'] = True
+
+        except Exception as e:
+            # logger.error(e.message)
+            res['flag'] = 'false'
+            res['content'] = u'编辑IDC失败:%s'%e.message
+            response['error'] =  res['content']
     return HttpResponse(json.dumps(response), content_type='application/json')
+
 
 
 
@@ -796,16 +856,18 @@ def idc_del(request,res, *args):
     """
     IDC delete view
     """
-    res['operator'] = res['content'] = u'删除机房'
+    res['operator'] = u'删除IDC'
+    res['content'] = u'删除机房'
     try:
-        idc_ids = request.GET.get('id', '')
+        idc_ids = request.POST.get('id', '')
         idc_id_list = idc_ids.split(',')
         for idc_id in idc_id_list:
-            idc = IDC.objects.get(id=idc_id)
+            idc = IDC.objects.get(id=int(idc_id))
             res['content'] += '  [%s]  ' % idc.name
             idc.delete()
     except Exception as e:
         logger.error(e.message)
         return HttpResponse(e.message)
-    return HttpResponse(u'机房删除成功')
+
+    return HttpResponse(res['content'])
 

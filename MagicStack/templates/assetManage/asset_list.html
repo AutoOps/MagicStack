@@ -802,10 +802,9 @@
                 data: {asset_id_all: asset_id_all},
                 url: $(this).attr('name'),
                 success: function (data) {
-                    layer.msg(data.messege,{offset:['100px','1200px']}, function(){
+                       layer.msg(data.messege,{offset:['100px','1200px']}, function(){
                         parent.location.reload();
-                    });
-
+                       });
                 }
             });
         }
@@ -884,7 +883,9 @@
 {#                          time: 20000,#}
 {#                          offset:['100px','800px']#}
 {#              });#}
-              alert(res.message)
+              if(res.message){
+                  alert(res.message)
+              }
           }
 {#          error: function(res) {#}
 {#              layer.msg(res.messege,#}

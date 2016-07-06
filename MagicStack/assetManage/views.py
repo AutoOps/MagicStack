@@ -618,7 +618,7 @@ def asset_event(request):
                 tk.content = result['event_log']
                 tk.save()
                 response['message'] = result['event_log']
-                return HttpResponse(json.dumps(response), content_type='application/json')
+            return HttpResponse(json.dumps(response), content_type='application/json')
         except Exception as e:
             response['error'] = e
             return HttpResponse(json.dumps(response), content_type='application/json')

@@ -309,15 +309,14 @@ def get_role_push_host(role):
     return asset_pushed, asset_no_push
 
 
-
-def save_or_delete(obj_name, data, proxy_list, obj_id='all', action='save'):
+def save_or_delete(obj_name, data, proxy_list, obj_uuid='all', action='save'):
     """
     保存，更新, 删除数据
     """
     res = []
     for proxy in proxy_list:
         try:
-            api = APIRequest('{0}/v1.0/permission/{1}/{2}'.format(proxy.url, obj_name, obj_id), proxy.username, CRYPTOR.decrypt(proxy.password))
+            api = APIRequest('{0}/v1.0/permission/{1}/{2}'.format(proxy.url, obj_name, obj_uuid), proxy.username, CRYPTOR.decrypt(proxy.password))
             if action == 'save':
                 result, codes = api.req_post(data)
             elif action == 'update':
@@ -331,13 +330,13 @@ def save_or_delete(obj_name, data, proxy_list, obj_id='all', action='save'):
     return res
 
 
-def get_one_or_all(obj_name, proxy, obj_id='all'):
+def get_one_or_all(obj_name, proxy, obj_uuid='all'):
     """
     获取所有的对象或者一个id对应的对象
     """
     obj_list = []
     try:
-        api = APIRequest('{0}/v1.0/permission/{1}/{2}'.format(proxy.url, obj_name, obj_id), proxy.username, CRYPTOR.decrypt(proxy.password))
+        api = APIRequest('{0}/v1.0/permission/{1}/{2}'.format(proxy.url, obj_name, obj_uuid), proxy.username, CRYPTOR.decrypt(proxy.password))
         result, codes = api.req_get()
         obj_list = result['messege']
     except Exception as e:

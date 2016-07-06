@@ -5,6 +5,7 @@ from userManage.models import User, UserGroup
 
 
 class PermSudo(models.Model):
+    uuid_id = models.CharField(max_length=200, verbose_name=u'唯一标识符')
     name = models.CharField(max_length=100, unique=True)
     date_added = models.DateTimeField(auto_now=True)
     commands = models.TextField()
@@ -15,6 +16,7 @@ class PermSudo(models.Model):
 
 
 class PermRole(models.Model):
+    uuid_id = models.CharField(max_length=200, verbose_name=u'唯一标识符')
     name = models.CharField(max_length=100, unique=True)
     comment = models.CharField(max_length=100, null=True, blank=True, default='')
     password = models.CharField(max_length=128)

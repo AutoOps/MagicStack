@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
 from __future__ import unicode_literals
-from django.db.models import Q
 from django.http import HttpResponseBadRequest, HttpResponseNotAllowed
 from paramiko import SSHException
 from permManage.perm_api import *
@@ -11,6 +10,7 @@ from assetManage.models import Asset, AssetGroup
 from permManage.models import PermRole, PermRule, PermSudo, PermPush
 import Queue
 import re
+import uuid
 from permManage.utils import gen_keys, trans_all
 from permManage.ansible_api import MyTask
 from permManage.perm_api import get_role_info, get_role_push_host,query_event
@@ -256,6 +256,7 @@ def perm_role_add(request, res, *args):
         password = request.POST.get("role_password", "")
         key_content = request.POST.get("role_key", "")
         sudo_ids = request.POST.getlist('sudo_name')
+        uuid_id = str(uuid.uuid1())
 
         try:
             if get_object(PermRole, name=name):
@@ -271,6 +272,7 @@ def perm_role_add(request, res, *args):
                 encrypt_pass = CRYPTOR.encrypt(CRYPTOR.gen_rand_pass(20))
             # 生成随机密码，生成秘钥对
             sudos_obj = [get_object(PermSudo, id=int(sudo_id)) for sudo_id in sudo_ids]
+            sudo_uuids = [item.uuid_id for item in sudos_obj]
             if key_content:
                 try:
                     key_path = gen_keys(key=key_content)
@@ -278,25 +280,32 @@ def perm_role_add(request, res, *args):
                     raise ServerError(e)
             else:
                 key_path = gen_keys()
+
+             # TODO 将数据保存到magicstack上
+            role = PermRole.objects.create(uuid_id=uuid_id, name=name, comment=comment, password=encrypt_pass, key_path=key_path)
+            role.sudo = sudos_obj
+            role.save()
+
+            # TODO 将数据同时保存到proxy上
             proxy_list = Proxy.objects.all()
-            # 将数据同时保存到proxy上
-            data = {'name': name,
+            data = {'uuid_id': uuid_id,
+                    'id': role.id,
+                    'name': name,
                     'password': encrypt_pass,
                     'comment': comment,
                     'key_content': key_content,
-                    'sudo_ids': sudo_ids}
+                    'sudo_uuids': sudo_uuids}
             data = json.dumps(data)
             message = save_or_delete('PermRole', data, proxy_list)
             flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
             if flag:
-                # TODO 将数据保存到magicstack上
-                role = PermRole.objects.create(name=name, comment=comment, password=encrypt_pass, key_path=key_path)
-                role.sudo = sudos_obj
-                role.save()
                 res['content'] = u"添加系统用户[%s]" % name
                 res['emer_status'] = u"添加系统用户[%s]成功" % name
                 response['success'] = True
-                response['error'] = u"添加系统用户[%s]成功" % name
+            else:
+                # TODO proxy上添加失败后,就删除magicstack上的role
+                role.delete()
+                raise ServerError(u"添加系统用户[%s]失败:proxy上的数据添加失败" % name)
         except ServerError, e:
             res['flag'] = 'false'
             res['content'] = e.message
@@ -317,7 +326,7 @@ def perm_role_delete(request, res, *args):
         try:
             # 获取参数删除的role对象
             role_id = request.GET.get("id")
-            role = get_object(PermRole, id=role_id)
+            role = get_object(PermRole, id=int(role_id))
             if not role:
                 logger.warning(u"Delete Role: role_id %s not exist" % role_id)
                 raise ServerError(u"role_id %s 无数据记录" % role_id)
@@ -336,7 +345,7 @@ def perm_role_delete(request, res, *args):
     if request.method == "POST":
         try:
             role_id = request.POST.get("id")
-            role = get_object(PermRole, id=role_id)
+            role = get_object(PermRole, id=int(role_id))
             if not role:
                 logger.warning(u"Delete Role: role_id %s not exist" % role_id)
                 raise ServerError(u"role_id %s 无数据记录" % role_id)
@@ -351,8 +360,8 @@ def perm_role_delete(request, res, *args):
                     host_list = [asset.networking.all()[0].ip_address for asset in value]
                     task = MyTask(recycle_resource, host_list)
                     try:
-                        msg_del_user = task.del_user(get_object(PermRole, id=role_id).name, proxy)
-                        msg_del_sudo = task.del_user_sudo(get_object(PermRole, id=role_id).name, proxy)
+                        msg_del_user = task.del_user(role.name, proxy)
+                        msg_del_sudo = task.del_user_sudo(role.name, proxy)
                     except Exception, e:
                         logger.warning(u"Recycle Role failed: %s" % e)
                         raise ServerError(u"回收已推送的系统用户失败: %s" % e)
@@ -372,24 +381,27 @@ def perm_role_delete(request, res, *args):
 
             # 删除proxy上的role, proxy上的role删除成功后再删除magicstack上的role
             proxy_list = Proxy.objects.all()
-            message = save_or_delete('PermRole', {}, proxy_list, obj_id=role_id, action='delete')
+            message = save_or_delete('PermRole', {}, proxy_list, role.uuid_id, action='delete')
             flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
             if flag:
-                res['content'] = u"删除系统用户[%s]成功" % role.name
-                res['emer_status'] = u"删除系统用户[%s]成功" % role.name
+                msg = u"删除系统用户[%s]成功" % role.name
+                res['content'] = msg
+                res['emer_status'] = msg
                 role.delete()
             else:
-                res['content'] = u"删除系统用户[%s]失败" % role.name
-                res['emer_status'] = u"删除系统用户[%s]失败" % role.name
+                msg = u"删除系统用户[%s]失败" % role.name
+                res['content'] = msg
+                res['emer_status'] = msg
                 res['flag'] = 'false'
 
-            return HttpResponse(u"删除系统用户: %s" % role.name)
         except ServerError, e:
             res['flag'] = 'false'
-            res['content'] = u"删除系统用户失败: %s" %e
-            res['emer_status'] = u"删除系统用户失败:%s" %e
-            return HttpResponseBadRequest(u"删除失败, 原因：　%s" % e)
-    return HttpResponseNotAllowed(u"仅支持POST")
+            msg = u"删除系统用户失败: %s" %e
+            res['content'] = msg
+            res['emer_status'] = msg
+
+        return HttpResponse(msg)
+
 
 
 @require_role('admin')
@@ -452,15 +464,13 @@ def perm_role_edit(request, res, *args):
         response = {'success': False, 'error': ''}
         role_id = request.GET.get("id", '')
         role = PermRole.objects.get(id=int(role_id))
-        if not role:
-            return HttpResponse(u'系统用户不存在')
         role_name = request.POST.get("role_name")
         role_password = request.POST.get("role_password")
         role_comment = request.POST.get("role_comment")
         role_sudo_names = request.POST.getlist("sudo_name")
         role_sudos = [PermSudo.objects.get(id=int(sudo_id)) for sudo_id in role_sudo_names]
         key_content = request.POST.get("role_key", "")
-
+        sudo_uuids = [item.uuid_id for item in role_sudos]
         try:
             if not role:
                 raise ServerError('该系统用户不能存在')
@@ -475,6 +485,7 @@ def perm_role_edit(request, res, *args):
             if key_content:
                 try:
                     key_path = gen_keys(key=key_content, key_path_dir=role.key_path)
+                    role.key_path = key_path
                 except SSHException:
                     raise ServerError(u'输入的密钥不合法')
                 logger.debug('Recreate role key: %s' % role.key_path)
@@ -482,11 +493,11 @@ def perm_role_edit(request, res, *args):
             data = {'name': role_name,
                     'password': role_password,
                     'comment': role_comment,
-                    'sudo_ids': role_sudo_names,
+                    'sudo_uuids': sudo_uuids,
                     'key_content': key_content}
             data = json.dumps(data)
             proxy_list = Proxy.objects.all()
-            message = save_or_delete('PermRole', data, proxy_list, role_id, 'update')
+            message = save_or_delete('PermRole', data, proxy_list, role.uuid_id, 'update')
             flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
             if flag:
                 # TODO 只有proxy上的数据库保存完成后,才会写入本地数据库
@@ -559,7 +570,7 @@ def perm_role_push(request, *args):
 
                 # 因为要先建立用户，而push key是在 password也完成的情况下的可选项
                 # 1. 以秘钥 方式推送角色
-                role_proxy = get_one_or_all('PermRole', proxy, role_id)
+                role_proxy = get_one_or_all('PermRole', proxy, role.uuid_id)
                 if key_push:
                     ret["pass_push"] = task.add_user(role.name, proxy)
                     ret["key_push"] = task.push_key(role.name, os.path.join(role_proxy['key_path'], 'id_rsa.pub'), proxy)
@@ -711,14 +722,11 @@ def perm_sudo_add(request, res, *args):
     """
     list sudo commands alias
     """
-    # 渲染数据
-    # header_title, path1, path2 = "Sudo命令", "别名管理", "添加别名"
     res['operator'] = u"添加别名"
-    response={'success':False,'error':''}
+    response ={'success': False, 'error': ''}
     res['emer_content'] = 6
-    try:
-        if request.method == "POST":
-            # 获取参数： name, comment
+    if request.method == "POST":
+        try:
             name = request.POST.get("sudo_name").strip().upper()
             comment = request.POST.get("sudo_comment")
             commands = request.POST.get("sudo_commands").strip()
@@ -736,29 +744,32 @@ def perm_sudo_add(request, res, *args):
             if sudo_name_test:
                 raise ServerError(u"别名[%s]已存在" %name)
 
+            sudo_uuid = str(uuid.uuid1())
+            # TODO 保存数据到magicstack
+            sudo = PermSudo.objects.create(uuid_id=sudo_uuid, name=name.strip(), comment=comment, commands=commands)
+
+            # TODO 保存数据到proxy上的数据库
             proxy_list = Proxy.objects.all()
-            data = {'name': name,
+            data = {'uuid_id': sudo_uuid,
+                    'id': sudo.id,
+                    'name': name,
                     'comment': comment,
                     'commands': commands}
             data = json.dumps(data)
             message = save_or_delete('PermSudo', data, proxy_list)
             flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
             if flag:
-                msg = u"添加Sudo命令别名[%s]成功" % name
-                res['content'] = msg
-                res['emer_status'] = msg
-                sudo = PermSudo(name=name.strip(), comment=comment, commands=commands)
-                sudo.save()
+                res['content'] = u"添加Sudo命令别名[%s]成功" % name
+                res['emer_status'] = u"添加Sudo命令别名[%s]成功" % name
                 response['success'] = True
-                return HttpResponse(json.dumps(response), content_type='application/json')
             else:
-                raise ServerError(u"添加Sudo命令别名[%s]失败" %name)
-
-    except ServerError as e:
-        res['flag'] = 'false'
-        res['content'] = e.message
-        res['emer_status'] = u"添加Sudo命令别名失败:%s" % (e.message)
-        response['error'] = e.message
+                sudo.delete()
+                raise ServerError(u"添加Sudo命令别名[%s]失败:proxy上添加sudo别名失败" %name)
+        except ServerError as e:
+            res['flag'] = 'false'
+            res['content'] = e.message
+            res['emer_status'] = u"添加Sudo命令别名失败:%s" % (e.message)
+            response['error'] = e.message
     return HttpResponse(json.dumps(response), content_type='application/json')
 
 
@@ -768,36 +779,30 @@ def perm_sudo_add(request, res, *args):
 @user_operator_record
 def perm_sudo_edit(request, res, *args):
     """
-    list sudo commands alias
+    编辑别名
     """
-    # 渲染数据
-    header_title, path1, path2 = "Sudo命令", "别名管理", "编辑别名"
-    res['operator'] = path2
+    res['operator'] = "编辑别名"
     res['emer_content'] = 6
-    sudo_id = request.GET.get("id")
-    sudo = PermSudo.objects.get(id=sudo_id)
-    try:
-        if request.method == "GET":
-            sudo_id = request.GET.get("id")
-            sudo = PermSudo.objects.get(id=sudo_id)
-            rest = {}
-            rest['Id'] = sudo.id
-            rest['name'] = sudo.name
-            rest['commands'] = sudo.commands
-            rest['comment'] = sudo.comment
-            return HttpResponse(json.dumps(rest), content_type='application/json')
-
-        if request.method == "POST":
+    if request.method == "GET":
+        sudo_id = request.GET.get("id")
+        sudo = PermSudo.objects.get(id=sudo_id)
+        rest = {}
+        rest['Id'] = sudo.id
+        rest['name'] = sudo.name
+        rest['commands'] = sudo.commands
+        rest['comment'] = sudo.comment
+        return HttpResponse(json.dumps(rest), content_type='application/json')
+    else:
+        response = {'success': False, 'error': ''}
+        try:
             sudo_id = request.GET.get("id")
             sudo = PermSudo.objects.get(id=int(sudo_id))
-            response = {'success':False,'error':''}
             name = request.POST.get("sudo_name").upper()
             commands = request.POST.get("sudo_commands")
             comment = request.POST.get("sudo_comment")
 
             if not name or not commands:
                 raise ServerError(u"sudo name 和 commands是必填项!")
-
 
             old_name = sudo.name
             if old_name == name:
@@ -817,28 +822,29 @@ def perm_sudo_edit(request, res, *args):
                     'comment': comment,
                     'commands': commands}
             data = json.dumps(data)
-            message = save_or_delete('PermSudo', data, proxy_list, sudo_id, 'update')
+            message = save_or_delete('PermSudo', data, proxy_list, sudo.uuid_id, 'update')
             flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
-            if flag :
-                msg = u"编辑Sudo命令别名[%s]成功" % sudo.name
-                res['content'] = msg
-                res['emer_status'] = msg
+            if flag:
                 sudo.name = name.strip()
                 sudo.commands = commands
                 sudo.comment = comment
                 sudo.save()
+
+                msg = u"编辑Sudo命令别名[%s]成功" % sudo.name
+                res['content'] = msg
+                res['emer_status'] = msg
                 response['success'] = True
 
             else:
-                msg = u"编辑Sudo命令别名[%s]失败" % sudo.name
+                msg = u"编辑Sudo命令别名[%s]失败:proxy上sudo更新失败" % sudo.name
                 raise ServerError(msg)
 
-    except ServerError as e:
-        res['flag'] = 'false'
-        res['content'] = u'编辑别名失败:[%s]'%e.message
-        res['emer_status'] = u"编辑Sudo命令别名失败:%s"%(e)
-        response ['error'] = e.message
-    return HttpResponse(json.dumps(response), content_type='application/json')
+        except ServerError as e:
+            res['flag'] = 'false'
+            res['content'] = u'编辑别名失败:[%s]'%e.message
+            res['emer_status'] = u"编辑Sudo命令别名失败:%s"%(e)
+            response['error'] = e.message
+        return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role('admin')
@@ -854,17 +860,18 @@ def perm_sudo_delete(request, res, *args):
         sudo = PermSudo.objects.get(id=int(sudo_id))
         # 数据库里删除记录
         proxy_list = Proxy.objects.all()
-        message = save_or_delete('PermSudo',{}, proxy_list , obj_id=sudo_id, action='delete')
+        message = save_or_delete('PermSudo',{}, proxy_list, obj_uuid=sudo.uuid_id, action='delete')
         flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
-        if flag :
-            res['content'] = u'删除Sudo别名[%s]成功'% sudo.name
-            res['emer_status'] = u'删除Sudo别名[%s]成功'% sudo.name
+        if flag:
+            msg = u'删除Sudo别名[%s]成功'% sudo.name
+            res['content'] = msg
+            res['emer_status'] = msg
             sudo.delete()
         else:
             res['flag'] = 'false'
-            res['content'] = u'删除Sudo别名[%s]失败'% sudo.name
-            res['emer_status'] = u'删除Sudo别名[%s]失败'% sudo.name
-        return HttpResponse(u"删除Sudo别名: %s" % sudo.name)
+            msg = u'删除Sudo别名[%s]失败'% sudo.name
+            res['content'] = res['emer_status'] = msg
+        return HttpResponse(msg)
     else:
         res['flag'] = 'false'
         res['content'] = u'不支持该操作'

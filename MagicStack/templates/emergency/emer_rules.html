@@ -129,8 +129,8 @@
            </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn grey-salsa btn-outline" data-dismiss="modal">Close</button>
-        <button type="button" class="btn green" id="btn_save">Save changes</button>
+        <button type="button" class="btn grey-salsa btn-outline" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn green" id="btn_save">保存</button>
       </div>
     </div>
   </div>
@@ -158,17 +158,7 @@
                 $('input[name=rule_id]').val(res.emer_id);
                  //设置下拉框的值
                 var select_user = res.emer_user.split(',');
-                var mutil_select = document.getElementById('mutil_user');
-                var options = mutil_select.options;
-
-                for (var i=0; i<select_user.length; i++){
-                     for (var j=0; j<options.length; j++){
-                         if(options[j].value == select_user[i]){
-                             options[j].selected = true
-                         }
-                     }
-
-                }
+                $("#mutil_user").val(select_user).trigger("change");
                 $('#single_time').val(res.emer_time);
                 $('#single_type').val(res.media_type);
                 $('#single_status').val(res.emer_status);

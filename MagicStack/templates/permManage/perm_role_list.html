@@ -245,16 +245,8 @@
 
             //设置下拉框的值
             var select_user = res.sudos.split(',');
-            var mutil_select = document.getElementById('role_sudos');
-            var options = mutil_select.options;
+            $("#role_sudos").val(select_user).trigger("change");
 
-            for (var i=0; i<select_user.length; i++){
-                 for (var j=0; j<options.length; j++){
-                     if(options[j].value == select_user[i]){
-                         options[j].selected = true
-                     }
-                 }
-            }
 
             var modal = $("#myModal");
             modal.find(".modal-title").text("编辑资产组");

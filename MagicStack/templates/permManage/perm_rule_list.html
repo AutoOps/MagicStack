@@ -206,27 +206,20 @@
             $("input[name='name']").val(res.name);
             $("input[name='comment']").val(res.comment);
 
-            //设置下拉框的值
-            var mutli_html = {'mult_user': res.user, 'mult_user_group': res.user_group, 'mult_asset':res.asset, 'mult_asset_group':res.asset_group, 'mult_role':res.role};
-            for( p in mutli_html){
-                var select_user = mutli_html[p].split(',');
-                var mutil_select = document.getElementById(p);
-                var options = mutil_select.options;
+            var select_p = res.user.split(',');
+            $("#mult_user").val(select_p).trigger("change");
 
-                //赋值之前先清空之前的选择项
-                for(var k=0; k<options.length; k++){
-                    options[k].selected = false
-                }
+            var s_user_group = res.user_group.split(',');
+            $("#mult_user_group").val(s_user_group).trigger("change");
 
-                //selected 赋值
-                for (var i=0; i<select_user.length; i++){
-                     for (var j=0; j<options.length; j++){
-                         if(options[j].value == select_user[i]){
-                             options[j].selected = 'selected'
-                         }
-                     }
-                }
-            }
+            var s_asset = res.asset.split(',');
+            $("#mult_asset").val(s_asset).trigger("change");
+
+            var s_asset_group = res.asset_group.split(',');
+            $("#mult_asset_group").val(s_asset_group).trigger("change");
+
+            var s_role = res.role.split(',');
+            $("#mult_role").val(s_role).trigger("change");
 
 
              var modal = $("#myModal");
@@ -253,7 +246,8 @@
 
         //modal 关闭事件
         $("#myModal").on('hidden.bs.modal', function(){
-             $("#error_info").hide()
+             $("#error_info").hide();
+             $("#form_rule").reset();
         });
 
         //modal save

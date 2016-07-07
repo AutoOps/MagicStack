@@ -36,56 +36,53 @@ def media_add(request, res, *args):
     response = {'success': False, 'error': ''}
     res['operator'] = u'添加告警媒介'
     if request.method == 'POST':
-        media_name = request.POST.get('media_name', '')
-        media_type = request.POST.get('media_type', '')
-        if media_type == '0':
-            smtp_host = request.POST.get('smtp_host', '')
-            smtp_host_port = int(request.POST.get('smtp_host_port', 587))
-            email_user = request.POST.get('email_user', '')
-            email_user_password = request.POST.get('email_user_password', '')
-            encrypt_password = CRYPTOR.encrypt(email_user_password)
-            connect_security = request.POST.getlist('connection', [])
-            status = request.POST.get('extra', '0')
-            comment = request.POST.get('comment', '')
-            is_use_tls = True if '1' in connect_security else 0
-            is_use_ssl = True if '0' in connect_security else 0
-            media_detail = u"SMTP服务器:{0}    SMTP电邮:{1}".format(smtp_host, email_user)
-            try:
+        try:
+            media_name = request.POST.get('media_name', '')
+            if EmergencyType.objects.filter(name=media_name):
+                    raise ServerError(u'名称已存在')
+            media_type = request.POST.get('media_type', '')
+            if media_type == '0':
+                smtp_host = request.POST.get('smtp_host', '')
+                smtp_host_port = request.POST.get('smtp_host_port', 587)
+                email_user = request.POST.get('email_user', '')
+                email_user_password = request.POST.get('email_user_password', '')
+                encrypt_password = CRYPTOR.encrypt(email_user_password)
+                connect_security = request.POST.getlist('connection', [])
+                status = request.POST.get('extra', '0')
+                comment = request.POST.get('comment', '')
+                is_use_tls = True if '1' in connect_security else 0
+                is_use_ssl = True if '0' in connect_security else 0
+                media_detail = u"SMTP服务器:{0}    SMTP电邮:{1}".format(smtp_host, email_user)
+
                 if '' in [media_name, smtp_host, smtp_host_port, email_user, email_user_password]:
                     raise ServerError(u'必要参数不能为空,请从新填写')
-                if EmergencyType.objects.filter(name=media_name):
-                    raise ServerError(u'名称已存在')
-                EmergencyType.objects.create(name=media_name, type=media_type, smtp_server=smtp_host, smtp_server_port=smtp_host_port,
+
+                EmergencyType.objects.create(name=media_name, type=media_type, smtp_server=smtp_host, smtp_server_port=int(smtp_host_port),
                                              status=status, email_username=email_user, email_password=encrypt_password,
                                              email_use_ssl=is_use_ssl, email_use_tls=is_use_tls,detail=media_detail, comment=comment)
 
                 res['content'] = u'添加告警媒介[%s]成功' % media_name
                 response['success'] = True
                 response['error'] = u'添加告警媒介[%s]成功' % media_name
-            except ServerError, e:
-                res['flag'] = False
-                res['content'] = e.message
-                response['error'] = e.message
-        elif media_type == '1':
-            corpid = request.POST.get('corpid', '')
-            corpsecret = request.POST.get('corpsecret', '')
-            status = request.POST.get('extra', '0')
-            comment = request.POST.get('comment', '')
-            try:
+            elif media_type == '1':
+                corpid = request.POST.get('corpid', '')
+                corpsecret = request.POST.get('corpsecret', '')
+                status = request.POST.get('extra', '0')
+                comment = request.POST.get('comment', '')
+
                 if '' in [media_name, corpid, corpsecret]:
                     raise ServerError(u'必要参数为空,请从新填写!')
-                if EmergencyType.objects.filter(name=media_name):
-                    raise ServerError(u'名称已存在')
+
                 media_detail = u'CorpID:%s '%corpid
                 EmergencyType.objects.create(name=media_name, type=media_type, corpid=corpid, corpsecret=corpsecret,
                                              detail=media_detail, status=status, comment=comment)
                 res['content'] = u'添加成功'
                 response['success'] = True
                 response['error'] = u'添加成功'
-            except Exception as e:
-                res['flag'] = False
-                res['content'] = e.message
-                response['error'] = e.message
+        except Exception as e:
+            res['flag'] = False
+            res['content'] = e.message
+            response['error'] = e.message
     return HttpResponse(json.dumps(response), content_type='application/json')
 
 

@@ -260,7 +260,7 @@ def perm_role_add(request, res, *args):
 
         try:
             if get_object(PermRole, name=name):
-                raise ServerError(u'已经存在该用户 %s' % name)
+                raise ServerError(u'用户 %s已经存在' % name)
             if name == "root":
                 raise ServerError(u'禁止使用root用户作为系统用户，这样非常危险！')
             if name == "":
@@ -309,8 +309,8 @@ def perm_role_add(request, res, *args):
         except ServerError, e:
             res['flag'] = 'false'
             res['content'] = e.message
-            res['emer_status'] = u"添加系统用户[{0}]失败:{1}".format(name, e.message)
-            response['error'] = u"添加系统用户[{0}]失败:{1}".format(name, e.message)
+            res['emer_status'] = u"添加系统用户失败:%s"(e.message)
+            response['error'] = u"添加系统用户失败:%s"%(e.message)
     return HttpResponse(json.dumps(response), content_type='application/json')
 
 
@@ -515,10 +515,10 @@ def perm_role_edit(request, res, *args):
                 response['error'] = u"编辑系统用户[%s]成功" % role.name
 
             else:
-                res['content'] = u"编辑系统用户： %s失败" % role.name
-                res['emer_status'] = u"编辑系统用户： %s失败" % role.name
+                res['content'] = u"编辑系统用户：[%s]失败" % role.name
+                res['emer_status'] = u"编辑系统用户：[%s]失败" % role.name
                 res['flag'] = 'false'
-                response['error'] = u"编辑系统用户： %s失败" % role.name
+                response['error'] = u"编辑系统用户：[%s]失败" % role.name
         except ServerError, e:
             res['flag'] = 'false'
             res['content'] = e.message

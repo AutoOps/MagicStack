@@ -16,6 +16,7 @@
 #   limitations under the License.
 
 import json
+import re
 import urllib2
 import traceback
 
@@ -26,6 +27,7 @@ from MagicStack.api import *
 from models import *
 from common.interface import APIRequest
 from userManage.user_api import user_operator_record
+from assetManage.models import Asset
 from proxyManage.models import Proxy
 from datetime import datetime
 
@@ -37,7 +39,7 @@ def task_list(request):
     """
     header_title, path1, path2 = u'常规任务', u'任务管理', u'常规任务'
     keyword = request.GET.get('search', '')
-    task_lists = Task.objects.all().exclude(task_statu='02').order_by('-id')
+    task_lists = Task.objects.all().filter(task_type='ansible').exclude(task_statu='02').order_by('-id')
     d_states = dict(Task.STATUS)
     if keyword:
         task_lists = task_lists.filter(Q(task_type__icontains=keyword) | Q(create_time__icontains=keyword))
@@ -133,7 +135,7 @@ def task_add(request, res, *args):
     elif request.method == "GET":
         proxy_list = [proxy.to_dict() for proxy in Proxy.objects.all().order_by('create_time')]
         res['proxys'] = proxy_list
-        res['task_types'] = Task.TYPES
+        res['task_types'] = [Task.TYPES[0]]
         return HttpResponse(json.dumps(res))
 
 
@@ -183,7 +185,8 @@ def task_edit(request, res, *args, **kwargs):
                     task.is_get_last = '00'
                     task.save()
             else:
-                api = APIRequest('{0}/v1.0/job/{1}'.format(task.task_proxy.url, task.task_uuid), task.task_proxy.username,
+                api = APIRequest('{0}/v1.0/job/{1}'.format(task.task_proxy.url, task.task_uuid),
+                                 task.task_proxy.username,
                                  CRYPTOR.decrypt(task.task_proxy.password))
                 result, code = api.req_put(json.dumps(param))
                 if code != 200:
@@ -451,4 +454,349 @@ def task_module(request):
     return HttpResponse(json.dumps(module.comment))
 
 
+def task_filter(objs, request):
+    """
+        根据指定备份类型进行过滤，结合前台的各字段含义进行解析
+    """
+    # 公共部分
+    sSerach = request.POST.get('sSearch', '').strip()
+    # 1. 查找可过滤内容， 如果没有过滤内容直接返回
+    if not sSerach:
+        return objs
 
+    # 2. 查找出可使用过滤列，并根据列找出数据库对应 bSearchable_x
+    pattern = re.compile(r'bSearchable_\d+')
+    columns = filter(lambda x: pattern.match(x), list(request.POST))
+    search_columns = []
+
+    for col in columns:
+        if request.POST.get(col):
+            search_columns.append(col)
+
+    if not search_columns:
+        return objs
+
+    # todo 过滤
+    return objs
+
+
+def task_order(objs, request):
+    """
+        根据指定备份类型，进行排序，需要结合前台的各字段含义进行解析
+    """
+    # todo 统一按照id倒叙排序
+    return objs.order_by('-id')
+
+
+def get_task_list(request, task_type=[]):
+    """
+        公共函数
+        获取任务列表
+        1. 前端通过jquery插件datatables填充数据表数据
+        2. 后端根据备份类型，进行分页操作
+    """
+    # 初始化datatables要求结果格式
+    return_obj = {
+        "sEcho": request.POST.get('sEcho', 0), # 前端上传原样返回
+        "iTotalRecords": 0, # 总记录数
+        "iTotalDisplayRecords": 0, # 过滤后总记录数，暂时不知具体用法
+        # 返回前端数据，内容可以为列表，也可以为字典，字典的话，必须要在前端指定mData，此处要和前端设置的一直
+        "aaData": []
+    }
+    try:
+        # 初始化数据
+        objs = Task.objects.filter(task_type__in=task_type)
+        return_obj['iTotalRecords'] = return_obj['iTotalDisplayRecords'] = objs.count()
+        # 获取前端上传数据，分页类，查询排序类
+        # 1. 过滤类
+        objs = task_filter(objs, request)
+        return_obj['iTotalDisplayRecords'] = objs.count()
+        # 2. 排序类
+        objs = task_order(objs, request)
+        # 3. 分页类
+        # 前端datatable上传每页显示数据
+        limit = int(request.POST.get('iDisplayLength', 0))
+        # 前端datatable上送从第几条开始展示
+        offset = int(request.POST.get('iDisplayStart', 5))
+        # 非选择全部时，有过滤
+        if limit > -1:
+            objs = objs[offset:offset + limit]
+            # 组织数据库查询数据
+        for obj in objs:
+            return_obj["aaData"].append({
+                'proxy': obj.task_proxy.id,
+                'proxy_name': obj.task_proxy.proxy_name,
+                'b_trigger': obj.trigger_kwargs,
+                'status': obj.task_statu,
+                'task_type': obj.task_type,
+                'last_exec_time': obj.last_exec_time,
+                'comment': obj.comment,
+                'id': obj.id
+            })
+    except:
+        logger.error(traceback.format_exc())
+    return return_obj
+
+
+@require_role('admin')
+def adv_task_list(request):
+    """
+        查看数据库备份
+    """
+    if request.method == 'GET':
+        # 第一次请求，到达首页
+        return my_render('taskManage/adv/list.html', locals(), request)
+
+    elif request.method == 'POST':
+        # 返回数据
+        return HttpResponse(json.dumps(get_task_list(request, ['ansible-pb', 'shell'])))
+
+    else:
+        pass
+
+
+@require_role('admin')
+@user_operator_record
+def adv_task_add(request, res, *args):
+    if request.method == 'POST':
+        param = {}
+        # 触发器
+        trigger_kwargs = request.POST.get('trigger')
+        task_name = request.POST.get('task_type')
+        task_content = request.POST.get('task_content') # 文件内容
+        task_host = request.POST.getlist('task_host[]') # 前端上送list时
+        proxy = request.POST.get('proxy')
+        comment = request.POST.get('comment')
+        try:
+            # 构建trigger
+            init_trigger = trigger_kwargs = json.loads(trigger_kwargs)
+            start_date = trigger_kwargs.pop('start_date')
+            if not trigger_kwargs:
+                start_date_2_date = datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S')
+                trigger_kwargs['year'] = start_date_2_date.year
+                trigger_kwargs['month'] = start_date_2_date.month
+                trigger_kwargs['day'] = start_date_2_date.day
+                trigger_kwargs['hour'] = start_date_2_date.hour
+                trigger_kwargs['minute'] = start_date_2_date.minute
+                trigger_kwargs['second'] = start_date_2_date.second
+            trigger_kwargs['start_date'] = start_date
+            param['trigger_kwargs'] = trigger_kwargs
+
+            hosts = []
+            # 没有选中主机，则认为是全选，取选中proxy下的所有
+            proxy_obj = Proxy.objects.get(id=proxy)
+            param['task_name'] = task_name
+            task_kwargs = {}
+
+            if not task_host:
+                hosts = Asset.objects.all().filter(proxy=proxy_obj)
+                if not hosts:
+                    # 没有可执行主机
+                    raise ServerError("no exec host")
+            else:
+                for host_id in task_host:
+                    hosts.append(Asset.objects.get(id=host_id))
+
+            host_list = []
+            resource = []
+            # 构建inventory 和 构建主机list
+            for host in hosts:
+                host_list.append(host.networking.all()[0].ip_address)
+                tmp_d = dict()
+                tmp_d['hostname'] = host.networking.all()[0].ip_address
+                tmp_d['port'] = host.port
+                tmp_d['username'] = host.username
+                tmp_d['password'] = CRYPTOR.decrypt(host.password)
+                # 用于前端确定选择的asset
+                tmp_d['id'] = host.id
+                resource.append(tmp_d)
+            task_kwargs['host_list'] = host_list
+            task_kwargs['resource'] = resource
+            param['task_kwargs'] = task_kwargs
+            # 调用proxy接口，创建任务
+            # api = APIRequest('{0}/v1.0/job'.format(proxy_obj.url), proxy_obj.username,
+            #                  CRYPTOR.decrypt(proxy_obj.password))
+            # result, code = api.req_post(json.dumps(param))
+            # if code != 200:
+            #     raise ServerError(result['messege'])
+            # else:
+            # TODO 测试存入
+            logger.info(">>>>>{0}".format(task_name))
+            task = Task(task_type=task_name, task_proxy=proxy_obj, ext1=json.dumps(task_kwargs),
+                        trigger_kwargs=json.dumps(trigger_kwargs), channal='00', comment=comment,
+                        task_uuid='1111', create_time=datetime.now())
+            task.save()
+        except ServerError, e:
+            error = e.message
+            res['flag'] = False
+            res['content'] = error
+        except Exception, e:
+            logger.error(traceback.format_exc())
+            res['flag'] = False
+            res['content'] = e[1]
+        else:
+            res['flag'] = True
+        return HttpResponse(json.dumps(res))
+    elif request.method == "GET":
+        proxy_list = [proxy.to_dict() for proxy in Proxy.objects.all().order_by('create_time')]
+        res['proxys'] = proxy_list
+        res['task_types'] = Task.TYPES[1:]
+        return HttpResponse(json.dumps(res))
+
+
+@require_role('admin')
+@user_operator_record
+def adv_task_edit(request, res, *args, **kwargs):
+    if request.method == 'POST':
+        param = {}
+        # 触发器
+        trigger_kwargs = request.POST.get('trigger')
+        comment = request.POST.get('comment')
+        task_id = int(request.POST.get('task_id'))
+        try:
+            task = Task.objects.get(id=task_id)
+            # 构建trigger
+            trigger_kwargs = json.loads(trigger_kwargs)
+            start_date = trigger_kwargs.pop('start_date')
+            end_date = trigger_kwargs.get('end_date')
+            if end_date:
+                trigger_kwargs.pop('end_date')
+
+            if not trigger_kwargs:
+                start_date_2_date = datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S')
+                trigger_kwargs['year'] = start_date_2_date.year
+                trigger_kwargs['month'] = start_date_2_date.month
+                trigger_kwargs['day'] = start_date_2_date.day
+                trigger_kwargs['hour'] = start_date_2_date.hour
+                trigger_kwargs['minute'] = start_date_2_date.minute
+                trigger_kwargs['second'] = start_date_2_date.second
+            trigger_kwargs['start_date'] = start_date
+            if end_date:
+                trigger_kwargs['start_date'] = end_date
+            param['trigger_kwargs'] = trigger_kwargs
+            if task.is_get_last != '00':
+                param['job_id'] = task.task_uuid
+                param['task_name'] = task.task_type
+                param['task_kwargs'] = json.loads(task.task_kwargs)
+                # 任务已经完全结束，再次编辑时，proxy端需要重新创建
+                api = APIRequest('{0}/v1.0/job'.format(task.task_proxy.url), task.task_proxy.username,
+                                 CRYPTOR.decrypt(task.task_proxy.password))
+                result, code = api.req_post(json.dumps(param))
+                if code != 200:
+                    raise ServerError(result['messege'])
+                else:
+                    task.trigger_kwargs = json.dumps(trigger_kwargs)
+                    task.comment = comment
+                    task.is_get_last = '00'
+                    task.save()
+            else:
+                api = APIRequest('{0}/v1.0/job/{1}'.format(task.task_proxy.url, task.task_uuid),
+                                 task.task_proxy.username,
+                                 CRYPTOR.decrypt(task.task_proxy.password))
+                result, code = api.req_put(json.dumps(param))
+                if code != 200:
+                    raise ServerError(result['messege'])
+                else:
+                    task.trigger_kwargs = json.dumps(trigger_kwargs)
+                    task.comment = comment
+                    task.save()
+        except:
+            logger.error(traceback.format_exc())
+            res['flag'] = False
+            res['content'] = "update error"
+        else:
+            res['flag'] = True
+        return HttpResponse(json.dumps(res))
+    elif request.method == "GET":
+        task_id = request.GET.get('task_id')
+        task = Task.objects.get(id=task_id).to_dict()
+        proxy_list = [proxy.to_dict() for proxy in Proxy.objects.all().order_by('create_time')]
+        task['module'] = task['module'].to_dict()
+        task['task_proxy'] = task['task_proxy'].to_dict()
+        res['task'] = task
+        res['proxys'] = proxy_list
+        res['task_types'] = Task.TYPES
+        return HttpResponse(json.dumps(res))
+
+
+@require_role('admin')
+@user_operator_record
+def adv_task_action(request, res, *args, **kwargs):
+    if request.method == 'POST':
+
+        task_id = request.POST.get('task_id')
+        action = request.POST.get('action')
+        task = Task.objects.get(id=task_id)
+        try:
+            # TODO 先获取记录是否存在，存在的话就是新建
+
+            # 构建参数
+            param = {'action': action}
+
+            # 调用proxy接口，
+            api = APIRequest('{0}/v1.0/job/{1}/action/'.format(task.task_proxy.url, task.task_uuid),
+                             task.task_proxy.username,
+                             CRYPTOR.decrypt(task.task_proxy.password))
+            result, code = api.req_post(json.dumps(param))
+            if code != 200:
+                raise ServerError(result['messege'])
+            else:
+                if action == 'pause':
+                    task.task_statu = '01'
+                else:
+                    task.task_statu = '00'
+                task.save()
+        except ServerError, e:
+            error = e.message
+            res['flag'] = False
+            res['content'] = error
+        except Exception, e:
+            res['flag'] = False
+            res['content'] = e[1]
+        else:
+            res['flag'] = True
+        return HttpResponse(json.dumps(res))
+    elif request.method == "GET":
+        proxy_list = [proxy.to_dict() for proxy in Proxy.objects.all().order_by('create_time')]
+        res['proxys'] = proxy_list
+        res['task_types'] = Task.TYPES
+        return HttpResponse(json.dumps(res))
+
+
+@require_role('admin')
+@user_operator_record
+def adv_task_del(request, res, *args, **kwargs):
+    if request.method == 'POST':
+        task_ids = request.POST.get('task_id')
+        res['flag'] = True
+        success = []
+        fail = []
+        # 循环删除
+        for task_id in task_ids.split(','):
+            task = Task.objects.get(id=task_id)
+            try:
+                # 调用proxy接口，
+                api = APIRequest('{0}/v1.0/job/{1}'.format(task.task_proxy.url, task.task_uuid),
+                                 task.task_proxy.username,
+                                 CRYPTOR.decrypt(task.task_proxy.password))
+                result, code = api.req_del(json.dumps({}))
+                if code != 200:
+                    raise ServerError(result['messege'])
+                else:
+                    task.task_statu = '02'
+                    task.save()
+            except ServerError, e:
+                fail.append(task)
+                error = e.message
+                res['flag'] = False
+                res['content'] = error
+            except Exception, e:
+                fail.append(task)
+                res['flag'] = False
+                res['content'] = e[1]
+            else:
+                success.append(task)
+        if len(success) + len(fail) > 1:
+            res['content'] = 'success [%d] fail [%d]' % (len(success), len(fail))
+
+        return HttpResponse(json.dumps(res))

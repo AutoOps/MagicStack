@@ -47,6 +47,8 @@ class Module(models.Model):
 class Task(models.Model):
     TYPES = (
         ('ansible', "Ansible"),
+        ('ansible-pb', "Ansible Playbook"),
+        ('shell', "Shell"),
     )
 
     STATUS = (
@@ -61,19 +63,19 @@ class Task(models.Model):
         ('02', '备份中心'),
     )
 
-
     task_proxy = models.ForeignKey(Proxy, help_text="proxy")
     task_type = models.CharField(max_length=20, choices=TYPES, help_text="任务类型")
     task_kwargs = models.BinaryField(help_text="任务参数") # 字典
     task_statu = models.CharField(max_length=2, choices=STATUS, default='00', help_text="任务状态")
     trigger_kwargs = models.BinaryField(help_text="触发器参数") # 字典
-    module = models.ForeignKey(Module, help_text="任务执行模块")
+    module = models.ForeignKey(Module, null=True, help_text="任务执行模块")
     channal = models.CharField(max_length=4, choices=CHANNEL, help_text="任务渠道")
     create_time = models.DateField(help_text="创建时间")
     comment = models.TextField(blank=True, null=True, help_text="备注")
     task_uuid = models.CharField(max_length=100, help_text="任务ID")
     last_exec_time = models.CharField(max_length=100, help_text="最后执行时间")
     is_get_last = models.CharField(max_length=4, default='00', help_text="是否获取最后执行时间")
+    adv_content = models.TextField(blank=True, null=True, help_text="高级任务，脚本内容")
     ext1 = models.CharField(max_length=2000, help_text="扩展字段1")
     ext2 = models.CharField(max_length=2000, help_text="扩展字段2")
     ext3 = models.CharField(max_length=2000, help_text="扩展字段3")
@@ -85,10 +87,10 @@ class Task(models.Model):
             d[f.name] = getattr(self, f.name, None)
             if isinstance(d[f.name], (datetime.datetime, datetime.date)):
                 d[f.name] = getattr(self, f.name, None).strftime('%Y-%m-%d %H:%M:%S')
-            # 定制前端需要内容
+                # 定制前端需要内容
         trigger_t = json.loads(d['trigger_kwargs'])
         d['trigger_display'] = u"<p>开始时间：%s</p><p>结束时间：%s</p>" % (
-        trigger_t.get('start_date'), trigger_t.get('end_date', '9999-12-31 23:59:59') )
+            trigger_t.get('start_date'), trigger_t.get('end_date', '9999-12-31 23:59:59') )
         return d
 
 

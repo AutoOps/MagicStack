@@ -158,10 +158,10 @@ def perm_rule_edit(request, res, *args):
                 raise ServerError(u'系统用户和关联系统用户不能为空')
             if rule_name_old == rule_name:
                 if len(PermRule.objects.filter(name=rule_name)) > 1:
-                    raise ServerError(u'授权规则名称已存在')
+                    raise ServerError(u'授权规则名称[%s]已存在'%rule_name)
             else:
                 if len(PermRule.objects.filter(name=rule_name)) > 0:
-                    raise ServerError(u'授权规则名称已存在')
+                    raise ServerError(u'授权规则名称[%s]已存在'%rule_name)
 
             assets_obj = [Asset.objects.get(id=asset_id) for asset_id in assets_select]
             asset_groups_obj = [AssetGroup.objects.get(id=group_id) for group_id in asset_groups_select]
@@ -199,7 +199,7 @@ def perm_rule_edit(request, res, *args):
         except Exception, e:
             res['flag'] = 'false'
             res['content'] = e.message
-            res['emer_status'] = response['error'] = u"编辑授权规则[{0}]失败:{1}".format(rule_name_old,e.message)
+            res['emer_status'] = response['error'] = u"编辑授权规则失败:%s"%e.message
         return HttpResponse(json.dumps(response), content_type='application/json')
 
 
@@ -769,7 +769,7 @@ def perm_sudo_add(request, res, *args):
             res['flag'] = 'false'
             res['content'] = e.message
             res['emer_status'] = u"添加Sudo命令别名失败:%s" % (e.message)
-            response['error'] = e.message
+            response['error'] = res['emer_status']
     return HttpResponse(json.dumps(response), content_type='application/json')
 
 
@@ -807,10 +807,10 @@ def perm_sudo_edit(request, res, *args):
             old_name = sudo.name
             if old_name == name:
                 if len(PermSudo.objects.filter(name=name)) > 1:
-                    raise ServerError(u'SUDO[%s]已存在' % name)
+                    raise ServerError(u'别名[%s]已存在' % name)
             else:
                 if len(PermSudo.objects.filter(name=name)) > 0:
-                    raise ServerError(u'SUDO[%s]已存在' % name)
+                    raise ServerError(u'别名[%s]已存在' % name)
 
             pattern = re.compile(r'[\n,\r]')
             deal_space_commands = list_drop_str(pattern.split(commands), u'')
@@ -841,9 +841,9 @@ def perm_sudo_edit(request, res, *args):
 
         except ServerError as e:
             res['flag'] = 'false'
-            res['content'] = u'编辑别名失败:[%s]'%e.message
-            res['emer_status'] = u"编辑Sudo命令别名失败:%s"%(e)
-            response['error'] = e.message
+            res['content'] = e.message
+            res['emer_status'] = u"编辑Sudo命令别名失败:%s"%(e.message)
+            response['error'] = res['emer_status']
         return HttpResponse(json.dumps(response), content_type='application/json')
 
 

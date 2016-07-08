@@ -78,7 +78,7 @@ def group_edit(request,res, *args):
     Group edit view
     编辑资产组
     """
-    res['operator'] = u'编辑主机组'
+    res['operator'] = u'编辑资产组'
     if request.method == 'GET':
         try:
             group_id = request.GET.get('id', '')
@@ -114,19 +114,19 @@ def group_edit(request,res, *args):
             old_name =group.name
             if old_name == name:
                 if len(AssetGroup.objects.filter(name=name)) > 1:
-                    raise ServerError(u'用户组[%s]已存在' % name)
+                    raise ServerError(u'资产组[%s]已存在' % name)
             else:
                 if len(AssetGroup.objects.filter(name=name)) > 0:
-                    raise ServerError(u'用户组[%s]已存在' % name)
+                    raise ServerError(u'资产组[%s]已存在' % name)
 
         except ServerError as e:
             res['flag'] = 'false'
-            res['content'] = e
+            res['content'] = e.message
             response['error'] = u"添加资产组失败:%s" % e.message
         else:
             group.asset_set.clear()
             db_update_group(id=group_id, name=name, comment=comment, asset_select=asset_select)
-            smg = u"主机组 %s 添加成功" % name
+            smg = u"编辑资产组 %s 添加成功" % name
             response['success'] = True
             res['content'] = response['error'] = smg
         return HttpResponse(json.dumps(response), content_type='application/json')
@@ -825,8 +825,6 @@ def idc_edit(request, res, *args):
             else:
                 if len(IDC.objects.filter(name=idc_name)) > 0:
                     raise ServerError(u'IDC[%s]已存在' % idc_name)
-            # if IDC.objects.filter(name=idc_name).count() > 1:
-            #     raise ServerError(u"IDC[%s]已存在" % idc_name)
 
             idc.name = idc_name
             idc.bandwidth = idc_bandwidth
@@ -843,8 +841,8 @@ def idc_edit(request, res, *args):
         except Exception as e:
             # logger.error(e.message)
             res['flag'] = 'false'
-            res['content'] = u'编辑IDC失败:%s'%e.message
-            response['error'] =  res['content']
+            res['content'] = e.message
+            response['error'] =  u'编辑IDC失败:%s'%e.message
     return HttpResponse(json.dumps(response), content_type='application/json')
 
 

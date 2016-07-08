@@ -21,8 +21,11 @@ from taskManage.views import *
 
 urlpatterns = patterns("",
     url("^list/$", task_list, name="task_list"),
+    url("^adv_task_list/$", adv_task_list, name="adv_task_list"),
     url("^add/$", task_add, name="task_add"),
+    url("^adv_task_add/$", adv_task_add, name="adv_task_add"),
     url("^edit/$", task_edit, name="task_edit"),
+    url("^adv_task_edit/$", adv_task_edit, name="adv_task_edit"),
     url("^del/$", task_del, name="task_del"),
     url("^action/$", task_action, name="task_action"),
     url("^groups/$", task_group, name="get_task_group"),

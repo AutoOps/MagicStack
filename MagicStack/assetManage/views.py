@@ -59,7 +59,7 @@ def group_add(request, res,*args):
         except ServerError as e:
             res['flag'] = 'false'
             res['content'] = e.message
-            response['error'] = e.message
+            response['error'] = u"添加资产组失败：%s"%e.message
 
         else:
             db_add_group(name=name, comment=comment, asset_select=asset_select)
@@ -511,8 +511,8 @@ def asset_edit(request, res, *args):
             except Exception, e:
                     logger.error(e)
                     res['flag'] = 'false'
-                    res['content'] = u'编辑资产失败:%s'%e.message
-                    response['error'] = e.message
+                    res['content'] = e.message
+                    response['error'] = u'编辑资产失败:%s'%e.message
             else:
                 if code == 200:
                     res['content'] = u'编辑资产[%s]成功' % name

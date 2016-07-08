@@ -52,10 +52,33 @@ def group_list(request):
     list user group
     用户组列表
     """
-    header_title, path1, path2 = u'查看用户组', u'用户管理', u'查看用户组'
-    user_group_list = UserGroup.objects.all().order_by('name')
-    user_all = User.objects.all()
-    return my_render('userManage/group_list.html', locals(), request)
+    if request.method == 'GET':
+        header_title, path1, path2 = u'查看用户组', u'用户管理', u'查看用户组'
+        user_all = User.objects.all()
+        return my_render('userManage/group_list.html', locals(), request)
+    else:
+        page_length = int(request.POST.get('length', '5'))
+        total_length = UserGroup.objects.all().count()
+        keyword = request.POST.get("search")
+        rest = {
+            "iTotalRecords": page_length,   # 本次加载记录数量
+            "iTotalDisplayRecords": total_length,  # 总记录数量
+            "aaData": []}
+        page_start = int(request.POST.get('start', '0'))
+        page_end = page_start + page_length
+        page_data = UserGroup.objects.all()[page_start:page_end]
+        data = []
+        for item in page_data:
+            res = {}
+            rest['Id'] = item.id
+            res['id'] = item.id
+            res['name'] = item.name
+            res['users'] = item.user_set.all().count()
+            res['comment'] = item.comment
+            data.append(res)
+        rest['aaData'] = data
+        return HttpResponse(json.dumps(rest), content_type='application/json')
+
 
 
 @require_role(role='super')

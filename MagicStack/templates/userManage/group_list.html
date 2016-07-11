@@ -166,13 +166,12 @@
             "iDisplayLength" : 5, //默认显示的记录数
             "bPaginate" : true, //是否显示（应用）分页器
             "bInfo" : true, //是否显示页脚信息，DataTables插件左下角显示记录数
-            "bSort" : true, //是否启动各个字段的排序功能
             "sPaginationType": "bootstrap_full_number",
-            "aaSorting" : [[2, "desc"]], //默认的排序方式，第0列，降序排列
+            "aaSorting" : [[2, "desc"]], //默认的排序方式，第2列，降序排列
             "bFilter" : true, //是否启动过滤、搜索功能
             "aoColumns" : [{
                 "sDefaultContent" : '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"> \
-                                        <input type="checkbox" class="checkboxes" value="{{ asset.id }}" /> \
+                                        <input type="checkbox" class="checkboxes" value="" /> \
                                         <span></span> \
                            </label>', //此列默认值为""，以防数据中没有此值，DataTables加载数据的时候报错
                 "bSortable":false //此列不排序
@@ -216,7 +215,7 @@
                 * 设置操作列的值
                 */
                 "fnRowCallback" : function(nRow, aData, iDisplayIndex) {
-                    op_del = '<a class="del" name=\"group/del/?id=' + aData.id + '\">删除</a> ';
+                    op_del = '<a class="del" name=\"/user/group/del/?id=' + aData.id + '\">删除</a> ';
                     op_edit = '<a href=\"#\" onclick=\"editGroup('+aData.id+')\">编辑</a>';
                     op_html = '<div class="btn-group"> \
                             <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions\
@@ -228,18 +227,9 @@
                             </ul>\
                         </div>';
                     $('td:eq(4)', nRow).html(op_html);
+                    $('td:eq(0) input', nRow).val(aData.id.toString());
                     return nRow;
                 },
-                /*
-                 * 向服务器传递的参数
-                 */
-{#                "fnServerParams": function ( aoData ) {#}
-{#                    aoData.add(#}
-{#                            { "name": "keyword", "value": $("search").val() }#}
-{#                            );#}
-{#                  },#}
-                 //请求url
-{#                "sAjaxSource" : basePath+"getCustomResponsePageMessage/"+$("#secret").val(),#}
                 //服务器端，数据回调处理
                 "fnServerData" : function(sSource, aDataSet, fnCallback) {
                     $.ajax({
@@ -307,13 +297,13 @@
             })
         });
 
-        $('.del').click(function(){
+        //单一删除
+        table.on('click', 'a.del', function(){
               var row = $(this).closest('tr');
-              var href_url = $(this).attr('name').split('?')[0];
               var del_id = $(this).attr('name').split('?')[1].split('=')[1];
               if (confirm("确定删除?")) {
                 $.post(
-                    href_url,
+                    '{% url "user_group_del" %}',
                     {'id': del_id },
                     function(data){
                         row.remove();
@@ -323,18 +313,19 @@
               }
           });
 
+        //删除多个
         $('#del_btn').click(function(){
             var check_array = [];
             if (confirm("确定删除所选的用户组?")) {
-                $(".gradeX input:checked").each(function() {
-                    check_array.push($(this).attr("value"))
+                var rowChecked = table.find('tbody tr .checkboxes:checked');
+                rowChecked.each(function(index, elem) {
+                    check_array.push($(elem).val())
                 });
                 $.post("{% url 'user_group_del' %}",
                     {id: check_array.join(",")},
                     function(result){
                         alert(result);
-                        $(".gradeX input:checked").closest("tr").remove();
-
+                        $("#sample_1 input:checked").closest("tr").remove();
                     }
                 )
             }

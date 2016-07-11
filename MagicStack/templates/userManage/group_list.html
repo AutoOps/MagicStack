@@ -116,6 +116,7 @@
     <script src="/static/global/scripts/datatable.js" type="text/javascript"></script>
     <script src="/static/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
     <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 <script>
      //编辑用户组
     function editGroup(id){
@@ -289,7 +290,7 @@
                 success:function(res){
                     if(res.success){
                         $("#myModal").modal('hide');
-                        table_init.api().ajax.reload();    //刷新table
+                        window.location.reload();    //刷新table
                     }else{
                         $("#error_info").text(res.error).show()
                     }
@@ -301,34 +302,38 @@
         table.on('click', 'a.del', function(){
               var row = $(this).closest('tr');
               var del_id = $(this).attr('name').split('?')[1].split('=')[1];
-              if (confirm("确定删除?")) {
-                $.post(
-                    '{% url "user_group_del" %}',
-                    {'id': del_id },
-                    function(data){
-                        row.remove();
-                        alert(data);
-                    }
-                )
-              }
+              bootbox.confirm("确定删除?", function(result){
+                  if(result){
+                      $.post(
+                            '{% url "user_group_del" %}',
+                            {'id': del_id },
+                            function(data){
+                                row.remove();
+                                bootbox.alert(data);
+                            }
+                      )
+                  }
+              })
           });
 
         //删除多个
         $('#del_btn').click(function(){
             var check_array = [];
-            if (confirm("确定删除所选的用户组?")) {
-                var rowChecked = table.find('tbody tr .checkboxes:checked');
-                rowChecked.each(function(index, elem) {
-                    check_array.push($(elem).val())
-                });
-                $.post("{% url 'user_group_del' %}",
-                    {id: check_array.join(",")},
-                    function(result){
-                        alert(result);
-                        $("#sample_1 input:checked").closest("tr").remove();
-                    }
-                )
-            }
+            bootbox.confirm("确定删除所选的用户组?", function(result){
+                if(result){
+                    var rowChecked = table.find('tbody tr .checkboxes:checked');
+                    rowChecked.each(function(index, elem) {
+                        check_array.push($(elem).val())
+                    });
+                    $.post("{% url 'user_group_del' %}",
+                        {id: check_array.join(",")},
+                        function(res){
+                            bootbox.alert(res);
+                            $("#sample_1 input:checked").closest("tr").remove();
+                        }
+                    )
+                }
+            })
         });
         <!--页面操作处理结束 -->
 

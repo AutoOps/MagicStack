@@ -56,51 +56,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                            {% for user in users_list %}
-                             <tr class="gradeX">
-                                <td>
-                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                        <input type="checkbox" class="checkboxes" value="{{ user.id }}" />
-                                        <span></span>
-                                    </label>
-                                </td>
-                                <td>
-                                    <a href="{% url 'user_detail' %}?id={{ user.id }}">{{ user.username }}</a>
-                                </td>
-                                <td>
-                                    {{ user.name }}
-                                </td>
-                                <td title="{% for user_group in user.group.all %} {{ user_group.name }} {% endfor %}"> {{ user.group.all | groups2str  }} </td>
-                                <td>
-                                    {{ user.id | get_role }}
-                                </td>
-                                <th>
-                                    {{ user.id | user_perm_asset_num }}
-                                </th>
-                                <td>
-                                    {{ user.is_active | bool2str }}
-                                </td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
-                                            <i class="fa fa-angle-down"></i>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li>
-                                                <a href="#" onclick="editUser('{{ user.id }}')">编辑</a>
-                                            </li>
-                                            <li>
-                                                <a name="{{ user.uuid }}"  class="email">Email</a>
-                                            </li>
-                                            <li>
-                                                <a name="{% url 'user_del' %}?id={{ user.id }}" class="del">
-                                                     删除 </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -232,7 +187,7 @@
     <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
-    <script src="/static/pages/scripts/table-datatables-managed.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL SCRIPTS -->
 <script>
     //编辑用户
@@ -293,6 +248,114 @@
     }
 
     $(document).ready(function(){
+        <!--初始化Table -->
+        var table = $("#sample_1");
+        var table_init = table.DataTable({
+            "bDestroy" : true,
+            "bProcessing" : true, //DataTables载入数据时，是否显示‘进度’提示
+            "bServerSide" : true, //是否启动服务器端数据导入
+            "bStateSave" : true, //是否打开客户端状态记录功能,此功能在ajax刷新纪录的时候不会将个性化设定回复为初始化状态
+            "aLengthMenu" : [[5, 15, 20, -1], [5, 15, 20, "All"]], //更改显示记录数选项
+            "iDisplayLength" : 5, //默认显示的记录数
+            "bPaginate" : true, //是否显示（应用）分页器
+            "bInfo" : true, //是否显示页脚信息，DataTables插件左下角显示记录数
+            "sPaginationType": "bootstrap_full_number",
+            "aaSorting" : [[2, "desc"]], //默认的排序方式，第2列，降序排列
+            "bFilter" : true, //是否启动过滤、搜索功能
+            "aoColumns" : [{
+                "sDefaultContent" : '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"> \
+                                        <input type="checkbox" class="checkboxes" value="" /> \
+                                        <span></span> \
+                           </label>', //此列默认值为""，以防数据中没有此值，DataTables加载数据的时候报错
+                "bSortable":false //此列不排序
+                }, {
+                    "mData" : "username",
+                    "sDefaultContent" : "",
+                    "bSearchable":true
+                }, {
+                    "mData" : "name",
+                    "sDefaultContent" : ""
+                }, {
+                    "mData" : "groups",
+                    "sDefaultContent" : ""  ,
+                    "bSortable":false   //此列不需要排序
+                },  {
+                    "mData" : "role",
+                    "sDefaultContent" : "",
+                    "bSortable":false
+                },{
+                   "mData": "assets",
+                   "sDefaultContent": ""
+                },{
+                   "mData": "is_active",
+                   "sDefaultContent": ""
+                },{
+                   "mData": "",
+                   "sDefaultContent": "",
+                   "bSortable": false
+                }],
+                "oLanguage": { //国际化配置
+                    "sProcessing" : "正在获取数据，请稍后...",
+                    "sLengthMenu" : "显示 _MENU_ 条",
+                    "sSearch": "搜索:",
+                    "sZeroRecords" : "没有您要搜索的内容",
+                    "sInfo" : "从 _START_ 到  _END_ 条记录 共 _TOTAL_ 条记录",
+                    "sInfoEmpty" : "记录数为0",
+                    "sInfoFiltered" : "(共显示 _MAX_ 条数据)",
+                    "sInfoPostFix" : "",
+                    "oPaginate": {
+                        "sFirst" : "第一页",
+                        "sPrevious" : "上一页",
+                        "sNext" : "下一页",
+                        "sLast" : "最后一页"
+                    }
+                },
+                /*
+                * 设置操作列的值
+                */
+                "fnRowCallback" : function(nRow, aData, iDisplayIndex) {
+                    op_del = '<a class="del" name=\"/user/del/?id=' + aData.id + '\">删除</a> ';
+                    op_edit = '<a href=\"#\" onclick=\"editUser('+aData.id+')\">编辑</a>';
+                    op_html = '<div class="btn-group"> \
+                            <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions\
+                                <i class="fa fa-angle-down"></i> \
+                            </button> \
+                            <ul class="dropdown-menu" role="menu"> \
+                                <li>' + op_edit + '</li>\
+                                <li>' + op_del + '</li>\
+                            </ul>\
+                        </div>';
+                    $('td:eq(7)', nRow).html(op_html);
+                    $('td:eq(0) input', nRow).val(aData.id.toString());
+                    return nRow;
+                },
+                //服务器端，数据回调处理
+                "fnServerData" : function(sSource, aDataSet, fnCallback) {
+                    $.ajax({
+                        "dataType" : 'json',
+                        "type" : "post",
+                        "url" : sSource,
+                        "data" : aDataSet,
+                        "success" : function(resp){
+                            fnCallback(resp);
+                        }
+                    });
+                }
+        });
+
+        table.find(".group-checkable").change(function() {
+            var e = $(this).attr("data-set"),
+            t = $(this).is(":checked");
+            $(e).each(function() {
+                t ? ($(this).prop("checked", !0), $(this).parents("tr").addClass("active")) : ($(this).prop("checked", !1), $(this).parents("tr").removeClass("active"))
+            })
+        });
+        table.on("change", "tbody tr .checkboxes", function() {
+                 $(this).parents("tr").toggleClass("active")
+        });
+        <!--初始化Table结束 -->
+
+        <!--页面操作处理-->
         //添加用户
         $("#btn_add").click(function(){
             document.getElementById("form_add_user").reset();
@@ -325,7 +388,7 @@
                 success:function(res){
                     if(res.success){
                         $("#addModal").modal('hide');
-                        window.location.reload()
+                        window.location.reload();
                     }else{
                         $("#error_info").text(res.error).show()
                     }
@@ -333,50 +396,53 @@
             })
         });
 
-          //删除一行
-          $('.del').click(function(){
+        //删除一行
+        table.on('click', 'a.del', function(){
               var row = $(this).closest('tr');
-              var href_url = $(this).attr('name').split('?')[0];
               var del_id = $(this).attr('name').split('?')[1].split('=')[1];
-              if (confirm("确定删除?")) {
-                $.post(
-                    href_url,
-                    {'id': del_id },
-                    function(data){
-                        alert(data);
-                        row.remove();
-                    }
-                )
-              }
-          });
+              bootbox.confirm("确定删除?",function(result){
+                  if(result){
+                      $.post( '{% url "user_del" %}',
+                         {'id': del_id },
+                         function(data){
+                             bootbox.alert(data);
+                             row.remove();
+                      })
+                  }
+              });
+        });
 
-          //删除多行
-          $('#del_btn').click(function(){
+        //删除多行
+        $('#del_btn').click(function(){
             var check_array = [];
-            if (confirm("确定删除")) {
-                $(".gradeX input:checked").each(function() {
-                    check_array.push($(this).attr("value"))
-                });
-                $.post("{% url 'user_del' %}",
-                    {id: check_array.join(",")},
-                    function(result){
-                        alert(result);
-                        $(".gradeX input:checked").closest("tr").remove();
+            bootbox.confirm("确定删除所选的用户?", function(result){
+                if(result){
+                    var rowChecked = table.find('tbody tr .checkboxes:checked');
+                    rowChecked.each(function(index, elem) {
+                        check_array.push($(elem).val())
+                    });
+                    $.post("{% url 'user_del' %}",
+                        {id: check_array.join(",")},
+                        function(res){
+                            bootbox.alert(res);
+                            $("#sample_1 input:checked").closest("tr").remove();
+                        }
+                    )
+                }
 
-                    }
-                )
-            }
-          });
+            })
+        });
 
-          //发送邮件
-          $('.email').click(function(){
+        //发送邮件
+        $('.email').click(function(){
             $.get('{% url "mail_retry" %}?uuid=' + $(this).attr('name'),
                     {},
                     function(data){
                         alert(data)
                     }
             )
-          });
+        });
+        <!--页面操作处理结束 -->
     });
 </script>
 {% endblock %}

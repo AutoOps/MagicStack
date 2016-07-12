@@ -1,14 +1,12 @@
 # coding: utf-8
 from __future__ import division
 import xlrd
-import xlsxwriter
-from django.db.models import AutoField
 from MagicStack.api import *
 from assetManage.models import ASSET_STATUS, ASSET_TYPE, ASSET_ENV, IDC, AssetRecord, Asset, AssetGroup
-from MagicStack.templatetags.mytags import get_disk_info
 from common.interface import APIRequest
 from django.db.models.query import QuerySet
 import traceback
+import ast
 
 
 def group_add_asset(group, asset_id=None, asset_ip=None):
@@ -76,12 +74,6 @@ def db_asset_update(**kwargs):
     """ 修改主机时数据库操作函数 """
     asset_id = kwargs.pop('id')
     Asset.objects.filter(id=asset_id).update(**kwargs)
-
-
-def sort_ip_list(ip_list):
-    """ ip地址排序 """
-    ip_list.sort(key=lambda s: map(int, s.split('.')))
-    return ip_list
 
 
 def get_tuple_name(asset_tuple, value):
@@ -160,70 +152,6 @@ def db_asset_alert(asset, username, alert_dic):
 
     if alert_list:
         AssetRecord.objects.create(asset=asset, username=username, content=alert_list)
-
-
-def write_excel(asset_all):
-    data = []
-    now = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M')
-    file_name = 'cmdb_excel_' + now + '.xlsx'
-    workbook = xlsxwriter.Workbook('static/files/excels/%s' % file_name)
-    worksheet = workbook.add_worksheet(u'CMDB数据')
-    worksheet.set_first_sheet()
-    worksheet.set_column('A:E', 15)
-    worksheet.set_column('F:F', 40)
-    worksheet.set_column('G:Z', 15)
-    title = [u'主机名', u'IP', u'IDC', u'所属主机组', u'操作系统', u'CPU', u'内存(G)', u'硬盘(G)',
-             u'机柜位置', u'MAC', u'远控IP', u'机器状态', u'备注']
-    for asset in asset_all:
-        group_list = []
-        for p in asset.group.all():
-            group_list.append(p.name)
-
-        disk = get_disk_info(asset.disk)
-        group_all = '/'.join(group_list)
-        status = asset.get_status_display()
-        idc_name = asset.idc.name if asset.idc else u''
-        system_type = asset.system_type if asset.system_type else u''
-        system_version = asset.system_version if asset.system_version else u''
-        system_os = unicode(system_type) + unicode(system_version)
-
-        alter_dic = [asset.name, asset.ip, idc_name, group_all, system_os, asset.cpu, asset.memory,
-                     disk, asset.cabinet, asset.mac, asset.remote_ip, status, asset.comment]
-        data.append(alter_dic)
-    format = workbook.add_format()
-    format.set_border(1)
-    format.set_align('center')
-    format.set_align('vcenter')
-    format.set_text_wrap()
-
-    format_title = workbook.add_format()
-    format_title.set_border(1)
-    format_title.set_bg_color('#cccccc')
-    format_title.set_align('center')
-    format_title.set_bold()
-
-    format_ave = workbook.add_format()
-    format_ave.set_border(1)
-    format_ave.set_num_format('0.00')
-
-    worksheet.write_row('A1', title, format_title)
-    i = 2
-    for alter_dic in data:
-        location = 'A' + str(i)
-        worksheet.write_row(location, alter_dic, format)
-        i += 1
-
-    workbook.close()
-    ret = (True, file_name)
-    return ret
-
-
-def copy_model_instance(obj):
-    initial = dict([(f.name, getattr(obj, f.name))
-                    for f in obj._meta.fields
-                    if not isinstance(f, AutoField) and \
-                    not f in obj._meta.parents.values()])
-    return obj.__class__(**initial)
 
 
 def ansible_record(asset, ansible_dic, username):
@@ -323,7 +251,6 @@ def get_ansible_asset_info(asset_ip, setup_info):
         cpu_cores = setup_info.get("ansible_processor_vcpus")
     cpu = cpu_type + ' * ' + unicode(cpu_cores)
     system_arch = setup_info.get("ansible_architecture")
-    # asset_type = setup_info.get("ansible_system")
     sn = setup_info.get("ansible_product_serial")
     asset_info = [other_ip, mac, cpu, memory_format, disk, sn, system_type, system_version, brand, system_arch]
     return asset_info
@@ -397,3 +324,31 @@ def gen_asset_proxy(asset_list):
                 asset_proxys[item].append(asset)
     logger.info('获取不同proxy所拥有的主机asset_proxys: %s'% asset_proxys)
     return asset_proxys
+
+
+def get_group_names(group_list):
+    """
+    获取用户组的名字 'group1 group2 ...'
+    """
+    if len(group_list) < 3:
+        return ' '.join([group.name for group in group_list])
+    else:
+        return '%s ...' % ' '.join([group.name for group in group_list[0:2]])
+
+
+def get_disk_info(disk_info):
+    """
+    获取硬盘信息
+    """
+    try:
+        disk_size = 0
+        if disk_info:
+            disk_dic = ast.literal_eval(disk_info)
+            for disk, size in disk_dic.items():
+                disk_size += size
+            disk_size = int(disk_size)
+        else:
+            disk_size = ''
+    except Exception:
+        disk_size = disk_info
+    return disk_size

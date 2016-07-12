@@ -25,9 +25,36 @@ MEDIA_TYPES = {'0': u'电子邮件', '1': u'微信', '2':u'短信'}
 
 @require_role('user')
 def media_list(request):
-    header_title, path1, path2 = u'告警媒介类型', u'告警管理', u'查看告警媒介类型'
-    media_lists = EmergencyType.objects.all()
-    return my_render('emergency/media_list.html', locals(), request)
+    if request.method == "GET":
+        header_title, path1, path2 = u'告警媒介类型', u'告警管理', u'查看告警媒介类型'
+        media_lists = EmergencyType.objects.all()
+        return my_render('emergency/media_list.html', locals(), request)
+    else:
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = EmergencyType.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": page_length,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = EmergencyType.objects.all()[page_start:page_end]
+            data = []
+            for item in page_data:
+                res={}
+                res['id']=item.id
+                res['name']=item.name
+                res['type']= u'电子邮件'if '0' in item.type else u'微信'
+                res['status']= u'启用'if '1'in item.status else u'禁用'
+                res['detail']=item.detail
+                res['comment']=item.comment
+                data.append(res)
+            rest['aaData']=data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+        except Exception as e:
+            logger.error(e.message)
 
 
 @require_role('admin')
@@ -187,17 +214,23 @@ def media_edit(request, res):
 @require_role('user')
 @user_operator_record
 def media_del(request, res):
-    msg = ''
     res['operator'] = u'删除告警媒介类型'
     res['content'] = u'删除告警媒介类型'
     selected_id = request.GET.get('id')
     media_ids = selected_id.split(',')
-    for item in media_ids:
-        media = EmergencyType.objects.get(id=int(item))
-        msg += '  %s  ' % media.name
-        res['content'] += u' [%s]  ' % media.name
-        media.delete()
-    return HttpResponse(u'删除[%s]成功' % msg)
+    if media_ids:
+        try:
+            for item in media_ids:
+                media = EmergencyType.objects.get(id=int(item))
+                res['content'] += u' [%s]  ' % media.name
+                media.delete()
+            msg = res['content'] + u"成功"
+            res['emer_status']=msg
+        except Exception as e:
+            res['flag'] = 'flase'
+            res['content']=e.message
+            msg=u"删除告警媒介失败：%s"%e.message
+    return HttpResponse(msg)
 
 
 @require_role('admin')

@@ -230,15 +230,40 @@ def perm_role_list(request):
     """
     list role page
     """
-    # 渲染数据
-    header_title, path1, path2 = "系统用户", "系统用户管理", "查看系统用户"
-    roles_list = PermRole.objects.all()
-    sudos = PermSudo.objects.all()
+    if request.method == 'GET':
+        header_title, path1, path2 = "系统用户", "系统用户管理", "查看系统用户"
+        roles_list = PermRole.objects.all()
+        sudos = PermSudo.objects.all()
 
-    # TODO 推送系统用户所需的数据
-    assets = Asset.objects.all()
-    asset_groups = AssetGroup.objects.all()
-    return my_render('permManage/perm_role_list.html', locals(), request)
+        # TODO 推送系统用户所需的数据
+        assets = Asset.objects.all()
+        asset_groups = AssetGroup.objects.all()
+        return my_render('permManage/perm_role_list.html', locals(), request)
+    else:
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = PermRole.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": 0,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = PermRole.objects.all()[page_start:page_end]
+            rest['iTotalRecords'] = len(page_data)
+            data = []
+            for item in page_data:
+                res = {}
+                res['id'] = item.id
+                res['name'] = item.name
+                res['sudos'] = ','.join([sudo.name for sudo in item.sudo.all()])
+                res['date_joined'] = item.date_added.strftime("%Y-%m-%d %H:%M:%S")
+                data.append(res)
+            rest['aaData'] = data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+        except Exception as e:
+            logger.error(e.message)
 
 
 @require_role('admin')

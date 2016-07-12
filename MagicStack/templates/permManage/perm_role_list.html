@@ -42,34 +42,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                            {% for role in roles_list %}
-                            <tr class="gradeX">
-                                <td> <a href="{% url 'role_detail' %}?id={{ role.id }}">{{ role.name }} </a> </td>
-                                <td> {{ role | role_contain_which_sudos }} </td>
-                                <td> {{ role.date_added | date:"Y-m-d H:i:s"}} </td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
-                                            <i class="fa fa-angle-down"></i>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li>
-                                                <a href="#" onclick="editRole('{{ role.id }}')">
-                                                    编辑 </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" onclick="pushRole('{{ role.id }}')">
-                                                    推送 </a>
-                                            </li>
-                                            <li>
-                                                <a name="{% url 'role_del' %}?id={{ role.id }}" class="del">
-                                                     删除 </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
+
                     </tbody>
                 </table>
             </div>
@@ -219,14 +192,13 @@
     <!-- BEGIN PAGE LEVEL PLUGINS -->
     <script src="/static/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
     <script src="/static/pages/scripts/components-select2.min.js" type="text/javascript"></script>
-    <script src="/static/global/scripts/datatable.js" type="text/javascript"></script>
     <script src="/static/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
     <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
-    <script src="/static/pages/scripts/table-datatables-managed.min.js" type="text/javascript"></script>
     <script src="/static/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
     <script src="/static/pages/scripts/ui-toastr.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL SCRIPTS -->
 <script>
     //编辑系统用户
@@ -283,93 +255,191 @@
 
 
     $(document).ready(function(){
-          //添加系统用户
-          $("#btn_add").click(function(){
-                document.getElementById("form_role").style.display = 'block';
-                document.getElementById("form_role_push").style.display = 'none';
-
-                document.getElementById("form_role").reset();
-                var modal = $("#myModal");
-                modal.find(".modal-title").text("添加系统用户");
-                $("#btn_save").html('保存');
-                modal.modal({
-                     'keyboard': false,
-                     'backdrop': 'static'
-                })
-          });
-
-          //modal 关闭事件
-          $("#myModal").on('hidden.bs.modal', function(){
-             $("#error_info").hide();
-             $("#push_error_info").hide();
-          });
-
-          //modal save
-          $("#btn_save").click(function(){
-                var operator_type = $('input[name=operator_type]').val();
-                var role_id = $('input[name=role_id]').val();  //role id
-                var push_role_id = $('input[name=push_role_id]').val();
-                var save_url = "{% url 'role_add' %}";
-                var pData = $("#form_role").serialize();
-                if (operator_type == 'edit'){
-                    save_url = "{% url 'role_edit' %}?id="+ role_id ;
-                }else if(operator_type == 'push'){
-                    save_url = "{% url 'role_push' %}?id=" + push_role_id ;
-                    pData = $("#form_role_push").serialize();
-                }
-
-                $.ajax({
-                    method: 'POST',
-                    url: save_url,
-                    data: pData,
-                    success:function(res){
-                        if(res.success){
-                            $("#myModal").modal('hide');
-                            window.location.reload()
-                        }else{
-                            $("#error_info").text(res.error).show()
-                        }
+        <!-- 初始化table 分页 排序-->
+        var table = $("#sample_1");
+        var table_init = table.DataTable({
+            "bDestroy" : true,
+            "bProcessing" : true, //DataTables载入数据时，是否显示‘进度’提示
+            "bServerSide" : true, //是否启动服务器端数据导入
+            "bStateSave" : true, //是否打开客户端状态记录功能,此功能在ajax刷新纪录的时候不会将个性化设定回复为初始化状态
+            "aLengthMenu" : [[5, 15, 20, -1], [5, 15, 20, "All"]], //更改显示记录数选项
+            "iDisplayLength" : 5, //默认显示的记录数
+            "bPaginate" : true, //是否显示（应用）分页器
+            "bInfo" : true, //是否显示页脚信息，DataTables插件左下角显示记录数
+            "sPaginationType": "bootstrap_full_number",
+            "aaSorting" : [[2, "desc"]], //默认的排序方式，第2列，降序排列
+            "bFilter" : true, //是否启动过滤、搜索功能
+            "aoColumns" : [{
+                    "mData" : "name",
+                    "sDefaultContent" : "",
+                    "bSearchable":true
+                }, {
+                    "mData" : "sudos",
+                    "sDefaultContent" : ""
+                }, {
+                    "mData" : "date_joined",
+                    "sDefaultContent" : ""  ,
+                    "bSortable":false   //此列不需要排序
+                },  {
+                    "mData" : "",
+                    "sDefaultContent" : "",
+                    "bSortable":false
+                }],
+                "oLanguage": { //国际化配置
+                    "sProcessing" : "正在获取数据，请稍后...",
+                    "sLengthMenu" : "显示 _MENU_ 条",
+                    "sSearch": "搜索:",
+                    "sZeroRecords" : "没有您要搜索的内容",
+                    "sInfo" : "从 _START_ 到  _END_ 条记录 共 _TOTAL_ 条记录",
+                    "sInfoEmpty" : "记录数为0",
+                    "sInfoFiltered" : "(共显示 _MAX_ 条数据)",
+                    "sInfoPostFix" : "",
+                    "oPaginate": {
+                        "sFirst" : "第一页",
+                        "sPrevious" : "上一页",
+                        "sNext" : "下一页",
+                        "sLast" : "最后一页"
                     }
-                })
-          });
+                },
+                /*
+                * 设置操作列的值
+                */
+                "fnRowCallback" : function(nRow, aData, iDisplayIndex) {
+                    op_del = '<a class="del" name=\"/permission/role/del/?id=' + aData.id + '\">删除</a> ';
+                    op_edit = '<a href=\"#\" onclick=\"editRole('+aData.id+')\">编辑</a>';
+                    op_push = '<a href=\"#\" onclick=\"pushRole('+aData.id+')\">推送</a>';
+                    op_html = '<div class="btn-group"> \
+                            <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions\
+                                <i class="fa fa-angle-down"></i> \
+                            </button> \
+                            <ul class="dropdown-menu" role="menu"> \
+                                <li>' + op_edit + '</li>\
+                                <li>' + op_push + '</li>\
+                                <li>' + op_del + '</li>\
+                            </ul>\
+                        </div>';
 
-          $('.del').click(function(){
-              var row = $(this).closest('tr');
-              var url_r = $(this).attr('name');
-              var role_id = url_r.split('?')[1].split('=')[1];
-              $.ajax({
-                    type: "GET",
-                    url: "{% url 'role_del' %}",
-                    data: {id: role_id, filter_type: 'recycle_assets'},
-                    success: function(data) {
-                        console.log(data);
-                        if (data) {
-                            msg = data + "的系统用户会被删除，包括其家目录，请谨慎操作!"
+                    $('td:eq(0)', nRow).html('<a href=\"{% url 'role_detail' %}?id=' + aData.id + '\">' + aData.name + '</a>');
+                    $('td:eq(3)', nRow).html(op_html);
+                    return nRow;
+                },
+                //服务器端，数据回调处理
+                "fnServerData" : function(sSource, aDataSet, fnCallback) {
+                    $.ajax({
+                        "dataType" : 'json',
+                        "type" : "post",
+                        "url" : sSource,
+                        "data" : aDataSet,
+                        "success" : function(resp){
+                            fnCallback(resp);
                         }
-                        else {
-                            msg = "该角色无已推送的系统用户, 可以安全删除"
-                        }
-                        if (confirm(msg)) {
-                            $.ajax({
+                    });
+                }
+        });
+
+        table.find(".group-checkable").change(function() {
+            var e = $(this).attr("data-set"),
+            t = $(this).is(":checked");
+            $(e).each(function() {
+                t ? ($(this).prop("checked", !0), $(this).parents("tr").addClass("active")) : ($(this).prop("checked", !1), $(this).parents("tr").removeClass("active"))
+            })
+        });
+        table.on("change", "tbody tr .checkboxes", function() {
+                 $(this).parents("tr").toggleClass("active")
+        });
+        <!-- 加载table完毕 -->
+
+
+        <!--页面操作处理 -->
+        //添加系统用户
+        $("#btn_add").click(function(){
+            document.getElementById("form_role").style.display = 'block';
+            document.getElementById("form_role_push").style.display = 'none';
+
+            document.getElementById("form_role").reset();
+            var modal = $("#myModal");
+            modal.find(".modal-title").text("添加系统用户");
+            $("#btn_save").html('保存');
+            modal.modal({
+                 'keyboard': false,
+                 'backdrop': 'static'
+            })
+        });
+
+        //modal 关闭事件
+        $("#myModal").on('hidden.bs.modal', function(){
+         $("#error_info").hide();
+         $("#push_error_info").hide();
+        });
+
+        //modal save
+        $("#btn_save").click(function(){
+            var operator_type = $('input[name=operator_type]').val();
+            var role_id = $('input[name=role_id]').val();  //role id
+            var push_role_id = $('input[name=push_role_id]').val();
+            var save_url = "{% url 'role_add' %}";
+            var pData = $("#form_role").serialize();
+            if (operator_type == 'edit'){
+                save_url = "{% url 'role_edit' %}?id="+ role_id ;
+            }else if(operator_type == 'push'){
+                save_url = "{% url 'role_push' %}?id=" + push_role_id ;
+                pData = $("#form_role_push").serialize();
+            }
+
+            $.ajax({
+                method: 'POST',
+                url: save_url,
+                data: pData,
+                success:function(res){
+                    if(res.success){
+                        $("#myModal").modal('hide');
+                        window.location.reload()
+                    }else{
+                        $("#error_info").text(res.error).show()
+                    }
+                }
+            })
+        });
+
+        //删除单个系统用户
+        table.on('click', 'a.del', function(){
+          var row = $(this).closest('tr');
+          var role_id = $(this).attr('name').split('?')[1].split('=')[1];
+          $.ajax({
+                type: "GET",
+                url: "{% url 'role_del' %}",
+                data: {id: role_id, filter_type: 'recycle_assets'},
+                success: function(data) {
+                    if (data) {
+                        msg = data + "的系统用户会被删除，包括其家目录，请谨慎操作!"
+                    }
+                    else {
+                        msg = "该角色无已推送的系统用户, 可以安全删除"
+                    }
+                    bootbox.confirm(msg, function(result){
+                        if(result){
+                           $.ajax({
                                type: "POST",
                                url: "{% url 'role_del' %}",
                                data: "id=" + role_id,
                                success: function(msg){
-                                   alert( "成功: " + msg );
+                                   bootbox.alert( "成功: " + msg );
                                    row.remove()
                                },
                                error: function (msg) {
-                                   console.log(msg);
-                                   alert("失败: " + msg.responseText)
+                                   bootbox.alert("失败: " + msg.responseText)
                                }
-                            });
+                           });
                         }
-                    },
-                    error: function(error) {
-                        alert(error)
-                    }
-              });
-          });
+                    })
+                },
+                error: function(error) {
+                    bootbox.alert(error)
+                }
+          })
+        });
+
+        <!--页面操作处理结束 -->
 
             //定时器
           function showalert() {
@@ -401,7 +471,7 @@
             window.setInterval(function(){
             showalert();
             },10000);
-      })
+        })
 </script>
 {% endblock %}
 

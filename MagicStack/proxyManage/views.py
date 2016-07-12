@@ -13,19 +13,34 @@ def proxy_list(request):
     """
     查看proxy
     """
-    header_title, path1, path2 = u'查看代理', u'代理管理', u'查看代理'
-    keyword = request.GET.get('search', '')
-    proxy_lists = Proxy.objects.all().order_by('create_time')
-    proxy_id = request.GET.get('id', '')
+    if request.method == "GET":
+        header_title, path1, path2 = u'查看代理', u'代理管理', u'查看代理'
+        proxy_lists = Proxy.objects.all()
+        return my_render('proxyManage/proxy_list.html',locals(),request)
+    else:
+        page_length = int(request.POST.get('length', '5'))
+        total_length = Proxy.objects.all().count()
+        keyword = request.POST.get("search")
+        rest = {
+            "iTotalRecords": page_length,   # 本次加载记录数量
+            "iTotalDisplayRecords": total_length,  # 总记录数量
+            "aaData": []}
+        page_start = int(request.POST.get('start', '0'))
+        page_end = page_start + page_length
+        page_data = Proxy.objects.all()[page_start:page_end]
+        data = []
+        for item in page_data:
+            res = {}
+            res['id'] = item.id
+            res['name'] = item.proxy_name
+            res['asset'] = item.asset_set.all().count()
+            res['username'] = item.username
+            res['url'] = item.url
+            res['comment'] = item.comment
+            data.append(res)
+        rest['aaData'] = data
+        return HttpResponse(json.dumps(rest), content_type='application/json')
 
-    if keyword:
-        proxy_lists = proxy_lists.filter(Q(name__icontains=keyword) | Q(create_time__icontains=keyword))
-
-    if proxy_id:
-        proxy_lists = proxy_lists.filter(id=int(proxy_id))
-
-    proxy_lists, p, proxys, page_range, current_page, show_first, show_end = pages(proxy_lists, request)
-    return my_render('proxyManage/proxy_list.html', locals(), request)
 
 
 @require_role('admin')

@@ -292,7 +292,7 @@
         <!-- 加载table完毕 -->
 
         <!-- 页面操做处理开始 -->
-        //添加用户组
+        //添加代理
         $('#add-proxy').click(function () {
             //              window.location.href = "{% url 'proxy_add' %}"
             // open modal并设置modal不可关闭
@@ -372,72 +372,6 @@
             })
         });
         <!--页面操作处理结束 -->
-
-      })
-
-    $(document).ready(function () {
-
-        <!-- proxy modal 相关事件处理  开始-->
-        $('#add-proxy').click(function () {
-            //              window.location.href = "{% url 'proxy_add' %}"
-            // open modal并设置modal不可关闭
-            $('#proxy').modal({backdrop: 'static', keyboard: false});
-        });
-
-        // 隐藏proxy modal事件
-        $('#proxy').on('hide.bs.modal', function () {
-            // 设置modal标题
-            $(".modal-title").html("添加代理");
-            // 清空form表单
-            $("#form_sample_1")[0].reset();
-            // 错误层，隐藏并清空
-            $("#err_info").html("").hide();
-            // 默认submit_type为add
-            $("#submit_type").val('add');
-        });
-
-        // 提交添加/修改proxy
-        $("#submit").click(function () {
-            // 控制提交与编辑proxy， 编辑时为edit
-            var url = "{% url 'proxy_add' %}";
-            if ($("#submit_type").val() == 'edit') {
-                url = "{% url 'proxy_edit' %}";
-            }
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: $("#form_sample_1").serialize(),
-                success: function (result) {
-                    result = $.parseJSON(result);
-                    if (result.flag) {
-                        //添加/编辑成功
-                        window.location.reload();
-                    } else {
-                        $("#err_info").html(result.content).show();
-                    }
-                }
-            });
-        });
-
-        <!-- proxy modal 相关事件处理  结束-->
-
-        $('.del').click(function () {
-            var row = $(this).closest('tr');
-            var href_url = $(this).attr('name').split('?')[0];
-            var del_id = $(this).attr('name').split('?')[1].split('=')[1];
-            if (confirm("确定删除?")) {
-                $.post(
-                        href_url,
-                        {'id': del_id},
-                        function (data) {
-                            row.remove();
-                            alert(data);
-                        }
-                )
-            }
-        });
-
-
 
     })
 </script>

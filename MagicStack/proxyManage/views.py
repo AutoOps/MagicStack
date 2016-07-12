@@ -135,22 +135,23 @@ def proxy_del(request, res, *args):
     res['operator'] = u'删除代理'
     res['content'] = u'删除代理'
     res['emer_content'] = 7
-    proxy_id = request.POST.get('id')
-    id_list = proxy_id.split(',')
-    if id_list:
+    try:
+        proxy_id = request.POST.get('id')
+        id_list = proxy_id.split(',')
         for pid in id_list:
             proxy = get_object(Proxy, id=int(pid))
             res['content'] += ' [%s]  ' % proxy.proxy_name
             proxy.delete()
         msg = res['content'] + u"成功"
         res['emer_status'] = msg
+        return HttpResponse(msg)
 
-    else:
-        msg = u"删除代理失败:ID不存在"
-        res['flag'] = 'false'
-        res['content'] = msg
-        res['emer_status'] = msg
-    return HttpResponse(msg)
+    except Exception as e:
+            msg = u"删除代理失败:ID不存在"
+            res['flag'] = 'false'
+            res['content'] = msg
+            res['emer_status'] = msg
+            return HttpResponse(msg)
 
 
 @require_role('admin')

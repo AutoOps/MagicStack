@@ -838,9 +838,43 @@ def idc_list(request):
     """
     IDC list view
     """
-    header_title, path1, path2 = u'查看IDC', u'资产管理', u'查看IDC'
-    posts = IDC.objects.all()
-    return my_render('assetManage/idc_list.html', locals(), request)
+    if request.method == "GET":
+        header_title, path1, path2 = u'查看IDC', u'资产管理', u'查看IDC'
+        posts = IDC.objects.all()
+        # asset_all = Asset.objects.all()
+        return my_render('assetManage/idc_list.html', locals(), request)
+    else:
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = IDC.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": 0,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = IDC.objects.all()[page_start:page_end]
+            rest['iTotalRecords'] = len(page_data)
+            data = []
+            for item in page_data:
+                res = {}
+                res['id']=item.id
+                res['name']=item.name
+                res['assets'] = item.asset_set.all().count()
+                res['linkman']=item.linkman
+                res['phone']=item.phone
+                res['comment']=item.comment
+                data.append(res)
+            rest['aaData'] = data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+
+        except Exception as e:
+            logger.error(e.message)
+
+
+
+
 
 
 @require_role('admin')

@@ -1,9 +1,7 @@
 # -*- coding:utf-8 -*-
 
-from django.db.models import Q
 from assetManage.asset_api import *
 from MagicStack.api import *
-from assetManage.forms import AssetForm, IdcForm,NetWorkingForm,NetWorkingGlobalForm,PowerManageForm
 from assetManage.models import *
 from permManage.perm_api import get_group_asset_perm, get_group_user_perm, gen_resource
 from userManage.user_api import user_operator_record
@@ -559,36 +557,73 @@ def asset_list(request):
     """
     asset list view
     """
-    header_title, path1, path2 = u'查看资产', u'资产管理', u'查看资产'
-    username = request.user.username
-    user_perm = request.session['role_id']
-    # 获取modal中所需的数据
-    proxys = Proxy.objects.all()
-    proxy_profiles = gen_proxy_profiles(proxys)
-    asset_status = ASSET_STATUS
-    asset_type = ASSET_TYPE
-    power_type = POWER_TYPE
-    idc_all = IDC.objects.all()
-    group_all = AssetGroup.objects.all()
+    if request.method == 'GET':
+        header_title, path1, path2 = u'查看资产', u'资产管理', u'查看资产'
+        username = request.user.username
+        user_perm = request.session['role_id']
+        # 获取modal中所需的数据
+        proxys = Proxy.objects.all()
+        proxy_profiles = gen_proxy_profiles(proxys)
+        asset_status = ASSET_STATUS
+        asset_type = ASSET_TYPE
+        power_type = POWER_TYPE
+        idc_all = IDC.objects.all()
+        group_all = AssetGroup.objects.all()
 
-    asset_list = Asset.objects.all()
+        asset_list = Asset.objects.all()
 
-    if user_perm != 0:
-        asset_find = Asset.objects.all()
+        if user_perm != 0:
+            asset_find = Asset.objects.all()
+        else:
+            asset_id_all = []
+            user = get_object(User, username=username)
+            asset_perm = get_group_user_perm(user) if user else {'asset': ''}
+            user_asset_perm = asset_perm['asset'].keys()
+            for asset in user_asset_perm:
+                asset_id_all.append(asset.id)
+            asset_find = Asset.objects.filter(pk__in=asset_id_all)
+            asset_group_all = list(asset_perm['asset_group'])
+
+        if user_perm != 0:
+            return my_render('assetManage/asset_list.html', locals(), request)
+        else:
+            return my_render('assetManage/asset_cu_list.html', locals(), request)
     else:
-        asset_id_all = []
-        user = get_object(User, username=username)
-        asset_perm = get_group_user_perm(user) if user else {'asset': ''}
-        user_asset_perm = asset_perm['asset'].keys()
-        for asset in user_asset_perm:
-            asset_id_all.append(asset.id)
-        asset_find = Asset.objects.filter(pk__in=asset_id_all)
-        asset_group_all = list(asset_perm['asset_group'])
-
-    if user_perm != 0:
-        return my_render('assetManage/asset_list.html', locals(), request)
-    else:
-        return my_render('assetManage/asset_cu_list.html', locals(), request)
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = Asset.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": 0,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = Asset.objects.all()[page_start:page_end]
+            rest['iTotalRecords'] = len(page_data)
+            data = []
+            for item in page_data:
+                res = {}
+                ip_address = ' '.join([nt.ip_address for nt in item.networking.all()])
+                group_names = get_group_names(item.group.all())
+                cpu_core = item.cpu.split('* ')[1] if item.cpu and '*' in item.cpu else item.cpu
+                memory_info = item.memory + 'G' if item.memory else '0G'
+                disk_info = get_disk_info(item.disk)
+                res['id'] = item.id
+                res['name'] = item.name
+                res['ip'] = ip_address
+                res['idc'] = item.idc.name
+                res['groups'] = group_names
+                res['proxy'] = item.proxy.proxy_name
+                res['system_type'] = item.system_type
+                res['cpu'] = cpu_core
+                res['memory'] = memory_info
+                res['disk'] = str(disk_info)+'G'
+                data.append(res)
+            rest['aaData'] = data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+        except Exception as e:
+            logger.error(e.message)
 
 
 @require_role('admin')

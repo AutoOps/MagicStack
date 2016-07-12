@@ -30,28 +30,31 @@ def media_list(request):
         media_lists = EmergencyType.objects.all()
         return my_render('emergency/media_list.html', locals(), request)
     else:
-        page_length = int(request.POST.get('length', '5'))
-        total_length = EmergencyType.objects.all().count()
-        keyword = request.POST.get("search")
-        rest = {
-            "iTotalRecords": page_length,   # 本次加载记录数量
-            "iTotalDisplayRecords": total_length,  # 总记录数量
-            "aaData": []}
-        page_start = int(request.POST.get('start', '0'))
-        page_end = page_start + page_length
-        page_data = EmergencyType.objects.all()[page_start:page_end]
-        data = []
-        for item in page_data:
-            res={}
-            res['id']=item.id
-            res['name']=item.name
-            res['type']= u'电子邮件'if '0' in item.type else u'微信'
-            res['status']= u'启用'if '1'in item.status else u'禁用'
-            res['detail']=item.detail
-            res['comment']=item.comment
-            data.append(res)
-        rest['aaData']=data
-    return HttpResponse(json.dumps(rest), content_type='application/json')
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = EmergencyType.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": page_length,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = EmergencyType.objects.all()[page_start:page_end]
+            data = []
+            for item in page_data:
+                res={}
+                res['id']=item.id
+                res['name']=item.name
+                res['type']= u'电子邮件'if '0' in item.type else u'微信'
+                res['status']= u'启用'if '1'in item.status else u'禁用'
+                res['detail']=item.detail
+                res['comment']=item.comment
+                data.append(res)
+            rest['aaData']=data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+        except Exception as e:
+            logger.error(e.message)
 
 
 @require_role('admin')

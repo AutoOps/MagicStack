@@ -32,15 +32,49 @@ def perm_rule_list(request):
     list rule page
     授权规则列表
     """
-    # 渲染数据
-    header_title, path1, path2 = "授权规则", "规则管理", "查看规则"
-    rules_list = PermRule.objects.all()
-    users = User.objects.all()
-    user_groups = UserGroup.objects.all()
-    assets = Asset.objects.all()
-    asset_groups = AssetGroup.objects.all()
-    roles = PermRole.objects.all()
-    return my_render('permManage/perm_rule_list.html', locals(), request)
+    if request.method == 'GET':
+        header_title, path1, path2 = "授权规则", "规则管理", "查看规则"
+        rules_list = PermRule.objects.all()
+        users = User.objects.all()
+        user_groups = UserGroup.objects.all()
+        assets = Asset.objects.all()
+        asset_groups = AssetGroup.objects.all()
+        roles = PermRole.objects.all()
+        return my_render('permManage/perm_rule_list.html', locals(), request)
+    else:
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = PermRule.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": 0,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = PermRule.objects.all()[page_start:page_end]
+            rest['iTotalRecords'] = len(page_data)
+            data = []
+            for item in page_data:
+                res = {}
+                res['id'] = item.id
+                res['name'] = item.name
+                res['user_num'] = len(item.user.all())
+                res['user_group_num'] = len(item.user_group.all())
+                res['asset_num'] = len(item.asset.all())
+                res['asset_group_num'] = len(item.asset_group.all())
+                res['role_num'] = len(item.role.all())
+                res['user_names'] = ','.join([user.username for user in item.user.all()])
+                res['user_group_names'] = ','.join([user_group.name for user_group in item.user_group.all()])
+                res['asset_names'] = ','.join([asset.name for asset in item.asset.all()])
+                res['asset_group_names'] = ','.join([asset_group.name for asset_group in item.asset_group.all()])
+                res['role_names'] = ','.join([role.name for role in item.role.all()])
+                data.append(res)
+            rest['aaData'] = data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+        except Exception as e:
+            logger.error(e.message)
+
 
 
 @require_role('admin')

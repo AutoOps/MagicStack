@@ -43,38 +43,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for rule in rules_list %}
-                    <tr class="gradeX">
-                        <td>{{ rule.name }}</td>
-                        <td>{{ rule | rule_member_count:"user" }}</td>
-                        <td>{{ rule | rule_member_count:"user_group" }}</td>
-                        <td>{{ rule | rule_member_count:"asset" }}</td>
-                        <td>{{ rule | rule_member_count:"asset_group" }}</td>
-                        <td>{{ rule | rule_member_count:"role" }}</td>
-                        <td>{{ rule.user.all|groups_name }}</td>
-                        <td>{{ rule.user_group.all | groups_name }}</td>
-                        <td>{{ rule.asset.all | groups_name }}</td>
-                        <td>{{ rule.asset_group.all | groups_name }}</td>
-                        <td>{{ rule.role.all | groups_name }}</td>
-                        <td>
-                            <div class="btn-group">
-                                <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
-                                    <i class="fa fa-angle-down"></i>
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="#" onclick="editRule('{{ rule.id }}')">
-                                            编辑 </a>
-                                    </li>
-                                    <li>
-                                        <a name="{% url 'rule_del' %}?id={{ rule.id }}" class="del">
-                                             删除 </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    {% endfor %}
+
                 </tbody>
             </table>
         </div>
@@ -188,10 +157,9 @@
 {% block self_footer_js %}
     <script src="/static/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
     <script src="/static/pages/scripts/components-select2.min.js" type="text/javascript"></script>
-    <script src="/static/global/scripts/datatable.js" type="text/javascript"></script>
     <script src="/static/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
     <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-    <script src="/static/pages/scripts/table-datatables-responsive.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 <script>
     //编辑授权规则
     function editRule(id){
@@ -233,6 +201,137 @@
     }
 
     $(document).ready(function(){
+        <!-- 初始化table 分页 排序-->
+        var table = $("#sample_1");
+        var table_init = table.DataTable({
+            "bDestroy" : true,
+            "bProcessing" : true, //DataTables载入数据时，是否显示‘进度’提示
+            "bServerSide" : true, //是否启动服务器端数据导入
+            "bStateSave" : true, //是否打开客户端状态记录功能,此功能在ajax刷新纪录的时候不会将个性化设定回复为初始化状态
+            "aLengthMenu" : [[5, 15, 20, -1], [5, 15, 20, "All"]], //更改显示记录数选项
+            "iDisplayLength" : 5, //默认显示的记录数
+            "bPaginate" : true, //是否显示（应用）分页器
+            "bInfo" : true, //是否显示页脚信息，DataTables插件左下角显示记录数
+            "sPaginationType": "bootstrap_full_number",
+            "aaSorting" : [[2, "desc"]], //默认的排序方式，第2列，降序排列
+            "bFilter" : true, //是否启动过滤、搜索功能,
+            "aoColumns" : [{
+                    "mData" : "name",
+                    "sDefaultContent" : ""
+                }, {
+                    "mData" : "user_num",
+                    "sDefaultContent" : ""
+                }, {
+                    "mData" : "user_group_num",
+                    "sDefaultContent" : ""
+                },  {
+                    "mData" : "asset_num",
+                    "sDefaultContent" : ""
+                }, {
+                    "mData" : "asset_group_num",
+                    "sDefaultContent" : ""
+                },  {
+                     "mData" : "role_num",
+                     "sDefaultContent" : ""
+                }, {
+                    "mData" : "user_names",
+                    "sDefaultContent" : "",
+                    "bSortable":false
+                }, {
+                    "mData" : "user_group_names",
+                    "sDefaultContent" : "",
+                    "bSortable":false
+                }, {
+                    "mData" : "asset_names",
+                    "sDefaultContent" : "",
+                    "bSortable":false
+                },  {
+                     "mData" : "asset_group_names",
+                    "sDefaultContent" : "",
+                    "bSortable":false
+                }, {
+                     "mData" : "role_names",
+                     "sDefaultContent" : "",
+                     "bSortable":false
+                }, {
+                     "mData" : "",
+                    "sDefaultContent" : "",
+                    "bSortable":false
+                }],
+                "oLanguage": { //国际化配置
+                    "sProcessing" : "正在获取数据，请稍后...",
+                    "sLengthMenu" : "显示 _MENU_ 条",
+                    "sSearch": "搜索:",
+                    "sZeroRecords" : "没有您要搜索的内容",
+                    "sInfo" : "从 _START_ 到  _END_ 条记录 共 _TOTAL_ 条记录",
+                    "sInfoEmpty" : "记录数为0",
+                    "sInfoFiltered" : "(共显示 _MAX_ 条数据)",
+                    "sInfoPostFix" : "",
+                    "oPaginate": {
+                        "sFirst" : "第一页",
+                        "sPrevious" : "上一页",
+                        "sNext" : "下一页",
+                        "sLast" : "最后一页"
+                    }
+                },
+                <!-- responsive table need -->
+                responsive: {
+                     details: {}
+                },
+                buttons: [
+                    { extend: 'print', className: 'btn dark btn-outline' },
+                    { extend: 'pdf', className: 'btn green btn-outline' },
+                    { extend: 'csv', className: 'btn purple btn-outline ' }
+                ],
+                "dom": "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
+                <!--end -->
+                /*
+                * 设置操作列的值
+                */
+                "fnRowCallback" : function(nRow, aData, iDisplayIndex) {
+                    op_del = '<a class="del" name=\"/permission/rule/del/?id=' + aData.id + '\">删除</a> ';
+                    op_edit = '<a href=\"#\" onclick=\"editRule('+aData.id+')\">编辑</a>';
+                    op_html = '<div class="btn-group"> \
+                            <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions\
+                                <i class="fa fa-angle-down"></i> \
+                            </button> \
+                            <ul class="dropdown-menu" role="menu"> \
+                                <li>' + op_edit + '</li>\
+                                <li>' + op_del + '</li>\
+                            </ul>\
+                        </div>';
+
+                    $('td:eq(11)', nRow).html(op_html);
+                    return nRow;
+                },
+                //服务器端，数据回调处理
+                "fnServerData" : function(sSource, aDataSet, fnCallback) {
+                    $.ajax({
+                        "dataType" : 'json',
+                        "type" : "post",
+                        "url" : sSource,
+                        "data" : aDataSet,
+                        "success" : function(resp){
+                            fnCallback(resp);
+                        }
+                    });
+                }
+        });
+
+        table.find(".group-checkable").change(function() {
+            var e = $(this).attr("data-set"),
+            t = $(this).is(":checked");
+            $(e).each(function() {
+                t ? ($(this).prop("checked", !0), $(this).parents("tr").addClass("active")) : ($(this).prop("checked", !1), $(this).parents("tr").removeClass("active"))
+            })
+        });
+        table.on("change", "tbody tr .checkboxes", function() {
+                 $(this).parents("tr").toggleClass("active")
+        });
+        <!-- 加载table完毕 -->
+
+
+        <!--页面操作处理 -->
         //添加授权规则
         $("#btn_add").click(function(){
             document.getElementById("form_rule").reset();
@@ -273,26 +372,28 @@
             })
         });
 
-
-        $('.del').click(function(){
-          var row = $(this).closest('tr');
-          var url_r = $(this).attr('name');
-          var rule_id = url_r.split('?')[1].split('=')[1];
-              if (confirm("确认删除")) {
-                    $.ajax({
-                       type: "POST",
-                       url: "{% url 'rule_del' %}",
-                       data: "id=" + rule_id,
-                       success: function(msg){
-                           alert( "成功: " + msg );
-                           row.remove()
-                       },
-                       error: function (msg) {
-                           alert("失败: " + msg)
-                       }
-                    });
-               }
-      });
+        table.on('click', 'a.del', function(){
+            var row = $(this).closest('tr');
+            var url_r = $(this).attr('name');
+            var rule_id = url_r.split('?')[1].split('=')[1];
+            bootbox.confirm("确认删除", function(result){
+                if(result){
+                     $.ajax({
+                           type: "POST",
+                           url: "{% url 'rule_del' %}",
+                           data: "id=" + rule_id,
+                           success: function(msg){
+                               bootbox.alert( "成功: " + msg );
+                               row.remove()
+                           },
+                           error: function (msg) {
+                               bootbox.alert("失败: " + msg)
+                           }
+                     });
+                }
+            })
+        });
+        <!--页面操作处理结束 -->
 
     })
 </script>

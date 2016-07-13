@@ -147,12 +147,13 @@ def group_list(request):
             total_length = AssetGroup.objects.all().count()
             keyword = request.POST.get("search")
             rest = {
-                "iTotalRecords": page_length,   # 本次加载记录数量
+                "iTotalRecords": 0,   # 本次加载记录数量
                 "iTotalDisplayRecords": total_length,  # 总记录数量
                 "aaData": []}
             page_start = int(request.POST.get('start', '0'))
             page_end = page_start + page_length
             page_data = AssetGroup.objects.all()[page_start:page_end]
+            rest['iTotalRecords'] = len(page_data)
             data = []
             for item in page_data:
                 res = {}

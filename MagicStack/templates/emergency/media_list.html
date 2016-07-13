@@ -49,48 +49,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {% for media in media_lists %}
-                            <tr class="gradeX">
-                                <td>
-                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                        <input type="checkbox" class="checkboxes" value="{{ media.id }}" />
-                                        <span></span>
-                                    </label>
-                                    </label>
-                                </td>
-                                <td>
-                                    {{ media.name }}
-                                </td>
-                                <td>
-                                    {{ media.type|number_to_str:"type" }}
-                                </td>
-                                <td>
-                                    {{ media.status|number_to_str:"status" }}
-                                </td>
-                                <th>
-                                    {{ media.detail }}
-                                </th>
-                                <td>
-                                    {{ media.comment }}
-                                </td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
-                                            <i class="fa fa-angle-down"></i>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li>
-                                                <a href="#" onclick="editMedia('{{ media.id }}')">编辑</a>
-                                            </li>
-
-                                            <li>
-                                                <a value="{% url 'media_del' %}?id={{ media.id }}"class="del">删除</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
                     </tbody>
                 </table>
             </div>

@@ -570,8 +570,6 @@ def asset_list(request):
         idc_all = IDC.objects.all()
         group_all = AssetGroup.objects.all()
 
-        asset_list = Asset.objects.all()
-
         if user_perm != 0:
             asset_find = Asset.objects.all()
         else:
@@ -612,9 +610,9 @@ def asset_list(request):
                 res['id'] = item.id
                 res['name'] = item.name
                 res['ip'] = ip_address
-                res['idc'] = item.idc.name
+                res['idc'] = item.idc.name if item.idc else ''
                 res['groups'] = group_names
-                res['proxy'] = item.proxy.proxy_name
+                res['proxy'] = item.proxy.proxy_name if item.proxy else ''
                 res['system_type'] = item.system_type
                 res['cpu'] = cpu_core
                 res['memory'] = memory_info

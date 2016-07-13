@@ -61,12 +61,13 @@ def group_list(request):
         total_length = UserGroup.objects.all().count()
         keyword = request.POST.get("search")
         rest = {
-            "iTotalRecords": page_length,   # 本次加载记录数量
+            "iTotalRecords": 0,   # 本次加载记录数量
             "iTotalDisplayRecords": total_length,  # 总记录数量
             "aaData": []}
         page_start = int(request.POST.get('start', '0'))
         page_end = page_start + page_length
         page_data = UserGroup.objects.all()[page_start:page_end]
+        rest['iTotalRecords'] = len(page_data)
         data = []
         for item in page_data:
             res = {}
@@ -102,8 +103,8 @@ def group_del(request,res, *args):
             msg = res['content'] + u'成功'
             res['emer_status'] = msg
         except Exception as e:
-            msg = e
-            res['emer_status'] = u"删除用户组失败:{0}".format(e)
+            msg = e.message
+            res['emer_status'] = u"删除用户组失败:{0}".format(e.message)
     else:
         msg = u"删除用户组失败:ID不存在!"
         res['emer_status'] = msg
@@ -236,7 +237,7 @@ def user_list(request):
     if request.method == 'GET':
         user_role = {'SU': u'超级管理员', 'GA': u'组管理员', 'CU': u'普通用户'}
         header_title, path1, path2 = u'查看用户', u'用户管理', u'用户列表'
-        users_list = User.objects.all().order_by('username')
+        # users_list = User.objects.all().order_by('username')
         group_all = UserGroup.objects.all()
         user_role = {'SU': u'超级管理员', 'CU': u'普通用户'}
         return my_render('userManage/user_list.html', locals(), request)
@@ -246,12 +247,13 @@ def user_list(request):
             total_length = User.objects.all().count()
             keyword = request.POST.get("search")
             rest = {
-                "iTotalRecords": page_length,   # 本次加载记录数量
+                "iTotalRecords": 0,   # 本次加载记录数量
                 "iTotalDisplayRecords": total_length,  # 总记录数量
                 "aaData": []}
             page_start = int(request.POST.get('start', '0'))
             page_end = page_start + page_length
             page_data = User.objects.all()[page_start:page_end]
+            rest['iTotalRecords'] = len(page_data)
             data = []
             for item in page_data:
                 res = {}

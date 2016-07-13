@@ -769,10 +769,40 @@ def perm_sudo_list(request):
     :return:
     """
     # 渲染数据
-    header_title, path1, path2 = "Sudo命令", "别名管理", "查看别名"
+    if request.method == 'GET':
+        header_title, path1, path2 = "Sudo命令", "别名管理", "查看别名"
     # 获取所有sudo 命令别名
-    sudos_list = PermSudo.objects.all()
-    return my_render('permManage/perm_sudo_list.html', locals(), request)
+        sudos_list = PermSudo.objects.all()
+        return my_render('permManage/perm_sudo_list.html', locals(), request)
+    else:
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = PermSudo.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": 0,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = PermSudo.objects.all()[page_start:page_end]
+            rest["iTotalRecords"] = len(page_data)
+            data = []
+            for item in page_data:
+                res = {}
+                res['id'] = item.id
+                res['name']=item.name
+                res['commands'] =item.commands
+                res['date_joined'] = item.date_added.strftime("%Y-%m-%d %H:%M:%S")
+                data.append(res)
+            rest['aaData'] = data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+        except Exception as e:
+            logger.error(e.message)
+
+
+
+
 
 
 @require_role('admin')

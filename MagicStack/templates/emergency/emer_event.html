@@ -102,10 +102,6 @@
                         "sLast" : "最后一页"
                     }
                 },
-                "fnRowCallback" : function(nRow, aData, iDisplayIndex) {
-                    $('td:eq(1)', nRow).html('<a href=\"{% url 'emergency_rule' %}?content=' + aData.emer_content_num + '\">' + aData.emer_event + '</a>');
-                    return nRow;
-                },
                 //服务器端，数据回调处理
                 "fnServerData" : function(sSource, aDataSet, fnCallback) {
                     $.ajax({

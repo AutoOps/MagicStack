@@ -244,9 +244,8 @@ def media_del(request, res):
 
 @require_role('admin')
 def emergency_rule(request):
-    header_title, path1, path2 = u"告警规则设置", u"告警管理", u"告警规则"
-    emer_content = request.GET.get('content', '')
     if request.method == 'GET':
+        header_title, path1, path2 = u"告警规则设置", u"告警管理", u"告警规则"
         users = User.objects.all()
         media_list = EmergencyType.objects.all()
         return my_render('emergency/emer_rules.html', locals(), request)
@@ -262,11 +261,7 @@ def emergency_rule(request):
             page_start = int(request.POST.get('start', '0'))
             page_end = page_start + page_length
             page_data = EmergencyRules.objects.all()[page_start:page_end]
-            if emer_content:
-                total_length = EmergencyRules.objects.filter(content=emer_content).count()
-                page_data = EmergencyRules.objects.filter(content=emer_content)[page_start:page_end]
             rest['iTotalRecords'] = len(page_data)
-            rest['iTotalDisplayRecords'] = total_length
             data = []
             emer_content = EMER_CONTENTS
             time_types = {'1': u'全部', '2': u'工作日', '3': u'周末'}

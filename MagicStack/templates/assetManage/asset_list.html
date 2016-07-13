@@ -34,7 +34,7 @@
                                 </button>
                                 <ul class="dropdown-menu pull-right">
                                     <li>
-                                        <a name="{% url 'asset_del' %}?arg=batch" class="del_batch">
+                                        <a href="#" class="del_batch">
                                                      删除所选 </a>
                                     </li>
                                     <li>
@@ -725,7 +725,7 @@
                     $.ajax({
                     type: "post",
                     data: {asset_id_all: asset_id_all},
-                    url: $(this).attr('name'),
+                    url: '{% url "asset_del" %}',
                     success: function (res) {
                         bootbox.alert(res.msg);
                         $("#sample_1 input:checked").closest("tr").remove();

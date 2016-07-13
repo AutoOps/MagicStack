@@ -364,37 +364,35 @@ def asset_del(request,res, *args):
                 response['msg'] = e
 
     if request.method == 'POST':
-        asset_batch = request.GET.get('arg', '')
         asset_id_all = request.POST.get('asset_id_all', '')
         asset_list = []
-        if asset_batch:
-            for asset_id in asset_id_all.split(','):
-                asset = get_object(Asset, id=int(asset_id))
-                res['content'] += '%s   ' % asset.name
-                if asset:
-                    asset_list.append(asset)
-            asset_proxys = gen_asset_proxy(asset_list)
-            for key, value in asset_proxys.items():
-                asset_names = [asset.name for asset in value]
-                id_uniques = [asset.id_unique for asset in value]
-                param = {'names': asset_names, 'id_unique': id_uniques}
-                data = json.dumps(param)
-                proxy_obj = Proxy.objects.get(proxy_name=key)
-                try:
-                    api = APIRequest('{0}/v1.0/system'.format(proxy_obj.url), proxy_obj.username, CRYPTOR.decrypt(proxy_obj.password))
-                    result, code = api.req_del(data)
-                    logger.debug(u'删除多个资产result:%s'% result)
-                    if code == 200:
-                        for item in value:
-                            item.delete()
-                    else:
-                        response['msg'] = result['messege']
-                except Exception as e:
-                    logger.error(e)
-                    res['flag'] = 'false'
-                    res['content'] = e
-                    response['msg'] = e
-    return HttpResponse(json.dumps(response), content_type='application/json')
+        for asset_id in asset_id_all.split(','):
+            asset = get_object(Asset, id=int(asset_id))
+            res['content'] += '%s   ' % asset.name
+            if asset:
+                asset_list.append(asset)
+        asset_proxys = gen_asset_proxy(asset_list)
+        for key, value in asset_proxys.items():
+            asset_names = [asset.name for asset in value]
+            id_uniques = [asset.id_unique for asset in value]
+            param = {'names': asset_names, 'id_unique': id_uniques}
+            data = json.dumps(param)
+            proxy_obj = Proxy.objects.get(proxy_name=key)
+            try:
+                api = APIRequest('{0}/v1.0/system'.format(proxy_obj.url), proxy_obj.username, CRYPTOR.decrypt(proxy_obj.password))
+                result, code = api.req_del(data)
+                logger.debug(u'删除多个资产result:%s'% result)
+                if code == 200:
+                    for item in value:
+                        item.delete()
+                else:
+                    response['msg'] = result['messege']
+            except Exception as e:
+                logger.error(e)
+                res['flag'] = 'false'
+                res['content'] = e
+                response['msg'] = e
+        return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role(role='super')

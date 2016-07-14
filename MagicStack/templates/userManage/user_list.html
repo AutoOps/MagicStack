@@ -325,7 +325,7 @@
                             </ul>\
                         </div>';
                     $('td:eq(7)', nRow).html(op_html);
-                     $('td:eq(1)', nRow).html('<a href=\"{% url 'user_detail' %}?id=' + aData.id + '\">' + aData.name + '</a>');
+                     $('td:eq(1)', nRow).html('<a href=\"{% url 'user_detail' %}?id=' + aData.id + '\">' + aData.username + '</a>');
                     $('td:eq(0) input', nRow).val(aData.id.toString());
                     return nRow;
                 },

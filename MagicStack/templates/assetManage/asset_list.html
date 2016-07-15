@@ -866,7 +866,7 @@
                     $.ajax({
                     type: "post",
                     data: {asset_id_all: asset_id_all},
-                    url: $(this).attr('name'),
+                    url: "{% url 'asset_action' 'on' %}",
                     success: function (data) {
                             layer.msg(data.messege,{offset:['100px','1200px']}, function(){
                             parent.location.reload();
@@ -889,7 +889,7 @@
                     $.ajax({
                         type: "post",
                         data: {asset_id_all: asset_id_all},
-                        url: $(this).attr('name'),
+                        url: "{% url 'asset_action' 'reboot' %}",
                         success: function (data) {
                             layer.msg( data.messege,{offset:['100px','1200px']}, function(){
                                 parent.location.reload();
@@ -912,7 +912,7 @@
                     $.ajax({
                     type: "post",
                     data: {asset_id_all: asset_id_all},
-                    url: $(this).attr('name'),
+                    url: "{% url 'asset_action' 'off' %}",
                     success: function (data) {
                         layer.msg( data.messege,{offset:['100px','1200px']}, function(){
                             parent.location.reload();
@@ -935,7 +935,7 @@
                     $.ajax({
                     type: "post",
                     data: {asset_id_all: asset_id_all},
-                    url: $(this).attr('name'),
+                    url: "{% url 'asset_action' 'rebuild' %}",
                     success: function (data) {
                         layer.msg( data.messege,{offset:['100px','1200px']}, function(){
                             parent.location.reload();

@@ -396,6 +396,20 @@
             })
         });
 
+
+         <!-- 基础函数 -->
+        function getIDall(){
+            var check_array = [];
+            var rowChecked = table.find('tbody tr .checkboxes:checked');
+            rowChecked.each(function(index, elem) {
+                check_array.push($(elem).val())
+            });
+            return check_array.join(",");
+        }
+
+        <!-- 结束 -->
+
+
         //删除一行
         table.on('click', 'a.del', function(){
               var row = $(this).closest('tr');
@@ -413,23 +427,25 @@
         });
 
         //删除多行
-        $('#del_btn').click(function(){
-            var check_array = [];
-            bootbox.confirm("确定删除所选的用户?", function(result){
-                if(result){
-                    var rowChecked = table.find('tbody tr .checkboxes:checked');
-                    rowChecked.each(function(index, elem) {
-                        check_array.push($(elem).val())
-                    });
-                    $.post("{% url 'user_del' %}",
-                        {id: check_array.join(",")},
-                        function(res){
-                            bootbox.alert(res);
-                            $("#sample_1 input:checked").closest("tr").remove();
-                        }
-                    )
-                }
 
+        $('#del_btn').click(function () {
+            var id = getIDall();
+            if (id == ''){
+                bootbox.alert("请至少选择一行!");
+                return false;
+            }
+            bootbox.confirm("确定删除?", function(result){
+                if(result){
+                    $.ajax({
+                    type: "post",
+                    data: {id: id},
+                    url: '{% url "user_del" %}',
+                    success: function (res) {
+                        bootbox.alert(res);
+                        $("#sample_1 input:checked").closest("tr").remove();
+                    }
+                    });
+                }
             })
         });
 

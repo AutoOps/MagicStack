@@ -427,6 +427,17 @@
                 }
             })
         });
+         <!-- 基础函数 -->
+        function getIDall(){
+            var check_array = [];
+            var rowChecked = table.find('tbody tr .checkboxes:checked');
+            rowChecked.each(function(index, elem) {
+                check_array.push($(elem).val())
+            });
+            return check_array.join(",");
+        }
+
+        <!-- 结束 -->
 
         //单一删除
         table.on('click', 'a.del', function(){
@@ -447,21 +458,23 @@
           });
 
         //删除多个
-        $('#del_btn').click(function(){
-            var check_array = [];
-            bootbox.confirm("确定删除", function(result){
+          $('#del_btn').click(function () {
+            var id = getIDall();
+            if (id == ''){
+                bootbox.alert("请至少选择一行!");
+                return false;
+            }
+            bootbox.confirm("确定删除?", function(result){
                 if(result){
-                    var rowChecked = table.find('tbody tr .checkboxes:checked');
-                    rowChecked.each(function(index, elem) {
-                        check_array.push($(elem).val())
+                    $.ajax({
+                    type: "get",
+                    data: {id: id},
+                    url: '{% url "media_del" %}',
+                    success: function (res) {
+                        bootbox.alert(res);
+                        $("#sample_1 input:checked").closest("tr").remove();
+                    }
                     });
-                    $.get("{% url 'media_del' %}",
-                        {id: check_array.join(",")},
-                        function(res){
-                            bootbox.alert(res);
-                            $("#sample_1 input:checked").closest("tr").remove();
-                        }
-                    )
                 }
             })
         });

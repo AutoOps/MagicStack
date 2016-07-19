@@ -138,7 +138,6 @@ def group_list(request):
     """
     if request.method == 'GET':
         header_title, path1, path2 = u'查看资产组', u'资产管理', u'查看资产组'
-        asset_group_list = AssetGroup.objects.all()
         asset_all = Asset.objects.all()
         return my_render('assetManage/group_list.html', locals(), request)
     else:

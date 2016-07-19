@@ -34,7 +34,6 @@ def perm_rule_list(request):
     """
     if request.method == 'GET':
         header_title, path1, path2 = "授权规则", "规则管理", "查看规则"
-        rules_list = PermRule.objects.all()
         users = User.objects.all()
         user_groups = UserGroup.objects.all()
         assets = Asset.objects.all()
@@ -266,7 +265,6 @@ def perm_role_list(request):
     """
     if request.method == 'GET':
         header_title, path1, path2 = "系统用户", "系统用户管理", "查看系统用户"
-        roles_list = PermRole.objects.all()
         sudos = PermSudo.objects.all()
 
         # TODO 推送系统用户所需的数据

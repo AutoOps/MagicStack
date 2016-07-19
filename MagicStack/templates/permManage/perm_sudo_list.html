@@ -34,30 +34,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                            {% for sudo in sudos_list %}
-                            <tr class="gradeX">
-                                <td> {{sudo.name}} </td>
-                                <td> {{ sudo.commands }} </td>
-                                <td> {{ sudo.date_added | date:"Y-m-d H:i:s"}} </td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
-                                            <i class="fa fa-angle-down"></i>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li>
-                                                 <a href="#"  onclick="edit_Sudo('{{ sudo.id }}')">
-                                                    编辑 </a>
-                                            </li>
-                                            <li>
-                                                <a name="{% url 'sudo_del' %}?id={{ sudo.id }}" class="del">
-                                                     删除 </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
                     </tbody>
                 </table>
             </div>

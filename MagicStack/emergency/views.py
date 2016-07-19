@@ -35,7 +35,6 @@ EMER_CONTENTS = {
 def media_list(request):
     if request.method == "GET":
         header_title, path1, path2 = u'告警媒介类型', u'告警管理', u'查看告警媒介类型'
-        media_lists = EmergencyType.objects.all()
         return my_render('emergency/media_list.html', locals(), request)
     else:
         try:

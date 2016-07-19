@@ -15,7 +15,6 @@ def proxy_list(request):
     """
     if request.method == "GET":
         header_title, path1, path2 = u'查看代理', u'代理管理', u'查看代理'
-        proxy_lists = Proxy.objects.all()
         return my_render('proxyManage/proxy_list.html',locals(),request)
     else:
         try:

@@ -57,28 +57,30 @@ def group_list(request):
         user_all = User.objects.all()
         return my_render('userManage/group_list.html', locals(), request)
     else:
-        page_length = int(request.POST.get('length', '5'))
-        total_length = UserGroup.objects.all().count()
-        keyword = request.POST.get("search")
-        rest = {
-            "iTotalRecords": 0,   # 本次加载记录数量
-            "iTotalDisplayRecords": total_length,  # 总记录数量
-            "aaData": []}
-        page_start = int(request.POST.get('start', '0'))
-        page_end = page_start + page_length
-        page_data = UserGroup.objects.all()[page_start:page_end]
-        rest['iTotalRecords'] = len(page_data)
-        data = []
-        for item in page_data:
-            res = {}
-            rest['Id'] = item.id
-            res['id'] = item.id
-            res['name'] = item.name
-            res['users'] = item.user_set.all().count()
-            res['comment'] = item.comment
-            data.append(res)
-        rest['aaData'] = data
-        return HttpResponse(json.dumps(rest), content_type='application/json')
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = UserGroup.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": 0,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = UserGroup.objects.all()[page_start:page_end]
+            rest['iTotalRecords'] = len(page_data)
+            data = []
+            for item in page_data:
+                res = {}
+                res['id'] = item.id
+                res['name'] = item.name
+                res['users'] = item.user_set.all().count()
+                res['comment'] = item.comment
+                data.append(res)
+            rest['aaData'] = data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+        except Exception as e:
+            logger.error(e)
 
 
 
@@ -235,9 +237,8 @@ def user_add(request, res, *args):
 @require_role(role='super')
 def user_list(request):
     if request.method == 'GET':
-        user_role = {'SU': u'超级管理员', 'GA': u'组管理员', 'CU': u'普通用户'}
+        # user_role = {'SU': u'超级管理员', 'GA': u'组管理员', 'CU': u'普通用户'}
         header_title, path1, path2 = u'查看用户', u'用户管理', u'用户列表'
-        # users_list = User.objects.all().order_by('username')
         group_all = UserGroup.objects.all()
         user_role = {'SU': u'超级管理员', 'CU': u'普通用户'}
         return my_render('userManage/user_list.html', locals(), request)

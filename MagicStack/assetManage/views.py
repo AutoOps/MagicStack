@@ -764,7 +764,8 @@ def asset_update_batch(request,res,*args):
                         'resource': resource,
                         'hosts': host_list,
                         'mod_args': '',
-                        'action': 'update',
+                        'run_action': 'sync',
+                        'run_type': 'ad-hoc'
                         }
                 data = json.dumps(data)
                 api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))

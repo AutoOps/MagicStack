@@ -21,49 +21,37 @@ class MyTask(object):
     def __init__(self, resource, host_list):
         self.resource = resource
         self.host_list = host_list
+        self.run_action = 'sync'               # 执行动作为同步还是异步 sync:同步  async:异步
+        self.run_type = 'ad-hoc'               # 执行ansible ad-hoc命令还是执行ansible playbook
+        self.isTemplate = False                # 是否需要渲染模板
 
     def push_key(self, user, key_path, proxy):
         """
         push the ssh authorized key to target.
         """
+        self.run_action = 'async'
+        self.run_type = 'ad-hoc'
         module_args = 'user="%s" key="{{ lookup("file", "%s") }}" state=present' % (user, key_path)
         data = {'mod_name': 'authorized_key',
                 'resource': self.resource,
                 'hosts': self.host_list,
                 'mod_args': module_args,
-                'role_name': user
+                'role_name': user,
+                'run_action': self.run_action,
+                'run_type': self.run_type,
+                'isTemplate': self.isTemplate
                 }
         data = json.dumps(data)
         api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
         result, code = api.req_post(data)
         return result
 
-    def push_multi_key(self, **user_info):
-        """
-        push multi key
-        :param user_info:
-        :return:
-        """
-        ret_failed = []
-        ret_success = []
-        for user, key_path in user_info.iteritems():
-            ret = self.push_key(user, key_path)
-            if ret.get("status") == "ok":
-                ret_success.append(ret)
-            if ret.get("status") == "failed":
-                ret_failed.append(ret)
-
-        if ret_failed:
-            return {"status": "failed", "msg": ret_failed}
-        else:
-            return {"status": "success", "msg": ret_success}
-
     def del_key(self, user, key_path, proxy):
         """
         push the ssh authorized key to target.
         """
+
         module_args = 'user="%s" key="{{ lookup("file", "%s") }}" state="absent"' % (user, key_path)
-        # self.run("authorized_key", module_args, become=True)
         data = {'mod_name': 'authorized_key',
                 'resource': self.resource,
                 'hosts': self.host_list,
@@ -75,14 +63,14 @@ class MyTask(object):
         result, code = api.req_post(data)
         return result
 
-    def add_user(self, username,proxy, password=''):
+    def add_user(self, username, proxy, groups):
         """
         add a host user.
         """
-
-        if password:
-            encrypt_pass = sha512_crypt.encrypt(password)
-            module_args = 'name=%s shell=/bin/bash password=%s' % (username, encrypt_pass)
+        self.run_action = 'async'
+        self.run_type = 'ad-hoc'
+        if groups:
+            module_args = 'name=%s shell=/bin/bash groups=%s' % (username, groups)
         else:
             module_args = 'name=%s shell=/bin/bash' % username
 
@@ -90,99 +78,66 @@ class MyTask(object):
                 'resource': self.resource,
                 'hosts': self.host_list,
                 'mod_args': module_args,
-                'role_name': username
+                'role_name': username,
+                'run_action': self.run_action,
+                'run_type': self.run_type,                    # 标记, 执行ansible ad-hoc命令还是执行playbook
+                'isTemplate': self.isTemplate
                 }
         data = json.dumps(data)
         api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
         result, code = api.req_post(data)
         return result
-
-    def add_multi_user(self, **user_info):
-        """
-        add multi user
-        :param user_info: keyword args
-            {username: password}
-        :return:
-        """
-        ret_success = []
-        ret_failed = []
-        for user, password in user_info.iteritems():
-            ret = self.add_user(user, password)
-            if ret.get("status") == "ok":
-                ret_success.append(ret)
-            if ret.get("status") == "failed":
-                ret_failed.append(ret)
-
-        if ret_failed:
-            return {"status": "failed", "msg": ret_failed}
-        else:
-            return {"status": "success", "msg": ret_success}
 
     def del_user(self, username, proxy):
         """
         delete a host user.
         """
-        module_args = 'name=%s state=absent remove=yes move_home=yes force=yes' % username
-        # self.run("user", module_args, become=True)
+        module_args = 'name=%s groups='' state=absent remove=yes move_home=yes force=yes' % username
         data = {'mod_name': 'user',
                 'resource': self.resource,
                 'hosts': self.host_list,
                 'mod_args': module_args,
                 'role_name': username,
-                'action': 'delete'
+                'run_action': 'sync',                       # run_action参数表示同步还是异步执行
+                'run_type': 'ad-hoc'
                 }
         data = json.dumps(data)
         api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
         result, code = api.req_post(data)
         return result
 
-    def del_user_sudo(self, username, proxy):
+    def del_user_sudo(self, role_uuid, proxy):
         """
         delete a role sudo item
-        :param username:
-        :return:
         """
-        module_args = "sed -i 's/^%s.*//' /etc/sudoers" % username
-        # self.run("command", module_args, become=True)
-        data = {'mod_name': 'command',
+        filename = 'role-%s'%role_uuid
+        module_args = "name=/etc/sudoers.d/%s  state=absent" %filename
+        data = {'mod_name': 'file',
                 'resource': self.resource,
                 'hosts': self.host_list,
                 'mod_args': module_args,
-                'action': 'delete'
+                'run_action': 'sync',
+                'run_type': 'ad-hoc'
                 }
         data = json.dumps(data)
         api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
         result, code = api.req_post(data)
         return result
 
-    @staticmethod
-    def gen_sudo_script(role_list, sudo_list):
-        sudo_alias = {}
-        sudo_user = {}
-        for sudo in sudo_list:
-            sudo_alias[sudo.name] = sudo.commands
-
-        for role in role_list:
-            sudo_user[role.name] = ','.join(sudo_alias.keys())
-
-        sudo_j2 = get_template('permManage/role_sudo.j2')
-        sudo_content = sudo_j2.render(Context({"sudo_alias": sudo_alias, "sudo_user": sudo_user}))
-        sudo_file = NamedTemporaryFile(delete=False)
-        sudo_file.write(sudo_content)
-        sudo_file.close()
-        return sudo_file.name
-
-    def push_sudo_file(self, role_list, sudo_list, proxy):
+    def push_sudo(self, role, sudo_uuids, proxy):
         """
         use template to render pushed sudoers file
-        :return:
         """
-        module_args = self.gen_sudo_script(role_list, sudo_list)
-        # self.run("script", module_args1, become=True)
-        data = {'mod_name': 'script',
-                'resource': self.resource,
+        self.run_action = 'async'
+        self.run_type = 'playbook'
+        data = {'resource': self.resource,
                 'hosts': self.host_list,
-                'mod_args': module_args
+                'sudo_uuids': sudo_uuids,
+                'role_name': role.name,
+                'role_uuid': role.uuid_id,
+                'run_action': self.run_action,
+                'run_type': self.run_type,
+                'isTemplate': True
                 }
         data = json.dumps(data)
         api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))

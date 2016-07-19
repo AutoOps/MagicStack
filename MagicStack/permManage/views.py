@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
 from __future__ import unicode_literals
-from django.http import HttpResponseBadRequest, HttpResponseNotAllowed
 from paramiko import SSHException
 from permManage.perm_api import *
 from assetManage.asset_api import gen_asset_proxy
@@ -17,6 +16,7 @@ from permManage.perm_api import get_role_info, get_role_push_host,query_event
 from MagicStack.api import my_render, get_object, CRYPTOR
 from common.models import Task
 from proxyManage.models import Proxy
+import time
 
 
 # 设置PERM APP Log
@@ -420,12 +420,12 @@ def perm_role_delete(request, res, *args):
                     task = MyTask(recycle_resource, host_list)
                     try:
                         msg_del_user = task.del_user(role.name, proxy)
-                        msg_del_sudo = task.del_user_sudo(role.name, proxy)
+                        msg_del_sudo = task.del_user_sudo(role.uuid_id, proxy)
                     except Exception, e:
                         logger.warning(u"Recycle Role failed: %s" % e)
                         raise ServerError(u"回收已推送的系统用户失败: %s" % e)
-                    logger.info(u"delete role %s - execute delete user: %s" % (role.name, msg_del_user))
-                    logger.info(u"delete role %s - execute delete sudo: %s" % (role.name, msg_del_sudo))
+                    logger.info(u"删除用户 %s - execute delete user: %s" % (role.name, msg_del_user))
+                    logger.info(u"删除用户 %s - execute delete sudo: %s" % (role.name, msg_del_sudo))
                     # TODO: 判断返回结果，处理异常
             # 删除存储的秘钥，以及目录
             try:
@@ -610,6 +610,7 @@ def perm_role_push(request, *args):
             asset_group_ids = request.POST.getlist("asset_groups")
             assets_obj = [Asset.objects.get(id=asset_id) for asset_id in asset_ids]
             asset_groups_obj = [AssetGroup.objects.get(id=asset_group_id) for asset_group_id in asset_group_ids]
+            sys_groups = request.POST.get("sys_groups", '').strip()            # 获取系统组,将系统用户加入到系统组中
             group_assets_obj = []
             for asset_group in asset_groups_obj:
                 group_assets_obj.extend(asset_group.asset_set.all())
@@ -631,15 +632,16 @@ def perm_role_push(request, *args):
                 # 1. 以秘钥 方式推送角色
                 role_proxy = get_one_or_all('PermRole', proxy, role.uuid_id)
                 if key_push:
-                    ret["pass_push"] = task.add_user(role.name, proxy)
+                    ret["pass_push"] = task.add_user(role.name, proxy, sys_groups)
+                    time.sleep(1)   # 暂停1秒,保证用户创建完成之后再推送key
                     ret["key_push"] = task.push_key(role.name, os.path.join(role_proxy['key_path'], 'id_rsa.pub'), proxy)
 
                 # 2. 推送账号密码 <为了安全 系统用户统一使用秘钥进行通信，不再提供密码方式的推送>
                 # 3. 推送sudo配置文件
-                if key_push:
-                    sudo_list = set([sudo for sudo in role.sudo.all()])  # set(sudo1, sudo2, sudo3)
+                    sudo_list = [sudo for sudo in role.sudo.all()]
                     if sudo_list:
-                        ret['sudo'] = task.push_sudo_file([role], sudo_list, proxy)
+                        sudo_uuids = [sudo.uuid_id for sudo in role.sudo.all()]
+                        ret['sudo'] = task.push_sudo(role, sudo_uuids, proxy)
                 logger.info('推送用户结果ret:%s'%ret)
 
                 # TODO 将事件放进queue中
@@ -771,8 +773,6 @@ def perm_sudo_list(request):
     # 渲染数据
     if request.method == 'GET':
         header_title, path1, path2 = "Sudo命令", "别名管理", "查看别名"
-    # 获取所有sudo 命令别名
-        sudos_list = PermSudo.objects.all()
         return my_render('permManage/perm_sudo_list.html', locals(), request)
     else:
         try:

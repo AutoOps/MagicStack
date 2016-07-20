@@ -81,9 +81,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="display: none">
                             <label class="col-md-3 control-label">密码&nbsp;&nbsp;</label>
-                            <div class="col-md-6">
+                            <div class="col-md-6" >
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="fa fa-lock fa-fw"></i>
@@ -98,6 +98,14 @@
                             <div class="col-md-6">
                                 <textarea name="role_key" type="text" class="form-control" ></textarea>
                                 <span class="help-block"> 如果不添加密钥，会自动生成</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">系统组
+                            </label>
+                            <div class="col-md-6">
+                                <textarea name="sys_groups" id="sys_groups" data-required="1" class="form-control"  placeholder="root,adm,tty,sys"></textarea>
+                                <span class="help-block">将系统用户加入到系统组中,系统组之间用逗号分隔</span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -158,14 +166,6 @@
                                         <option value="{{ asset_group.id }}"{% if asset_group in pushed_asset_groups %}selected{% endif %}>{{ asset_group.name }}</option>
                                     {% endfor %}
                                 </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">系统组
-                            </label>
-                            <div class="col-md-6">
-                                <textarea name="sys_groups" id="sys_groups" data-required="1" class="form-control"  placeholder="root,adm,tty,sys"></textarea>
-                                <span class="help-block">将系统用户加入到系统组中,系统组之间用逗号分隔</span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -452,6 +452,7 @@
 
             //定时器
           function showalert() {
+
                $.ajax({
                   url: '{% url 'push_role_event' %}',
                   method: 'get',

@@ -69,7 +69,7 @@ class MyTask(object):
         """
         self.run_action = 'async'
         self.run_type = 'ad-hoc'
-        if groups:
+        if groups.strip():
             module_args = 'name=%s shell=/bin/bash groups=%s' % (username, groups)
         else:
             module_args = 'name=%s shell=/bin/bash' % username

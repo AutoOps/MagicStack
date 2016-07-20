@@ -314,6 +314,7 @@ def perm_role_add(request, res, *args):
         key_content = request.POST.get("role_key", "")
         sudo_ids = request.POST.getlist('sudo_name')
         uuid_id = str(uuid.uuid1())
+        sys_groups = request.POST.get('sys_groups', '').strip()
 
         try:
             if get_object(PermRole, name=name):
@@ -339,7 +340,8 @@ def perm_role_add(request, res, *args):
                 key_path = gen_keys()
 
              # TODO 将数据保存到magicstack上
-            role = PermRole.objects.create(uuid_id=uuid_id, name=name, comment=comment, password=encrypt_pass, key_path=key_path)
+            role = PermRole.objects.create(uuid_id=uuid_id, name=name, comment=comment, password=encrypt_pass,
+                                           key_path=key_path, system_groups=sys_groups)
             role.sudo = sudos_obj
             role.save()
 
@@ -351,7 +353,8 @@ def perm_role_add(request, res, *args):
                     'password': encrypt_pass,
                     'comment': comment,
                     'key_content': key_content,
-                    'sudo_uuids': sudo_uuids}
+                    'sudo_uuids': sudo_uuids,
+                    'sys_groups': sys_groups}
             data = json.dumps(data)
             message = save_or_delete('PermRole', data, proxy_list)
             flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
@@ -515,6 +518,7 @@ def perm_role_edit(request, res, *args):
         rest['role_name'] = role.name
         rest['role_password'] = role.password
         rest['role_comment'] = role.comment
+        rest['system_groups'] = role.system_groups
         rest['sudos'] = ','.join([str(item.id) for item in role.sudo.all()])
         return HttpResponse(json.dumps(rest), content_type='application/json')
     else:
@@ -528,6 +532,7 @@ def perm_role_edit(request, res, *args):
         role_sudos = [PermSudo.objects.get(id=int(sudo_id)) for sudo_id in role_sudo_names]
         key_content = request.POST.get("role_key", "")
         sudo_uuids = [item.uuid_id for item in role_sudos]
+        sys_groups = request.POST.get("sys_groups",'').strip()
         try:
             if not role:
                 raise ServerError('该系统用户不能存在')
@@ -551,7 +556,8 @@ def perm_role_edit(request, res, *args):
                     'password': role_password,
                     'comment': role_comment,
                     'sudo_uuids': sudo_uuids,
-                    'key_content': key_content}
+                    'key_content': key_content,
+                    'sys_groups': sys_groups}
             data = json.dumps(data)
             proxy_list = Proxy.objects.all()
             message = save_or_delete('PermRole', data, proxy_list, role.uuid_id, 'update')
@@ -560,6 +566,7 @@ def perm_role_edit(request, res, *args):
                 # TODO 只有proxy上的数据库保存完成后,才会写入本地数据库
                 role.name = role_name
                 role.comment = role_comment
+                role.system_groups = sys_groups
                 role.sudo = role_sudos
                 role.save()
 
@@ -608,7 +615,7 @@ def perm_role_push(request, *args):
             asset_group_ids = request.POST.getlist("asset_groups")
             assets_obj = [Asset.objects.get(id=asset_id) for asset_id in asset_ids]
             asset_groups_obj = [AssetGroup.objects.get(id=asset_group_id) for asset_group_id in asset_group_ids]
-            sys_groups = request.POST.get("sys_groups", '').strip()            # 获取系统组,将系统用户加入到系统组中
+
             group_assets_obj = []
             for asset_group in asset_groups_obj:
                 group_assets_obj.extend(asset_group.asset_set.all())
@@ -630,7 +637,7 @@ def perm_role_push(request, *args):
                 # 1. 以秘钥 方式推送角色
                 role_proxy = get_one_or_all('PermRole', proxy, role.uuid_id)
                 if key_push:
-                    ret["pass_push"] = task.add_user(role.name, proxy, sys_groups)
+                    ret["pass_push"] = task.add_user(role.name, proxy, role.system_groups)
                     time.sleep(1)   # 暂停1秒,保证用户创建完成之后再推送key
                     ret["key_push"] = task.push_key(role.name, os.path.join(role_proxy['key_path'], 'id_rsa.pub'), proxy)
 
@@ -682,8 +689,8 @@ def push_role_event(request):
     """
     response = {'error': '', 'message':''}
     if request.method == 'GET':
-        try:
-            if task_queue.qsize() > 0:
+        if task_queue.qsize() > 0:
+            try:
                 tk_event = task_queue.get()
                 host_names = tk_event.pop('push_assets')
                 calc_assets = [Asset.objects.get(name=name) for name in host_names]
@@ -756,9 +763,11 @@ def push_role_event(request):
                                                                         ','.join(failed_asset.keys()),
                                                                         ','.join(success_asset.keys()))
                     response['message'] = error
-        except Exception as e:
-            response['message'] = e
+
+            except Exception as e:
+                response['message'] = e
         return HttpResponse(json.dumps(response), content_type='application/json')
+
 
 
 @require_role('admin')

@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load mytags %}
 {% block self_head_css_js %}
 
         <link href="/static/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
@@ -35,7 +34,7 @@
                                 </button>
                                 <ul class="dropdown-menu pull-right">
                                     <li>
-                                        <a name="{% url 'asset_del' %}?arg=batch" class="del_batch">
+                                        <a href="#" class="del_batch">
                                                      删除所选 </a>
                                     </li>
                                     <li>
@@ -85,45 +84,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                            {% for asset in asset_list %}
-                            <tr class="gradeX">
-                                <td>
-                                    <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                        <input type="checkbox" class="checkboxes" value="{{ asset.id }}" />
-                                        <span></span>
-                                    </label>
-                                </td>
-                                <td class="hostname"> <a href="{% url 'asset_detail' %}?id={{ asset.id }}">{{ asset.name|default_if_none:"" }}</a> </td>
-                                <td> {{ asset.networking.all|net_str2 }}
-                                <td > {{ asset.idc.name|default_if_none:"" }} </td>
-                                <td >{{ asset.group.all|group_str2 }}</td>
-                                <td >{{ asset.proxy.proxy_name|default_if_none:"" }}</td>
-                                <td >{{ asset.system_type|default_if_none:"" }}{{ asset.system_version|default_if_none:"" }}</td>
-                                <td > {{ asset.cpu|get_cpu_core|default_if_none:"" }} </td>
-                                <td > {{ asset.memory|default_if_none:"" }}{% if asset.memory %}G{% endif %}</td>
-                                <td > {{ asset.disk|get_disk_info }}{% if asset.disk %}G{% endif %}</td>
-                                <td>
-                                    <div class="btn-group">
-                                        <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
-                                            <i class="fa fa-angle-down"></i>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li>
-                                                <a href="#" onclick="editAsset('{{ asset.id }}')">
-                                                    编辑 </a>
-                                            </li>
-                                            <li>
-                                                <a name="{{ asset.id }}" class="conn">连接</a>
-                                            </li>
-                                            <li>
-                                                <a name="{% url 'asset_del' %}?id={{ asset.id }}" class="del">
-                                                     删除 </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -473,18 +433,16 @@
 {% block self_footer_js %}
     <script src="/static/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
     <script src="/static/pages/scripts/components-select2.min.js" type="text/javascript"></script>
-    <script src="/static/global/scripts/datatable.js" type="text/javascript"></script>
     <script src="/static/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
     <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-    <script src="/static/pages/scripts/table-datatables-managed.min.js" type="text/javascript"></script>
     <script src="/static/js/layer/layer.js" type="text/javascript"></script>
-    <script src="/static/js/base.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 <script>
     //获取一级菜单长度
     var select1_len = document.assetForm.proxy.options.length;
     var select2 = new Array(select1_len);
     //把一级菜单都设为数组
-    for (i = 0; i < select1_len; i++) {
+    for (var i=0; i < select1_len; i++) {
         select2[i] = new Array();
     }
     select2[0][0] = new Option('请选择profile','');
@@ -605,38 +563,176 @@
     }
 
     $(document).ready(function(){
-        //删除单个资产
-        $('.del').click(function(){
-              var row = $(this).closest('tr');
-              if (confirm("确定删除?")) {
-                $.get(
-                    $(this).attr('name'),
-                    {},
-                    function(data){
-                        alert(data.msg);
-                        row.remove();
+        <!-- 初始化table 分页 排序-->
+        var table = $("#sample_1");
+        var table_init = table.DataTable({
+            "bDestroy" : true,
+            "bProcessing" : true, //DataTables载入数据时，是否显示‘进度’提示
+            "bServerSide" : true, //是否启动服务器端数据导入
+            "bStateSave" : true, //是否打开客户端状态记录功能,此功能在ajax刷新纪录的时候不会将个性化设定回复为初始化状态
+            "aLengthMenu" : [[5, 15, 20, -1], [5, 15, 20, "All"]], //更改显示记录数选项
+            "iDisplayLength" : 5, //默认显示的记录数
+            "bPaginate" : true, //是否显示（应用）分页器
+            "bInfo" : true, //是否显示页脚信息，DataTables插件左下角显示记录数
+            "sPaginationType": "bootstrap_full_number",
+            "aaSorting" : [[2, "desc"]], //默认的排序方式，第2列，降序排列
+            "bFilter" : true, //是否启动过滤、搜索功能
+            "aoColumns" : [{
+                "sDefaultContent" : '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"> \
+                                        <input type="checkbox" class="checkboxes" value="" /> \
+                                        <span></span> \
+                           </label>', //此列默认值为""，以防数据中没有此值，DataTables加载数据的时候报错
+                "bSortable":false //此列不排序
+                }, {
+                    "mData" : "name",
+                    "sDefaultContent" : "",
+                    "sClass": 'hostname',
+                    "bSearchable":true
+                }, {
+                    "mData" : "ip",
+                    "sDefaultContent" : ""
+                }, {
+                    "mData" : "idc",
+                    "sDefaultContent" : ""  ,
+                    "bSortable":false   //此列不需要排序
+                },{
+                    "mData" : "groups",
+                    "sDefaultContent" : "",
+                    "bSortable":false
+                },{
+                   "mData": "proxy",
+                   "sDefaultContent" : ""
+                },{
+                   "mData": "system_type",
+                   "sDefaultContent" : ""
+                },{
+                  "mData": "cpu",
+                  "sDefaultContent" : ""
+                },{
+                  "mData": "memory",
+                  "sDefaultContent" : ""
+                },{
+                  "mData": "disk",
+                  "sDefaultContent" : ""
+                },{
+                  "mData": "",             //操作列
+                  "sDefaultContent" : "",
+                  "bSortable":false
+                }],
+                "oLanguage": { //国际化配置
+                    "sProcessing" : "正在获取数据，请稍后...",
+                    "sLengthMenu" : "显示 _MENU_ 条",
+                    "sSearch": "搜索:",
+                    "sZeroRecords" : "没有您要搜索的内容",
+                    "sInfo" : "从 _START_ 到  _END_ 条记录 共 _TOTAL_ 条记录",
+                    "sInfoEmpty" : "记录数为0",
+                    "sInfoFiltered" : "(共显示 _MAX_ 条数据)",
+                    "sInfoPostFix" : "",
+                    "oPaginate": {
+                        "sFirst" : "第一页",
+                        "sPrevious" : "上一页",
+                        "sNext" : "下一页",
+                        "sLast" : "最后一页"
                     }
-                )
-              }
+                },
+                /*
+                * 设置操作列的值
+                */
+                "fnRowCallback" : function(nRow, aData, iDisplayIndex) {
+                    op_del = '<a class="del" name=\"/asset/del/?id=' + aData.id + '\">删除</a> ';
+                    op_edit = '<a href=\"#\" onclick=\"editAsset('+aData.id+')\">编辑</a>';
+                    op_conn = '<a class="conn" name=\" ' + aData.id + '\">连接</a> ';
+                    op_html = '<div class="btn-group"> \
+                            <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions\
+                                <i class="fa fa-angle-down"></i> \
+                            </button> \
+                            <ul class="dropdown-menu" role="menu"> \
+                                <li>' + op_edit + '</li>\
+                                <li>' + op_conn + '</li>\
+                                <li>' + op_del + '</li>\
+                            </ul>\
+                        </div>';
+                    $('td:eq(0) input', nRow).val(aData.id.toString());
+                    $('td:eq(1)', nRow).html('<a href=\"{% url 'asset_detail' %}?id=' + aData.id + '\">' + aData.name + '</a>');
+                    $('td:eq(10)', nRow).html(op_html);
+                    return nRow;
+                },
+                //服务器端，数据回调处理
+                "fnServerData" : function(sSource, aDataSet, fnCallback) {
+                    $.ajax({
+                        "dataType" : 'json',
+                        "type" : "post",
+                        "url" : sSource,
+                        "data" : aDataSet,
+                        "success" : function(resp){
+                            fnCallback(resp);
+                        }
+                    });
+                }
         });
-         //删除多个资产
+
+        table.find(".group-checkable").change(function() {
+            var e = $(this).attr("data-set"),
+            t = $(this).is(":checked");
+            $(e).each(function() {
+                t ? ($(this).prop("checked", !0), $(this).parents("tr").addClass("active")) : ($(this).prop("checked", !1), $(this).parents("tr").removeClass("active"))
+            })
+        });
+        table.on("change", "tbody tr .checkboxes", function() {
+                 $(this).parents("tr").toggleClass("active")
+        });
+        <!-- 加载table完毕 -->
+
+        <!-- 基础函数 -->
+        function getIDall(){
+            var check_array = [];
+            var rowChecked = table.find('tbody tr .checkboxes:checked');
+            rowChecked.each(function(index, elem) {
+                check_array.push($(elem).val())
+            });
+            return check_array.join(",");
+        }
+
+        <!-- 结束 -->
+
+        <!-- 页面操做处理开始 -->
+        //删除单个资产
+        table.on('click', 'a.del', function(){
+              var row = $(this).closest('tr');
+              var del_id = $(this).attr('name').split('?')[1].split('=')[1];
+              var url_p = "{% url 'asset_del' %}?id=" + del_id ;
+              bootbox.confirm("确定删除?", function(result){
+                  if(result){
+                      $.get(
+                            url_p ,
+                            function(data){
+                                row.remove();
+                                bootbox.alert(data);
+                            }
+                      )
+                  }
+              })
+        });
+        //删除多个资产
         $('.del_batch').click(function () {
             var asset_id_all = getIDall();
             if (asset_id_all == ''){
-                alert("请至少选择一行!");
+                bootbox.alert("请至少选择一行!");
                 return false;
             }
-            if (confirm("确定删除?")) {
-                $.ajax({
+            bootbox.confirm("确定删除?", function(result){
+                if(result){
+                    $.ajax({
                     type: "post",
                     data: {asset_id_all: asset_id_all},
-                    url: $(this).attr('name'),
+                    url: '{% url "asset_del" %}',
                     success: function (res) {
-                        alert(res.msg);
-                        $(".gradeX input:checked").closest("tr").remove();
+                        bootbox.alert(res.msg);
+                        $("#sample_1 input:checked").closest("tr").remove();
                     }
-                });
-            }
+                    });
+                }
+            })
         });
 
         //添加资产
@@ -685,7 +781,7 @@
         });
 
         //连接
-        $('.conn').click(function(){
+        table.on('click', 'a.conn', function(){
             var url='{% url "role_get" %}?id=' + $(this).attr('name'); // 获取用户有权限的角色
             var href = $(this).attr('href');
             var new_url = '{% url "terminal" %}?id=' ;  //wbterminal socket url
@@ -725,6 +821,131 @@
             });
             return false
         });
+
+        //更新
+        $(".update").click( function(){
+            var asset_id_all = getIDall();
+            var url_p = $(this).attr('name');
+            if(asset_id_all == ''){
+                bootbox.confirm("更新全部资产信息?", function(result){
+                    if(result){
+                        layer.msg('玩命更新中...', {time: 200000});
+                        url_p += '?arg=all';
+                        $.ajax({
+                            type: "post",
+                            url: url_p,
+                            success: function (res) {
+                                parent.location.reload();
+                            }
+                        });
+                    }
+                })
+            }else{
+                layer.msg('玩命更新中...', {time: 200000});
+                $.ajax({
+                    type: "post",
+                    data: {asset_id_all: asset_id_all},
+                    url: url_p,
+                    success: function () {
+                        parent.location.reload();
+                    }
+                });
+            }
+
+        });
+
+        //开机
+        $(".start_up").click(function () {
+            var asset_id_all = getIDall();
+            if (asset_id_all == ''){
+                bootbox.alert("请至少选择一行!");
+                return false;
+            }
+            bootbox.confirm("确定开启所选机器?", function(result){
+                if(result){
+                    $.ajax({
+                    type: "post",
+                    data: {asset_id_all: asset_id_all},
+                    url: "{% url 'asset_action' 'on' %}",
+                    success: function (data) {
+                            layer.msg(data.messege,{offset:['100px','1200px']}, function(){
+                            parent.location.reload();
+                           });
+                    }
+                });
+                }
+            })
+        });
+
+        //重启
+        $(".restart").click(function(){
+            var asset_id_all = getIDall();
+            if (asset_id_all == ''){
+                bootbox.alert("请至少选择一行!");
+                return false;
+            }
+            bootbox.confirm("确定重启所选的机器?", function(result){
+                if(result){
+                    $.ajax({
+                        type: "post",
+                        data: {asset_id_all: asset_id_all},
+                        url: "{% url 'asset_action' 'reboot' %}",
+                        success: function (data) {
+                            layer.msg( data.messege,{offset:['100px','1200px']}, function(){
+                                parent.location.reload();
+                            });
+                        }
+                    });
+                }
+            })
+        });
+
+        //关机
+        $(".shutdown").click(function(){
+            var asset_id_all = getIDall();
+            if (asset_id_all == ''){
+                bootbox.alert("请至少选择一行!");
+                return false;
+            }
+            bootbox.confirm("确定关闭所选的机器?", function(result){
+                if(result){
+                    $.ajax({
+                    type: "post",
+                    data: {asset_id_all: asset_id_all},
+                    url: "{% url 'asset_action' 'off' %}",
+                    success: function (data) {
+                        layer.msg( data.messege,{offset:['100px','1200px']}, function(){
+                            parent.location.reload();
+                        });
+                    }
+                });
+                }
+            })
+        });
+
+        //重装系统
+        $(".rebuild").click(function () {
+            var asset_id_all = getIDall();
+            if (asset_id_all == ''){
+                bootbox.alert("请至少选择一行!");
+                return false;
+            }
+            bootbox.confirm("确定重装所选的机器?", function(result){
+                if(result){
+                    $.ajax({
+                    type: "post",
+                    data: {asset_id_all: asset_id_all},
+                    url: "{% url 'asset_action' 'rebuild' %}",
+                    success: function (data) {
+                        layer.msg( data.messege,{offset:['100px','1200px']}, function(){
+                            parent.location.reload();
+                        });
+                    }
+                });
+                }
+            })
+        });
+
     });
 
     function windowOpen(a){
@@ -755,119 +976,6 @@
         return false
     }
 
-
-    $('.update').click(function () {
-        var asset_id_all = getIDall();
-        var url_p = $(this).attr('name');
-        if (asset_id_all == ''){
-            if (confirm("更新全部资产信息?")) {
-                layer.msg('玩命更新中...', {time: 200000});
-                url_p += '?arg=all';
-                $.ajax({
-                    type: "post",
-                    url: url_p,
-                    success: function (res) {
-                        alert(res.success);
-                        parent.location.reload();
-                    }
-                });
-            }
-        }
-        else {
-            layer.msg('玩命更新中...', {time: 200000});
-            $.ajax({
-                type: "post",
-                data: {asset_id_all: asset_id_all},
-                url: url_p,
-                success: function () {
-                    parent.location.reload();
-                }
-            });
-        }
-    });
-
-    $('.start_up').click(function () {
-        var asset_id_all = getIDall();
-        if (asset_id_all == ''){
-            alert("请至少选择一行!");
-            return false;
-        }
-        if (confirm("确定开启所选机器?")) {
-            $.ajax({
-                type: "post",
-                data: {asset_id_all: asset_id_all},
-                url: $(this).attr('name'),
-                success: function (data) {
-                       layer.msg(data.messege,{offset:['100px','1200px']}, function(){
-                        parent.location.reload();
-                       });
-                }
-            });
-        }
-    });
-
-    $('.restart').click(function () {
-        var asset_id_all = getIDall();
-        if (asset_id_all == ''){
-            alert("请至少选择一行!");
-            return false;
-        }
-        if (confirm("确定重启所选的机器?")) {
-            $.ajax({
-                type: "post",
-                data: {asset_id_all: asset_id_all},
-                url: $(this).attr('name'),
-                success: function (data) {
-                    layer.msg( data.messege,{offset:['100px','1200px']}, function(){
-                        parent.location.reload();
-                    });
-
-                }
-            });
-        }
-    });
-
-    $('.shutdown').click(function () {
-        var asset_id_all = getIDall();
-        if (asset_id_all == ''){
-            alert("请至少选择一行!");
-            return false;
-        }
-        if (confirm("确定关闭所选的机器?")) {
-            $.ajax({
-                type: "post",
-                data: {asset_id_all: asset_id_all},
-                url: $(this).attr('name'),
-                success: function (data) {
-                    layer.msg( data.messege,{offset:['100px','1200px']}, function(){
-                        parent.location.reload();
-                    });
-                }
-            });
-        }
-    });
-
-
-    $('.rebuild').click(function () {
-        var asset_id_all = getIDall();
-        if (asset_id_all == ''){
-            alert("请至少选择一行!");
-            return false;
-        }
-        if (confirm("确定重装所选的机器?")) {
-            $.ajax({
-                type: "post",
-                data: {asset_id_all: asset_id_all},
-                url: $(this).attr('name'),
-                success: function (data) {
-                    layer.msg( data.messege,{offset:['100px','1200px']}, function(){
-                        parent.location.reload();
-                    });
-                }
-            });
-        }
-    });
-
     function showalert()
     {
        $.ajax({
@@ -883,19 +991,14 @@
                   alert(res.message)
               }
           }
-{#          error: function(res) {#}
-{#              layer.msg(res.messege,#}
-{#                      {#}
-{#                          offset:['100px','1200px']#}
-{#              });#}
-{#          }#}
         });
     }
     //定时执行，5秒后执行showalert()
     window.setInterval(function(){
     showalert();
-    },6000);
+    },5000);
 
+    <!--页面操作结束 -->
 </script>
 
 {% endblock %}

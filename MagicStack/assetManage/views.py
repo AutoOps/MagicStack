@@ -1,9 +1,7 @@
 # -*- coding:utf-8 -*-
 
-from django.db.models import Q
 from assetManage.asset_api import *
 from MagicStack.api import *
-from assetManage.forms import AssetForm, IdcForm,NetWorkingForm,NetWorkingGlobalForm,PowerManageForm
 from assetManage.models import *
 from permManage.perm_api import get_group_asset_perm, get_group_user_perm, gen_resource
 from userManage.user_api import user_operator_record
@@ -138,10 +136,36 @@ def group_list(request):
     list asset group
     列出资产组
     """
-    header_title, path1, path2 = u'查看资产组', u'资产管理', u'查看资产组'
-    asset_group_list = AssetGroup.objects.all()
-    asset_all = Asset.objects.all()
-    return my_render('assetManage/group_list.html', locals(), request)
+    if request.method == 'GET':
+        header_title, path1, path2 = u'查看资产组', u'资产管理', u'查看资产组'
+        asset_all = Asset.objects.all()
+        return my_render('assetManage/group_list.html', locals(), request)
+    else:
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = AssetGroup.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": 0,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = AssetGroup.objects.all()[page_start:page_end]
+            rest['iTotalRecords'] = len(page_data)
+            data = []
+            for item in page_data:
+                res = {}
+                res['id'] = item.id
+                res['name'] = item.name
+                res['assets'] = item.asset_set.all().count()
+                res['comment'] = item.comment
+                data.append(res)
+            rest['aaData'] = data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+
+        except Exception as e:
+            logger.error(e.message)
 
 
 @require_role('admin')
@@ -153,14 +177,18 @@ def group_del(request,res, *args):
     """
     res['operator'] = u'删除主机组'
     res['content'] = u'删除主机组'
-    group_ids = request.GET.get('id', '')
-    group_id_list = group_ids.split(',')
-    for group_id in group_id_list:
-        asset_group = AssetGroup.objects.get(id=int(group_id))
-        res['content'] += '%s   ' % asset_group.name
-        asset_group.delete()
+    try:
+        group_ids = request.POST.get('id', '')
+        group_id_list = group_ids.split(',')
+        for group_id in group_id_list:
+            asset_group = AssetGroup.objects.get(id=int(group_id))
+            res['content'] += '%s   ' % asset_group.name
+            asset_group.delete()
 
-    return HttpResponse(u'删除成功')
+        return HttpResponse(u'删除成功')
+    except Exception as e:
+        logger.error(e.message)
+        return HttpResponse(u'删除失败:%s'%e.message)
 
 
 @require_role('admin')
@@ -336,37 +364,35 @@ def asset_del(request,res, *args):
                 response['msg'] = e
 
     if request.method == 'POST':
-        asset_batch = request.GET.get('arg', '')
         asset_id_all = request.POST.get('asset_id_all', '')
         asset_list = []
-        if asset_batch:
-            for asset_id in asset_id_all.split(','):
-                asset = get_object(Asset, id=int(asset_id))
-                res['content'] += '%s   ' % asset.name
-                if asset:
-                    asset_list.append(asset)
-            asset_proxys = gen_asset_proxy(asset_list)
-            for key, value in asset_proxys.items():
-                asset_names = [asset.name for asset in value]
-                id_uniques = [asset.id_unique for asset in value]
-                param = {'names': asset_names, 'id_unique': id_uniques}
-                data = json.dumps(param)
-                proxy_obj = Proxy.objects.get(proxy_name=key)
-                try:
-                    api = APIRequest('{0}/v1.0/system'.format(proxy_obj.url), proxy_obj.username, CRYPTOR.decrypt(proxy_obj.password))
-                    result, code = api.req_del(data)
-                    logger.debug(u'删除多个资产result:%s'% result)
-                    if code == 200:
-                        for item in value:
-                            item.delete()
-                    else:
-                        response['msg'] = result['messege']
-                except Exception as e:
-                    logger.error(e)
-                    res['flag'] = 'false'
-                    res['content'] = e
-                    response['msg'] = e
-    return HttpResponse(json.dumps(response), content_type='application/json')
+        for asset_id in asset_id_all.split(','):
+            asset = get_object(Asset, id=int(asset_id))
+            res['content'] += '%s   ' % asset.name
+            if asset:
+                asset_list.append(asset)
+        asset_proxys = gen_asset_proxy(asset_list)
+        for key, value in asset_proxys.items():
+            asset_names = [asset.name for asset in value]
+            id_uniques = [asset.id_unique for asset in value]
+            param = {'names': asset_names, 'id_unique': id_uniques}
+            data = json.dumps(param)
+            proxy_obj = Proxy.objects.get(proxy_name=key)
+            try:
+                api = APIRequest('{0}/v1.0/system'.format(proxy_obj.url), proxy_obj.username, CRYPTOR.decrypt(proxy_obj.password))
+                result, code = api.req_del(data)
+                logger.debug(u'删除多个资产result:%s'% result)
+                if code == 200:
+                    for item in value:
+                        item.delete()
+                else:
+                    response['msg'] = result['messege']
+            except Exception as e:
+                logger.error(e)
+                res['flag'] = 'false'
+                res['content'] = e
+                response['msg'] = e
+        return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role(role='super')
@@ -529,36 +555,71 @@ def asset_list(request):
     """
     asset list view
     """
-    header_title, path1, path2 = u'查看资产', u'资产管理', u'查看资产'
-    username = request.user.username
-    user_perm = request.session['role_id']
-    # 获取modal中所需的数据
-    proxys = Proxy.objects.all()
-    proxy_profiles = gen_proxy_profiles(proxys)
-    asset_status = ASSET_STATUS
-    asset_type = ASSET_TYPE
-    power_type = POWER_TYPE
-    idc_all = IDC.objects.all()
-    group_all = AssetGroup.objects.all()
+    if request.method == 'GET':
+        header_title, path1, path2 = u'查看资产', u'资产管理', u'查看资产'
+        username = request.user.username
+        user_perm = request.session['role_id']
+        # 获取modal中所需的数据
+        proxys = Proxy.objects.all()
+        proxy_profiles = gen_proxy_profiles(proxys)
+        asset_status = ASSET_STATUS
+        asset_type = ASSET_TYPE
+        power_type = POWER_TYPE
+        idc_all = IDC.objects.all()
+        group_all = AssetGroup.objects.all()
 
-    asset_list = Asset.objects.all()
+        if user_perm != 0:
+            asset_find = Asset.objects.all()
+        else:
+            asset_id_all = []
+            user = get_object(User, username=username)
+            asset_perm = get_group_user_perm(user) if user else {'asset': ''}
+            user_asset_perm = asset_perm['asset'].keys()
+            for asset in user_asset_perm:
+                asset_id_all.append(asset.id)
+            asset_find = Asset.objects.filter(pk__in=asset_id_all)
+            asset_group_all = list(asset_perm['asset_group'])
 
-    if user_perm != 0:
-        asset_find = Asset.objects.all()
+        if user_perm != 0:
+            return my_render('assetManage/asset_list.html', locals(), request)
+        else:
+            return my_render('assetManage/asset_cu_list.html', locals(), request)
     else:
-        asset_id_all = []
-        user = get_object(User, username=username)
-        asset_perm = get_group_user_perm(user) if user else {'asset': ''}
-        user_asset_perm = asset_perm['asset'].keys()
-        for asset in user_asset_perm:
-            asset_id_all.append(asset.id)
-        asset_find = Asset.objects.filter(pk__in=asset_id_all)
-        asset_group_all = list(asset_perm['asset_group'])
-
-    if user_perm != 0:
-        return my_render('assetManage/asset_list.html', locals(), request)
-    else:
-        return my_render('assetManage/asset_cu_list.html', locals(), request)
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = Asset.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": 0,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = Asset.objects.all()[page_start:page_end]
+            rest['iTotalRecords'] = len(page_data)
+            data = []
+            for item in page_data:
+                res = {}
+                ip_address = ' '.join([nt.ip_address for nt in item.networking.all()])
+                group_names = get_group_names(item.group.all())
+                cpu_core = item.cpu.split('* ')[1] if item.cpu and '*' in item.cpu else item.cpu
+                memory_info = item.memory + 'G' if item.memory else '0G'
+                disk_info = get_disk_info(item.disk)
+                res['id'] = item.id
+                res['name'] = item.name
+                res['ip'] = ip_address
+                res['idc'] = item.idc.name if item.idc else ''
+                res['groups'] = group_names
+                res['proxy'] = item.proxy.proxy_name if item.proxy else ''
+                res['system_type'] = item.system_type
+                res['cpu'] = cpu_core
+                res['memory'] = memory_info
+                res['disk'] = str(disk_info)+'G'
+                data.append(res)
+            rest['aaData'] = data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+        except Exception as e:
+            logger.error(e.message)
 
 
 @require_role('admin')
@@ -702,7 +763,8 @@ def asset_update_batch(request,res,*args):
                         'resource': resource,
                         'hosts': host_list,
                         'mod_args': '',
-                        'action': 'update',
+                        'run_action': 'sync',
+                        'run_type': 'ad-hoc'
                         }
                 data = json.dumps(data)
                 api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
@@ -773,9 +835,43 @@ def idc_list(request):
     """
     IDC list view
     """
-    header_title, path1, path2 = u'查看IDC', u'资产管理', u'查看IDC'
-    posts = IDC.objects.all()
-    return my_render('assetManage/idc_list.html', locals(), request)
+    if request.method == "GET":
+        header_title, path1, path2 = u'查看IDC', u'资产管理', u'查看IDC'
+        posts = IDC.objects.all()
+        # asset_all = Asset.objects.all()
+        return my_render('assetManage/idc_list.html', locals(), request)
+    else:
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = IDC.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": 0,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = IDC.objects.all()[page_start:page_end]
+            rest['iTotalRecords'] = len(page_data)
+            data = []
+            for item in page_data:
+                res = {}
+                res['id']=item.id
+                res['name']=item.name
+                res['assets'] = item.asset_set.all().count()
+                res['linkman']=item.linkman
+                res['phone']=item.phone
+                res['comment']=item.comment
+                data.append(res)
+            rest['aaData'] = data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+
+        except Exception as e:
+            logger.error(e.message)
+
+
+
+
 
 
 @require_role('admin')

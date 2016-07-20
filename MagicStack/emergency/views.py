@@ -13,7 +13,6 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 from django.shortcuts import HttpResponseRedirect, HttpResponse
-from django.core.urlresolvers import reverse
 import json
 from MagicStack.api import  my_render, require_role, CRYPTOR, ServerError, logger
 from userManage.user_api import user_operator_record
@@ -21,13 +20,49 @@ from emergency.models import *
 from emergency.emer_api import send_email
 
 MEDIA_TYPES = {'0': u'电子邮件', '1': u'微信', '2':u'短信'}
+EMER_CONTENTS = {
+        '1': u'用户变更',
+        '2': u'资产变更',
+        '3': u'应用变更',
+        '4': u'任务变更',
+        '5': u'备份变更',
+        '6': u'授权变更',
+        '7': u'代理变更'
+    }
 
 
 @require_role('user')
 def media_list(request):
-    header_title, path1, path2 = u'告警媒介类型', u'告警管理', u'查看告警媒介类型'
-    media_lists = EmergencyType.objects.all()
-    return my_render('emergency/media_list.html', locals(), request)
+    if request.method == "GET":
+        header_title, path1, path2 = u'告警媒介类型', u'告警管理', u'查看告警媒介类型'
+        return my_render('emergency/media_list.html', locals(), request)
+    else:
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = EmergencyType.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": 0,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = EmergencyType.objects.all()[page_start:page_end]
+            rest['iTotalRecords'] = len(page_data)
+            data = []
+            for item in page_data:
+                res={}
+                res['id']=item.id
+                res['name']=item.name
+                res['type']= u'电子邮件'if '0' in item.type else u'微信'
+                res['status']= u'启用'if '1'in item.status else u'禁用'
+                res['detail']=item.detail
+                res['comment']=item.comment
+                data.append(res)
+            rest['aaData']=data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+        except Exception as e:
+            logger.error(e.message)
 
 
 @require_role('admin')
@@ -187,42 +222,68 @@ def media_edit(request, res):
 @require_role('user')
 @user_operator_record
 def media_del(request, res):
-    msg = ''
     res['operator'] = u'删除告警媒介类型'
     res['content'] = u'删除告警媒介类型'
     selected_id = request.GET.get('id')
     media_ids = selected_id.split(',')
-    for item in media_ids:
-        media = EmergencyType.objects.get(id=int(item))
-        msg += '  %s  ' % media.name
-        res['content'] += u' [%s]  ' % media.name
-        media.delete()
-    return HttpResponse(u'删除[%s]成功' % msg)
+    if media_ids:
+        try:
+            for item in media_ids:
+                media = EmergencyType.objects.get(id=int(item))
+                res['content'] += u' [%s]  ' % media.name
+                media.delete()
+            msg = res['content'] + u"成功"
+            res['emer_status']=msg
+        except Exception as e:
+            res['flag'] = 'flase'
+            res['content']=e.message
+            msg = u"删除告警媒介失败：%s"%e.message
+    return HttpResponse(msg)
 
 
 @require_role('admin')
 def emergency_rule(request):
-    header_title, path1, path2 = u"告警规则设置", u"告警管理", u"告警规则"
-    emer_content = request.GET.get('content', '')
-    emer_rules = EmergencyRules.objects.all()
-    if emer_content:
-        emer_rules = EmergencyRules.objects.filter(content=emer_content)
-    users = User.objects.all()
-    media_list = EmergencyType.objects.all()
-    return my_render('emergency/emer_rules.html', locals(), request)
+    if request.method == 'GET':
+        header_title, path1, path2 = u"告警规则设置", u"告警管理", u"告警规则"
+        users = User.objects.all()
+        media_list = EmergencyType.objects.all()
+        return my_render('emergency/emer_rules.html', locals(), request)
+    else:
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = EmergencyRules.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": 0,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = EmergencyRules.objects.all()[page_start:page_end]
+            rest['iTotalRecords'] = len(page_data)
+            data = []
+            emer_content = EMER_CONTENTS
+            time_types = {'1': u'全部', '2': u'工作日', '3': u'周末'}
+            for item in page_data:
+                res = {}
+                res['id'] = item.id
+                res['content'] = emer_content.get(str(item.content), '')
+                res['user'] = ','.join([user.username for user in item.staff.all()])
+                res['emergency_time'] = time_types.get(str(item.emergency_time), '')
+                res['media_type'] = item.media_type.name if item.media_type else ''
+                res['status'] = u'启用' if item.status else u'禁用'
+                data.append(res)
+            rest['aaData'] = data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+        except Exception as e:
+            logger.error(e.message)
+
+
 
 @require_role('admin')
 def emergency_edit(request):
     response = {}
-    emer_content = {
-        '1': u'用户变更',
-        '2': u'资产变更',
-        '3': u'应用变更',
-        '4': u'任务变更',
-        '5': u'备份变更',
-        '6': u'授权变更',
-        '7': u'代理变更'
-    }
+    emer_content = EMER_CONTENTS
     if request.method == "GET":
         emer_id = request.GET.get('id')
         if emer_id:
@@ -283,9 +344,40 @@ def emergency_save(request, res):
 
 @require_role('admin')
 def emergency_event(request):
-    header_title, path1, path2 = u"告警事件", u'告警管理', u'告警事件'
-    emer_events = EmergencyEvent.objects.all()
-    return my_render('emergency/emer_event.html', locals(), request)
+    if request.method == 'GET':
+        header_title, path1, path2 = u"告警事件", u'告警管理', u'告警事件'
+        return my_render('emergency/emer_event.html', locals(), request)
+    else:
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = EmergencyEvent.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": 0,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = EmergencyEvent.objects.all()[page_start:page_end]
+            rest["iTotalRecords"] = len(page_data)
+            data = []
+            emer_content = EMER_CONTENTS
+            for item in page_data:
+                res = {}
+                res['id'] = item.id
+                res['emer_time'] = item.emer_time.strftime("%Y-%m-%d %H:%M:%S")
+                res['emer_event'] = emer_content.get(str(item.emer_event.content), '')
+                res['emer_user'] = item.emer_user
+                res['emer_id'] = item.id
+                res['emer_info'] = item.emer_info
+                res['emer_result'] = u'已执行' if item.emer_result else u'未执行'
+                res['emer_content_num'] = item.emer_event.content
+                data.append(res)
+            rest['aaData'] = data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+        except Exception as e:
+            logger.error(e.message)
+
 
 
 

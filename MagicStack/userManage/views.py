@@ -1,6 +1,6 @@
  # -*- coding:utf-8 -*-
 import time
-from django.db.models import Q
+from django.http import Http404
 from userManage.user_api import *
 from permManage.perm_api import get_group_user_perm
 from emergency.emer_api import send_email
@@ -57,27 +57,30 @@ def group_list(request):
         user_all = User.objects.all()
         return my_render('userManage/group_list.html', locals(), request)
     else:
-        page_length = int(request.POST.get('length', '5'))
-        total_length = UserGroup.objects.all().count()
-        keyword = request.POST.get("search")
-        rest = {
-            "iTotalRecords": page_length,   # 本次加载记录数量
-            "iTotalDisplayRecords": total_length,  # 总记录数量
-            "aaData": []}
-        page_start = int(request.POST.get('start', '0'))
-        page_end = page_start + page_length
-        page_data = UserGroup.objects.all()[page_start:page_end]
-        data = []
-        for item in page_data:
-            res = {}
-            rest['Id'] = item.id
-            res['id'] = item.id
-            res['name'] = item.name
-            res['users'] = item.user_set.all().count()
-            res['comment'] = item.comment
-            data.append(res)
-        rest['aaData'] = data
-        return HttpResponse(json.dumps(rest), content_type='application/json')
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = UserGroup.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": 0,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = UserGroup.objects.all()[page_start:page_end]
+            rest['iTotalRecords'] = len(page_data)
+            data = []
+            for item in page_data:
+                res = {}
+                res['id'] = item.id
+                res['name'] = item.name
+                res['users'] = item.user_set.all().count()
+                res['comment'] = item.comment
+                data.append(res)
+            rest['aaData'] = data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+        except Exception as e:
+            logger.error(e)
 
 
 
@@ -102,8 +105,8 @@ def group_del(request,res, *args):
             msg = res['content'] + u'成功'
             res['emer_status'] = msg
         except Exception as e:
-            msg = e
-            res['emer_status'] = u"删除用户组失败:{0}".format(e)
+            msg = e.message
+            res['emer_status'] = u"删除用户组失败:{0}".format(e.message)
     else:
         msg = u"删除用户组失败:ID不存在!"
         res['emer_status'] = msg
@@ -233,12 +236,56 @@ def user_add(request, res, *args):
 
 @require_role(role='super')
 def user_list(request):
-    user_role = {'SU': u'超级管理员', 'GA': u'组管理员', 'CU': u'普通用户'}
-    header_title, path1, path2 = u'查看用户', u'用户管理', u'用户列表'
-    users_list = User.objects.all().order_by('username')
-    group_all = UserGroup.objects.all()
-    user_role = {'SU': u'超级管理员', 'CU': u'普通用户'}
-    return my_render('userManage/user_list.html', locals(), request)
+    if request.method == 'GET':
+        # user_role = {'SU': u'超级管理员', 'GA': u'组管理员', 'CU': u'普通用户'}
+        header_title, path1, path2 = u'查看用户', u'用户管理', u'用户列表'
+        group_all = UserGroup.objects.all()
+        user_role = {'SU': u'超级管理员', 'CU': u'普通用户'}
+        return my_render('userManage/user_list.html', locals(), request)
+    else:
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = User.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": 0,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = User.objects.all()[page_start:page_end]
+            rest['iTotalRecords'] = len(page_data)
+            data = []
+            for item in page_data:
+                res = {}
+                # 获取所有的组名
+                if item.group.all().count()>2:
+                    group_names = ' '.join([gitem.name for gitem in item.group.all()[0:3]]) + '...'
+                else:
+                    group_names = ' '.join(gitem.name for gitem in item.group.all())
+                # 获取用户角色
+                if item.role == 'SU':
+                    user_role = u'超级用户'
+                elif item.role == 'CU':
+                    user_role = u'普通用户'
+                else:
+                    user_role = u'组管理员'
+                # 获取用户所拥有的主机数
+                user_perm_info = get_group_user_perm(item)
+                asset_numbers = len(user_perm_info.get('asset').keys())
+
+                res['id'] = item.id
+                res['username'] = item.username
+                res['name'] = item.name
+                res['groups'] = group_names
+                res['role'] = user_role
+                res['assets'] = asset_numbers
+                res['is_active'] = u'是' if item.is_active else u'否'
+                data.append(res)
+            rest['aaData'] = data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+        except Exception as e:
+            logger.error(e.message)
 
 
 @require_role(role='user')
@@ -397,7 +444,7 @@ def user_edit(request,res, *args):
         try:
             user_id = request.GET.get('id', '')
             user = User.objects.get(id=int(user_id))
-            username=request.POST.get('username','')
+            username = request.POST.get('username','')
             password = request.POST.get('password', '')
             name = request.POST.get('name', '')
             email = request.POST.get('email', '')
@@ -409,21 +456,19 @@ def user_edit(request,res, *args):
             email_need = True if '1' in extra else False
             user_role = {'SU': u'超级管理员', 'GA': u'部门管理员', 'CU': u'普通用户'}
 
-            if user_id:
-                user = get_object(User, id=user_id)
-                username_old = user.username
-            else:
+            if not user:
                 res['flag'] = 'false'
                 res['content'] = u'用户不存在!'
                 res['emer_satus'] = u"编辑用户失败:{1}".format(u'用户不存在!')
                 response['error'] = u"编辑用户失败:{1}".format(u'用户不存在!')
+
+            username_old = user.username
             if username_old == username:
-                if len(User.objects.filter(nam = username)) > 1:
+                if len(User.objects.filter(name=username)) > 1:
                     raise ServerError(u'用户已存在')
             else:
-                if len(User.objects.filter(name = username)) > 0:
+                if len(User.objects.filter(name=username)) > 0:
                     raise ServerError(u'用户已存在')
-
 
             db_update_user(user_id=user_id,
                            username=username,
@@ -435,7 +480,7 @@ def user_edit(request,res, *args):
                            role=role_post,
                            is_active=is_active)
 
-            res['content'] = u'编辑用户%s' % user.username
+            res['content'] = u'编辑用户%s' % username_old
             res['emer_status'] = u"编辑用户[{0}]成功".format(username_old)
             response['success'] = True
             response['error'] = res['emer_status']
@@ -457,7 +502,7 @@ def user_edit(request,res, *args):
         except Exception as e:
             logger.error(e)
             res['flag'] = 'false'
-            error_info = u"编辑用户{0}失败:{1}".format(username ,e.message)
+            error_info = u"编辑用户{0}失败:{1}".format(username_old ,e.message)
             res['content'] = res['emer_status'] = response['error'] = error_info
         return HttpResponse(json.dumps(response), content_type='application/json')
 

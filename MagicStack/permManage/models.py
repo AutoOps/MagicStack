@@ -23,6 +23,7 @@ class PermRole(models.Model):
     key_path = models.CharField(max_length=100)
     date_added = models.DateTimeField(auto_now=True)
     sudo = models.ManyToManyField(PermSudo, related_name='perm_role')
+    system_groups = models.CharField(max_length=200, null=True, blank=True, verbose_name=u'系统组')
 
     def __unicode__(self):
         return self.name

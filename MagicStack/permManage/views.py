@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
 from __future__ import unicode_literals
-from django.http import HttpResponseBadRequest, HttpResponseNotAllowed
 from paramiko import SSHException
 from permManage.perm_api import *
 from assetManage.asset_api import gen_asset_proxy
@@ -17,6 +16,7 @@ from permManage.perm_api import get_role_info, get_role_push_host,query_event
 from MagicStack.api import my_render, get_object, CRYPTOR
 from common.models import Task
 from proxyManage.models import Proxy
+import time
 
 
 # 设置PERM APP Log
@@ -32,15 +32,48 @@ def perm_rule_list(request):
     list rule page
     授权规则列表
     """
-    # 渲染数据
-    header_title, path1, path2 = "授权规则", "规则管理", "查看规则"
-    rules_list = PermRule.objects.all()
-    users = User.objects.all()
-    user_groups = UserGroup.objects.all()
-    assets = Asset.objects.all()
-    asset_groups = AssetGroup.objects.all()
-    roles = PermRole.objects.all()
-    return my_render('permManage/perm_rule_list.html', locals(), request)
+    if request.method == 'GET':
+        header_title, path1, path2 = "授权规则", "规则管理", "查看规则"
+        users = User.objects.all()
+        user_groups = UserGroup.objects.all()
+        assets = Asset.objects.all()
+        asset_groups = AssetGroup.objects.all()
+        roles = PermRole.objects.all()
+        return my_render('permManage/perm_rule_list.html', locals(), request)
+    else:
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = PermRule.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": 0,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = PermRule.objects.all()[page_start:page_end]
+            rest['iTotalRecords'] = len(page_data)
+            data = []
+            for item in page_data:
+                res = {}
+                res['id'] = item.id
+                res['name'] = item.name
+                res['user_num'] = len(item.user.all())
+                res['user_group_num'] = len(item.user_group.all())
+                res['asset_num'] = len(item.asset.all())
+                res['asset_group_num'] = len(item.asset_group.all())
+                res['role_num'] = len(item.role.all())
+                res['user_names'] = ','.join([user.username for user in item.user.all()])
+                res['user_group_names'] = ','.join([user_group.name for user_group in item.user_group.all()])
+                res['asset_names'] = ','.join([asset.name for asset in item.asset.all()])
+                res['asset_group_names'] = ','.join([asset_group.name for asset_group in item.asset_group.all()])
+                res['role_names'] = ','.join([role.name for role in item.role.all()])
+                data.append(res)
+            rest['aaData'] = data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+        except Exception as e:
+            logger.error(e.message)
+
 
 
 @require_role('admin')
@@ -230,15 +263,39 @@ def perm_role_list(request):
     """
     list role page
     """
-    # 渲染数据
-    header_title, path1, path2 = "系统用户", "系统用户管理", "查看系统用户"
-    roles_list = PermRole.objects.all()
-    sudos = PermSudo.objects.all()
+    if request.method == 'GET':
+        header_title, path1, path2 = "系统用户", "系统用户管理", "查看系统用户"
+        sudos = PermSudo.objects.all()
 
-    # TODO 推送系统用户所需的数据
-    assets = Asset.objects.all()
-    asset_groups = AssetGroup.objects.all()
-    return my_render('permManage/perm_role_list.html', locals(), request)
+        # TODO 推送系统用户所需的数据
+        assets = Asset.objects.all()
+        asset_groups = AssetGroup.objects.all()
+        return my_render('permManage/perm_role_list.html', locals(), request)
+    else:
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = PermRole.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": 0,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = PermRole.objects.all()[page_start:page_end]
+            rest['iTotalRecords'] = len(page_data)
+            data = []
+            for item in page_data:
+                res = {}
+                res['id'] = item.id
+                res['name'] = item.name
+                res['sudos'] = ','.join([sudo.name for sudo in item.sudo.all()])
+                res['date_joined'] = item.date_added.strftime("%Y-%m-%d %H:%M:%S")
+                data.append(res)
+            rest['aaData'] = data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+        except Exception as e:
+            logger.error(e.message)
 
 
 @require_role('admin')
@@ -257,6 +314,7 @@ def perm_role_add(request, res, *args):
         key_content = request.POST.get("role_key", "")
         sudo_ids = request.POST.getlist('sudo_name')
         uuid_id = str(uuid.uuid1())
+        sys_groups = request.POST.get('sys_groups', '').strip()
 
         try:
             if get_object(PermRole, name=name):
@@ -282,7 +340,8 @@ def perm_role_add(request, res, *args):
                 key_path = gen_keys()
 
              # TODO 将数据保存到magicstack上
-            role = PermRole.objects.create(uuid_id=uuid_id, name=name, comment=comment, password=encrypt_pass, key_path=key_path)
+            role = PermRole.objects.create(uuid_id=uuid_id, name=name, comment=comment, password=encrypt_pass,
+                                           key_path=key_path, system_groups=sys_groups)
             role.sudo = sudos_obj
             role.save()
 
@@ -294,7 +353,8 @@ def perm_role_add(request, res, *args):
                     'password': encrypt_pass,
                     'comment': comment,
                     'key_content': key_content,
-                    'sudo_uuids': sudo_uuids}
+                    'sudo_uuids': sudo_uuids,
+                    'sys_groups': sys_groups}
             data = json.dumps(data)
             message = save_or_delete('PermRole', data, proxy_list)
             flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
@@ -361,12 +421,12 @@ def perm_role_delete(request, res, *args):
                     task = MyTask(recycle_resource, host_list)
                     try:
                         msg_del_user = task.del_user(role.name, proxy)
-                        msg_del_sudo = task.del_user_sudo(role.name, proxy)
+                        msg_del_sudo = task.del_user_sudo(role.uuid_id, proxy)
                     except Exception, e:
                         logger.warning(u"Recycle Role failed: %s" % e)
                         raise ServerError(u"回收已推送的系统用户失败: %s" % e)
-                    logger.info(u"delete role %s - execute delete user: %s" % (role.name, msg_del_user))
-                    logger.info(u"delete role %s - execute delete sudo: %s" % (role.name, msg_del_sudo))
+                    logger.info(u"删除用户 %s - execute delete user: %s" % (role.name, msg_del_user))
+                    logger.info(u"删除用户 %s - execute delete sudo: %s" % (role.name, msg_del_sudo))
                     # TODO: 判断返回结果，处理异常
             # 删除存储的秘钥，以及目录
             try:
@@ -458,6 +518,7 @@ def perm_role_edit(request, res, *args):
         rest['role_name'] = role.name
         rest['role_password'] = role.password
         rest['role_comment'] = role.comment
+        rest['system_groups'] = role.system_groups
         rest['sudos'] = ','.join([str(item.id) for item in role.sudo.all()])
         return HttpResponse(json.dumps(rest), content_type='application/json')
     else:
@@ -471,6 +532,7 @@ def perm_role_edit(request, res, *args):
         role_sudos = [PermSudo.objects.get(id=int(sudo_id)) for sudo_id in role_sudo_names]
         key_content = request.POST.get("role_key", "")
         sudo_uuids = [item.uuid_id for item in role_sudos]
+        sys_groups = request.POST.get("sys_groups",'').strip()
         try:
             if not role:
                 raise ServerError('该系统用户不能存在')
@@ -494,7 +556,8 @@ def perm_role_edit(request, res, *args):
                     'password': role_password,
                     'comment': role_comment,
                     'sudo_uuids': sudo_uuids,
-                    'key_content': key_content}
+                    'key_content': key_content,
+                    'sys_groups': sys_groups}
             data = json.dumps(data)
             proxy_list = Proxy.objects.all()
             message = save_or_delete('PermRole', data, proxy_list, role.uuid_id, 'update')
@@ -503,6 +566,7 @@ def perm_role_edit(request, res, *args):
                 # TODO 只有proxy上的数据库保存完成后,才会写入本地数据库
                 role.name = role_name
                 role.comment = role_comment
+                role.system_groups = sys_groups
                 role.sudo = role_sudos
                 role.save()
 
@@ -551,6 +615,7 @@ def perm_role_push(request, *args):
             asset_group_ids = request.POST.getlist("asset_groups")
             assets_obj = [Asset.objects.get(id=asset_id) for asset_id in asset_ids]
             asset_groups_obj = [AssetGroup.objects.get(id=asset_group_id) for asset_group_id in asset_group_ids]
+
             group_assets_obj = []
             for asset_group in asset_groups_obj:
                 group_assets_obj.extend(asset_group.asset_set.all())
@@ -572,15 +637,16 @@ def perm_role_push(request, *args):
                 # 1. 以秘钥 方式推送角色
                 role_proxy = get_one_or_all('PermRole', proxy, role.uuid_id)
                 if key_push:
-                    ret["pass_push"] = task.add_user(role.name, proxy)
+                    ret["pass_push"] = task.add_user(role.name, proxy, role.system_groups)
+                    time.sleep(1)   # 暂停1秒,保证用户创建完成之后再推送key
                     ret["key_push"] = task.push_key(role.name, os.path.join(role_proxy['key_path'], 'id_rsa.pub'), proxy)
 
                 # 2. 推送账号密码 <为了安全 系统用户统一使用秘钥进行通信，不再提供密码方式的推送>
                 # 3. 推送sudo配置文件
-                if key_push:
-                    sudo_list = set([sudo for sudo in role.sudo.all()])  # set(sudo1, sudo2, sudo3)
+                    sudo_list = [sudo for sudo in role.sudo.all()]
                     if sudo_list:
-                        ret['sudo'] = task.push_sudo_file([role], sudo_list, proxy)
+                        sudo_uuids = [sudo.uuid_id for sudo in role.sudo.all()]
+                        ret['sudo'] = task.push_sudo(role, sudo_uuids, proxy)
                 logger.info('推送用户结果ret:%s'%ret)
 
                 # TODO 将事件放进queue中
@@ -623,8 +689,8 @@ def push_role_event(request):
     """
     response = {'error': '', 'message':''}
     if request.method == 'GET':
-        try:
-            if task_queue.qsize() > 0:
+        if task_queue.qsize() > 0:
+            try:
                 tk_event = task_queue.get()
                 host_names = tk_event.pop('push_assets')
                 calc_assets = [Asset.objects.get(name=name) for name in host_names]
@@ -697,9 +763,11 @@ def push_role_event(request):
                                                                         ','.join(failed_asset.keys()),
                                                                         ','.join(success_asset.keys()))
                     response['message'] = error
-        except Exception as e:
-            response['message'] = e
+
+            except Exception as e:
+                response['message'] = e
         return HttpResponse(json.dumps(response), content_type='application/json')
+
 
 
 @require_role('admin')
@@ -710,10 +778,38 @@ def perm_sudo_list(request):
     :return:
     """
     # 渲染数据
-    header_title, path1, path2 = "Sudo命令", "别名管理", "查看别名"
-    # 获取所有sudo 命令别名
-    sudos_list = PermSudo.objects.all()
-    return my_render('permManage/perm_sudo_list.html', locals(), request)
+    if request.method == 'GET':
+        header_title, path1, path2 = "Sudo命令", "别名管理", "查看别名"
+        return my_render('permManage/perm_sudo_list.html', locals(), request)
+    else:
+        try:
+            page_length = int(request.POST.get('length', '5'))
+            total_length = PermSudo.objects.all().count()
+            keyword = request.POST.get("search")
+            rest = {
+                "iTotalRecords": 0,   # 本次加载记录数量
+                "iTotalDisplayRecords": total_length,  # 总记录数量
+                "aaData": []}
+            page_start = int(request.POST.get('start', '0'))
+            page_end = page_start + page_length
+            page_data = PermSudo.objects.all()[page_start:page_end]
+            rest["iTotalRecords"] = len(page_data)
+            data = []
+            for item in page_data:
+                res = {}
+                res['id'] = item.id
+                res['name']=item.name
+                res['commands'] =item.commands
+                res['date_joined'] = item.date_added.strftime("%Y-%m-%d %H:%M:%S")
+                data.append(res)
+            rest['aaData'] = data
+            return HttpResponse(json.dumps(rest), content_type='application/json')
+        except Exception as e:
+            logger.error(e.message)
+
+
+
+
 
 
 @require_role('admin')

@@ -317,6 +317,7 @@
                     op_del = '<a class="del" name=\"/permission/role/del/?id=' + aData.id + '\">删除</a> ';
                     op_edit = '<a href=\"#\" onclick=\"editRole('+aData.id+')\">编辑</a>';
                     op_push = '<a href=\"#\" onclick=\"pushRole('+aData.id+')\">推送</a>';
+                    op_download_file = '<a class="download_key" name=\"/permission/role/download/key/?id=' + aData.id + '\">下载秘钥</a> ';
                     op_html = '<div class="btn-group"> \
                             <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions\
                                 <i class="fa fa-angle-down"></i> \
@@ -324,6 +325,7 @@
                             <ul class="dropdown-menu" role="menu"> \
                                 <li>' + op_edit + '</li>\
                                 <li>' + op_push + '</li>\
+                                <li>' + op_download_file + '</li>\
                                 <li>' + op_del + '</li>\
                             </ul>\
                         </div>';
@@ -446,6 +448,13 @@
                     bootbox.alert(error)
                 }
           })
+        });
+
+
+        //下载用户秘钥
+        table.on('click', 'a.download_key', function(){
+          var role_id = $(this).attr('name').split('?')[1].split('=')[1];
+          window.location.href = "{% url 'download_key' %}?id=" + role_id ;
         });
 
         <!--页面操作处理结束 -->

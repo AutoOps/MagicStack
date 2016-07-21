@@ -186,7 +186,6 @@ def user_add(request, res, *args):
     if request.method == 'POST':
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
-        name = request.POST.get('name', '')
         email = request.POST.get('email', '')
         groups = request.POST.getlist('groups', [])
         admin_groups = request.POST.getlist('admin_groups', [])
@@ -196,7 +195,7 @@ def user_add(request, res, *args):
         send_mail_need = True if '1' in extra else False
 
         try:
-            if '' in [username, password, name, role]:
+            if '' in [username, password, role]:
                 raise ServerError(u'带*内容不能为空')
             check_user_is_exist = User.objects.filter(username=username)
             if check_user_is_exist:
@@ -208,7 +207,7 @@ def user_add(request, res, *args):
                 response['error'] = res['emer_status']
         else:
             try:
-                user = db_add_user(username=username, name=name,
+                user = db_add_user(username=username,
                                    password=password,
                                    email=email, role=role,
                                    groups=groups, admin_groups=admin_groups,
@@ -276,7 +275,6 @@ def user_list(request):
 
                 res['id'] = item.id
                 res['username'] = item.username
-                res['name'] = item.name
                 res['groups'] = group_names
                 res['role'] = user_role
                 res['assets'] = asset_numbers
@@ -432,7 +430,6 @@ def user_edit(request,res, *args):
             is_super = True if user.role == 'SU' else False
             rest['Id'] = user.id
             rest['username'] = user.username
-            rest['name'] = user.name
             rest['password'] = user.password
             rest['email'] = user.email
             rest['is_active'] = user.is_active
@@ -446,7 +443,6 @@ def user_edit(request,res, *args):
             user = User.objects.get(id=int(user_id))
             username = request.POST.get('username','')
             password = request.POST.get('password', '')
-            name = request.POST.get('name', '')
             email = request.POST.get('email', '')
             groups = request.POST.getlist('groups', [])
             role_post = request.POST.get('role', 'CU')
@@ -473,7 +469,6 @@ def user_edit(request,res, *args):
             db_update_user(user_id=user_id,
                            username=username,
                            password=password,
-                           name=name,
                            email=email,
                            groups=groups,
                            admin_groups=admin_groups,

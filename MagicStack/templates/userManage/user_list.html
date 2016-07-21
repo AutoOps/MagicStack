@@ -46,7 +46,6 @@
                                 </label>
                             </td>
                             <th>用户名</th>
-                            <th>姓名</th>
                             <th>小组</th>
                             <th>权限</th>
                             <th>主机数量</th>
@@ -92,13 +91,6 @@
                             <input type="text" name="username" data-required="1" class="form-control" >
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3">昵称
-                        <span class="required"> * </span>
-                    </label>
-                    <div class="col-md-6">
-                        <input type="text" name="name" data-required="1" class="form-control" /> </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">密码&nbsp;&nbsp;</label>
@@ -202,7 +194,6 @@
             $("input[name=user_id]").val(res.Id);
 
             $("input[name=username]").val(res.username);
-            $("input[name=name]").val(res.name);
             $("input[name=password]").val('');      //不修改密码留空
             $("input[name=email]").val(res.email);
             $("input[name=comment]").val(res.comment);
@@ -272,9 +263,6 @@
                     "sDefaultContent" : "",
                     "bSearchable":true
                 }, {
-                    "mData" : "name",
-                    "sDefaultContent" : ""
-                }, {
                     "mData" : "groups",
                     "sDefaultContent" : ""  ,
                     "bSortable":false   //此列不需要排序
@@ -324,7 +312,7 @@
                                 <li>' + op_del + '</li>\
                             </ul>\
                         </div>';
-                    $('td:eq(7)', nRow).html(op_html);
+                    $('td:eq(6)', nRow).html(op_html);
                      $('td:eq(1)', nRow).html('<a href=\"{% url 'user_detail' %}?id=' + aData.id + '\">' + aData.username + '</a>');
                     $('td:eq(0) input', nRow).val(aData.id.toString());
                     return nRow;

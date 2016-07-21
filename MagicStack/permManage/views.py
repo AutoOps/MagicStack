@@ -1022,3 +1022,27 @@ def perm_role_get(request):
             return HttpResponse(json.dumps(response))
     return HttpResponse('error')
 
+
+@require_role('user')
+@user_operator_record
+def download_key(request, res):
+    res['operator'] = '下载秘钥'
+    res['content'] = '下载系统用户秘钥成功'
+    if request.method == 'GET':
+        try:
+            role_id = request.GET.get('id', '')
+            if not role_id:
+                raise ValueError('下载秘钥失败:ID为空 ')
+            role = PermRole.objects.get(id=int(role_id))
+            key_path = role.key_path + '/id_rsa'
+            with open(key_path, 'r') as f:
+                key_data = f.read()
+            response = HttpResponse(key_data, content_type='application/x-x509-ca-cert')
+            response['Content-Disposition'] = 'attachment; filename="%s.pem"'%role.name
+            return response
+        except Exception as e:
+            res['flag'] = 'false'
+            res['content'] = '下载秘钥失败:%s'%e.message
+            logger.error(e)
+            return HttpResponse(e)
+

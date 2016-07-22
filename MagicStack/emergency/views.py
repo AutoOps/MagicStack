@@ -137,7 +137,8 @@ def media_edit(request, res):
             rest['smtp_server'] = media_info.smtp_server
             rest['smtp_server_port'] = media_info.smtp_server_port
             rest['email_username'] = media_info.email_username
-            rest['email_password'] = media_info.email_password
+            email_psswd = CRYPTOR.decrypt(media_info.email_password)  # 将密码解密后在传到前端
+            rest['email_password'] = email_psswd
             rest['email_use_tls'] = media_info.email_use_tls
             rest['email_use_ssl'] = media_info.email_use_ssl
             rest['corpid'] = media_info.corpid

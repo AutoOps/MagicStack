@@ -62,9 +62,12 @@ def get_emergency_event():
                     # 判断告警类型 "0":电子邮件  "1": 微信
                     if rules_media_type == "0":
                         send_email_users = [user.email for user in rules_user]
-                        send_email(emer_rules.media_type, u"告警信息", send_email_users, email_msg)
-                        item.emer_result = 1
-                        item.save()
+                        rest_email = send_email(emer_rules.media_type, u"告警信息", send_email_users, email_msg)
+                        if rest_email['msgCode'] == 0:
+                            item.emer_result = 1
+                            item.save()
+                        else:
+                            logger.error("email发送失败原因:%s"%rest_email['msgError'])
                     else:
                         media = emer_rules.media_type
                         rest = send_wx_mail(media.corpid, media.corpsecret, param)

@@ -22,10 +22,11 @@ import urllib
 from MagicStack.api import logger, CRYPTOR
 
 
-def send_email(email_config,email_title, email_to, email_msg):
+def send_email(email_config, email_title, email_to, email_msg):
     """
     发送邮件
     """
+    rest = {'msgCode': 0, 'msgError': ''}  # msgCode: 0:成功  1:失败
     message = MIMEText(email_msg, 'plain', 'utf-8')
     message['Subject'] = Header(email_title)
     message['From'] = email_config.email_username
@@ -38,13 +39,16 @@ def send_email(email_config,email_title, email_to, email_msg):
         server.connect(email_config.smtp_server, email_config.smtp_server_port)
         if email_config.email_use_tls and email_config.email_use_ssl is not True:
             server.starttls()
+        logger.info(u'%s: password %s'%(email_config.name, email_config.email_password))
         server.login(email_config.email_username, CRYPTOR.decrypt(email_config.email_password))
         server.sendmail(email_config.email_username, email_to, message.as_string())
     except Exception as e:
+        rest['msgCode'] = 1
+        rest['msgError'] = e
         logger.error(e)
     finally:
         server.quit()
-
+    return rest
 
 def send_wx_mail(corpid, corpsecret, param):
     get_token = requests.get('https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={0}&corpsecret={1}'.format(corpid, corpsecret),verify=False)

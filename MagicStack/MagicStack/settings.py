@@ -36,7 +36,8 @@ LOG_LEVEL = config.get('base', 'log')
 IP = config.get('base', 'ip')
 PORT = config.get('base', 'port')
 
-
+HOST_IP = '172.16.50.82'
+HOST_PORT = 8801
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'q)l5svbbgh(e_6u3#vy@nr^(hl9t=-9q99be8wu26+g53nf+r3'

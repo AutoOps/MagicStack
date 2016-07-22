@@ -18,5 +18,4 @@ urlpatterns = patterns('userManage.views',
                        url(r'^password/reset/$', 'reset_password', name='password_reset'),
                        url(r'^login/password/forget/$', 'forget_password', name='password_forget'),
                        url(r'^key/gen/$', 'regen_ssh_key', name='key_gen'),
-                       url(r'^key/down/$', 'down_key', name='key_down'),
                        )

@@ -331,17 +331,14 @@ def perm_role_add(request, res, *args):
             # 生成随机密码，生成秘钥对
             sudos_obj = [get_object(PermSudo, id=int(sudo_id)) for sudo_id in sudo_ids]
             sudo_uuids = [item.uuid_id for item in sudos_obj]
-            if key_content:
-                try:
-                    key_path = gen_keys(key=key_content)
-                except SSHException, e:
-                    raise ServerError(e)
-            else:
-                key_path = gen_keys()
+            try:
+                keys_content = json.dumps(gen_keys(key_content))
+            except Exception, e:
+                raise ServerError(e)
 
              # TODO 将数据保存到magicstack上
             role = PermRole.objects.create(uuid_id=uuid_id, name=name, comment=comment, password=encrypt_pass,
-                                           key_path=key_path, system_groups=sys_groups)
+                                           key_content=keys_content, system_groups=sys_groups)
             role.sudo = sudos_obj
             role.save()
 
@@ -352,7 +349,7 @@ def perm_role_add(request, res, *args):
                     'name': name,
                     'password': encrypt_pass,
                     'comment': comment,
-                    'key_content': key_content,
+                    'key_content': keys_content,
                     'sudo_uuids': sudo_uuids,
                     'sys_groups': sys_groups}
             data = json.dumps(data)
@@ -543,11 +540,14 @@ def perm_role_edit(request, res, *args):
             if role_password:
                 encrypt_pass = CRYPTOR.encrypt(role_password)
                 role.password = encrypt_pass
+
+            role_key_content = ""    # key_content为空表示用户秘钥不变，不为空就根据私钥生成公钥
             # TODO 生成随机密码，生成秘钥对
             if key_content:
                 try:
-                    key_path = gen_keys(key=key_content, key_path_dir=role.key_path)
-                    role.key_path = key_path
+                    key_contents = json.dumps(gen_keys(key=key_content))
+                    role.key_content = key_contents
+                    role_key_content = key_contents
                 except SSHException:
                     raise ServerError(u'输入的密钥不合法')
                 logger.debug('Recreate role key: %s' % role.key_path)
@@ -556,7 +556,7 @@ def perm_role_edit(request, res, *args):
                     'password': role_password,
                     'comment': role_comment,
                     'sudo_uuids': sudo_uuids,
-                    'key_content': key_content,
+                    'key_content': role_key_content,
                     'sys_groups': sys_groups}
             data = json.dumps(data)
             proxy_list = Proxy.objects.all()
@@ -1034,9 +1034,7 @@ def download_key(request, res):
             if not role_id:
                 raise ValueError('下载秘钥失败:ID为空 ')
             role = PermRole.objects.get(id=int(role_id))
-            key_path = role.key_path + '/id_rsa'
-            with open(key_path, 'r') as f:
-                key_data = f.read()
+            key_data = json.loads(role.key_content).get('private_key')
             response = HttpResponse(key_data, content_type='application/x-x509-ca-cert')
             response['Content-Disposition'] = 'attachment; filename="%s.pem"'%role.name
             return response

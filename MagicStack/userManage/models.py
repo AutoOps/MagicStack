@@ -19,8 +19,7 @@ class User(AbstractUser):
         ('GA', 'GroupAdmin'),
         ('CU', 'CommonUser'),
     )
-    name = models.CharField(max_length=80)
-    uuid = models.CharField(max_length=100)
+    uuid_id = models.CharField(max_length=200, verbose_name=u'uuid 唯一标示符')
     role = models.CharField(max_length=2, choices=USER_ROLE_CHOICES, default='CU')
     group = models.ManyToManyField(UserGroup)
     ssh_key_pwd = models.CharField(max_length=200)

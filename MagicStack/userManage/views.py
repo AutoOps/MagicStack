@@ -1,10 +1,13 @@
- # -*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 import time
+import uuid
 from django.http import Http404
 from userManage.user_api import *
 from permManage.perm_api import get_group_user_perm
 from emergency.emer_api import send_email
 from emergency.models import EmergencyType
+from MagicStack.settings import HOST_IP,HOST_PORT
+
 
 default_email = ''
 if EmergencyType.objects.filter(type='0'):
@@ -186,7 +189,6 @@ def user_add(request, res, *args):
     if request.method == 'POST':
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
-        name = request.POST.get('name', '')
         email = request.POST.get('email', '')
         groups = request.POST.getlist('groups', [])
         admin_groups = request.POST.getlist('admin_groups', [])
@@ -194,9 +196,9 @@ def user_add(request, res, *args):
         extra = request.POST.getlist('extra', [])
         is_active = False if '0' in extra else True
         send_mail_need = True if '1' in extra else False
-
+        uuid_id = str(uuid.uuid1())             # 生成uuid
         try:
-            if '' in [username, password, name, role]:
+            if '' in [username, password, role]:
                 raise ServerError(u'带*内容不能为空')
             check_user_is_exist = User.objects.filter(username=username)
             if check_user_is_exist:
@@ -208,8 +210,9 @@ def user_add(request, res, *args):
                 response['error'] = res['emer_status']
         else:
             try:
-                user = db_add_user(username=username, name=name,
+                user = db_add_user(username=username,
                                    password=password,
+                                   uuid_id=uuid_id,
                                    email=email, role=role,
                                    groups=groups, admin_groups=admin_groups,
                                    is_active=is_active,
@@ -276,7 +279,6 @@ def user_list(request):
 
                 res['id'] = item.id
                 res['username'] = item.username
-                res['name'] = item.name
                 res['groups'] = group_names
                 res['role'] = user_role
                 res['assets'] = asset_numbers
@@ -337,7 +339,7 @@ def user_del(request, res, *args):
 def send_mail_retry(request,res, *args):
     res['operator'] = u'发送邮件'
     uuid_r = request.GET.get('uuid', '1')
-    user = get_object(User, uuid=uuid_r)
+    user = get_object(User, uuid_id=uuid_r)
     msg = u"""
     MagicStack地址： %s
     用户名：%s
@@ -360,25 +362,34 @@ def send_mail_retry(request,res, *args):
 @defend_attack
 def forget_password(request):
     if request.method == 'POST':
-        defend_attack(request)
-        email = request.POST.get('email', '')
-        username = request.POST.get('username', '')
-        user = get_object(User, username=username, email=email)
-        if user:
-            timestamp = int(time.time())
-            hash_encode = PyCrypt.md5_crypt(str(user.uuid) + str(timestamp) + KEY)
-            msg = u"""
-            Hi %s, 请点击下面链接重设密码！
-            %s/userManage/password/reset/?uuid=%s&timestamp=%s&hash=%s
-            """ % (user.name, URL, user.uuid, timestamp, hash_encode)
-            if not default_email:
-                error = u'没有邮件服务器信息,请先到告警管理中配置邮件服务器,谢谢!'
-            send_email(default_email, u'忘记登录密码', [email], msg)
-            msg = u'请登陆邮箱，点击邮件重设密码'
-            return http_success(request, msg)
-        else:
-            error = u'用户不存在或邮件地址错误'
-            return http_error(request, error)
+        try:
+            defend_attack(request)
+            email = request.POST.get('email', '')
+            username = request.POST.get('username', '')
+            user = get_object(User, username=username, email=email)
+            if user:
+                timestamp = int(time.time())
+                hash_encode = PyCrypt.md5_crypt(str(user.uuid_id) + str(timestamp) + KEY)
+                msg = u"""
+                Hi %s, 请点击下面链接重设密码！
+                http://%s:%s/user/password/reset/?uuid=%s&timestamp=%s&hash=%s
+                """ % (user.username, HOST_IP, HOST_PORT, user.uuid_id, timestamp, hash_encode)
+                if not default_email:
+                    msg = u'没有邮件服务器信息,请先到告警管理中配置邮件服务器,谢谢!'
+                rest = send_email(default_email, u'忘记登录密码', [email], msg)
+                logger.info(u'重置密码，发送邮件信息:%s'%rest)
+                if rest['msgCode'] == 0:
+                    msg = u'邮件成功已成功发送至您的邮箱,请登陆邮箱,点击邮件重设密码'
+                    return http_success(request, msg)
+                else:
+                    error = u'邮件发送失败:%s'%rest['msgError']
+                    return http_error(request, error)
+            else:
+                error = u'用户不存在或邮件地址错误'
+                return http_error(request, error)
+        except Exception as e:
+            logger.error(e)
+
 
 
 @defend_attack
@@ -386,7 +397,7 @@ def reset_password(request):
     uuid_r = request.GET.get('uuid', '')
     timestamp = request.GET.get('timestamp', '')
     hash_encode = request.GET.get('hash', '')
-    action = '/userManage/password/reset/?uuid=%s&timestamp=%s&hash=%s' % (uuid_r, timestamp, hash_encode)
+    action = '/user/password/reset/?uuid=%s&timestamp=%s&hash=%s' % (uuid_r, timestamp, hash_encode)
 
     if hash_encode == PyCrypt.md5_crypt(uuid_r + timestamp + KEY):
         if int(time.time()) - int(timestamp) > 600:
@@ -397,11 +408,11 @@ def reset_password(request):
     if request.method == 'POST':
         password = request.POST.get('password')
         password_confirm = request.POST.get('password_confirm')
-        print password, password_confirm
+        logger.info(u'重置密码   password:%s       password_config:%s'%(password, password_confirm))
         if password != password_confirm:
             return HttpResponse(u'密码不匹配')
         else:
-            user = get_object(User, uuid=uuid_r)
+            user = get_object(User, uuid_id=uuid_r)
             if user:
                 user.password = PyCrypt.md5_crypt(password)
                 user.save()
@@ -432,7 +443,6 @@ def user_edit(request,res, *args):
             is_super = True if user.role == 'SU' else False
             rest['Id'] = user.id
             rest['username'] = user.username
-            rest['name'] = user.name
             rest['password'] = user.password
             rest['email'] = user.email
             rest['is_active'] = user.is_active
@@ -446,7 +456,6 @@ def user_edit(request,res, *args):
             user = User.objects.get(id=int(user_id))
             username = request.POST.get('username','')
             password = request.POST.get('password', '')
-            name = request.POST.get('name', '')
             email = request.POST.get('email', '')
             groups = request.POST.getlist('groups', [])
             role_post = request.POST.get('role', 'CU')
@@ -464,16 +473,15 @@ def user_edit(request,res, *args):
 
             username_old = user.username
             if username_old == username:
-                if len(User.objects.filter(name=username)) > 1:
+                if len(User.objects.filter(username=username)) > 1:
                     raise ServerError(u'用户已存在')
             else:
-                if len(User.objects.filter(name=username)) > 0:
+                if len(User.objects.filter(username=username)) > 0:
                     raise ServerError(u'用户已存在')
 
             db_update_user(user_id=user_id,
                            username=username,
                            password=password,
-                           name=name,
                            email=email,
                            groups=groups,
                            admin_groups=admin_groups,
@@ -493,7 +501,7 @@ def user_edit(request,res, *args):
                     密码：%s (如果密码为None代表密码为原密码)
                     权限：：%s
 
-                """ % (user.name, URL, user.username, password, user_role.get(role_post, u''))
+                """ % (user.username, URL, user.username, password, user_role.get(role_post, u''))
 
                 if not default_email:
                     error = u"没有邮件服务器信息,请先到告警管理配置邮件服务器,谢谢!"
@@ -525,7 +533,7 @@ def change_info(request):
         return HttpResponseRedirect(reverse('index'))
 
     if request.method == 'POST':
-        name = request.POST.get('name', '')
+        name = request.POST.get('username', '')
         password = request.POST.get('password', '')
         email = request.POST.get('email', '')
 
@@ -533,7 +541,7 @@ def change_info(request):
             error = u'不能为空'
 
         if not error:
-            User.objects.filter(id=user_id).update(name=name, email=email)
+            User.objects.filter(id=user_id).update(username=name, email=email)
             if len(password) > 0:
                 user.set_password(password)
                 user.save()
@@ -545,7 +553,7 @@ def change_info(request):
 @require_role(role='user')
 def regen_ssh_key(request):
     uuid_r = request.GET.get('uuid', '')
-    user = get_object(User, uuid=uuid_r)
+    user = get_object(User, uuid_id=uuid_r)
     if not user:
         return HttpResponse(u'没有该用户')
 
@@ -554,26 +562,4 @@ def regen_ssh_key(request):
     gen_ssh_key(username, ssh_key_pass)
     return HttpResponse(u'ssh密钥已生成，密码为 %s, 请到下载页面下载' % ssh_key_pass)
 
-
-@require_role(role='user')
-def down_key(request):
-    if is_role_request(request, 'super'):
-        uuid_r = request.GET.get('uuid', '')
-    else:
-        uuid_r = request.user.uuid
-    if uuid_r:
-        user = get_object(User, uuid=uuid_r)
-        if user:
-            username = user.username
-            private_key_file = os.path.join(KEY_DIR, 'user', username+'.pem')
-            if os.path.isfile(private_key_file):
-                f = open(private_key_file)
-                data = f.read()
-                f.close()
-                response = HttpResponse(data, content_type='application/octet-stream')
-                response['Content-Disposition'] = 'attachment; filename=%s' % os.path.basename(private_key_file)
-                if request.user.role == 'CU':
-                    os.unlink(private_key_file)
-                return response
-    return HttpResponse('No Key File. Contact Admin.')
 

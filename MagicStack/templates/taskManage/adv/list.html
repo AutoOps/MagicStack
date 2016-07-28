@@ -55,6 +55,7 @@
     </div>
 </div>
 {% include 'taskManage/adv/tab.html' %}
+{% include 'taskManage/task_exec_detail.html' %}
 {% endblock %}
 {% block self_head_css_js %}
 {% include 'taskManage/adv/css.html' %}
@@ -138,7 +139,7 @@ $(document).ready(function () {
                 $("#form_sample_1")[0].reset();
                 console.log(result);
                 // 设置modal titile
-                $("#task .modal-title").text('添加任务');
+                $("#modal_adv_task .modal-title").text('添加任务');
 
                 // 设置隐藏sbtype 为add
                 $("#sbtype").val('add');
@@ -152,6 +153,9 @@ $(document).ready(function () {
                 // 因和编辑共用，需要指定部分域为非只读
                 $("select[name='proxy']").removeAttr('disabled');
                 $("select[name='task_host']").removeAttr('disabled');
+                $("select[name='adv_task_type']").removeAttr('disabled');
+                $("input[name='task_content']").removeAttr('readonly');
+                $("#file_info").removeAttr('readonly');
 
                 // 设置表单select内容
                 // task_type options
@@ -215,7 +219,6 @@ $(document).ready(function () {
 
     });
 
-
     <!-- 初始化首页表单数据 -->
     var table_back = $("#table_advtask").dataTable({
         "destroy": true,                        //如果这个tab初始化过，将会先销毁再初始化
@@ -229,12 +232,12 @@ $(document).ready(function () {
             },
             {
                 "mData": "proxy",
-                "sWidth": "15%",
+                "sWidth": "10%",
                 "bSortable": false
             },
             {
                 "mData": "task_type",
-                "sWidth": "15%",
+                "sWidth": "10%",
                 "bSortable": false
             },
             {
@@ -245,7 +248,7 @@ $(document).ready(function () {
             },
             {
                 "mData": "status",
-                "sWidth": "15%",
+                "sWidth": "10%",
                 "bSortable": false,
                 "bSearchable": false
             },
@@ -262,12 +265,12 @@ $(document).ready(function () {
             },
             {
                 "mData": "id",
+                "sWidth": "10%",
                 "bSortable": false,
                 "bSearchable": false
             }
         ],
         "aaSorting": [
-            [0, "desc"]
         ], //默认排序
         "bProcessing": true,                    //加载数据时显示正在加载信息
         "bServerSide": true,                    //指定从服务器端获取数据
@@ -287,7 +290,61 @@ $(document).ready(function () {
             });
         },
         "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            $('td:eq(1)', nRow).html(aData.proxy_name);
+            $('td:eq(0)', nRow).html(
+                    '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">' +
+                            '    <input type="checkbox" class="checkboxes" value="' + aData.id + '"/>' +
+                            '    <span></span> ' +
+                            '</label>'
+            );
+            if (aData.status == '00') {
+                $('td:eq(4)', nRow).html("启用");
+            } else if (aData.status == '01') {
+                $('td:eq(4)', nRow).html("暂停");
+            } else {
+                $('td:eq(4)', nRow).html("销毁");
+                $('td:eq(0)', nRow).html(
+                        '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">' +
+                                '    <input type="checkbox" disabled="disabled" class="checkboxes" value="' + aData.id + '"/>' +
+                                '    <span></span> ' +
+                                '</label>'
+                );
+            }
 
+            // 设置操作连接
+            var qs_a = "";
+            if (aData.status == '00') {
+                qs_a = '    <li>' +
+                        '        <a href="#" name="disable">禁用</a>' +
+                        '    </li>';
+            } else if (aData.status == '01') {
+                qs_a = '    <li>' +
+                        '        <a href="#" name="enable">启用</a>' +
+                        '    </li>';
+            }
+            var del_a = aData.status == '00' || aData.status == '01' ? '    <li>' +
+                    '        <a href="#" name="del">删除</a>' +
+                    '    </li>' : '';
+            var edit_a = aData.status == '00' || aData.status == '01' ? '    <li>' +
+                    '        <a data-toggle="modal" href="#" name="edit">编辑</a>' +
+                    '    </li>' : '';
+
+            var op_div = '<div class="btn-group">' +
+                    '<button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> ' +
+                    'Actions ' +
+                    '<i class="fa fa-angle-down">' +
+                    '</i>' +
+                    '</button>' +
+                    '<ul class="dropdown-menu" role="menu">' +
+                    '    <li>' +
+                    '        <a href="#" name="view">查看明细</a>' +
+                    '    </li>' +
+                    qs_a +
+                    edit_a +
+                    del_a +
+                    '</ul>' +
+                    '</div>';
+            $('td:eq(7)', nRow).html(op_div);
         },
 
         // 此处参考的是table-datables-managed.min.js
@@ -330,6 +387,339 @@ $(document).ready(function () {
             function () {
                 $(this).parents("tr").toggleClass("active")
             });
+
+    <!-- 查看明细 -->
+    table_back.on('click', "a[name='view']", function () {
+        /**
+         *  1. 初始化datatables
+         *  2. 初始化modal
+         *  3. show modal
+         * **/
+        var task_id = $(this).parents('tr').find("input[type='checkbox']").val();
+        // init datatables
+        var datatab = $("#tab_task_exec_detail").dataTable({
+//            "retrieve": true,                     //不重复初始化，类似单例模式
+            "destroy": true,                        //如果这个tab初始化过，将会先销毁再初始化
+            "bAutoWidth": false,                    //不自动计算列宽度
+            "aoColumns": [                          //设定各列宽度
+                {
+                    "mData": "start_time",           //指定列名，在后台程序回显时，根据名字查找
+                    "sWidth": "30%",
+                    "bSortable": false
+                },
+                {
+                    "mData": "end_time",
+                    "sWidth": "30%",
+                    "bSortable": false
+                },
+                {
+                    "mData": "status",
+                    "sWidth": "20%",
+                    "bSortable": false
+                },
+                {
+                    "mData": "id",
+                    "sWidth": "20%",
+                    "bSortable": false
+                }
+            ],
+            "aaSorting": [
+                [0, "desc"]
+            ], //默认排序
+            "bProcessing": true,                    //加载数据时显示正在加载信息
+            "bServerSide": true,                    //指定从服务器端获取数据
+            "bFilter": false,                       //不使用过滤功能
+            "bLengthChange": false,                 //用户不可改变每页显示数量
+            "iDisplayLength": 5,                    //每页显示5条数据
+            "sAjaxSource": "{% url 'task_exec_info' %}",//获取数据的url
+            //获取数据的处理函数
+            "fnServerData": function (sSource, aoData, fnCallback, oSettings) {
+                aoData.push({"name": "task_id", "value": task_id});
+                $.ajax({
+                    type: 'POST',
+                    url: sSource,
+                    dataType: "json",
+                    data: aoData,
+                    success: function (resp) {
+                        fnCallback(resp);
+                    }
+                });
+            },
+            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+
+                // 翻译状态
+                if (aData.status == 'running') {
+                    $('td:eq(2)', nRow).html("执行中");
+                } else if (aData.status == 'complete') {
+                    $('td:eq(2)', nRow).html("完成");
+                } else {
+                    $('td:eq(2)', nRow).html("失败");
+                }
+
+                // 设置操作连接
+                $('td:eq(3)', nRow).html("<a href='#' class='btn btn-link' name='replay' value=\"{% url 'task_exec_replay' %}?task_id=" + aData.id + "&job_id=" + aData.job_id + "\">回放</a>");
+
+            },
+
+            // 此处参考的是table-datables-managed.min.js
+            language: {
+                aria: {
+                    sortAscending: ": activate to sort column ascending",
+                    sortDescending: ": activate to sort column descending"
+                },
+                emptyTable: "No data available in table",
+                info: "Showing _START_ to _END_ of _TOTAL_ records",
+                infoEmpty: "No records found",
+                infoFiltered: "(filtered1 from _MAX_ total records)",
+                lengthMenu: "Show _MENU_",
+                search: "Search:",
+                zeroRecords: "No matching records found",
+                paginate: {
+                    previous: "Prev",
+                    next: "Next",
+                    last: "Last",
+                    first: "First"
+                }
+            },
+            pagingType: "bootstrap_full_number"
+        });
+
+        // 刷新Datatable，会自动激发retrieveData
+        // datatab.fnDraw();
+
+        // show modal
+        $('#modal_task_detail').modal({backdrop: 'static', keyboard: false});
+
+    });
+
+    <!-- 启用 -->
+    table_back.on('click', "a[name='enable']", function () {
+        // 获取当期任务ID
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'task_action' %}",
+            dataType: "json",
+            data: {
+                "task_id": $(this).parents('tr').find("input[type='checkbox']").val(),
+                "action": 'resume'
+            },
+            success: function (result) {
+                if (result.flag) {
+                    window.location.reload();
+                } else {
+                    alert(result.content);
+                }
+            }
+
+        });
+
+    });
+
+    <!-- 编辑 -->
+    table_back.on('click', "a[name='edit']", function () {
+        /**
+         * 1. 读取数据库原有数据
+         * 2. 清空表单内容
+         * 3. 填充表单内容，并设置相应单元
+         * **/
+        // 清空表单
+        $("#form_sample_1")[0].reset();
+
+        // 设置modal titile
+        $("#modal_adv_task .modal-title").text('编辑任务');
+
+        // 设置提交类型
+        $("#sbtype").val('edit');
+
+        // 激活第一个tab页
+        $("#tab_adv_task ul li").attr('class', '');
+        $("#tab_adv_task ul li:eq(0)").attr('class', 'active');
+        $("#tab_adv_task .tab-content div.tab-pane").attr('class', 'tab-pane');
+        $("#tab_adv_task .tab-content div.tab-pane:eq(0)").attr('class', 'tab-pane active');
+
+        // 编辑时，设置某些内容只可读
+
+        $("select[name='adv_task_type']").attr('disabled', 'disabled');
+        $("input[name='task_content']").attr('readonly', 'true');
+        $("select[name='proxy']").attr('disabled', 'disabled');
+        $("select[name='task_host']").attr('disabled', 'disabled');
+        $("#file_info").attr('readonly', 'true');
+
+        $("#edit_task_id").val($(this).parents('tr').find("input[type='checkbox']").val());
+        // ajax 数据获取
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'adv_task_edit' %}",
+            dataType: "json",
+            data: {
+                "task_id": $(this).parents('tr').find("input[type='checkbox']").val()
+            },
+            success: function (result) {
+                var task_types = result.task_types;
+                var task = result.task;
+                var task_trigger = $.parseJSON(task.trigger_kwargs);
+                var task_kwargs = $.parseJSON(task.task_kwargs);
+                $("select[name='adv_task_type']").empty();
+                for (var i = 0; i < task_types.length; i++) {
+                    if (task.task_type == task_types[i][0]) {
+                        $("select[name='adv_task_type']").append("<option selected value='" + task_types[i][0] + "'>" + task_types[i][1] + "</option>");
+                    } else {
+                        $("select[name='adv_task_type']").append("<option value='" + task_types[i][0] + "'>" + task_types[i][1] + "</option>");
+                    }
+                }
+                // 初始化任务模块，并传递参数
+                $("select[name='adv_task_type']").trigger("change", task.module);
+
+                // 赋值内容
+                $("input[name='comment']").val(task.comment);
+                $("#file_info").val(task_kwargs.content);
+
+                // proxy options
+                var proxys = result.proxys;
+                $("select[name='proxy']").empty();
+                for (var i = 0; i < proxys.length; i++) {
+                    if(task.task_proxy.id == proxys[i].id){
+                        $("select[name='proxy']").append(("<option selected value='" + proxys[i].id + "'>" + proxys[i].proxy_name + "</option>"));
+                    }else{
+                        $("select[name='proxy']").append(("<option value='" + proxys[i].id + "'>" + proxys[i].proxy_name + "</option>"));
+                    }
+
+                }
+                // 初始化任务主机内容
+                $("select[name='proxy']").trigger("change", task_kwargs);
+
+
+                // 初始化触发器内容
+                $("input[name='start_datetime']").val(task_trigger.start_date);
+                if(task_trigger.end_date != undefined){
+                    $("input[name='end_datetime']").val(task_trigger.end_date);
+                }
+                if(task_trigger.end_date != undefined){
+                    $("input[name='trigger_month']").val(task_trigger.month);
+                }
+
+                if(task_trigger.day!=undefined){
+                    $("input[name='trigger_day']").val(task_trigger.day);
+                }
+                if(task_trigger.week!=undefined){
+                    $("input[name='trigger_week']").val(task_trigger.week);
+                }
+                if(task_trigger.day_of_week!=undefined){
+                    $("input[name='trigger_day_of_week']").val(task_trigger.day_of_week);
+                }
+                if(task_trigger.hour!=undefined){
+                    $("input[name='trigger_hour']").val(task_trigger.hour);
+                }
+                if(task_trigger.minute!=undefined){
+                    $("input[name='trigger_minute']").val(task_trigger.minute);
+                }
+                if(task_trigger.second!=undefined){
+                    $("input[name='trigger_second']").val(task_trigger.second);
+                }
+            }
+
+        });
+        // show modal
+        $('#modal_adv_task').modal({backdrop: 'static', keyboard: false});
+    });
+
+    <!-- 禁用 -->
+    table_back.on('click', "a[name='disable']", function () {
+        // 获取当期任务ID
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'task_action' %}",
+            dataType: "json",
+            data: {
+                "task_id": $(this).parents('tr').find("input[type='checkbox']").val(),
+                "action": 'pause'
+            },
+            success: function (result) {
+                if (result.flag) {
+                    window.location.reload();
+                } else {
+                    alert(result.content);
+                }
+            }
+
+        });
+    });
+
+
+    <!-- 单个删除 -->
+    table_back.on('click', "a[name='del']", function () {
+        var del_btn = $(this);
+        // 弹框确认
+        bootbox.confirm({
+            message: "确定删除?",
+            callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "{% url 'task_del' %}",
+                        dataType: "json",
+                        data: { "task_id": del_btn.parents('tr').find("input[type='checkbox']").val()},
+                        success: function (result) {
+                            if (result.flag) {
+                                window.location.reload();
+                            } else {
+                                alert(result.content);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+    <!-- 批量删除 -->
+    $("#del_btn").click(function () {
+
+        var check_array = [];
+        $(".checkboxes:checked").each(function () {
+            check_array.push($(this).val());
+        });
+        if (check_array.length > 0) {
+            bootbox.confirm({
+                message: "确定删除选中对象?",
+                callback: function (result) {
+                    if (result) {
+                        $.ajax({
+                            type: 'POST',
+                            url: "{% url 'task_del' %}",
+                            dataType: "json",
+                            data: { "task_id": check_array.join(',')},
+                            success: function (result) {
+                                if (result.flag) {
+                                    window.location.reload();
+                                } else {
+                                    alert(result.content);
+                                    window.location.reload();
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    });
+
+    <!-- 动态添加元素绑定事件方式 -->
+    $('body').on('click', "a[name='replay']", function () {
+        var start_time = $(this).parents('tr').find('td').eq(0).html();
+        var end_time = $(this).parents('tr').find('td').eq(1).html();
+        var div_time = ' 时间: ' + '<span class="text-info">' + start_time + '</span>' + ' - <span class="text-info">' + end_time + '</span>';
+        var title = 'MagicStack录像回放 ' + div_time;
+        layer.open({
+            type: 2,
+            title: title,
+            maxmin: true,
+            shade: false,
+            area: ['625px', '450px'],
+            content: $(this).attr('value')
+        });
+        return false;
+    });
 
     // 时间选择器格式设置
     $(".form-datetime").datetimepicker({

@@ -639,6 +639,8 @@ $(document).ready(function () {
                 // 初始化任务主机内容
                 $("select[name='proxy']").trigger("change", task_kwargs);
 
+                // 填充备注内容
+                $("input[name='comment']").val(task.comment);
 
                 // 初始化触发器内容
                 $("input[name='start_datetime']").val(task_trigger.start_date);

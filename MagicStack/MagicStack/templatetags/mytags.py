@@ -362,3 +362,18 @@ def get_from_dict_by_key(dict_, key):
         根据key值获取字典value
     """
     return dict_.get(key)
+
+@register.filter(name='action_to_zh')
+def action_to_zh(action):
+    result = ''
+    if action == 'add':
+        result = u'添加'
+    elif action == 'update':
+        result = u'编辑'
+    elif action == 'push':
+        result = u'推送'
+    return result
+
+@register.filter(name='result_to_zh')
+def result_to_zh(result):
+    return u'成功' if result == 'success' else u'失败'

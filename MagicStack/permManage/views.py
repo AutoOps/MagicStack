@@ -1,29 +1,25 @@
 # -*- coding:utf-8 -*-
 from __future__ import unicode_literals
+from django.shortcuts import HttpResponse
 from paramiko import SSHException
-from permManage.perm_api import *
 from assetManage.asset_api import gen_asset_proxy
 from userManage.models import User, UserGroup
 from userManage.user_api import user_operator_record
 from assetManage.models import Asset, AssetGroup
 from permManage.models import PermRole, PermRule, PermSudo, PermPush
-import Queue
-import re
-import uuid
 from permManage.utils import gen_keys, trans_all
 from permManage.ansible_api import MyTask
-from permManage.perm_api import get_role_info, get_role_push_host,query_event
-from MagicStack.api import my_render, get_object, CRYPTOR
+from permManage.perm_api import get_role_info, get_role_push_host,query_event, execute_thread_tasks, gen_resource, save_or_delete,get_one_or_all, user_have_perm
+from MagicStack.api import my_render, get_object, CRYPTOR, require_role, logger, task_queue, ServerError, list_drop_str
 from common.models import Task
 from proxyManage.models import Proxy
+from MagicStack.settings import THREAD_NUMBERS
 import time
-
-
-# 设置PERM APP Log
-from MagicStack.api import logger
-
-# 推送用户事件队列
-task_queue = Queue.Queue()
+import json
+import os
+import datetime
+import re
+import uuid
 
 
 @require_role('admin')
@@ -302,7 +298,7 @@ def perm_role_list(request):
 @user_operator_record
 def perm_role_add(request, res, *args):
     """
-    添加系统用户
+    添加系统用户 server和proxy上都添加
     """
     response = {'success': False, 'error': ''}
     res['operator'] = u"添加系统用户"
@@ -336,7 +332,7 @@ def perm_role_add(request, res, *args):
             except Exception, e:
                 raise ServerError(e)
 
-             # TODO 将数据保存到magicstack上
+            #  # TODO 将数据保存到magicstack上
             role = PermRole.objects.create(uuid_id=uuid_id, name=name, comment=comment, password=encrypt_pass,
                                            key_content=keys_content, system_groups=sys_groups)
             role.sudo = sudos_obj
@@ -353,16 +349,11 @@ def perm_role_add(request, res, *args):
                     'sudo_uuids': sudo_uuids,
                     'sys_groups': sys_groups}
             data = json.dumps(data)
-            message = save_or_delete('PermRole', data, proxy_list)
-            flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
-            if flag:
-                res['content'] = u"添加系统用户[%s]" % name
-                res['emer_status'] = u"添加系统用户[%s]成功" % name
-                response['success'] = True
-            else:
-                # TODO proxy上添加失败后,就删除magicstack上的role
-                role.delete()
-                raise ServerError(u"添加系统用户[%s]失败:proxy上的数据添加失败" % name)
+            execute_thread_tasks(proxy_list, THREAD_NUMBERS, request.user.username, 'PermRole', data,
+                                 obj_uuid=role.uuid_id, action='add')
+            response['success'] = True
+            res['content'] = u'添加系统用户[%s]成功'% role.name
+            res['emer_status'] = u'添加系统用户[%s]成功'% role.name
         except ServerError, e:
             res['flag'] = 'false'
             res['content'] = e.message
@@ -406,7 +397,6 @@ def perm_role_delete(request, res, *args):
             if not role:
                 logger.warning(u"Delete Role: role_id %s not exist" % role_id)
                 raise ServerError(u"role_id %s 无数据记录" % role_id)
-            role_key = role.key_path
             recycle_assets = [push.asset for push in role.perm_push.all() if push.success]
             logger.debug(u"delete role %s - delete_assets: %s" % (role.name, recycle_assets))
             if recycle_assets:
@@ -425,38 +415,23 @@ def perm_role_delete(request, res, *args):
                     logger.info(u"删除用户 %s - execute delete user: %s" % (role.name, msg_del_user))
                     logger.info(u"删除用户 %s - execute delete sudo: %s" % (role.name, msg_del_sudo))
                     # TODO: 判断返回结果，处理异常
-            # 删除存储的秘钥，以及目录
-            try:
-                key_files = os.listdir(role_key)
-                for key_file in key_files:
-                    os.remove(os.path.join(role_key, key_file))
-                os.rmdir(role_key)
-            except OSError, e:
-                logger.warning(u"Delete Role: delete key error, %s" % e)
-                raise ServerError(u"删除系统用户key失败: %s" % e)
-            logger.info(u"delete role %s - delete role key directory: %s" % (role.name, role_key))
 
             # 删除proxy上的role, proxy上的role删除成功后再删除magicstack上的role
             proxy_list = Proxy.objects.all()
-            message = save_or_delete('PermRole', {}, proxy_list, role.uuid_id, action='delete')
-            flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
-            if flag:
-                msg = u"删除系统用户[%s]成功" % role.name
-                res['content'] = msg
-                res['emer_status'] = msg
-                role.delete()
-            else:
-                msg = u"删除系统用户[%s]失败" % role.name
-                res['content'] = msg
-                res['emer_status'] = msg
-                res['flag'] = 'false'
-
+            data = {
+                'name': role.name,
+            }
+            data = json.dumps(data)
+            execute_thread_tasks(proxy_list, THREAD_NUMBERS, request.user.username, 'PermRole', data, obj_uuid=role.uuid_id, action='delete')
+            msg = u"删除系统用户[%s]成功" % role.name
+            res['content'] = msg
+            res['emer_status'] = msg
+            role.delete()
         except ServerError, e:
             res['flag'] = 'false'
             msg = u"删除系统用户失败: %s" %e
             res['content'] = msg
             res['emer_status'] = msg
-
         return HttpResponse(msg)
 
 
@@ -480,19 +455,21 @@ def perm_role_detail(request):
             role_id = request.GET.get("id")
             if not role_id:
                 raise ServerError("not role id")
-            role = get_object(PermRole, id=role_id)
+            role = get_object(PermRole, id=int(role_id))
             role_info = get_role_info(role_id)
 
-            # 渲染数据
+            # 系统用户推送记录
             rules = role_info.get("rules")
             assets = role_info.get("assets")
             asset_groups = role_info.get("asset_groups")
             users = role_info.get("users")
             user_groups = role_info.get("user_groups")
             pushed_asset, need_push_asset = get_role_push_host(get_object(PermRole, id=role_id))
-    except ServerError, e:
-        logger.warning(e)
 
+            # 系统用户在proxy上的操作记录
+            role_operator_record = Task.objects.filter(role_name=role.name).filter(role_uuid=role.uuid_id)
+    except ServerError, e:
+        logger.error(e)
     return my_render('permManage/perm_role_detail.html', locals(), request)
 
 
@@ -550,8 +527,14 @@ def perm_role_edit(request, res, *args):
                     role_key_content = key_contents
                 except SSHException:
                     raise ServerError(u'输入的密钥不合法')
-                logger.debug('Recreate role key: %s' % role.key_path)
+            # 跟新server上的permrole
+            role.name = role_name
+            role.comment = role_comment
+            role.system_groups = sys_groups
+            role.sudo = role_sudos
+            role.save()
 
+            # 更新proxy上的permrole
             data = {'name': role_name,
                     'password': role_password,
                     'comment': role_comment,
@@ -560,29 +543,13 @@ def perm_role_edit(request, res, *args):
                     'sys_groups': sys_groups}
             data = json.dumps(data)
             proxy_list = Proxy.objects.all()
-            message = save_or_delete('PermRole', data, proxy_list, role.uuid_id, 'update')
-            flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
-            if flag:
-                # TODO 只有proxy上的数据库保存完成后,才会写入本地数据库
-                role.name = role_name
-                role.comment = role_comment
-                role.system_groups = sys_groups
-                role.sudo = role_sudos
-                role.save()
-
-                # TODO 用户操作记录
-                res['content'] = u"编辑系统用户[%s]成功" % role.name
-                # TODO 告警事件记录
-                res['emer_status'] = u"编辑系统用户[%s]成功" % role.name
-                # TODO 页面返回信息
-                response['success'] = True
-                response['error'] = u"编辑系统用户[%s]成功" % role.name
-
-            else:
-                res['content'] = u"编辑系统用户：[%s]失败" % role.name
-                res['emer_status'] = u"编辑系统用户：[%s]失败" % role.name
-                res['flag'] = 'false'
-                response['error'] = u"编辑系统用户：[%s]失败" % role.name
+            execute_thread_tasks(proxy_list, THREAD_NUMBERS, request.user.username, 'PermRole', data, obj_uuid=role.uuid_id, action='update')
+            # TODO 用户操作记录
+            res['content'] = u"编辑系统用户[%s]成功" % role.name
+            # TODO 告警事件记录
+            res['emer_status'] = u"编辑系统用户[%s]成功" % role.name
+            # TODO 页面返回信息
+            response['success'] = True
         except ServerError, e:
             res['flag'] = 'false'
             res['content'] = e.message
@@ -692,77 +659,83 @@ def push_role_event(request):
         if task_queue.qsize() > 0:
             try:
                 tk_event = task_queue.get()
-                host_names = tk_event.pop('push_assets')
-                calc_assets = [Asset.objects.get(name=name) for name in host_names]
-                role = PermRole.objects.get(name=tk_event['role_name'])
-                password_push = tk_event['password_push']
-                key_push = tk_event['key_push']
-                proxy = Proxy.objects.get(proxy_name=tk_event['task_proxy'])
-                success_asset = {}
-                failed_asset = {}
-                for task_name in tk_event['tasks']:
-                    result = query_event(task_name, proxy)
-                    # 更新task的status, result
-                    tk = get_object(Task, task_name=task_name)
-                    tk.status = 'complete'
-                    tk.content = result['messege']
-                    tk.save()
-                    res = json.loads(result['messege'])
-                    if res.get('failed'):
-                        for hostname, info in res.get('failed').items():
-                            if hostname in failed_asset.keys():
-                                if info in failed_asset.get(hostname):
-                                    failed_asset[hostname] += info
-                            else:
-                                failed_asset[hostname] = info
-                    if res.get('unreachable'):
-                        for hostname, info in res.get('unreachable').items():
-                            if hostname in failed_asset.keys():
-                                if info in failed_asset.get(hostname):
-                                    failed_asset[hostname] += info
-                            else:
-                                failed_asset[hostname] = info
-
-                    if res.get('success'):
-                        for hostname, info in res.get('success').items():
-                            if hostname in failed_asset.keys():
-                                continue
-                            elif hostname in success_asset.keys():
-                                if str(info) in success_asset.get(hostname, ''):
-                                    success_asset[hostname] += str(info)
-                            else:
-                                success_asset[hostname] = str(info)
-                # 推送成功 回写push表
-                for asset in calc_assets:
-                    push_check = PermPush.objects.filter(role=role, asset=asset)
-                    if push_check:
-                        func = push_check.update
-                    else:
-                        def func(**kwargs):
-                            PermPush(**kwargs).save()
-
-                    if failed_asset.get(asset.networking.all()[0].ip_address):
-                        func(is_password=password_push, is_public_key=key_push, role=role, asset=asset, success=False,
-                             result=failed_asset.get(asset.networking.all()[0].ip_address))
-                    else:
-                        func(is_password=password_push, is_public_key=key_push, role=role, asset=asset, success=True)
-
-                if not failed_asset:
-                    msg = u'系统用户 %s 推送成功[ %s ]' % (role.name, ','.join(success_asset.keys()))
-                    response['message'] = msg
+                if 'server' in tk_event:
+                    event_name = tk_event['server']
+                    tk_obj = Task.objects.get(task_name=event_name)
+                    response['message'] = tk_obj.proxy_name + tk_obj.content
                 else:
-                    intersection = set(success_asset.keys())&set(failed_asset.keys())
-                    if intersection:
-                        for item in intersection:
-                            success_asset.pop(item)
-                        error = u'系统用户 %s 推送失败 [ %s ], 推送成功 [ %s ] 进入系统用户详情，查看失败原因' % (role.name,
-                                                                        ','.join(failed_asset.keys()),
-                                                                        ','.join(success_asset.keys()))
+                    host_names = tk_event.pop('push_assets')
+                    calc_assets = [Asset.objects.get(name=name) for name in host_names]
+                    role = PermRole.objects.get(name=tk_event['role_name'])
+                    password_push = tk_event['password_push']
+                    key_push = tk_event['key_push']
+                    proxy = Proxy.objects.get(proxy_name=tk_event['task_proxy'])
+                    success_asset = {}
+                    failed_asset = {}
+                    for task_name in tk_event['tasks']:
+                        time.sleep(4)   # 暂停4s,否则可能会查不出结果
+                        result = query_event(task_name, proxy)
+                        # 更新task的status, result
+                        tk = get_object(Task, task_name=task_name)
+                        tk.status = 'complete'
+                        tk.content = result['messege']
+                        tk.save()
+                        res = json.loads(result['messege'])
+                        if res.get('failed'):
+                            for hostname, info in res.get('failed').items():
+                                if hostname in failed_asset.keys():
+                                    if info in failed_asset.get(hostname):
+                                        failed_asset[hostname] += info
+                                else:
+                                    failed_asset[hostname] = info
+                        if res.get('unreachable'):
+                            for hostname, info in res.get('unreachable').items():
+                                if hostname in failed_asset.keys():
+                                    if info in failed_asset.get(hostname):
+                                        failed_asset[hostname] += info
+                                else:
+                                    failed_asset[hostname] = info
+
+                        if res.get('success'):
+                            for hostname, info in res.get('success').items():
+                                if hostname in failed_asset.keys():
+                                    continue
+                                elif hostname in success_asset.keys():
+                                    if str(info) in success_asset.get(hostname, ''):
+                                        success_asset[hostname] += str(info)
+                                else:
+                                    success_asset[hostname] = str(info)
+                    # 推送成功 回写push表
+                    for asset in calc_assets:
+                        push_check = PermPush.objects.filter(role=role, asset=asset)
+                        if push_check:
+                            func = push_check.update
+                        else:
+                            def func(**kwargs):
+                                PermPush(**kwargs).save()
+
+                        if failed_asset.get(asset.networking.all()[0].ip_address):
+                            func(is_password=password_push, is_public_key=key_push, role=role, asset=asset, success=False,
+                                 result=failed_asset.get(asset.networking.all()[0].ip_address))
+                        else:
+                            func(is_password=password_push, is_public_key=key_push, role=role, asset=asset, success=True)
+
+                    if not failed_asset:
+                        msg = u'系统用户 %s 推送成功[ %s ]' % (role.name, ','.join(success_asset.keys()))
+                        response['message'] = msg
                     else:
-                         error = u'系统用户 %s 推送失败 [ %s ], 推送成功 [ %s ] 进入系统用户详情，查看失败原因' % (role.name,
-                                                                        ','.join(failed_asset.keys()),
-                                                                        ','.join(success_asset.keys()))
-                    response['message'] = error
+                        intersection = set(success_asset.keys())&set(failed_asset.keys())
+                        if intersection:
+                            for item in intersection:
+                                success_asset.pop(item)
+                            error = u'系统用户 %s 推送失败 [ %s ], 推送成功 [ %s ] 进入系统用户详情，查看失败原因' % (role.name,
+                                                                            ','.join(failed_asset.keys()),
+                                                                            ','.join(success_asset.keys()))
+                        else:
+                             error = u'系统用户 %s 推送失败 [ %s ], 推送成功 [ %s ] 进入系统用户详情，查看失败原因' % (role.name,
+                                                                            ','.join(failed_asset.keys()),
+                                                                            ','.join(success_asset.keys()))
+                        response['message'] = error
 
             except Exception as e:
                 response['message'] = e
@@ -806,10 +779,6 @@ def perm_sudo_list(request):
             return HttpResponse(json.dumps(rest), content_type='application/json')
         except Exception as e:
             logger.error(e.message)
-
-
-
-
 
 
 @require_role('admin')
@@ -1044,3 +1013,42 @@ def download_key(request, res):
             logger.error(e)
             return HttpResponse(e)
 
+@require_role('user')
+@user_operator_record
+def perm_role_retry(request, res):
+    response = {'success': True, 'message': ''}
+    res['emer_content'] = 6
+    if request.method == 'POST':
+        tk_id = request.POST.get('id')
+        action = request.POST.get('action')
+        if '' or None in [tk_id, action]:
+            response['success'] = False
+            response['message'] = '必要参数为空'
+            return HttpResponse(json.dumps(response), content_type='application/json')
+        tk_event = Task.objects.get(id=int(tk_id))
+        error_role = PermRole.objects.get(uuid_id=tk_event.role_uuid, name=tk_event.role_name)
+        error_proxy = Proxy.objects.get(proxy_name=tk_event.proxy_name)
+        role_data = tk_event.role_data
+        if action == 'add':
+            res['operator'] = u"重新在proxy上添加系统用户"
+            info = save_or_delete('PermRole', role_data, error_proxy, error_role.uuid_id, 'add')
+            if info == 'success':
+                tk_event.result = info
+                tk_event.save()
+                res['emer_status'] = u'重新在[%s]上添加系统用户[%s]成功'%(error_proxy.proxy_name, error_role.name)
+            else:
+                res['emer_status'] = u'重新在[%s]上添加系统用户[%s]失败'%(error_proxy.proxy_name, error_role.name)
+                response['success'] = False
+                response['message'] = res['emer_status'] = u'重新在[%s]上添加系统用户[%s]失败,请联系管理员'%(error_proxy.proxy_name, error_role.name)
+        elif action == 'update':
+            res['operator'] = u"重新在proxy上编辑系统用户"
+            info = save_or_delete('PermRole', role_data, error_proxy, error_role.uuid_id, 'update')
+            if info == 'success':
+                tk_event.result = info
+                tk_event.save()
+                res['emer_status'] = u'重新在[%s]上编辑系统用户[%s]成功'%(error_proxy.proxy_name, error_role.name)
+            else:
+                res['emer_status'] = u'重新在[%s]上编辑系统用户[%s]失败'%(error_proxy.proxy_name, error_role.name)
+                response['success'] = False
+                response['message'] = res['emer_status'] = u'重新在[%s]上编辑系统用户[%s]失败,请联系管理员'%(error_proxy.proxy_name, error_role.name)
+    return HttpResponse(json.dumps(response), content_type='application/json')

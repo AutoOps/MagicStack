@@ -162,10 +162,10 @@ $(document).ready(function () {
                                 "  tasks:\n" +
                                 "  "
                 );
+                $("textarea[name='task_content']").trigger('valuechange');
 
 
                 // 设置表单select内容
-                // task_type options
                 var task_types = result.task_types;
                 $("select[name='adv_task_type']").empty();
                 for (var i = 0; i < task_types.length; i++) {
@@ -190,7 +190,27 @@ $(document).ready(function () {
         });
     });
 
+    $("textarea[name='task_content']").on('valuechange', function (e, previous) {
+        var tp = $("select[name='adv_task_type'] option:selected").val();
+        if (tp == 'shell') {
+            tp = 'shell';
+        } else if (tp == 'ansible-pb') {
+            tp = 'yaml';
+        }
+        $.ajax({
+            type: "post",
+            url: "{% url 'get_html_code' %}",
+            dataType: "json",
+            data: {"code": $("textarea[name='task_content']").val(), "lexer": tp },
+            success: function (data) {
+                $("#r_display").html(data.r);
+            }
+        });
+
+    });
+
     $("select[name='adv_task_type']").change(function (even, assets) {
+
         var tp = $("select[name='adv_task_type'] option:selected").val();
         if (tp == 'shell') {
             $("textarea[name='task_content']").val("");
@@ -203,6 +223,9 @@ $(document).ready(function () {
                             "  "
             );
         }
+
+        $("textarea[name='task_content']").trigger('valuechange');
+
     });
 
     // proxy选择加载主机信息
@@ -561,7 +584,6 @@ $(document).ready(function () {
         // 编辑时，设置某些内容只可读
 
         $("select[name='adv_task_type']").attr('disabled', 'disabled');
-        $("textarea[name='task_content']").attr('readonly', 'true');
         $("select[name='proxy']").attr('disabled', 'disabled');
         $("select[name='task_host']").attr('disabled', 'disabled');
         $("#file_info").attr('readonly', 'true');
@@ -594,6 +616,7 @@ $(document).ready(function () {
                 // 赋值内容
                 $("input[name='comment']").val(task.comment);
                 $("#file_info").val(task_kwargs.content);
+                $("#file_info").trigger("valuechange");
 
                 // proxy options
                 var proxys = result.proxys;
@@ -779,6 +802,33 @@ function get_nowdate(formatDate) {
 
     return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second
 }
+
+
+// 自定义内容改变事件
+$.event.special.valuechange = {
+
+    teardown: function (namespaces) {
+        $(this).unbind('.valuechange');
+    },
+
+    handler: function (e) {
+        $.event.special.valuechange.triggerChanged($(this));
+    },
+
+    add: function (obj) {
+        $(this).on('keyup.valuechange cut.valuechange paste.valuechange input.valuechange', obj.selector, $.event.special.valuechange.handler)
+    },
+
+    triggerChanged: function (element) {
+        var current = element[0].contentEditable === 'true' ? element.html() : element.val()
+                , previous = typeof element.data('previous') === 'undefined' ? element[0].defaultValue : element.data('previous')
+        if (current !== previous) {
+            element.trigger('valuechange', [element.data('previous')])
+            element.data('previous', current)
+        }
+    }
+}
+
 
 // trigger相关信息验证
 function trigger_validate(key, val) {

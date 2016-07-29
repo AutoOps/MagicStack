@@ -23,6 +23,10 @@ import traceback
 from django.db.models import Q
 from django.shortcuts import render
 
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import get_formatter_by_name
+from pygments import highlight
+
 from MagicStack.api import *
 from models import *
 from common.interface import APIRequest
@@ -831,3 +835,23 @@ def adv_task_del(request, res, *args, **kwargs):
             res['content'] = 'success [%d] fail [%d]' % (len(success), len(fail))
 
         return HttpResponse(json.dumps(res))
+
+
+@require_role('admin')
+def get_html_code(request):
+    """
+        根据给定代码，返回HTML代码
+    """
+    code = request.POST.get('code', '')
+    _lexer = request.POST.get('lexer', 'yaml')
+    _formatter = request.POST.get('formatter', 'html')
+    res = {}
+    res['r'] = code
+    try:
+        lexer = get_lexer_by_name(_lexer, stripall=True)
+        formatter = get_formatter_by_name(_formatter)
+        r = highlight(code, lexer, formatter)
+        res['r'] = r
+    except:
+        logger.error(traceback.format_exc())
+    return HttpResponse(json.dumps(res))

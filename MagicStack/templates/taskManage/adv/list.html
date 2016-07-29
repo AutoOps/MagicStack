@@ -137,7 +137,6 @@ $(document).ready(function () {
                 result = $.parseJSON(result);
                 // 初始化表单内容
                 $("#form_sample_1")[0].reset();
-                console.log(result);
                 // 设置modal titile
                 $("#modal_adv_task .modal-title").text('添加任务');
 
@@ -154,14 +153,21 @@ $(document).ready(function () {
                 $("select[name='proxy']").removeAttr('disabled');
                 $("select[name='task_host']").removeAttr('disabled');
                 $("select[name='adv_task_type']").removeAttr('disabled');
-                $("input[name='task_content']").removeAttr('readonly');
                 $("#file_info").removeAttr('readonly');
+
+                $("textarea[name='task_content']").val(
+                        "---\n" +
+                                "- hosts: default_group\n" +
+                                "  remote_user: root\n" +
+                                "  tasks:\n" +
+                                "  "
+                );
+
 
                 // 设置表单select内容
                 // task_type options
                 var task_types = result.task_types;
                 $("select[name='adv_task_type']").empty();
-                console.log(task_types);
                 for (var i = 0; i < task_types.length; i++) {
                     $("select[name='adv_task_type']").append("<option value='" + task_types[i][0] + "'>" + task_types[i][1] + "</option>");
                 }
@@ -182,6 +188,21 @@ $(document).ready(function () {
                 $('#modal_adv_task').modal({backdrop: 'static', keyboard: false});
             }
         });
+    });
+
+    $("select[name='adv_task_type']").change(function (even, assets) {
+        var tp = $("select[name='adv_task_type'] option:selected").val();
+        if (tp == 'shell') {
+            $("textarea[name='task_content']").val("");
+        } else if (tp == 'ansible-pb') {
+            $("textarea[name='task_content']").val(
+                    "---\n" +
+                            "- hosts: default_group\n" +
+                            "  remote_user: root\n" +
+                            "  tasks:\n" +
+                            "  "
+            );
+        }
     });
 
     // proxy选择加载主机信息
@@ -522,7 +543,7 @@ $(document).ready(function () {
          * 2. 清空表单内容
          * 3. 填充表单内容，并设置相应单元
          * **/
-        // 清空表单
+            // 清空表单
         $("#form_sample_1")[0].reset();
 
         // 设置modal titile
@@ -540,7 +561,7 @@ $(document).ready(function () {
         // 编辑时，设置某些内容只可读
 
         $("select[name='adv_task_type']").attr('disabled', 'disabled');
-        $("input[name='task_content']").attr('readonly', 'true');
+        $("textarea[name='task_content']").attr('readonly', 'true');
         $("select[name='proxy']").attr('disabled', 'disabled');
         $("select[name='task_host']").attr('disabled', 'disabled');
         $("#file_info").attr('readonly', 'true');
@@ -578,9 +599,9 @@ $(document).ready(function () {
                 var proxys = result.proxys;
                 $("select[name='proxy']").empty();
                 for (var i = 0; i < proxys.length; i++) {
-                    if(task.task_proxy.id == proxys[i].id){
+                    if (task.task_proxy.id == proxys[i].id) {
                         $("select[name='proxy']").append(("<option selected value='" + proxys[i].id + "'>" + proxys[i].proxy_name + "</option>"));
-                    }else{
+                    } else {
                         $("select[name='proxy']").append(("<option value='" + proxys[i].id + "'>" + proxys[i].proxy_name + "</option>"));
                     }
 
@@ -591,29 +612,29 @@ $(document).ready(function () {
 
                 // 初始化触发器内容
                 $("input[name='start_datetime']").val(task_trigger.start_date);
-                if(task_trigger.end_date != undefined){
+                if (task_trigger.end_date != undefined) {
                     $("input[name='end_datetime']").val(task_trigger.end_date);
                 }
-                if(task_trigger.end_date != undefined){
+                if (task_trigger.end_date != undefined) {
                     $("input[name='trigger_month']").val(task_trigger.month);
                 }
 
-                if(task_trigger.day!=undefined){
+                if (task_trigger.day != undefined) {
                     $("input[name='trigger_day']").val(task_trigger.day);
                 }
-                if(task_trigger.week!=undefined){
+                if (task_trigger.week != undefined) {
                     $("input[name='trigger_week']").val(task_trigger.week);
                 }
-                if(task_trigger.day_of_week!=undefined){
+                if (task_trigger.day_of_week != undefined) {
                     $("input[name='trigger_day_of_week']").val(task_trigger.day_of_week);
                 }
-                if(task_trigger.hour!=undefined){
+                if (task_trigger.hour != undefined) {
                     $("input[name='trigger_hour']").val(task_trigger.hour);
                 }
-                if(task_trigger.minute!=undefined){
+                if (task_trigger.minute != undefined) {
                     $("input[name='trigger_minute']").val(task_trigger.minute);
                 }
-                if(task_trigger.second!=undefined){
+                if (task_trigger.second != undefined) {
                     $("input[name='trigger_second']").val(task_trigger.second);
                 }
             }

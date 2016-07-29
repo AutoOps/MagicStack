@@ -33,4 +33,5 @@ urlpatterns = patterns("",
     url("^module/$", task_module, name="get_module_comment"),
     url("^exec_info/$", task_exec_info, name="task_exec_info"),
     url("^exec_replay/$", task_exec_replay, name="task_exec_replay"),
+    url("^get_html_code/$", get_html_code, name="get_html_code"),
 )

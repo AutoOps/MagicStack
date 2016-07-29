@@ -25,7 +25,7 @@ class MyTask(object):
         self.run_type = 'ad-hoc'               # 执行ansible ad-hoc命令还是执行ansible playbook
         self.isTemplate = False                # 是否需要渲染模板
 
-    def push_key(self, user, key_path, proxy):
+    def push_key(self, user, key_path, proxy, web_username):
         """
         push the ssh authorized key to target.
         """
@@ -37,6 +37,7 @@ class MyTask(object):
                 'hosts': self.host_list,
                 'mod_args': module_args,
                 'role_name': user,
+                'web_username': web_username,
                 'run_action': self.run_action,
                 'run_type': self.run_type,
                 'isTemplate': self.isTemplate
@@ -63,9 +64,11 @@ class MyTask(object):
         result, code = api.req_post(data)
         return result
 
-    def add_user(self, username, proxy, groups):
+    def add_user(self, username, proxy, groups, web_username):
         """
         add a host user.
+        username: 系统用户名
+        web_username: 网站用户名
         """
         self.run_action = 'async'
         self.run_type = 'ad-hoc'
@@ -79,6 +82,7 @@ class MyTask(object):
                 'hosts': self.host_list,
                 'mod_args': module_args,
                 'role_name': username,
+                'web_username': web_username,
                 'run_action': self.run_action,
                 'run_type': self.run_type,                    # 标记, 执行ansible ad-hoc命令还是执行playbook
                 'isTemplate': self.isTemplate
@@ -88,7 +92,7 @@ class MyTask(object):
         result, code = api.req_post(data)
         return result
 
-    def del_user(self, username, proxy):
+    def del_user(self, username, proxy, web_username):
         """
         delete a host user.
         """
@@ -98,6 +102,7 @@ class MyTask(object):
                 'hosts': self.host_list,
                 'mod_args': module_args,
                 'role_name': username,
+                'web_username': web_username,
                 'run_action': 'sync',                       # run_action参数表示同步还是异步执行
                 'run_type': 'ad-hoc'
                 }
@@ -106,7 +111,7 @@ class MyTask(object):
         result, code = api.req_post(data)
         return result
 
-    def del_user_sudo(self, role_uuid, proxy):
+    def del_user_sudo(self, role_uuid, proxy, web_username):
         """
         delete a role sudo item
         """
@@ -116,6 +121,7 @@ class MyTask(object):
                 'resource': self.resource,
                 'hosts': self.host_list,
                 'mod_args': module_args,
+                'web_username': web_username,
                 'run_action': 'sync',
                 'run_type': 'ad-hoc'
                 }
@@ -124,7 +130,7 @@ class MyTask(object):
         result, code = api.req_post(data)
         return result
 
-    def push_sudo(self, role, sudo_uuids, proxy):
+    def push_sudo(self, role, sudo_uuids, proxy, web_username):
         """
         use template to render pushed sudoers file
         """
@@ -135,6 +141,7 @@ class MyTask(object):
                 'sudo_uuids': sudo_uuids,
                 'role_name': role.name,
                 'role_uuid': role.uuid_id,
+                'web_username': web_username,
                 'run_action': self.run_action,
                 'run_type': self.run_type,
                 'isTemplate': True

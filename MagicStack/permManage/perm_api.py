@@ -355,8 +355,8 @@ def get_one_or_all(obj_name, proxy, obj_uuid='all'):
     return obj_list
 
 
-def query_event(task_name, proxy):
-    data = {'task_name': task_name}
+def query_event(task_name, username, proxy):
+    data = {'task_name': task_name, 'username': username}
     data = json.dumps(data)
     api = APIRequest('{0}/v1.0/permission/event'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
     result, codes = api.req_post(data)

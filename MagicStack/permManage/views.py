@@ -407,8 +407,8 @@ def perm_role_delete(request, res, *args):
                     host_list = [asset.networking.all()[0].ip_address for asset in value]
                     task = MyTask(recycle_resource, host_list)
                     try:
-                        msg_del_user = task.del_user(role.name, proxy)
-                        msg_del_sudo = task.del_user_sudo(role.uuid_id, proxy)
+                        msg_del_user = task.del_user(role.name, proxy, request.user.username)
+                        msg_del_sudo = task.del_user_sudo(role.uuid_id, proxy, request.user.username)
                     except Exception, e:
                         logger.warning(u"Recycle Role failed: %s" % e)
                         raise ServerError(u"回收已推送的系统用户失败: %s" % e)
@@ -604,16 +604,17 @@ def perm_role_push(request, *args):
                 # 1. 以秘钥 方式推送角色
                 role_proxy = get_one_or_all('PermRole', proxy, role.uuid_id)
                 if key_push:
-                    ret["pass_push"] = task.add_user(role.name, proxy, role.system_groups)
+                    ret["pass_push"] = task.add_user(role.name, proxy, role.system_groups, request.user.username)
                     time.sleep(1)   # 暂停1秒,保证用户创建完成之后再推送key
-                    ret["key_push"] = task.push_key(role.name, os.path.join(role_proxy['key_path'], 'id_rsa.pub'), proxy)
+                    ret["key_push"] = task.push_key(role.name, os.path.join(role_proxy['key_path'], 'id_rsa.pub'),
+                                                    proxy, request.user.username)
 
                 # 2. 推送账号密码 <为了安全 系统用户统一使用秘钥进行通信，不再提供密码方式的推送>
                 # 3. 推送sudo配置文件
                     sudo_list = [sudo for sudo in role.sudo.all()]
                     if sudo_list:
                         sudo_uuids = [sudo.uuid_id for sudo in role.sudo.all()]
-                        ret['sudo'] = task.push_sudo(role, sudo_uuids, proxy)
+                        ret['sudo'] = task.push_sudo(role, sudo_uuids, proxy, request.user.username)
                 logger.info('推送用户结果ret:%s'%ret)
 
                 # TODO 将事件放进queue中
@@ -631,6 +632,7 @@ def perm_role_push(request, *args):
                 event = dict(push_assets=host_names, role_name=role.name, password_push=password_push,
                              key_push=key_push, task_proxy=proxy.proxy_name)
                 event['tasks'] = event_task_names
+                event['username'] = request.user.username
                 task_queue.put(event)
 
                 # TODO 记录task事件
@@ -666,7 +668,8 @@ def push_role_event(request):
                     tk_obj = Task.objects.get(task_name=event_name, username=web_username)
                     if not tk_obj:
                         task_queue.put(tk_event)
-                    response['message'] = tk_obj.proxy_name + tk_obj.content
+                    else:
+                        response['message'] = tk_obj.proxy_name + tk_obj.content
                 else:
                     host_names = tk_event.pop('push_assets')
                     calc_assets = [Asset.objects.get(name=name) for name in host_names]
@@ -677,38 +680,41 @@ def push_role_event(request):
                     success_asset = {}
                     failed_asset = {}
                     for task_name in tk_event['tasks']:
-                        time.sleep(4)   # 暂停4s,否则可能会查不出结果
-                        result = query_event(task_name, proxy)
-                        # 更新task的status, result
-                        tk = get_object(Task, task_name=task_name)
-                        tk.status = 'complete'
-                        tk.content = result['messege']
-                        tk.save()
-                        res = json.loads(result['messege'])
-                        if res.get('failed'):
-                            for hostname, info in res.get('failed').items():
-                                if hostname in failed_asset.keys():
-                                    if info in failed_asset.get(hostname):
-                                        failed_asset[hostname] += info
-                                else:
-                                    failed_asset[hostname] = info
-                        if res.get('unreachable'):
-                            for hostname, info in res.get('unreachable').items():
-                                if hostname in failed_asset.keys():
-                                    if info in failed_asset.get(hostname):
-                                        failed_asset[hostname] += info
-                                else:
-                                    failed_asset[hostname] = info
+                        time.sleep(2)   # 暂停3s,否则可能会查不出结果
+                        result = query_event(task_name, tk_event['username'], proxy)
+                        if not result:
+                            task_queue.put(tk_event)
+                        else:
+                            # 更新task的status, result
+                            tk = get_object(Task, task_name=task_name)
+                            tk.status = 'complete'
+                            tk.content = result['messege']
+                            tk.save()
+                            res = json.loads(result['messege'])
+                            if res.get('failed'):
+                                for hostname, info in res.get('failed').items():
+                                    if hostname in failed_asset.keys():
+                                        if info in failed_asset.get(hostname):
+                                            failed_asset[hostname] += info
+                                    else:
+                                        failed_asset[hostname] = info
+                            if res.get('unreachable'):
+                                for hostname, info in res.get('unreachable').items():
+                                    if hostname in failed_asset.keys():
+                                        if info in failed_asset.get(hostname):
+                                            failed_asset[hostname] += info
+                                    else:
+                                        failed_asset[hostname] = info
 
-                        if res.get('success'):
-                            for hostname, info in res.get('success').items():
-                                if hostname in failed_asset.keys():
-                                    continue
-                                elif hostname in success_asset.keys():
-                                    if str(info) in success_asset.get(hostname, ''):
-                                        success_asset[hostname] += str(info)
-                                else:
-                                    success_asset[hostname] = str(info)
+                            if res.get('success'):
+                                for hostname, info in res.get('success').items():
+                                    if hostname in failed_asset.keys():
+                                        continue
+                                    elif hostname in success_asset.keys():
+                                        if str(info) in success_asset.get(hostname, ''):
+                                            success_asset[hostname] += str(info)
+                                    else:
+                                        success_asset[hostname] = str(info)
                     # 推送成功 回写push表
                     for asset in calc_assets:
                         push_check = PermPush.objects.filter(role=role, asset=asset)

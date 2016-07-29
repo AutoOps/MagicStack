@@ -7,6 +7,7 @@
         <link href="/static/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
         <link href="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
         <!-- END PAGE LEVEL PLUGINS -->
+        <link href="/static/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css" />
         <!-- BEGIN THEME GLOBAL STYLES -->
         <link href="/static/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
         <link href="/static/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
@@ -437,6 +438,8 @@
     <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
     <script src="/static/js/layer/layer.js" type="text/javascript"></script>
     <script src="/static/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+    <script src="/static/pages/scripts/ui-toastr.min.js" type="text/javascript"></script>
 <script>
     //获取一级菜单长度
     var select1_len = document.assetForm.proxy.options.length;
@@ -765,16 +768,33 @@
             if (operator_type == 'edit'){
                 save_url = "{% url 'asset_edit' %}?id="+ asset_id ;
             }
+            $("#myModal").modal('hide');
             $.ajax({
                 method: 'POST',
                 url: save_url,
                 data: $('#form_asset').serialize(),
                 success:function(res){
                     if(res.success){
-                        $("#myModal").modal('hide');
                         window.location.reload()
                     }else{
-                        $("#error_info").text(res.error).show()
+                        toastr["error"](res.error);
+                        toastr.options = {
+                          "closeButton": false,
+                          "debug": false,
+                          "newestOnTop": false,
+                          "progressBar": false,
+                          "positionClass": "toast-top-right",
+                          "preventDuplicates": false,
+                          "onclick": null,
+                          "showDuration": "300",
+                          "hideDuration": "1000",
+                          "timeOut": "5000",
+                          "extendedTimeOut": "1000",
+                          "showEasing": "swing",
+                          "hideEasing": "linear",
+                          "showMethod": "fadeIn",
+                          "hideMethod": "fadeOut"
+                        }
                     }
                 }
             })

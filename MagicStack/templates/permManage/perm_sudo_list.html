@@ -249,16 +249,33 @@
             if (operator_type == 'edit'){
                 save_url = "{% url 'sudo_edit' %}?id="+ sudo_id ;
             }
+            $("#myModal").modal('hide');
             $.ajax({
                 method: 'POST',
                 url: save_url,
                 data: $('#form_sudo').serialize(),
                 success:function(res){
                     if(res.success){
-                        $("#myModal").modal('hide');
                         window.location.reload()
                     }else{
-                        $("#error_info").text(res.error).show()
+                        toastr["error"](res.error);
+                        toastr.options = {
+                          "closeButton": false,
+                          "debug": false,
+                          "newestOnTop": false,
+                          "progressBar": false,
+                          "positionClass": "toast-top-right",
+                          "preventDuplicates": false,
+                          "onclick": null,
+                          "showDuration": "300",
+                          "hideDuration": "1000",
+                          "timeOut": "5000",
+                          "extendedTimeOut": "1000",
+                          "showEasing": "swing",
+                          "hideEasing": "linear",
+                          "showMethod": "fadeIn",
+                          "hideMethod": "fadeOut"
+                        }
                     }
                 }
             })

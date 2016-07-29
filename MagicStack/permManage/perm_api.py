@@ -337,7 +337,7 @@ def save_or_delete(obj_name, data, proxy, obj_uuid=None, action='add'):
             info = result['messege']
     except Exception as e:
         info = 'error'
-        logger.error(e)
+        logger.error("[save_or_delete]    %s"%e)
     return info
 
 
@@ -395,16 +395,17 @@ def role_proxy_operator(user_name, obj_name, data, proxy=None, obj_uuid='all', a
         logger.info('role_proxy_%s:%s'%(action, result['messege']))
 
         # 生成唯一的事件名称，用于从数据库中查询执行结果
-        role_name = json.loads(data)['name']
-        task_name = role_name + '_' + uuid.uuid4().hex
+        if 'name' not in json.dumps(data):
+            raise ValueError('role_proxy_operator: data["name"]不存在')
+        task_name = json.loads(data)['name'] + '_' + uuid.uuid4().hex
         # 将事件添加到消息队列中
-        task_queue.put({'server': task_name})
+        task_queue.put({'server': task_name, 'username': user_name})
 
         # 将执行结果保存到数据库中
         role_task = Task()
         role_task.task_name = task_name
         role_task.proxy_name = proxy.proxy_name
-        role_task.role_name = role_name
+        role_task.role_name = json.loads(data)['name']
         role_task.username = user_name
         role_task.status = 'complete'
         role_task.content = res_info
@@ -416,7 +417,7 @@ def role_proxy_operator(user_name, obj_name, data, proxy=None, obj_uuid='all', a
         role_task.result = result['messege']
         role_task.save()
     except Exception as e:
-        logger.error(e)
+        logger.error("[role_proxy_operator] %s"%e)
     finally:
         g_lock.release()
     return result
@@ -431,5 +432,5 @@ def execute_thread_tasks(proxy_list, thread_num, *args, **kwargs):
         work_manager.init_work_queue(role_proxy_operator, *args, **kwargs)
         work_manager.init_thread_pool()
     except Exception as e:
-        logger.error(e)
+        logger.error("[execute_thread_tasks]  %s"%e)
 

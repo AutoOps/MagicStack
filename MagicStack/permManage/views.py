@@ -657,11 +657,15 @@ def push_role_event(request):
     response = {'error': '', 'message':''}
     if request.method == 'GET':
         if task_queue.qsize() > 0:
+            logger.info(u'任务队列:%s'%task_queue.qsize())
             try:
                 tk_event = task_queue.get()
                 if 'server' in tk_event:
                     event_name = tk_event['server']
-                    tk_obj = Task.objects.get(task_name=event_name)
+                    web_username = tk_event['username']
+                    tk_obj = Task.objects.get(task_name=event_name, username=web_username)
+                    if not tk_obj:
+                        task_queue.put(tk_event)
                     response['message'] = tk_obj.proxy_name + tk_obj.content
                 else:
                     host_names = tk_event.pop('push_assets')
@@ -821,15 +825,11 @@ def perm_sudo_add(request, res, *args):
                     'comment': comment,
                     'commands': commands}
             data = json.dumps(data)
-            message = save_or_delete('PermSudo', data, proxy_list)
-            flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
-            if flag:
-                res['content'] = u"添加Sudo命令别名[%s]成功" % name
-                res['emer_status'] = u"添加Sudo命令别名[%s]成功" % name
-                response['success'] = True
-            else:
-                sudo.delete()
-                raise ServerError(u"添加Sudo命令别名[%s]失败:proxy上添加sudo别名失败" %name)
+            execute_thread_tasks(proxy_list, THREAD_NUMBERS, request.user.username, 'PermSudo', data,
+                                 obj_uuid=sudo.uuid_id, action='add')
+            res['content'] = u"添加Sudo命令别名[%s]成功" % name
+            res['emer_status'] = u"添加Sudo命令别名[%s]成功" % name
+            response['success'] = True
         except ServerError as e:
             res['flag'] = 'false'
             res['content'] = e.message
@@ -881,29 +881,23 @@ def perm_sudo_edit(request, res, *args):
             deal_space_commands = list_drop_str(pattern.split(commands), u'')
             deal_all_commands = map(trans_all, deal_space_commands)
             commands = ', '.join(deal_all_commands).strip()
+            sudo.name = name.strip()
+            sudo.commands = commands
+            sudo.comment = comment
+            sudo.save()
             proxy_list = Proxy.objects.all()
             # 更新proxy上的数据
             data = {'name': name.strip(),
                     'comment': comment,
                     'commands': commands}
             data = json.dumps(data)
-            message = save_or_delete('PermSudo', data, proxy_list, sudo.uuid_id, 'update')
-            flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
-            if flag:
-                sudo.name = name.strip()
-                sudo.commands = commands
-                sudo.comment = comment
-                sudo.save()
+            execute_thread_tasks(proxy_list, THREAD_NUMBERS, request.user.username, 'PermSudo', data,
+                                 obj_uuid=sudo.uuid_id, action='update')
 
-                msg = u"编辑Sudo命令别名[%s]成功" % sudo.name
-                res['content'] = msg
-                res['emer_status'] = msg
-                response['success'] = True
-
-            else:
-                msg = u"编辑Sudo命令别名[%s]失败:proxy上sudo更新失败" % sudo.name
-                raise ServerError(msg)
-
+            msg = u"编辑Sudo命令别名[%s]成功" % sudo.name
+            res['content'] = msg
+            res['emer_status'] = msg
+            response['success'] = True
         except ServerError as e:
             res['flag'] = 'false'
             res['content'] = e.message
@@ -921,21 +915,25 @@ def perm_sudo_delete(request, res, *args):
     res['operator'] = '删除别名'
     res['emer_content'] = 6
     if request.method == "POST":
-        sudo_id = request.POST.get("id")
-        sudo = PermSudo.objects.get(id=int(sudo_id))
-        # 数据库里删除记录
-        proxy_list = Proxy.objects.all()
-        message = save_or_delete('PermSudo',{}, proxy_list, obj_uuid=sudo.uuid_id, action='delete')
-        flag = True if len(filter(lambda x: x == 'success', message)) == len(message) else False
-        if flag:
+        try:
+            sudo_id = request.POST.get("id")
+            sudo = PermSudo.objects.get(id=int(sudo_id))
+            # 数据库里删除记录
+            proxy_list = Proxy.objects.all()
+            data = {
+                'name': sudo.name,
+            }
+            data = json.dumps(data)
+            execute_thread_tasks(proxy_list, THREAD_NUMBERS, request.user.username, 'PermSudo', data, obj_uuid=sudo.uuid_id, action='delete')
             msg = u'删除Sudo别名[%s]成功'% sudo.name
             res['content'] = msg
             res['emer_status'] = msg
             sudo.delete()
-        else:
+        except Exception as e:
             res['flag'] = 'false'
-            msg = u'删除Sudo别名[%s]失败'% sudo.name
-            res['content'] = res['emer_status'] = msg
+            msg = u'删除Sudo别名[%s]失败:%s'% (sudo.name,e)
+            res['content'] = msg
+            res['emer_status'] = msg
         return HttpResponse(msg)
     else:
         res['flag'] = 'false'
@@ -1016,39 +1014,63 @@ def download_key(request, res):
 @require_role('user')
 @user_operator_record
 def perm_role_retry(request, res):
+    """
+    第一次添加或者更新失败后，再次在proxy上添加或者更新系统用户/SUDO
+    action: 添加 or 编辑
+    character: 标记系统用户 or SUDO
+    """
     response = {'success': True, 'message': ''}
     res['emer_content'] = 6
     if request.method == 'POST':
         tk_id = request.POST.get('id')
         action = request.POST.get('action')
+        character = request.POST.get('character')
         if '' or None in [tk_id, action]:
             response['success'] = False
             response['message'] = '必要参数为空'
             return HttpResponse(json.dumps(response), content_type='application/json')
-        tk_event = Task.objects.get(id=int(tk_id))
-        error_role = PermRole.objects.get(uuid_id=tk_event.role_uuid, name=tk_event.role_name)
-        error_proxy = Proxy.objects.get(proxy_name=tk_event.proxy_name)
-        role_data = tk_event.role_data
-        if action == 'add':
-            res['operator'] = u"重新在proxy上添加系统用户"
-            info = save_or_delete('PermRole', role_data, error_proxy, error_role.uuid_id, 'add')
+        try:
+            tk_event = Task.objects.get(id=int(tk_id))
+            if character == 'role':
+                obj_name = 'PermRole'
+                msg_info = u'系统用户'
+                error_role = PermRole.objects.get(uuid_id=tk_event.role_uuid, name=tk_event.role_name)
+            else:
+                obj_name = 'PermSudo'
+                msg_info = u'SUDO'
+                error_role = PermSudo.objects.get(uuid_id=tk_event.role_uuid, name=tk_event.role_name)
+            operate = u'添加' if action == 'add' else u'编辑'
+            error_proxy = Proxy.objects.get(proxy_name=tk_event.proxy_name)
+            role_data = tk_event.role_data
+            res['operator'] = u"重新在proxy上{}{}".format(operate,msg_info)
+            info = save_or_delete(obj_name, role_data, error_proxy, error_role.uuid_id, action)
             if info == 'success':
                 tk_event.result = info
                 tk_event.save()
-                res['emer_status'] = u'重新在[%s]上添加系统用户[%s]成功'%(error_proxy.proxy_name, error_role.name)
+                res['emer_status'] = u'重新在[{0}]上{1}{2}[{3}]成功'.format(error_proxy.proxy_name,operate, msg_info, error_role.name)
+                res['content'] = u'重新在[{0}]上{1}{2}[{3}]成功'.format(error_proxy.proxy_name,operate, msg_info, error_role.name)
             else:
-                res['emer_status'] = u'重新在[%s]上添加系统用户[%s]失败'%(error_proxy.proxy_name, error_role.name)
+                res['flag'] = 'false'
+                res['emer_status'] = u'重新在[{0}]上{1}{2}[{3}]失败'.format(error_proxy.proxy_name,operate, msg_info, error_role.name)
+                res['content'] = u'重新在[{0}]上{1}{2}[{3}]失败'.format(error_proxy.proxy_name,operate, msg_info, error_role.name)
                 response['success'] = False
-                response['message'] = res['emer_status'] = u'重新在[%s]上添加系统用户[%s]失败,请联系管理员'%(error_proxy.proxy_name, error_role.name)
-        elif action == 'update':
-            res['operator'] = u"重新在proxy上编辑系统用户"
-            info = save_or_delete('PermRole', role_data, error_proxy, error_role.uuid_id, 'update')
-            if info == 'success':
-                tk_event.result = info
-                tk_event.save()
-                res['emer_status'] = u'重新在[%s]上编辑系统用户[%s]成功'%(error_proxy.proxy_name, error_role.name)
-            else:
-                res['emer_status'] = u'重新在[%s]上编辑系统用户[%s]失败'%(error_proxy.proxy_name, error_role.name)
-                response['success'] = False
-                response['message'] = res['emer_status'] = u'重新在[%s]上编辑系统用户[%s]失败,请联系管理员'%(error_proxy.proxy_name, error_role.name)
+                response['message'] = u'重新在[{0}]上{1}{2}[{3}]失败'.format(error_proxy.proxy_name,operate, msg_info, error_role.name)
+        except Exception as e:
+            res['flag'] = 'false'
+            errorMsg = u'重新在[{0}]上{1}{2}[{3}]失败'.format(error_proxy.proxy_name,operate, msg_info, error_role.name)
+            res['content'] = errorMsg
+            res['emer_status'] = errorMsg
+            response['success'] = False
+            response['message'] = u'重新在[{0}]上{1}{2}[{3}]失败:{4}'.format(error_proxy.proxy_name,operate, msg_info, error_role.name,e)
+            logger.error(e)
     return HttpResponse(json.dumps(response), content_type='application/json')
+
+
+@require_role('user')
+def perm_sudo_detail(request):
+    header_title, path1, path2 = u"SUDO别名", u"SUDO别名管理", "SUDO详情"
+    sudo_id = request.GET.get('id')
+    sudo = PermSudo.objects.get(id=int(sudo_id))
+    sudo_roles = sudo.perm_role.all()
+    sudo_operator_record = Task.objects.filter(role_name=sudo.name).filter(role_uuid=sudo.uuid_id)
+    return my_render('permManage/perm_sudo_detail.html', locals(), request)

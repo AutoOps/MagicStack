@@ -194,6 +194,15 @@ def get_display_msg(user, password='', send_mail_need=False):
 
 
 def user_operator_record(func):
+    """
+    用户操作记录
+    operator: add edit delete
+    flag: success/false
+    content: the result of the operator
+    告警记录
+    emer_content: emergency source
+    emer_status: the content of the emergency
+    """
     res = {'operator':'', 'flag':'success', 'content':'', 'emer_content':'', 'emer_status': ''}
     @functools.wraps(func)
     def wrapper(request, *args):

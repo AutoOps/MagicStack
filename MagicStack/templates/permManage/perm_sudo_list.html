@@ -2,6 +2,7 @@
 {% block self_head_css_js %}
     <link href="/static/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
     <link href="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="/static/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css" />
     <link href="/static/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
     <link href="/static/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
 {% endblock %}
@@ -103,6 +104,8 @@
     <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
     <script src="/static/pages/scripts/table-datatables-managed.min.js" type="text/javascript"></script>
     <script src="/static/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+    <script src="/static/pages/scripts/ui-toastr.min.js" type="text/javascript"></script>
 <script>
       //编辑资产组
     function edit_Sudo(id){
@@ -189,7 +192,7 @@
                                 <li>' + op_del + '</li>\
                             </ul>\
                         </div>';
-
+                    $('td:eq(0)', nRow).html('<a href=\"{% url 'sudo_detail' %}?id=' + aData.id + '\">' + aData.name + '</a>');
                     $('td:eq(3)', nRow).html(op_html);
                     return nRow;
                 },
@@ -280,7 +283,37 @@
           });
 
         <!--页面操作处理结束 -->
-    })
+    });
 
+    //定时器
+    function showalert() {
+        $.ajax({
+          url: '{% url 'push_role_event' %}',
+          method: 'get',
+          success: function(res) {
+              if(res.message) {
+                  toastr['success'](res.message);
+                  toastr.options = {
+                      "closeButton": true,
+                      "debug": false,
+                      "positionClass": "toast-top-right",
+                      "onclick": null,
+                      "showDuration": "1000",
+                      "hideDuration": "1000",
+                      "timeOut": "5000",
+                      "extendedTimeOut": "1000",
+                      "showEasing": "swing",
+                      "hideEasing": "linear",
+                      "showMethod": "fadeIn",
+                      "hideMethod": "fadeOut"
+                  }
+              }
+          }
+        });
+    }
+    //定时执行，每隔2秒执行一次showalert()
+    window.setInterval(function(){
+    showalert();
+    },2000);
 </script>
 {% endblock %}

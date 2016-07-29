@@ -170,7 +170,7 @@
     <script>
 
     function Retry(id, action){
-        $.post("{% url 'perm_role_retry' %}",{'id': id, 'action': action}, function(res){
+        $.post("{% url 'perm_role_retry' %}",{'id': id, 'action': action, 'character': 'role'}, function(res){
             if(res.success){
                window.location.reload()
             }else{

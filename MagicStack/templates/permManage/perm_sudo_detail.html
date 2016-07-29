@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load mytags %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6">
+        <!-- BEGIN SAMPLE TABLE PORTLET-->
+        <div class="portlet light portlet-fit bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-settings font-green"></i>
+                    <span class="caption-subject font-green sbold uppercase">{{ sudo.name }} - 关联的系统用户</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable table-scrollable-borderless">
+                    <table class="table table-hover table-light">
+                        <thead>
+                            <tr class="uppercase">
+                                <th class="text-center">系统用户</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in sudo_roles %}
+                            <tr class="gradeX">
+                                <td class="text-center"> {{ item.name }} </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- END SAMPLE TABLE PORTLET-->
+    </div>
+    <div class="col-md-6">
+        <!-- BEGIN SAMPLE TABLE PORTLET-->
+        <div class="portlet light portlet-fit bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-settings font-green"></i>
+                    <span class="caption-subject font-green sbold uppercase">{{ sudo.name }} - proxy上操作记录</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable table-scrollable-borderless">
+                    <table class="table table-hover table-light">
+                        <thead>
+                            <tr class="uppercase">
+                                <th class="text-center">proxy</th>
+                                <th class="text-center">操作</th>
+                                <th class="text-center">结果</th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for record in sudo_operator_record %}
+                            <tr class="gradeX">
+                                <td class="text-center"> {{ record.proxy_name }} </td>
+                                <td class="text-center"> {{ record.action | action_to_zh }} </td>
+                                {% if record.result == 'success' %}
+                                <td class="text-center" style="color: #1ab394;" >{{ record.result|result_to_zh }} </td>
+                                {% else %}
+                                <td class="text-center" style="color: #ec4758;cursor: help" title="{{ record.result }}">{{ record.result|result_to_zh }} </td>
+                                {% endif %}
+                                {% if record.result == 'error' %}
+                                     {% if record.action == 'add' %}
+                                         <td class="text-center" > <a class="edit" onclick="Retry('{{ record.id }}', 'add')"> 添加 </a></td>
+                                     {% elif record.action == 'update' %}
+                                         <td class="text-center" > <a class="edit" onclick="Retry('{{ record.id }}', 'update')"> 编辑 </a></td>
+                                     {% elif record.action == 'push' %}
+                                         <td class="text-center" > <a class="edit" onclick="Retry('{{ record.id }}', 'push')"> 推送 </a></td>
+                                     {% endif %}
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- END SAMPLE TABLE PORTLET-->
+    </div>
+</div>
+
+
+{% endblock %}
+{% block self_footer_js %}
+    <script src="/static/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+
+    <script>
+
+    function Retry(id, action){
+        $.post("{% url 'perm_role_retry' %}",{'id': id, 'action': action, 'character': 'sudo'}, function(res){
+            if(res.success){
+               window.location.reload()
+            }else{
+               bootbox.alert(res.message)
+            }
+
+        })
+
+    }
+    </script>
+{% endblock %}

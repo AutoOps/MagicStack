@@ -21,4 +21,5 @@ urlpatterns = patterns('permManage.views',
                        url(r'^sudo/add/$', perm_sudo_add, name='sudo_add'),
                        url(r'^sudo/del/$', perm_sudo_delete, name='sudo_del'),
                        url(r'^sudo/edit/$', perm_sudo_edit, name='sudo_edit'),
+                       url(r'^sudo/detail/$', perm_sudo_detail, name='sudo_detail')
                        )

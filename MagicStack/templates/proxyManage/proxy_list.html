@@ -365,6 +365,7 @@
             if ($("#submit_type").val() == 'edit') {
                 url = "{% url 'proxy_edit' %}";
             }
+            $("#proxy").modal('hide');
             $.ajax({
                 type: 'POST',
                 url: url,
@@ -375,7 +376,24 @@
                         //添加/编辑成功
                         window.location.reload();
                     } else {
-                        $("#err_info").html(result.content).show();
+                        toastr["error"](result.content);
+                        toastr.options = {
+                          "closeButton": false,
+                          "debug": false,
+                          "newestOnTop": false,
+                          "progressBar": false,
+                          "positionClass": "toast-top-right",
+                          "preventDuplicates": false,
+                          "onclick": null,
+                          "showDuration": "300",
+                          "hideDuration": "1000",
+                          "timeOut": "5000",
+                          "extendedTimeOut": "1000",
+                          "showEasing": "swing",
+                          "hideEasing": "linear",
+                          "showMethod": "fadeIn",
+                          "hideMethod": "fadeOut"
+                        }
                     }
                 }
             });

@@ -406,7 +406,7 @@
                     if(res.success){
                         window.location.reload()
                     }else{
-                        toastr['success'](res.error);
+                        toastr['error'](res.error);
                         toastr.options = {
                           "closeButton": true,
                           "debug": false,

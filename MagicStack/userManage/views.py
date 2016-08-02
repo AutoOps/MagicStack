@@ -198,7 +198,7 @@ def user_add(request, res, *args):
         send_mail_need = True if '1' in extra else False
         uuid_id = str(uuid.uuid1())             # 生成uuid
         try:
-            if '' in [username, password, role]:
+            if '' in [username, password, email]:
                 raise ServerError(u'带*内容不能为空')
             check_user_is_exist = User.objects.filter(username=username)
             if check_user_is_exist:

@@ -333,7 +333,21 @@
                             {'id': del_id },
                             function(data){
                                 row.remove();
-                                bootbox.alert(data);
+                                toastr['success'](data);
+                                toastr.options = {
+                                      "closeButton": true,
+                                      "debug": false,
+                                      "positionClass": "toast-top-right",
+                                      "onclick": null,
+                                      "showDuration": "1000",
+                                      "hideDuration": "1000",
+                                      "timeOut": "5000",
+                                      "extendedTimeOut": "1000",
+                                      "showEasing": "swing",
+                                      "hideEasing": "linear",
+                                      "showMethod": "fadeIn",
+                                      "hideMethod": "fadeOut"
+                                }
                             }
                       )
                   }
@@ -354,7 +368,21 @@
                     data: {id: id},
                     url: '{% url "user_group_del" %}',
                     success: function (res) {
-                        bootbox.alert(res);
+                        toastr['success'](res);
+                        toastr.options = {
+                              "closeButton": true,
+                              "debug": false,
+                              "positionClass": "toast-top-right",
+                              "onclick": null,
+                              "showDuration": "1000",
+                              "hideDuration": "1000",
+                              "timeOut": "5000",
+                              "extendedTimeOut": "1000",
+                              "showEasing": "swing",
+                              "hideEasing": "linear",
+                              "showMethod": "fadeIn",
+                              "hideMethod": "fadeOut"
+                        };
                         $("#sample_1 input:checked").closest("tr").remove();
                     }
                     });

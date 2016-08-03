@@ -157,6 +157,7 @@ def db_asset_alert(asset, username, alert_dic):
 def ansible_record(asset, ansible_dic, username):
     alert_dic = {}
     asset_dic = asset.__dict__
+    eth_info = ansible_dic.pop('eth_info')
     for field, value in ansible_dic.items():
         old = asset_dic.get(field)
         new = ansible_dic.get(field)
@@ -165,6 +166,30 @@ def ansible_record(asset, ansible_dic, username):
             asset.save()
             alert_dic[field] = [old, new]
 
+    # 更新网卡信息
+    asset_net = asset.networking.all()[0]
+    if asset_net.net_name in eth_info.keys():
+        asset_net.active = eth_info[asset_net.net_name]['active']
+        asset_net.device = eth_info[asset_net.net_name]['device']
+        asset_net.macaddress = eth_info[asset_net.net_name]['macaddress']
+        asset_net.mtu = eth_info[asset_net.net_name]['mtu']
+        asset_net.module = eth_info[asset_net.net_name]['module']
+        asset_net.pciid = eth_info[asset_net.net_name]['pciid']
+        asset_net.promisc = eth_info[asset_net.net_name]['promisc']
+        asset_net.type = eth_info[asset_net.net_name]['type']
+        asset_net.save()
+    elif asset_net.net_name not in eth_info.keys() and len(eth_info.keys()) == 1:
+        new_eth_info = eth_info.values()[0]
+        asset_net.net_name = new_eth_info['device']
+        asset_net.active = new_eth_info['active']
+        asset_net.device = new_eth_info['device']
+        asset_net.macaddress = new_eth_info['macaddress']
+        asset_net.module = new_eth_info['module']
+        asset_net.mtu = new_eth_info['mtu']
+        asset_net.pciid = new_eth_info['pciid']
+        asset_net.promisc = new_eth_info['promisc']
+        asset_net.type = new_eth_info['type']
+        asset_net.save()
     db_asset_alert(asset, username, alert_dic)
 
 
@@ -229,8 +254,11 @@ def get_ansible_asset_info(asset_ip, setup_info):
     all_ip = setup_info.get("ansible_all_ipv4_addresses")
     other_ip_list = all_ip.remove(asset_ip) if asset_ip in all_ip else []
     other_ip = ','.join(other_ip_list) if other_ip_list else ''
-    mac = setup_info.get("ansible_default_ipv4").get("macaddress")
-    brand = setup_info.get("ansible_product_name")
+    product_name = setup_info.get("ansible_product_name")
+    product_uuid = setup_info.get("ansible_product_uuid")
+    product_version = setup_info.get("ansible_product_version")
+    system_vendor = setup_info.get("ansible_system_vendor")
+    devices = setup_info.get("ansible_devices")
     try:
         cpu_type = setup_info.get("ansible_processor")[1]
     except IndexError:
@@ -251,8 +279,17 @@ def get_ansible_asset_info(asset_ip, setup_info):
         cpu_cores = setup_info.get("ansible_processor_vcpus")
     cpu = cpu_type + ' * ' + unicode(cpu_cores)
     system_arch = setup_info.get("ansible_architecture")
-    sn = setup_info.get("ansible_product_serial")
-    asset_info = [other_ip, mac, cpu, memory_format, disk, sn, system_type, system_version, brand, system_arch]
+    product_serial = setup_info.get("ansible_product_serial")
+    bios_date = setup_info.get("ansible_bios_date")
+    bios_version = setup_info.get("ansible_bios_version")
+    interfaces = setup_info.get("ansible_interfaces")
+    eth_info = {}
+    for item in interfaces:
+        if item.startswith('eth'):
+                eth_info[item] = setup_info.get("ansible_%s"%item)
+    asset_info = [other_ip, cpu, memory_format, disk, product_serial, system_type, devices,
+                  system_version, product_name, system_arch, bios_date, bios_version,
+                  product_uuid, product_version, system_vendor, eth_info]
     return asset_info
 
 
@@ -267,18 +304,26 @@ def asset_ansible_update(obj_list, ansible_asset_info, name):
         else:
             try:
                 asset_info = get_ansible_asset_info(asset.ip, setup_info)
-                other_ip, mac, cpu, memory, disk, sn, system_type, system_version, brand, system_arch = asset_info
+                other_ip, cpu, memory, disk, product_serial, system_type, devices,\
+                system_version, product_name, system_arch, bios_date, bios_version,\
+                product_uuid, product_version, system_vendor, eth_info = asset_info
                 asset_dic = {"other_ip": other_ip,
                              "cpu": cpu,
                              "memory": memory,
                              "disk": disk,
-                             "sn": sn,
+                             "product_serial": product_serial,
+                             "product_name": product_name,
+                             "product_uuid": product_uuid,
+                             "product_version": product_version,
                              "system_type": system_type,
+                             "devices": devices,
                              "system_version": system_version,
                              "system_arch": system_arch,
-                             "brand": brand
+                             "bios_date": bios_date,
+                             "bios_version": bios_version,
+                             "system_vendor": system_vendor,
+                             "eth_info": eth_info
                              }
-
                 ansible_record(asset, asset_dic, name)
             except Exception as e:
                 logger.error("save setup info failed! %s" % e)

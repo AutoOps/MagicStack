@@ -2,17 +2,19 @@
 
 from django.db.models.query import QuerySet
 from userManage.models import User, UserGroup
-from MagicStack.api import get_role_key, CRYPTOR, ROLE_TASK_QUEUE, logger, get_asset_info
+from MagicStack.api import get_role_key, CRYPTOR, ROLE_TASK_QUEUE, logger, get_asset_info, ServerError
 from permManage.models import PermRole, PermPush, PermRule
 from common.interface import APIRequest
 from assetManage.models import Asset, AssetGroup
 from thread_api import WorkManager
 from common.models import Task
+from permManage.ansible_api import MyTask
 import threading
 import os
 import json
 import uuid
 import datetime
+import time
 
 task_queue = ROLE_TASK_QUEUE
 
@@ -424,6 +426,67 @@ def role_proxy_operator(user_name, obj_name, data, proxy=None, obj_uuid='all', a
     return result
 
 
+def push_role_to_asset(asset_list, role, username, proxy=None):
+    """from permManage.ansible_api import MyTask
+    推送系统用户到远程主机上
+    """
+    try:
+        proxy_assets = Asset.objects.filter(proxy__proxy_name=proxy.proxy_name)
+        need_push_assets = list(set(asset_list) & set(proxy_assets))
+        push_resource = gen_resource(need_push_assets)
+
+        # TODO 调用Ansible API 进行推送
+        host_list = [asset.networking.all()[0].ip_address for asset in need_push_assets]
+        host_names = [asset.name for asset in need_push_assets]
+        task = MyTask(push_resource, host_list)
+        ret = {}
+
+        # 因为要先建立用户，而push key是在 password也完成的情况下的可选项
+        # 1. 以秘钥 方式推送角色
+        role_proxy = get_one_or_all('PermRole', proxy, role.uuid_id)
+        ret["pass_push"] = task.add_user(role.name, proxy, role.system_groups, username)
+        time.sleep(1)   # 暂停1秒,保证用户创建完成之后再推送key
+        ret["key_push"] = task.push_key(role.name, os.path.join(role_proxy['key_path'], 'id_rsa.pub'),
+                                        proxy, username)
+
+        # 2. 推送账号密码 <为了安全 系统用户统一使用秘钥进行通信，不再提供密码方式的推送>
+        # 3. 推送sudo配置文件
+        sudo_list = [sudo for sudo in role.sudo.all()]
+        if sudo_list:
+            sudo_uuids = [sudo.uuid_id for sudo in role.sudo.all()]
+            ret['sudo'] = task.push_sudo(role, sudo_uuids, proxy, username)
+        logger.info('推送用户结果ret:%s'%ret)
+
+        # TODO 将事件放进queue中
+        event_task_names = []
+        if ret.has_key('pass_push'):
+            tk_pass_push = ret['pass_push']['task_name']
+            event_task_names.append(tk_pass_push)
+        if ret.has_key('key_push'):
+            tk_key_push = ret['key_push']['task_name']
+            event_task_names.append(tk_key_push)
+        if ret.has_key('sudo'):
+            if 'task_name' in ret['sudo']:
+                tk_sudo_push = ret['sudo']['task_name']
+                event_task_names.append(tk_sudo_push)
+        event = dict(push_assets=host_names, role_name=role.name, password_push=False,
+                     key_push=True, task_proxy=proxy.proxy_name)
+        event['tasks'] = event_task_names
+        event['username'] = username
+        task_queue.put(event)
+
+        # TODO 记录task事件
+        for item in event['tasks']:
+            tk = Task()
+            tk.task_name = item
+            tk.status = 'running'
+            tk.start_time = datetime.datetime.now()
+            tk.username = username
+            tk.save()
+    except Exception as e:
+        raise ServerError(e)
+
+
 def execute_thread_tasks(proxy_list, thread_num, func, *args, **kwargs):
     """
     多个任务并发执行
@@ -434,4 +497,7 @@ def execute_thread_tasks(proxy_list, thread_num, func, *args, **kwargs):
         work_manager.init_thread_pool()
     except Exception as e:
         logger.error("[execute_thread_tasks]  %s"%e)
+
+
+
 

@@ -916,7 +916,7 @@
                     data: {asset_id_all: asset_id_all},
                     url: "{% url 'asset_action' 'on' %}",
                     success: function (data) {
-                            layer.msg(data.messege,{offset:['100px','1200px']}, function(){
+                            layer.msg(data,{offset:['100px','1200px']}, function(){
                             parent.location.reload();
                            });
                     }
@@ -939,7 +939,7 @@
                         data: {asset_id_all: asset_id_all},
                         url: "{% url 'asset_action' 'reboot' %}",
                         success: function (data) {
-                            layer.msg( data.messege,{offset:['100px','1200px']}, function(){
+                            layer.msg( data,{offset:['100px','1200px']}, function(){
                                 parent.location.reload();
                             });
                         }
@@ -962,7 +962,7 @@
                     data: {asset_id_all: asset_id_all},
                     url: "{% url 'asset_action' 'off' %}",
                     success: function (data) {
-                        layer.msg( data.messege,{offset:['100px','1200px']}, function(){
+                        layer.msg( data,{offset:['100px','1200px']}, function(){
                             parent.location.reload();
                         });
                     }
@@ -985,7 +985,7 @@
                     data: {asset_id_all: asset_id_all},
                     url: "{% url 'asset_action' 'rebuild' %}",
                     success: function (data) {
-                        layer.msg( data.messege,{offset:['100px','1200px']}, function(){
+                        layer.msg( data,{offset:['100px','1200px']}, function(){
                             parent.location.reload();
                         });
                     }
@@ -1035,7 +1035,7 @@
 {#                          time: 20000,#}
 {#                          offset:['100px','800px']#}
 {#              });#}
-              if(res.message){
+              if(res.success && res.message){
                   alert(res.message)
               }
           }

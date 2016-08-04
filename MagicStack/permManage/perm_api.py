@@ -2,8 +2,7 @@
 
 from django.db.models.query import QuerySet
 from userManage.models import User, UserGroup
-from assetManage.asset_api import get_asset_info
-from MagicStack.api import get_role_key, CRYPTOR, task_queue, logger
+from MagicStack.api import get_role_key, CRYPTOR, ROLE_TASK_QUEUE, logger, get_asset_info
 from permManage.models import PermRole, PermPush, PermRule
 from common.interface import APIRequest
 from assetManage.models import Asset, AssetGroup
@@ -14,6 +13,8 @@ import os
 import json
 import uuid
 import datetime
+
+task_queue = ROLE_TASK_QUEUE
 
 
 def get_group_user_perm(ob):
@@ -423,13 +424,13 @@ def role_proxy_operator(user_name, obj_name, data, proxy=None, obj_uuid='all', a
     return result
 
 
-def execute_thread_tasks(proxy_list, thread_num, *args, **kwargs):
+def execute_thread_tasks(proxy_list, thread_num, func, *args, **kwargs):
     """
     多个任务并发执行
     """
     try:
         work_manager = WorkManager(proxy_list, thread_num)
-        work_manager.init_work_queue(role_proxy_operator, *args, **kwargs)
+        work_manager.init_work_queue(func, *args, **kwargs)
         work_manager.init_thread_pool()
     except Exception as e:
         logger.error("[execute_thread_tasks]  %s"%e)

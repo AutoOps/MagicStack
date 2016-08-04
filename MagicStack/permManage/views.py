@@ -9,8 +9,8 @@ from assetManage.models import Asset, AssetGroup
 from permManage.models import PermRole, PermRule, PermSudo, PermPush
 from permManage.utils import gen_keys, trans_all
 from permManage.ansible_api import MyTask
-from permManage.perm_api import get_role_info, get_role_push_host,query_event, execute_thread_tasks, gen_resource, save_or_delete,get_one_or_all, user_have_perm
-from MagicStack.api import my_render, get_object, CRYPTOR, require_role, logger, task_queue, ServerError, list_drop_str
+from permManage.perm_api import get_role_info, get_role_push_host,query_event, execute_thread_tasks, gen_resource, save_or_delete,get_one_or_all, user_have_perm, role_proxy_operator
+from MagicStack.api import my_render, get_object, CRYPTOR, require_role, logger, ROLE_TASK_QUEUE, ServerError, list_drop_str
 from common.models import Task
 from proxyManage.models import Proxy
 from MagicStack.settings import THREAD_NUMBERS
@@ -21,6 +21,7 @@ import datetime
 import re
 import uuid
 
+task_queue = ROLE_TASK_QUEUE
 
 @require_role('admin')
 def perm_rule_list(request):
@@ -349,7 +350,7 @@ def perm_role_add(request, res, *args):
                     'sudo_uuids': sudo_uuids,
                     'sys_groups': sys_groups}
             data = json.dumps(data)
-            execute_thread_tasks(proxy_list, THREAD_NUMBERS, request.user.username, 'PermRole', data,
+            execute_thread_tasks(proxy_list, THREAD_NUMBERS, role_proxy_operator, request.user.username, 'PermRole', data,
                                  obj_uuid=role.uuid_id, action='add')
             response['success'] = True
             res['content'] = u'添加系统用户[%s]成功'% role.name
@@ -422,7 +423,7 @@ def perm_role_delete(request, res, *args):
                 'name': role.name,
             }
             data = json.dumps(data)
-            execute_thread_tasks(proxy_list, THREAD_NUMBERS, request.user.username, 'PermRole', data, obj_uuid=role.uuid_id, action='delete')
+            execute_thread_tasks(proxy_list, THREAD_NUMBERS,role_proxy_operator, request.user.username, 'PermRole', data, obj_uuid=role.uuid_id, action='delete')
             msg = u"删除系统用户[%s]成功" % role.name
             res['content'] = msg
             res['emer_status'] = msg
@@ -543,7 +544,7 @@ def perm_role_edit(request, res, *args):
                     'sys_groups': sys_groups}
             data = json.dumps(data)
             proxy_list = Proxy.objects.all()
-            execute_thread_tasks(proxy_list, THREAD_NUMBERS, request.user.username, 'PermRole', data, obj_uuid=role.uuid_id, action='update')
+            execute_thread_tasks(proxy_list, THREAD_NUMBERS, role_proxy_operator, request.user.username, 'PermRole', data, obj_uuid=role.uuid_id, action='update')
             # TODO 用户操作记录
             res['content'] = u"编辑系统用户[%s]成功" % role.name
             # TODO 告警事件记录
@@ -831,7 +832,7 @@ def perm_sudo_add(request, res, *args):
                     'comment': comment,
                     'commands': commands}
             data = json.dumps(data)
-            execute_thread_tasks(proxy_list, THREAD_NUMBERS, request.user.username, 'PermSudo', data,
+            execute_thread_tasks(proxy_list, THREAD_NUMBERS, role_proxy_operator, request.user.username, 'PermSudo', data,
                                  obj_uuid=sudo.uuid_id, action='add')
             res['content'] = u"添加Sudo命令别名[%s]成功" % name
             res['emer_status'] = u"添加Sudo命令别名[%s]成功" % name
@@ -897,7 +898,7 @@ def perm_sudo_edit(request, res, *args):
                     'comment': comment,
                     'commands': commands}
             data = json.dumps(data)
-            execute_thread_tasks(proxy_list, THREAD_NUMBERS, request.user.username, 'PermSudo', data,
+            execute_thread_tasks(proxy_list, THREAD_NUMBERS, role_proxy_operator, request.user.username, 'PermSudo', data,
                                  obj_uuid=sudo.uuid_id, action='update')
 
             msg = u"编辑Sudo命令别名[%s]成功" % sudo.name
@@ -930,7 +931,7 @@ def perm_sudo_delete(request, res, *args):
                 'name': sudo.name,
             }
             data = json.dumps(data)
-            execute_thread_tasks(proxy_list, THREAD_NUMBERS, request.user.username, 'PermSudo', data, obj_uuid=sudo.uuid_id, action='delete')
+            execute_thread_tasks(proxy_list, THREAD_NUMBERS, role_proxy_operator,request.user.username, 'PermSudo', data, obj_uuid=sudo.uuid_id, action='delete')
             msg = u'删除Sudo别名[%s]成功'% sudo.name
             res['content'] = msg
             res['emer_status'] = msg

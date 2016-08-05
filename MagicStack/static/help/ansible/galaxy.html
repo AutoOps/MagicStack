@@ -1,0 +1,791 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset=UTF-8"utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Tag Manager Data Layer -->
+  <script>
+   dataLayer = [];
+  </script>
+  <!-- End Google Tag Manager Data Layer -->
+
+  
+  <title>Ansible Galaxy &mdash; Ansible Documentation</title>
+  
+
+  
+  
+
+  
+  <link href="css-family=Lato-400,700-Roboto+Slab-400,700-Inconsolata-400,700.css" tppabs="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel='stylesheet' type='text/css'>
+  <link href="font-awesome.min.css" tppabs="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'https://docs.ansible.com/ansible/0.01',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+      <script type="text/javascript" src="jquery.js" tppabs="https://docs.ansible.com/ansible/_static/jquery.js"></script>
+      <script type="text/javascript" src="underscore.js" tppabs="https://docs.ansible.com/ansible/_static/underscore.js"></script>
+      <script type="text/javascript" src="doctools.js" tppabs="https://docs.ansible.com/ansible/_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="theme.min.css" tppabs="https://docs.ansible.com/ansible/_static/css/theme.min.css" type="text/css" />
+    <script type="text/javascript" src="theme.js" tppabs="https://docs.ansible.com/ansible/_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="Ansible Documentation" href="index.html"/>
+        <link rel="next" title="Testing Strategies" href="test_strategies.html"/>
+        <link rel="prev" title="Community Information &amp; Contributing" href="community.html"/> 
+
+  <script src="modernizr.min.js" tppabs="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  <style>
+    .search-reset-start {
+        color: #463E3F;
+        float: right;
+        position: relative;
+        top: -25px;
+        left: -10px;
+        z-index: 10;
+     }
+     .search-reset-start:hover {
+        cursor: pointer;
+        color: #2980B9;
+     }
+     #search-box-id {
+        padding-right: 25px;
+     }
+  </style>
+
+  <link href="css-family=Open+Sans-400,300.css" tppabs="https://fonts.googleapis.com/css?family=Open+Sans:400,300"
+    rel='stylesheet' type='text/css'>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="ns.html-id=GTM-PSB293" tppabs="https://www.googletagmanager.com/ns.html?id=GTM-PSB293" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'/*tpa=https://docs.ansible.com/ansible/gtm.js*/});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-PSB293');</script>
+  <!-- End Google Tag Manager -->
+
+  <a class="DocSite-nav" href="javascript:if(confirm('http://docs.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">
+    <img class="DocSiteNav-logo"
+      src="logo_invert.png" tppabs="https://docs.ansible.com/ansible/_static/images/logo_invert.png"
+      alt="Ansible Logo">
+    <div class="DocSiteNav-title">
+      Documentation
+    </div>
+  </a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+
+      <div style="background-color:#5bbdbf;height=80px;margin:'auto auto auto auto'">
+        <a class="DocSiteProduct-header DocSiteProduct-header--core"
+          href="index.htm" tppabs="http://docs.ansible.com/ansible/">
+          <div class="DocSiteProduct-productName">
+            <div class="DocSiteProduct-logoText">
+              ANSIBLE
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div id="menu-id" class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html" tppabs="https://docs.ansible.com/ansible/intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro_installation.html" tppabs="https://docs.ansible.com/ansible/intro_installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_getting_started.html" tppabs="https://docs.ansible.com/ansible/intro_getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_inventory.html" tppabs="https://docs.ansible.com/ansible/intro_inventory.html">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_dynamic_inventory.html" tppabs="https://docs.ansible.com/ansible/intro_dynamic_inventory.html">Dynamic Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_patterns.html" tppabs="https://docs.ansible.com/ansible/intro_patterns.html">Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_adhoc.html" tppabs="https://docs.ansible.com/ansible/intro_adhoc.html">Introduction To Ad-Hoc Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_configuration.html" tppabs="https://docs.ansible.com/ansible/intro_configuration.html">Configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_bsd.html" tppabs="https://docs.ansible.com/ansible/intro_bsd.html">BSD Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_windows.html" tppabs="https://docs.ansible.com/ansible/intro_windows.html">Windows Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_networking.html" tppabs="https://docs.ansible.com/ansible/intro_networking.html">Networking Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html" tppabs="https://docs.ansible.com/ansible/quickstart.html">Quickstart Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks.html" tppabs="https://docs.ansible.com/ansible/playbooks.html">Playbooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_intro.html" tppabs="https://docs.ansible.com/ansible/playbooks_intro.html">Intro to Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_roles.html" tppabs="https://docs.ansible.com/ansible/playbooks_roles.html">Playbook Roles and Include Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_variables.html" tppabs="https://docs.ansible.com/ansible/playbooks_variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_filters.html" tppabs="https://docs.ansible.com/ansible/playbooks_filters.html">Jinja2 filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_conditionals.html" tppabs="https://docs.ansible.com/ansible/playbooks_conditionals.html">Conditionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_loops.html" tppabs="https://docs.ansible.com/ansible/playbooks_loops.html">Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_blocks.html" tppabs="https://docs.ansible.com/ansible/playbooks_blocks.html">Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_strategies.html" tppabs="https://docs.ansible.com/ansible/playbooks_strategies.html">Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_best_practices.html" tppabs="https://docs.ansible.com/ansible/playbooks_best_practices.html">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks_special_topics.html" tppabs="https://docs.ansible.com/ansible/playbooks_special_topics.html">Playbooks: Special Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="become.html" tppabs="https://docs.ansible.com/ansible/become.html">Become (Privilege Escalation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_acceleration.html" tppabs="https://docs.ansible.com/ansible/playbooks_acceleration.html">Accelerated Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_async.html" tppabs="https://docs.ansible.com/ansible/playbooks_async.html">Asynchronous Actions and Polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_checkmode.html" tppabs="https://docs.ansible.com/ansible/playbooks_checkmode.html">Check Mode (&#8220;Dry Run&#8221;)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_debugger.html" tppabs="https://docs.ansible.com/ansible/playbooks_debugger.html">Playbook Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_delegation.html" tppabs="https://docs.ansible.com/ansible/playbooks_delegation.html">Delegation, Rolling Updates, and Local Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_environment.html" tppabs="https://docs.ansible.com/ansible/playbooks_environment.html">Setting the Environment (and Working With Proxies)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_error_handling.html" tppabs="https://docs.ansible.com/ansible/playbooks_error_handling.html">Error Handling In Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_advanced_syntax.html" tppabs="https://docs.ansible.com/ansible/playbooks_advanced_syntax.html">Advanced Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_lookups.html" tppabs="https://docs.ansible.com/ansible/playbooks_lookups.html">Using Lookups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_prompts.html" tppabs="https://docs.ansible.com/ansible/playbooks_prompts.html">Prompts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_tags.html" tppabs="https://docs.ansible.com/ansible/playbooks_tags.html">Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_vault.html" tppabs="https://docs.ansible.com/ansible/playbooks_vault.html">Vault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_startnstep.html" tppabs="https://docs.ansible.com/ansible/playbooks_startnstep.html">Start and Step</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_directives.html" tppabs="https://docs.ansible.com/ansible/playbooks_directives.html">Directives Glossary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html" tppabs="https://docs.ansible.com/ansible/modules.html">About Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules_intro.html" tppabs="https://docs.ansible.com/ansible/modules_intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_core.html" tppabs="https://docs.ansible.com/ansible/modules_core.html">Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_extra.html" tppabs="https://docs.ansible.com/ansible/modules_extra.html">Extras Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_return_values.html" tppabs="https://docs.ansible.com/ansible/common_return_values.html">Common Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules_by_category.html" tppabs="https://docs.ansible.com/ansible/modules_by_category.html">Module Index</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="list_of_all_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_all_modules.html">All Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascript:if(confirm('https://docs.ansible.com/ansible/list_of_cloud_modules.html  \n\n该文件无法用 Teleport Ultra 下载, 因为 不可用, 或放弃了下载, 或项目即将停止。  \n\n你想在服务器上打开它?'))window.location='https://docs.ansible.com/ansible/list_of_cloud_modules.html'" tppabs="https://docs.ansible.com/ansible/list_of_cloud_modules.html">Cloud Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_clustering_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_clustering_modules.html">Clustering Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_commands_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_commands_modules.html">Commands Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_database_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_database_modules.html">Database Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_files_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_files_modules.html">Files Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_inventory_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_inventory_modules.html">Inventory Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_messaging_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_messaging_modules.html">Messaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_monitoring_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_monitoring_modules.html">Monitoring Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_network_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_network_modules.html">Network Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_notification_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_notification_modules.html">Notification Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_packaging_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_packaging_modules.html">Packaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_source_control_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_source_control_modules.html">Source Control Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_system_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_system_modules.html">System Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_utilities_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_utilities_modules.html">Utilities Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_web_infrastructure_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_web_infrastructure_modules.html">Web Infrastructure Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_windows_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_windows_modules.html">Windows Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guides.html" tppabs="https://docs.ansible.com/ansible/guides.html">Detailed Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_aws.html" tppabs="https://docs.ansible.com/ansible/guide_aws.html">Amazon Web Services Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_azure.html" tppabs="https://docs.ansible.com/ansible/guide_azure.html">Getting Started with Azure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rax.html" tppabs="https://docs.ansible.com/ansible/guide_rax.html">Rackspace Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_gce.html" tppabs="https://docs.ansible.com/ansible/guide_gce.html">Google Cloud Platform Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_cloudstack.html" tppabs="https://docs.ansible.com/ansible/guide_cloudstack.html">CloudStack Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_vagrant.html" tppabs="https://docs.ansible.com/ansible/guide_vagrant.html">Using Vagrant and Ansible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rolling_upgrade.html" tppabs="https://docs.ansible.com/ansible/guide_rolling_upgrade.html">Continuous Delivery and Rolling Upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_docker.html" tppabs="https://docs.ansible.com/ansible/guide_docker.html">Getting Started with Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developing.html" tppabs="https://docs.ansible.com/ansible/developing.html">Developer Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developing_api.html" tppabs="https://docs.ansible.com/ansible/developing_api.html">Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_inventory.html" tppabs="https://docs.ansible.com/ansible/developing_inventory.html">Developing Dynamic Inventory Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_modules.html" tppabs="https://docs.ansible.com/ansible/developing_modules.html">Developing Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_plugins.html" tppabs="https://docs.ansible.com/ansible/developing_plugins.html">Developing Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_core.html" tppabs="https://docs.ansible.com/ansible/developing_core.html">Developing the Ansible Core Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_test_pr.html" tppabs="https://docs.ansible.com/ansible/developing_test_pr.html">Helping Testing PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_releases.html" tppabs="https://docs.ansible.com/ansible/developing_releases.html">Releases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tower.html" tppabs="https://docs.ansible.com/ansible/tower.html">Ansible Tower</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html" tppabs="https://docs.ansible.com/ansible/community.html">Community Information &amp; Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community.html#ansible-users" tppabs="https://docs.ansible.com/ansible/community.html#ansible-users">Ansible Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#for-current-and-prospective-developers" tppabs="https://docs.ansible.com/ansible/community.html#for-current-and-prospective-developers">For Current and Prospective Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#other-topics" tppabs="https://docs.ansible.com/ansible/community.html#other-topics">Other Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#community-code-of-conduct" tppabs="https://docs.ansible.com/ansible/community.html#community-code-of-conduct">Community Code of Conduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#contributors-license-agreement" tppabs="https://docs.ansible.com/ansible/community.html#contributors-license-agreement">Contributors License Agreement</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Ansible Galaxy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-website">The Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-ansible-galaxy-command-line-tool">The ansible-galaxy command line tool</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test_strategies.html" tppabs="https://docs.ansible.com/ansible/test_strategies.html">Testing Strategies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#integrating-testing-with-ansible-playbooks" tppabs="https://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-ansible-playbooks">Integrating Testing With Ansible Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#the-right-level-of-testing" tppabs="https://docs.ansible.com/ansible/test_strategies.html#the-right-level-of-testing">The Right Level of Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#check-mode-as-a-drift-test" tppabs="https://docs.ansible.com/ansible/test_strategies.html#check-mode-as-a-drift-test">Check Mode As A Drift Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#modules-that-are-useful-for-testing" tppabs="https://docs.ansible.com/ansible/test_strategies.html#modules-that-are-useful-for-testing">Modules That Are Useful for Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#testing-lifecycle" tppabs="https://docs.ansible.com/ansible/test_strategies.html#testing-lifecycle">Testing Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#integrating-testing-with-rolling-updates" tppabs="https://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-rolling-updates">Integrating Testing With Rolling Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#achieving-continuous-deployment" tppabs="https://docs.ansible.com/ansible/test_strategies.html#achieving-continuous-deployment">Achieving Continuous Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#conclusion" tppabs="https://docs.ansible.com/ansible/test_strategies.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html" tppabs="https://docs.ansible.com/ansible/faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook" tppabs="https://docs.ansible.com/ansible/faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook">How can I set the PATH or any other environment variable for a task or entire playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with">How do I handle different machines needing different user accounts or ports to log in with?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file">How do I get ansible to reuse connections, enable Kerberized SSH, or have Ansible pay attention to my local SSH config file?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">How do I configure a jump host to access servers that I have no direct access to?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-speed-up-management-inside-ec2" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-speed-up-management-inside-ec2">How do I speed up management inside EC2?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine">How do I handle python pathing not having a Python 2.X in /usr/bin/python on a remote machine?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#what-is-the-best-way-to-make-content-reusable-redistributable" tppabs="https://docs.ansible.com/ansible/faq.html#what-is-the-best-way-to-make-content-reusable-redistributable">What is the best way to make content reusable/redistributable?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it" tppabs="https://docs.ansible.com/ansible/faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it">Where does the configuration file live and what can I configure in it?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-disable-cowsay" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-disable-cowsay">How do I disable cowsay?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables">How do I see a list of all of the ansible_ variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host">How do I see all the inventory vars defined for my host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template">How do I loop over a list of hosts in a group, inside of a template?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-a-variable-name-programmatically" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-name-programmatically">How do I access a variable name programmatically?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group">How do I access a variable of the first host in a group?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-copy-files-recursively-onto-a-target-host" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-copy-files-recursively-onto-a-target-host">How do I copy files recursively onto a target host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-shell-environment-variables" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-shell-environment-variables">How do I access shell environment variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-generate-crypted-passwords-for-the-user-module" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module">How do I generate crypted passwords for the user module?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#can-i-get-training-on-ansible-or-find-commercial-support" tppabs="https://docs.ansible.com/ansible/faq.html#can-i-get-training-on-ansible-or-find-commercial-support">Can I get training on Ansible or find commercial support?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#is-there-a-web-interface-rest-api-etc" tppabs="https://docs.ansible.com/ansible/faq.html#is-there-a-web-interface-rest-api-etc">Is there a web interface / REST API / etc?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-submit-a-change-to-the-documentation" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-submit-a-change-to-the-documentation">How do I submit a change to the documentation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-keep-secret-data-in-my-playbook" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-keep-secret-data-in-my-playbook">How do I keep secret data in my playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names" tppabs="https://docs.ansible.com/ansible/faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names">When should I use {{ }}? Also, how to interpolate variables or dynamic variable names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#i-don-t-see-my-question-here" tppabs="https://docs.ansible.com/ansible/faq.html#i-don-t-see-my-question-here">I don&#8217;t see my question here</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html" tppabs="https://docs.ansible.com/ansible/glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YAMLSyntax.html" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html">YAML Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax.html#yaml-basics" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html#yaml-basics">YAML Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax.html#gotchas" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html#gotchas">Gotchas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html">Porting Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#playbook" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#playbook">Playbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#deprecated" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#deprecated">Deprecated</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#other-caveats" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#other-caveats">Other caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#porting-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#porting-plugins">Porting plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#lookup-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#lookup-plugins">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#connection-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#connection-plugins">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#action-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#action-plugins">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#callback-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#callback-plugins">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id1" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id1">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#hybrid-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#hybrid-plugins">Hybrid plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id2" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id2">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id3" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id3">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id4" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id4">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id5" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id5">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id6" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id6">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#porting-custom-scripts" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#porting-custom-scripts">Porting custom scripts</a></li>
+</ul>
+
+        
+
+<!-- changeable widget -->
+<center>
+<br/>
+<a href="javascript:if(confirm('http://www.ansible.com/docs-left?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-left?utm_source=docs'" tppabs="http://www.ansible.com/docs-left?utm_source=docs">
+    <img style="border-width:0px;" src="ASB-docs-left-rail.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-left-rail.png" />
+</a>
+</center>
+
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="javascript:if(confirm('https://docs.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://docs.ansible.com/'" tppabs="https://docs.ansible.com/">Ansible Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+
+          <!-- Banner ads -->
+          <div class="DocSiteBanner">
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-left.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-left.png">
+            </a>
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-right.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-right.png">
+            </a>
+        </div>
+
+          <ul class="wy-breadcrumbs">
+  <li><a href="index.html" tppabs="https://docs.ansible.com/ansible/index.html">Docs</a> &raquo;</li>
+  <li><a href="">Ansible Galaxy</a></li>
+  
+    <li class="wy-breadcrumbs-aside">
+      <a href="javascript:if(confirm('https://github.com/ansible/ansible/blob/devel/docsite/rst/galaxy.rst  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible/blob/devel/docsite/rst/galaxy.rst'" tppabs="https://github.com/ansible/ansible/blob/devel/docsite/rst/galaxy.rst" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  
+</ul>
+<hr/>
+
+          <div id="page-content">
+          
+  <div class="section" id="ansible-galaxy">
+<h1><a class="toc-backref" href="#id6">Ansible Galaxy</a><a class="headerlink" href="#ansible-galaxy" title="Permalink to this headline">露</a></h1>
+<p>&#8220;Ansible Galaxy&#8221; can either refer to a website for sharing and downloading Ansible roles, or a command line tool for managing and creating roles.</p>
+<div class="contents topic" id="topics">
+<p class="topic-title first">Topics</p>
+<ul class="simple">
+<li><a class="reference internal" href="#ansible-galaxy" id="id6">Ansible Galaxy</a><ul>
+<li><a class="reference internal" href="#the-website" id="id7">The Website</a></li>
+<li><a class="reference internal" href="#the-ansible-galaxy-command-line-tool" id="id8">The ansible-galaxy command line tool</a><ul>
+<li><a class="reference internal" href="#installing-roles" id="id9">Installing Roles</a><ul>
+<li><a class="reference internal" href="#roles-path" id="id10">roles_path</a></li>
+<li><a class="reference internal" href="#installing-multiple-roles-from-a-file" id="id11">Installing Multiple Roles From A File</a></li>
+<li><a class="reference internal" href="#installing-multiple-roles-from-multiple-files" id="id12">Installing Multiple Roles From Multiple Files</a></li>
+<li><a class="reference internal" href="#advanced-control-over-role-requirements-files" id="id13">Advanced Control over Role Requirements Files</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#building-role-scaffolding" id="id14">Building Role Scaffolding</a></li>
+<li><a class="reference internal" href="#search-for-roles" id="id15">Search for Roles</a></li>
+<li><a class="reference internal" href="#get-more-information-about-a-role" id="id16">Get More Information About a Role</a></li>
+<li><a class="reference internal" href="#list-installed-roles" id="id17">List Installed Roles</a></li>
+<li><a class="reference internal" href="#remove-an-installed-role" id="id18">Remove an Installed Role</a></li>
+<li><a class="reference internal" href="#authenticate-with-galaxy" id="id19">Authenticate with Galaxy</a></li>
+<li><a class="reference internal" href="#import-a-role" id="id20">Import a Role</a></li>
+<li><a class="reference internal" href="#delete-a-role" id="id21">Delete a Role</a></li>
+<li><a class="reference internal" href="#setup-travis-integrations" id="id22">Setup Travis Integrations</a><ul>
+<li><a class="reference internal" href="#list-travis-integrations" id="id23">List Travis Integrations</a></li>
+<li><a class="reference internal" href="#remove-travis-integrations" id="id24">Remove Travis Integrations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="the-website">
+<h2><a class="toc-backref" href="#id7">The Website</a><a class="headerlink" href="#the-website" title="Permalink to this headline">露</a></h2>
+<p>The website <a class="reference external" href="javascript:if(confirm('https://galaxy.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://galaxy.ansible.com/'" tppabs="https://galaxy.ansible.com/">Ansible Galaxy</a>, is a free site for finding, downloading, and sharing community developed Ansible roles. Downloading roles from Galaxy is a great way to jumpstart your automation projects.</p>
+<p>Access the Galaxy web site using GitHub OAuth, and to install roles use the &#8216;ansible-galaxy&#8217; command line tool included in Ansible 1.4.2 and later.</p>
+<p>Read the &#8220;About&#8221; page on the Galaxy site for more information.</p>
+</div>
+<div class="section" id="the-ansible-galaxy-command-line-tool">
+<h2><a class="toc-backref" href="#id8">The ansible-galaxy command line tool</a><a class="headerlink" href="#the-ansible-galaxy-command-line-tool" title="Permalink to this headline">露</a></h2>
+<p>The ansible-galaxy command has many different sub-commands for managing roles both locally and at <a class="reference external" href="javascript:if(confirm('https://galaxy.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://galaxy.ansible.com/'" tppabs="https://galaxy.ansible.com/">galaxy.ansible.com</a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The search, login, import, delete, and setup commands in the Ansible 2.0 version of ansible-galaxy require access to the
+2.0 Beta release of the Galaxy web site available at <a class="reference external" href="javascript:if(confirm('https://galaxy-qa.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://galaxy-qa.ansible.com/'" tppabs="https://galaxy-qa.ansible.com/">https://galaxy-qa.ansible.com</a>.</p>
+<p>Use the <code class="docutils literal"><span class="pre">--server</span></code> option to access the beta site. For example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$ ansible-galaxy search --server https://galaxy-qa.ansible.com mysql --author geerlingguy</span>
+</pre></div>
+</div>
+<p>Additionally, you can define a server in ansible.cfg:</p>
+<div class="last highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">[</span><span class="nv">galaxy</span><span class="p p-Indicator">]</span>
+<span class="l l-Scalar l-Scalar-Plain">server=https://galaxy-qa.ansible.com</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="installing-roles">
+<h3><a class="toc-backref" href="#id9">Installing Roles</a><a class="headerlink" href="#installing-roles" title="Permalink to this headline">露</a></h3>
+<p>The most obvious use of the ansible-galaxy command is downloading roles from <a class="reference external" href="javascript:if(confirm('https://galaxy.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://galaxy.ansible.com/'" tppabs="https://galaxy.ansible.com/">the Ansible Galaxy website</a>:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$ ansible-galaxy install username.rolename</span>
+</pre></div>
+</div>
+<div class="section" id="roles-path">
+<h4><a class="toc-backref" href="#id10">roles_path</a><a class="headerlink" href="#roles-path" title="Permalink to this headline">露</a></h4>
+<p>You can specify a particular directory where you want the downloaded roles to be placed:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$ ansible-galaxy install username.role -p ~/Code/ansible_roles/</span>
+</pre></div>
+</div>
+<p>This can be useful if you have a master folder that contains ansible galaxy roles shared across several projects. The default is the roles_path configured in your ansible.cfg file (/etc/ansible/roles if not configured).</p>
+</div>
+<div class="section" id="installing-multiple-roles-from-a-file">
+<h4><a class="toc-backref" href="#id11">Installing Multiple Roles From A File</a><a class="headerlink" href="#installing-multiple-roles-from-a-file" title="Permalink to this headline">露</a></h4>
+<p>To install multiple roles, the ansible-galaxy CLI can be fed a requirements file.  All versions of ansible allow the following syntax for installing roles from the Ansible Galaxy website:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$ ansible-galaxy install -r requirements.txt</span>
+</pre></div>
+</div>
+<p>Where the requirements.txt looks like:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">username1.foo_role</span>
+<span class="l l-Scalar l-Scalar-Plain">username2.bar_role</span>
+</pre></div>
+</div>
+<p>To request specific versions (tags) of a role, use this syntax in the roles file:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">username1.foo_role,version</span>
+<span class="l l-Scalar l-Scalar-Plain">username2.bar_role,version</span>
+</pre></div>
+</div>
+<p>Available versions will be listed on the Ansible Galaxy webpage for that role.</p>
+</div>
+<div class="section" id="installing-multiple-roles-from-multiple-files">
+<h4><a class="toc-backref" href="#id12">Installing Multiple Roles From Multiple Files</a><a class="headerlink" href="#installing-multiple-roles-from-multiple-files" title="Permalink to this headline">露</a></h4>
+<p>At a basic level, including requirements files allows you to break up bits of configuration policy into smaller files. Role includes pull in roles from other files.</p>
+<blockquote>
+<div><p>ansible-galaxy install -r requirements.yml</p>
+<p># from galaxy
+- src: yatesr.timezone</p>
+<ul class="simple">
+<li>include: webserver.yml</li>
+</ul>
+</div></blockquote>
+<p>Content of the webserver.yml file.</p>
+<blockquote>
+<div><p># from github
+- src: <a class="reference external" href="javascript:if(confirm('https://github.com/bennojoy/nginx  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/bennojoy/nginx'" tppabs="https://github.com/bennojoy/nginx">https://github.com/bennojoy/nginx</a></p>
+<p># from github installing to a relative path
+- src: <a class="reference external" href="javascript:if(confirm('https://github.com/bennojoy/nginx  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/bennojoy/nginx'" tppabs="https://github.com/bennojoy/nginx">https://github.com/bennojoy/nginx</a></p>
+<blockquote>
+<div>path: vagrant/roles/</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="advanced-control-over-role-requirements-files">
+<h4><a class="toc-backref" href="#id13">Advanced Control over Role Requirements Files</a><a class="headerlink" href="#advanced-control-over-role-requirements-files" title="Permalink to this headline">露</a></h4>
+<p>For more advanced control over where to download roles from, including support for remote repositories, Ansible 1.8 and later support a new YAML format for the role requirements file, which must end in a &#8216;yml&#8217; extension.  It works like this:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible-galaxy install -r requirements.yml</span>
+</pre></div>
+</div>
+<p>The extension is important. If the .yml extension is left off, the ansible-galaxy CLI will assume the file is in the &#8220;basic&#8221; format and will be confused.</p>
+<p>And here&#8217;s an example showing some specific version downloads from multiple sources.  In one of the examples we also override the name of the role and download it as something different:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span> <span class="c1"># from galaxy</span>
+ <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">src</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yatesr.timezone</span>
+
+ <span class="c1"># from GitHub</span>
+ <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">src</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://github.com/bennojoy/nginx</span>
+
+ <span class="c1"># from GitHub, overriding the name and specifying a specific tag</span>
+ <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">src</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://github.com/bennojoy/nginx</span>
+   <span class="l l-Scalar l-Scalar-Plain">version</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">master</span>
+   <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx_role</span>
+
+ <span class="c1"># from a webserver, where the role is packaged in a tar.gz</span>
+ <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">src</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://some.webserver.example.com/files/master.tar.gz</span>
+   <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http-role</span>
+
+ <span class="c1"># from Bitbucket</span>
+ <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">src</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">git+http://bitbucket.org/willthames/git-ansible-galaxy</span>
+   <span class="l l-Scalar l-Scalar-Plain">version</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">v1.4</span>
+
+ <span class="c1"># from Bitbucket, alternative syntax and caveats</span>
+ <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">src</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://bitbucket.org/willthames/hg-ansible-galaxy</span>
+   <span class="l l-Scalar l-Scalar-Plain">scm</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">hg</span>
+
+<span class="c1"># from GitLab or other git-based scm</span>
+ <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">src</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain"><a class="__cf_email__" href="javascript:if(confirm('https://docs.ansible.com/cdn-cgi/l/email-protection  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://docs.ansible.com/cdn-cgi/l/email-protection'" tppabs="https://docs.ansible.com/cdn-cgi/l/email-protection" data-cfemail="fd9a9489bd9a9489919c9fd39e92908d9c9384d39e9290">[email&#160;protected]</a><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script>:mygroup/ansible-base.git</span>
+   <span class="l l-Scalar l-Scalar-Plain">scm</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">git</span>
+   <span class="l l-Scalar l-Scalar-Plain">version</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1.0</span>
+</pre></div>
+</div>
+<p>As you can see in the above, there are a large amount of controls available
+to customize where roles can be pulled from, and what to save roles as.</p>
+<p>Roles pulled from galaxy work as with other SCM sourced roles above. To download a role with dependencies, and automatically install those dependencies, the role must be uploaded to the Ansible Galaxy website.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="playbooks_roles.html" tppabs="https://docs.ansible.com/ansible/playbooks_roles.html"><span class="doc">Playbook Roles and Include Statements</span></a></dt>
+<dd>All about ansible roles</dd>
+<dt><a class="reference external" href="javascript:if(confirm('http://groups.google.com/group/ansible-project  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://groups.google.com/group/ansible-project'" tppabs="http://groups.google.com/group/ansible-project">Mailing List</a></dt>
+<dd>Questions? Help? Ideas?  Stop by the list on Google Groups</dd>
+<dt><a class="reference external" href="javascript:if(confirm('http://irc.freenode.net/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://irc.freenode.net/'" tppabs="http://irc.freenode.net/">irc.freenode.net</a></dt>
+<dd>#ansible IRC chat channel</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="section" id="building-role-scaffolding">
+<h3><a class="toc-backref" href="#id14">Building Role Scaffolding</a><a class="headerlink" href="#building-role-scaffolding" title="Permalink to this headline">露</a></h3>
+<p>Use the init command to initialize the base structure of a new role, saving time on creating the various directories and main.yml files a role requires:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$ ansible-galaxy init rolename</span>
+</pre></div>
+</div>
+<p>The above will create the following directory structure in the current working directory:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">README.md</span>
+<span class="l l-Scalar l-Scalar-Plain">.travis.yml</span>
+<span class="l l-Scalar l-Scalar-Plain">defaults/</span>
+    <span class="l l-Scalar l-Scalar-Plain">main.yml</span>
+<span class="l l-Scalar l-Scalar-Plain">files/</span>
+<span class="l l-Scalar l-Scalar-Plain">handlers/</span>
+    <span class="l l-Scalar l-Scalar-Plain">main.yml</span>
+<span class="l l-Scalar l-Scalar-Plain">meta/</span>
+    <span class="l l-Scalar l-Scalar-Plain">main.yml</span>
+<span class="l l-Scalar l-Scalar-Plain">templates/</span>
+<span class="l l-Scalar l-Scalar-Plain">tests/</span>
+    <span class="l l-Scalar l-Scalar-Plain">inventory</span>
+    <span class="l l-Scalar l-Scalar-Plain">test.yml</span>
+<span class="l l-Scalar l-Scalar-Plain">vars/</span>
+    <span class="l l-Scalar l-Scalar-Plain">main.yml</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">.travis.yml and tests/ are new in Ansible 2.0</p>
+</div>
+<p>If a directory matching the name of the role already exists in the current working directory, the init command will result in an error. To ignore the error use the &#8211;force option. Force will create the above subdirectories and files, replacing anything that matches.</p>
+</div>
+<div class="section" id="search-for-roles">
+<h3><a class="toc-backref" href="#id15">Search for Roles</a><a class="headerlink" href="#search-for-roles" title="Permalink to this headline">露</a></h3>
+<p>The search command provides for querying the Galaxy database, allowing for searching by tags, platforms, author and multiple keywords. For example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$ ansible-galaxy search elasticsearch --author geerlingguy</span>
+</pre></div>
+</div>
+<p>The search command will return a list of the first 1000 results matching your search:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">Found 2 roles matching your search</span><span class="p p-Indicator">:</span>
+
+<span class="l l-Scalar l-Scalar-Plain">Name                              Description</span>
+<span class="l l-Scalar l-Scalar-Plain">----                              -----------</span>
+<span class="l l-Scalar l-Scalar-Plain">geerlingguy.elasticsearch         Elasticsearch for Linux.</span>
+<span class="l l-Scalar l-Scalar-Plain">geerlingguy.elasticsearch-curator Elasticsearch curator for Linux.</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The format of results pictured here is new in Ansible 2.0.</p>
+</div>
+</div>
+<div class="section" id="get-more-information-about-a-role">
+<h3><a class="toc-backref" href="#id16">Get More Information About a Role</a><a class="headerlink" href="#get-more-information-about-a-role" title="Permalink to this headline">露</a></h3>
+<p>Use the info command To view more detail about a specific role:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$ ansible-galaxy info username.role_name</span>
+</pre></div>
+</div>
+<p>This returns everything found in Galaxy for the role:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">Role</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">username.rolename</span>
+    <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Installs and configures a thing, a distributed, highly available NoSQL thing.</span>
+    <span class="l l-Scalar l-Scalar-Plain">active</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">commit</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">c01947b7bc89ebc0b8a2e298b87ab416aed9dd57</span>
+    <span class="l l-Scalar l-Scalar-Plain">commit_message</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Adding travis</span>
+    <span class="l l-Scalar l-Scalar-Plain">commit_url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://github.com/username/repo_name/commit/c01947b7bc89ebc0b8a2e298b87ab</span>
+    <span class="l l-Scalar l-Scalar-Plain">company</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">My Company, Inc.</span>
+    <span class="l l-Scalar l-Scalar-Plain">created</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2015-12-08T14:17:52.773Z</span>
+    <span class="l l-Scalar l-Scalar-Plain">download_count</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+    <span class="l l-Scalar l-Scalar-Plain">forks_count</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+    <span class="l l-Scalar l-Scalar-Plain">github_branch</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">github_repo</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">repo_name</span>
+    <span class="l l-Scalar l-Scalar-Plain">github_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">username</span>
+    <span class="l l-Scalar l-Scalar-Plain">id</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">6381</span>
+    <span class="l l-Scalar l-Scalar-Plain">is_valid</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">issue_tracker_url</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">license</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Apache</span>
+    <span class="l l-Scalar l-Scalar-Plain">min_ansible_version</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1.4</span>
+    <span class="l l-Scalar l-Scalar-Plain">modified</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2015-12-08T18:43:49.085Z</span>
+    <span class="l l-Scalar l-Scalar-Plain">namespace</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">username</span>
+    <span class="l l-Scalar l-Scalar-Plain">open_issues_count</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+    <span class="l l-Scalar l-Scalar-Plain">path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/Users/username/projects/roles</span>
+    <span class="l l-Scalar l-Scalar-Plain">scm</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">None</span>
+    <span class="l l-Scalar l-Scalar-Plain">src</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">username.repo_name</span>
+    <span class="l l-Scalar l-Scalar-Plain">stargazers_count</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+    <span class="l l-Scalar l-Scalar-Plain">travis_status_url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://travis-ci.org/username/repo_name.svg?branch=master</span>
+    <span class="l l-Scalar l-Scalar-Plain">version</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">watchers_count</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="list-installed-roles">
+<h3><a class="toc-backref" href="#id17">List Installed Roles</a><a class="headerlink" href="#list-installed-roles" title="Permalink to this headline">露</a></h3>
+<p>The list command shows the name and version of each role installed in roles_path.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$ ansible-galaxy list</span>
+
+<span class="l l-Scalar l-Scalar-Plain">- chouseknecht.role-install_mongod, master</span>
+<span class="l l-Scalar l-Scalar-Plain">- chouseknecht.test-role-1, v1.0.2</span>
+<span class="l l-Scalar l-Scalar-Plain">- chrismeyersfsu.role-iptables, master</span>
+<span class="l l-Scalar l-Scalar-Plain">- chrismeyersfsu.role-required_vars, master</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="remove-an-installed-role">
+<h3><a class="toc-backref" href="#id18">Remove an Installed Role</a><a class="headerlink" href="#remove-an-installed-role" title="Permalink to this headline">露</a></h3>
+<p>The remove command will delete a role from roles_path:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$ ansible-galaxy remove username.rolename</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="authenticate-with-galaxy">
+<h3><a class="toc-backref" href="#id19">Authenticate with Galaxy</a><a class="headerlink" href="#authenticate-with-galaxy" title="Permalink to this headline">露</a></h3>
+<p>To use the import, delete and setup commands authentication with Galaxy is required. The login command will authenticate the user,retrieve a token from Galaxy, and store it in the user&#8217;s home directory.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$ ansible-galaxy login</span>
+
+<span class="l l-Scalar l-Scalar-Plain">We need your Github login to identify you.</span>
+<span class="l l-Scalar l-Scalar-Plain">This information will not be sent to Galaxy, only to api.github.com.</span>
+<span class="l l-Scalar l-Scalar-Plain">The password will not be displayed.</span>
+
+<span class="l l-Scalar l-Scalar-Plain">Use --github-token if you do not want to enter your password.</span>
+
+<span class="l l-Scalar l-Scalar-Plain">Github Username</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dsmith</span>
+<span class="l l-Scalar l-Scalar-Plain">Password for dsmith</span><span class="p p-Indicator">:</span>
+<span class="l l-Scalar l-Scalar-Plain">Succesfully logged into Galaxy as dsmith</span>
+</pre></div>
+</div>
+<p>As depicted above, the login command prompts for a GitHub username and password. It does NOT send your password to Galaxy. It actually authenticates with GitHub and creates a personal access token. It then sends the personal access token to Galaxy, which in turn verifies that you are you and returns a Galaxy access token. After authentication completes the GitHub personal access token is destroyed.</p>
+<p>If you do not wish to use your GitHub password, or if you have two-factor authentication enabled with GitHub, use the &#8211;github-token option to pass a personal access token that you create. Log into GitHub, go to Settings and click on Personal Access Token to create a token.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The login command in Ansible 2.0 requires using the Galaxy 2.0 Beta site. Use the <code class="docutils literal"><span class="pre">--server</span></code> option to access
+<a class="reference external" href="javascript:if(confirm('https://galaxy-qa.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://galaxy-qa.ansible.com/'" tppabs="https://galaxy-qa.ansible.com/">https://galaxy-qa.ansible.com</a>. You can also add a <em>server</em> definition in the [galaxy]
+section of your ansible.cfg file.</p>
+</div>
+</div>
+<div class="section" id="import-a-role">
+<h3><a class="toc-backref" href="#id20">Import a Role</a><a class="headerlink" href="#import-a-role" title="Permalink to this headline">露</a></h3>
+<p>Roles can be imported using ansible-galaxy. The import command expects that the user previously authenticated with Galaxy using the login command.</p>
+<p>Import any GitHub repo you have access to:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$ ansible-galaxy import github_user github_repo</span>
+</pre></div>
+</div>
+<p>By default the command will wait for the role to be imported by Galaxy, displaying the results as the import progresses:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">Successfully submitted import request 41</span>
+<span class="l l-Scalar l-Scalar-Plain">Starting import 41</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">role_name=myrole repo=githubuser/ansible-role-repo ref=</span>
+<span class="l l-Scalar l-Scalar-Plain">Retrieving Github repo githubuser/ansible-role-repo</span>
+<span class="l l-Scalar l-Scalar-Plain">Accessing branch</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">master</span>
+<span class="l l-Scalar l-Scalar-Plain">Parsing and validating meta/main.yml</span>
+<span class="l l-Scalar l-Scalar-Plain">Parsing galaxy_tags</span>
+<span class="l l-Scalar l-Scalar-Plain">Parsing platforms</span>
+<span class="l l-Scalar l-Scalar-Plain">Adding dependencies</span>
+<span class="l l-Scalar l-Scalar-Plain">Parsing and validating README.md</span>
+<span class="l l-Scalar l-Scalar-Plain">Adding repo tags as role versions</span>
+<span class="l l-Scalar l-Scalar-Plain">Import completed</span>
+<span class="l l-Scalar l-Scalar-Plain">Status SUCCESS</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">warnings=0 errors=0</span>
+</pre></div>
+</div>
+<p>Use the &#8211;branch option to import a specific branch. If not specified, the default branch for the repo will be used.</p>
+<p>If the &#8211;no-wait option is present, the command will not wait for results. Results of the most recent import for any of your roles is available on the Galaxy web site under My Imports.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The import command in Ansible 2.0 requires using the Galaxy 2.0 Beta site. Use the <code class="docutils literal"><span class="pre">--server</span></code> option to access
+<a class="reference external" href="javascript:if(confirm('https://galaxy-qa.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://galaxy-qa.ansible.com/'" tppabs="https://galaxy-qa.ansible.com/">https://galaxy-qa.ansible.com</a>. You can also add a <em>server</em> definition in the [galaxy]
+section of your ansible.cfg file.</p>
+</div>
+</div>
+<div class="section" id="delete-a-role">
+<h3><a class="toc-backref" href="#id21">Delete a Role</a><a class="headerlink" href="#delete-a-role" title="Permalink to this headline">露</a></h3>
+<p>Remove a role from the Galaxy web site using the delete command.  You can delete any role that you have access to in GitHub. The delete command expects that the user previously authenticated with Galaxy using the login command.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$ ansible-galaxy delete github_user github_repo</span>
+</pre></div>
+</div>
+<p>This only removes the role from Galaxy. It does not impact the actual GitHub repo.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The delete command in Ansible 2.0 requires using the Galaxy 2.0 Beta site. Use the <code class="docutils literal"><span class="pre">--server</span></code> option to access
+<a class="reference external" href="javascript:if(confirm('https://galaxy-qa.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://galaxy-qa.ansible.com/'" tppabs="https://galaxy-qa.ansible.com/">https://galaxy-qa.ansible.com</a>. You can also add a <em>server</em> definition in the [galaxy]
+section of your ansible.cfg file.</p>
+</div>
+</div>
+<div class="section" id="setup-travis-integrations">
+<h3><a class="toc-backref" href="#id22">Setup Travis Integrations</a><a class="headerlink" href="#setup-travis-integrations" title="Permalink to this headline">露</a></h3>
+<p>Using the setup command you can enable notifications from <a class="reference external" href="javascript:if(confirm('http://travis-ci.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://travis-ci.org/'" tppabs="http://travis-ci.org/">travis</a>. The setup command expects that the user previously authenticated with Galaxy using the login command.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$ ansible-galaxy setup travis github_user github_repo xxxtravistokenxxx</span>
+
+<span class="l l-Scalar l-Scalar-Plain">Added integration for travis github_user/github_repo</span>
+</pre></div>
+</div>
+<p>The setup command requires your Travis token. The Travis token is not stored in Galaxy. It is used along with the GitHub username and repo to create a hash as described in <a class="reference external" href="javascript:if(confirm('https://docs.travis-ci.com/user/notifications/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://docs.travis-ci.com/user/notifications/'" tppabs="https://docs.travis-ci.com/user/notifications/">the Travis documentation</a>. The calculated hash is stored in Galaxy and used to verify notifications received from Travis.</p>
+<p>The setup command enables Galaxy to respond to notifications. Follow the <a class="reference external" href="javascript:if(confirm('https://docs.travis-ci.com/user/getting-started/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://docs.travis-ci.com/user/getting-started/'" tppabs="https://docs.travis-ci.com/user/getting-started/">Travis getting started guide</a> to enable the Travis build process for the role repository.</p>
+<p>When you create your .travis.yml file add the following to cause Travis to notify Galaxy when a build completes:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">notifications</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">webhooks</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://galaxy.ansible.com/api/v1/notifications/</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The setup command in Ansible 2.0 requires using the Galaxy 2.0 Beta site. Use the <code class="docutils literal"><span class="pre">--server</span></code> option to access
+<a class="reference external" href="javascript:if(confirm('https://galaxy-qa.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://galaxy-qa.ansible.com/'" tppabs="https://galaxy-qa.ansible.com/">https://galaxy-qa.ansible.com</a>. You can also add a <em>server</em> definition in the [galaxy]
+section of your ansible.cfg file.</p>
+</div>
+<div class="section" id="list-travis-integrations">
+<h4><a class="toc-backref" href="#id23">List Travis Integrations</a><a class="headerlink" href="#list-travis-integrations" title="Permalink to this headline">露</a></h4>
+<p>Use the &#8211;list option to display your Travis integrations:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$ ansible-galaxy setup --list</span>
+
+
+<span class="l l-Scalar l-Scalar-Plain">ID         Source     Repo</span>
+<span class="l l-Scalar l-Scalar-Plain">---------- ---------- ----------</span>
+<span class="l l-Scalar l-Scalar-Plain">2          travis     github_user/github_repo</span>
+<span class="l l-Scalar l-Scalar-Plain">1          travis     github_user/github_repo</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="remove-travis-integrations">
+<h4><a class="toc-backref" href="#id24">Remove Travis Integrations</a><a class="headerlink" href="#remove-travis-integrations" title="Permalink to this headline">露</a></h4>
+<p>Use the &#8211;remove option to disable and remove a Travis integration:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$ ansible-galaxy setup --remove ID</span>
+</pre></div>
+</div>
+<p>Provide the ID of the integration you want disabled. Use the &#8211;list option to get the ID.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div id="search-results"><gcse:searchresults-only></div>
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+        <a href="test_strategies.html" tppabs="https://docs.ansible.com/ansible/test_strategies.html" class="btn btn-neutral float-right" title="Testing Strategies"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="community.html" tppabs="https://docs.ansible.com/ansible/community.html" class="btn btn-neutral" title="Community Information &amp; Contributing"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','st.js'/*tpa=https://s.swiftypecdn.com/install/v2/st.js*/,'_st');
+
+  _st('install','yABGvz2N8PwcwBxyfzUc','2.0.0');
+</script>
+
+  <p>
+  Copyright 漏 2016 Red Hat, Inc.
+  <br>
+    Last updated on Jun 22, 2016.
+  </p>
+<p>
+Ansible docs are generated from <a href="javascript:if(confirm('https://github.com/ansible/ansible  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible'" tppabs="https://github.com/ansible/ansible">GitHub sources</A> using <A HREF="javascript:if(confirm('http://sphinx-doc.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://sphinx-doc.org/'" tppabs="http://sphinx-doc.org/">Sphinx</A> using a theme provided by <a href="javascript:if(confirm('http://readthedocs.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://readthedocs.org/'" tppabs="http://readthedocs.org/">Read the Docs</a>. 
+</p>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+<!-- begin analytics -->
+<script type="text/javascript">
+var _hsq = _hsq || [];
+_hsq.push(["setContentType", "standard-page"]);
+        (function(d,s,i,r) {
+        if (d.getElementById(i)){return;}
+        var n = d.createElement(s),e = document.getElementsByTagName(s)[0];
+        n.id=i;n.src = '//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/330046.js';
+        e.parentNode.insertBefore(n, e);
+        })(document, "script", "hs-analytics",300000);
+</script>
+<!-- end analytics -->
+
+</body>
+</html>

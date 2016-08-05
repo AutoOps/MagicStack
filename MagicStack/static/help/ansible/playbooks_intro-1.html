@@ -1,0 +1,838 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset=UTF-8"utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Tag Manager Data Layer -->
+  <script>
+   dataLayer = [];
+  </script>
+  <!-- End Google Tag Manager Data Layer -->
+
+  
+  <title>Intro to Playbooks &mdash; Ansible Documentation</title>
+  
+
+  
+  
+
+  
+  <link href="css-family=Lato-400,700-Roboto+Slab-400,700-Inconsolata-400,700.css" tppabs="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel='stylesheet' type='text/css'>
+  <link href="font-awesome.min.css" tppabs="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'http://docs.ansible.com/ansible/0.01',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+      <script type="text/javascript" src="jquery-1.js" tppabs="http://docs.ansible.com/ansible/_static/jquery.js"></script>
+      <script type="text/javascript" src="underscore-1.js" tppabs="http://docs.ansible.com/ansible/_static/underscore.js"></script>
+      <script type="text/javascript" src="doctools-1.js" tppabs="http://docs.ansible.com/ansible/_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="theme.min-1.css" tppabs="http://docs.ansible.com/ansible/_static/css/theme.min.css" type="text/css" />
+    <script type="text/javascript" src="theme-1.js" tppabs="http://docs.ansible.com/ansible/_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="Ansible Documentation" href="index.html"/>
+        <link rel="up" title="Playbooks" href="playbooks.html"/>
+        <link rel="next" title="Playbook Roles and Include Statements" href="playbooks_roles.html"/>
+        <link rel="prev" title="Playbooks" href="playbooks.html"/> 
+
+  <script src="modernizr.min-1.js" tppabs="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  <style>
+    .search-reset-start {
+        color: #463E3F;
+        float: right;
+        position: relative;
+        top: -25px;
+        left: -10px;
+        z-index: 10;
+     }
+     .search-reset-start:hover {
+        cursor: pointer;
+        color: #2980B9;
+     }
+     #search-box-id {
+        padding-right: 25px;
+     }
+  </style>
+
+  <link href="css-family=Open+Sans-400,300.css" tppabs="https://fonts.googleapis.com/css?family=Open+Sans:400,300"
+    rel='stylesheet' type='text/css'>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="ns-1.html-id=gtm-psb293" tppabs="http://www.googletagmanager.com/ns.html?id=GTM-PSB293" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm-1.js'/*tpa=http://docs.ansible.com/ansible/gtm.js*/});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-PSB293');</script>
+  <!-- End Google Tag Manager -->
+
+  <a class="DocSite-nav" href="javascript:if(confirm('http://docs.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">
+    <img class="DocSiteNav-logo"
+      src="logo_invert-1.png" tppabs="http://docs.ansible.com/ansible/_static/images/logo_invert.png"
+      alt="Ansible Logo">
+    <div class="DocSiteNav-title">
+      Documentation
+    </div>
+  </a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+
+      <div style="background-color:#5bbdbf;height=80px;margin:'auto auto auto auto'">
+        <a class="DocSiteProduct-header DocSiteProduct-header--core"
+          href="index.htm" tppabs="http://docs.ansible.com/ansible/">
+          <div class="DocSiteProduct-productName">
+            <div class="DocSiteProduct-logoText">
+              ANSIBLE
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div id="menu-id" class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro-1.html" tppabs="http://docs.ansible.com/ansible/intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro_installation-1.html" tppabs="http://docs.ansible.com/ansible/intro_installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_getting_started-1.html" tppabs="http://docs.ansible.com/ansible/intro_getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_inventory.html">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_dynamic_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_dynamic_inventory.html">Dynamic Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_patterns-1.html" tppabs="http://docs.ansible.com/ansible/intro_patterns.html">Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_adhoc-1.html" tppabs="http://docs.ansible.com/ansible/intro_adhoc.html">Introduction To Ad-Hoc Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_configuration-1.html" tppabs="http://docs.ansible.com/ansible/intro_configuration.html">Configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_bsd-1.html" tppabs="http://docs.ansible.com/ansible/intro_bsd.html">BSD Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_windows-1.html" tppabs="http://docs.ansible.com/ansible/intro_windows.html">Windows Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_networking-1.html" tppabs="http://docs.ansible.com/ansible/intro_networking.html">Networking Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart-1.html" tppabs="http://docs.ansible.com/ansible/quickstart.html">Quickstart Video</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="playbooks-1.html" tppabs="http://docs.ansible.com/ansible/playbooks.html">Playbooks</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Intro to Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_roles-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_roles.html">Playbook Roles and Include Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_variables-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_filters-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_filters.html">Jinja2 filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_conditionals-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_conditionals.html">Conditionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_loops-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_loops.html">Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_blocks-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_blocks.html">Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_strategies-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_strategies.html">Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_best_practices-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_best_practices.html">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks_special_topics-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_special_topics.html">Playbooks: Special Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="become-1.html" tppabs="http://docs.ansible.com/ansible/become.html">Become (Privilege Escalation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_acceleration-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_acceleration.html">Accelerated Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_async-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_async.html">Asynchronous Actions and Polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_checkmode-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_checkmode.html">Check Mode (&#8220;Dry Run&#8221;)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_debugger-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_debugger.html">Playbook Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_delegation-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_delegation.html">Delegation, Rolling Updates, and Local Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_environment-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_environment.html">Setting the Environment (and Working With Proxies)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_error_handling-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_error_handling.html">Error Handling In Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_advanced_syntax-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_advanced_syntax.html">Advanced Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_lookups-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_lookups.html">Using Lookups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_prompts-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_prompts.html">Prompts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_tags-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_tags.html">Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_vault-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_vault.html">Vault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_startnstep-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_startnstep.html">Start and Step</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_directives-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_directives.html">Directives Glossary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules-1.html" tppabs="http://docs.ansible.com/ansible/modules.html">About Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules_intro-1.html" tppabs="http://docs.ansible.com/ansible/modules_intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_core-1.html" tppabs="http://docs.ansible.com/ansible/modules_core.html">Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_extra-1.html" tppabs="http://docs.ansible.com/ansible/modules_extra.html">Extras Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_return_values-1.html" tppabs="http://docs.ansible.com/ansible/common_return_values.html">Common Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules_by_category-1.html" tppabs="http://docs.ansible.com/ansible/modules_by_category.html">Module Index</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="list_of_all_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_all_modules.html">All Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_cloud_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_cloud_modules.html">Cloud Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_clustering_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_clustering_modules.html">Clustering Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_commands_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_commands_modules.html">Commands Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_database_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_database_modules.html">Database Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_files_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_files_modules.html">Files Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_inventory_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_inventory_modules.html">Inventory Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_messaging_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_messaging_modules.html">Messaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_monitoring_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_monitoring_modules.html">Monitoring Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_network_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_network_modules.html">Network Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_notification_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_notification_modules.html">Notification Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_packaging_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_packaging_modules.html">Packaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_source_control_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_source_control_modules.html">Source Control Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_system_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_system_modules.html">System Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_utilities_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_utilities_modules.html">Utilities Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_web_infrastructure_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_web_infrastructure_modules.html">Web Infrastructure Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_windows_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_windows_modules.html">Windows Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guides-1.html" tppabs="http://docs.ansible.com/ansible/guides.html">Detailed Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_aws-1.html" tppabs="http://docs.ansible.com/ansible/guide_aws.html">Amazon Web Services Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_azure-1.html" tppabs="http://docs.ansible.com/ansible/guide_azure.html">Getting Started with Azure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rax-1.html" tppabs="http://docs.ansible.com/ansible/guide_rax.html">Rackspace Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_gce-1.html" tppabs="http://docs.ansible.com/ansible/guide_gce.html">Google Cloud Platform Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_cloudstack-1.html" tppabs="http://docs.ansible.com/ansible/guide_cloudstack.html">CloudStack Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_vagrant-1.html" tppabs="http://docs.ansible.com/ansible/guide_vagrant.html">Using Vagrant and Ansible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rolling_upgrade-1.html" tppabs="http://docs.ansible.com/ansible/guide_rolling_upgrade.html">Continuous Delivery and Rolling Upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_docker-1.html" tppabs="http://docs.ansible.com/ansible/guide_docker.html">Getting Started with Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developing-1.html" tppabs="http://docs.ansible.com/ansible/developing.html">Developer Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developing_api-1.html" tppabs="http://docs.ansible.com/ansible/developing_api.html">Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_inventory-1.html" tppabs="http://docs.ansible.com/ansible/developing_inventory.html">Developing Dynamic Inventory Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_modules-1.html" tppabs="http://docs.ansible.com/ansible/developing_modules.html">Developing Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_plugins-1.html" tppabs="http://docs.ansible.com/ansible/developing_plugins.html">Developing Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_core-1.html" tppabs="http://docs.ansible.com/ansible/developing_core.html">Developing the Ansible Core Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_test_pr-1.html" tppabs="http://docs.ansible.com/ansible/developing_test_pr.html">Helping Testing PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_releases-1.html" tppabs="http://docs.ansible.com/ansible/developing_releases.html">Releases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tower-1.html" tppabs="http://docs.ansible.com/ansible/tower.html">Ansible Tower</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community-1.html" tppabs="http://docs.ansible.com/ansible/community.html">Community Information &amp; Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#ansible-users" tppabs="http://docs.ansible.com/ansible/community.html#ansible-users">Ansible Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#for-current-and-prospective-developers" tppabs="http://docs.ansible.com/ansible/community.html#for-current-and-prospective-developers">For Current and Prospective Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#other-topics" tppabs="http://docs.ansible.com/ansible/community.html#other-topics">Other Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#community-code-of-conduct" tppabs="http://docs.ansible.com/ansible/community.html#community-code-of-conduct">Community Code of Conduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#contributors-license-agreement" tppabs="http://docs.ansible.com/ansible/community.html#contributors-license-agreement">Contributors License Agreement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="galaxy-1.html" tppabs="http://docs.ansible.com/ansible/galaxy.html">Ansible Galaxy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="galaxy-1.html#the-website" tppabs="http://docs.ansible.com/ansible/galaxy.html#the-website">The Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="galaxy-1.html#the-ansible-galaxy-command-line-tool" tppabs="http://docs.ansible.com/ansible/galaxy.html#the-ansible-galaxy-command-line-tool">The ansible-galaxy command line tool</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test_strategies-1.html" tppabs="http://docs.ansible.com/ansible/test_strategies.html">Testing Strategies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#integrating-testing-with-ansible-playbooks" tppabs="http://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-ansible-playbooks">Integrating Testing With Ansible Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#the-right-level-of-testing" tppabs="http://docs.ansible.com/ansible/test_strategies.html#the-right-level-of-testing">The Right Level of Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#check-mode-as-a-drift-test" tppabs="http://docs.ansible.com/ansible/test_strategies.html#check-mode-as-a-drift-test">Check Mode As A Drift Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#modules-that-are-useful-for-testing" tppabs="http://docs.ansible.com/ansible/test_strategies.html#modules-that-are-useful-for-testing">Modules That Are Useful for Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#testing-lifecycle" tppabs="http://docs.ansible.com/ansible/test_strategies.html#testing-lifecycle">Testing Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#integrating-testing-with-rolling-updates" tppabs="http://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-rolling-updates">Integrating Testing With Rolling Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#achieving-continuous-deployment" tppabs="http://docs.ansible.com/ansible/test_strategies.html#achieving-continuous-deployment">Achieving Continuous Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#conclusion" tppabs="http://docs.ansible.com/ansible/test_strategies.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq-1.html" tppabs="http://docs.ansible.com/ansible/faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook" tppabs="http://docs.ansible.com/ansible/faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook">How can I set the PATH or any other environment variable for a task or entire playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with">How do I handle different machines needing different user accounts or ports to log in with?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file">How do I get ansible to reuse connections, enable Kerberized SSH, or have Ansible pay attention to my local SSH config file?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">How do I configure a jump host to access servers that I have no direct access to?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-speed-up-management-inside-ec2" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-speed-up-management-inside-ec2">How do I speed up management inside EC2?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine">How do I handle python pathing not having a Python 2.X in /usr/bin/python on a remote machine?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#what-is-the-best-way-to-make-content-reusable-redistributable" tppabs="http://docs.ansible.com/ansible/faq.html#what-is-the-best-way-to-make-content-reusable-redistributable">What is the best way to make content reusable/redistributable?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it" tppabs="http://docs.ansible.com/ansible/faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it">Where does the configuration file live and what can I configure in it?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-disable-cowsay" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-disable-cowsay">How do I disable cowsay?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-see-a-list-of-all-of-the-ansible-variables" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables">How do I see a list of all of the ansible_ variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host">How do I see all the inventory vars defined for my host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template">How do I loop over a list of hosts in a group, inside of a template?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-a-variable-name-programmatically" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-name-programmatically">How do I access a variable name programmatically?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-a-variable-of-the-first-host-in-a-group" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group">How do I access a variable of the first host in a group?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-copy-files-recursively-onto-a-target-host" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-copy-files-recursively-onto-a-target-host">How do I copy files recursively onto a target host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-shell-environment-variables" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-shell-environment-variables">How do I access shell environment variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-generate-crypted-passwords-for-the-user-module" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module">How do I generate crypted passwords for the user module?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#can-i-get-training-on-ansible-or-find-commercial-support" tppabs="http://docs.ansible.com/ansible/faq.html#can-i-get-training-on-ansible-or-find-commercial-support">Can I get training on Ansible or find commercial support?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#is-there-a-web-interface-rest-api-etc" tppabs="http://docs.ansible.com/ansible/faq.html#is-there-a-web-interface-rest-api-etc">Is there a web interface / REST API / etc?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-submit-a-change-to-the-documentation" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-submit-a-change-to-the-documentation">How do I submit a change to the documentation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-keep-secret-data-in-my-playbook" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-keep-secret-data-in-my-playbook">How do I keep secret data in my playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names" tppabs="http://docs.ansible.com/ansible/faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names">When should I use {{ }}? Also, how to interpolate variables or dynamic variable names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#i-don-t-see-my-question-here" tppabs="http://docs.ansible.com/ansible/faq.html#i-don-t-see-my-question-here">I don&#8217;t see my question here</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary-1.html" tppabs="http://docs.ansible.com/ansible/glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YAMLSyntax-1.html" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html">YAML Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax-1.html#yaml-basics" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html#yaml-basics">YAML Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax-1.html#gotchas" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html#gotchas">Gotchas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html">Porting Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#playbook" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#playbook">Playbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#deprecated" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#deprecated">Deprecated</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#other-caveats" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#other-caveats">Other caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#porting-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#porting-plugins">Porting plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#lookup-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#lookup-plugins">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#connection-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#connection-plugins">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#action-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#action-plugins">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#callback-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#callback-plugins">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id1" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id1">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#hybrid-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#hybrid-plugins">Hybrid plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id2" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id2">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id3" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id3">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id4" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id4">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id5" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id5">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id6" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id6">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#porting-custom-scripts" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#porting-custom-scripts">Porting custom scripts</a></li>
+</ul>
+
+        
+
+<!-- changeable widget -->
+<center>
+<br/>
+<a href="javascript:if(confirm('http://www.ansible.com/docs-left?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-left?utm_source=docs'" tppabs="http://www.ansible.com/docs-left?utm_source=docs">
+    <img style="border-width:0px;" src="ASB-docs-left-rail.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-left-rail.png" />
+</a>
+</center>
+
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="javascript:if(confirm('http://docs.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">Ansible Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+
+          <!-- Banner ads -->
+          <div class="DocSiteBanner">
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-left.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-left.png">
+            </a>
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-right.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-right.png">
+            </a>
+        </div>
+
+          <ul class="wy-breadcrumbs">
+  <li><a href="index-1.html" tppabs="http://docs.ansible.com/ansible/index.html">Docs</a> &raquo;</li>
+  <li><a href="">Intro to Playbooks</a></li>
+  
+    <li class="wy-breadcrumbs-aside">
+      <a href="javascript:if(confirm('https://github.com/ansible/ansible/blob/devel/docsite/rst/playbooks_intro.rst  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible/blob/devel/docsite/rst/playbooks_intro.rst'" tppabs="https://github.com/ansible/ansible/blob/devel/docsite/rst/playbooks_intro.rst" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  
+</ul>
+<hr/>
+
+          <div id="page-content">
+          
+  <div class="section" id="intro-to-playbooks">
+<h1>Intro to Playbooks<a class="headerlink" href="#intro-to-playbooks" title="Permalink to this headline">露</a></h1>
+<div class="section" id="about-playbooks">
+<span id="id1"></span><h2>About Playbooks<a class="headerlink" href="#about-playbooks" title="Permalink to this headline">露</a></h2>
+<p>Playbooks are a completely different way to use ansible than in adhoc task execution mode, and are
+particularly powerful.</p>
+<p>Simply put, playbooks are the basis for a really simple configuration management and multi-machine deployment system,
+unlike any that already exist, and one that is very well suited to deploying complex applications.</p>
+<p>Playbooks can declare configurations, but they can also orchestrate steps of
+any manual ordered process, even as different steps must bounce back and forth
+between sets of machines in particular orders.  They can launch tasks
+synchronously or asynchronously.</p>
+<p>While you might run the main <code class="docutils literal"><span class="pre">/usr/bin/ansible</span></code> program for ad-hoc
+tasks, playbooks are more likely to be kept in source control and used
+to push out your configuration or assure the configurations of your
+remote systems are in spec.</p>
+<p>There are also some full sets of playbooks illustrating a lot of these techniques in the
+<a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible-examples  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible-examples'" tppabs="https://github.com/ansible/ansible-examples">ansible-examples repository</a>.  We&#8217;d recommend
+looking at these in another tab as you go along.</p>
+<p>There are also many jumping off points after you learn playbooks, so hop back to the documentation
+index after you&#8217;re done with this section.</p>
+</div>
+<div class="section" id="playbook-language-example">
+<span id="id2"></span><h2>Playbook Language Example<a class="headerlink" href="#playbook-language-example" title="Permalink to this headline">露</a></h2>
+<p>Playbooks are expressed in YAML format (see <a class="reference internal" href="YAMLSyntax-1.html" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html"><span class="doc">YAML Syntax</span></a>) and have a minimum of syntax, which intentionally
+tries to not be a programming language or script, but rather a model of a configuration or a process.</p>
+<p>Each playbook is composed of one or more &#8216;plays&#8217; in a list.</p>
+<p>The goal of a play is to map a group of hosts to some well defined roles, represented by
+things ansible calls tasks.  At a basic level, a task is nothing more than a call
+to an ansible module (see <a class="reference internal" href="modules-1.html" tppabs="http://docs.ansible.com/ansible/modules.html"><span class="doc">About Modules</span></a>).</p>
+<p>By composing a playbook of multiple &#8216;plays&#8217;, it is possible to
+orchestrate multi-machine deployments, running certain steps on all
+machines in the webservers group, then certain steps on the database
+server group, then more commands back on the webservers group, etc.</p>
+<p>&#8220;plays&#8221; are more or less a sports analogy.  You can have quite a lot of plays that affect your systems
+to do different things.  It&#8217;s not as if you were just defining one particular state or model, and you
+can run different plays at different times.</p>
+<p>For starters, here&#8217;s a playbook that contains just one play:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">webservers</span>
+  <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">http_port</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
+    <span class="l l-Scalar l-Scalar-Plain">max_clients</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
+  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ensure apache is at the latest version</span>
+    <span class="l l-Scalar l-Scalar-Plain">yum</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=httpd state=latest</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">write the apache config file</span>
+    <span class="l l-Scalar l-Scalar-Plain">template</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">src=/srv/httpd.j2 dest=/etc/httpd.conf</span>
+    <span class="l l-Scalar l-Scalar-Plain">notify</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">restart apache</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ensure apache is running (and enable it at boot)</span>
+    <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=httpd state=started enabled=yes</span>
+  <span class="l l-Scalar l-Scalar-Plain">handlers</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">restart apache</span>
+      <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=httpd state=restarted</span>
+</pre></div>
+</div>
+<p>We can also break task items out over multiple lines using the YAML dictionary
+types to supply module arguments. This can be helpful when working with tasks
+that have really long parameters or modules that take many parameters to keep
+them well structured. Below is another version of the above example but using
+YAML dictionaries to supply the modules with their <code class="docutils literal"><span class="pre">key=value</span></code> arguments.:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">webservers</span>
+  <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">http_port</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
+    <span class="l l-Scalar l-Scalar-Plain">max_clients</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
+  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ensure apache is at the latest version</span>
+    <span class="l l-Scalar l-Scalar-Plain">yum</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">httpd</span>
+      <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">latest</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">write the apache config file</span>
+    <span class="l l-Scalar l-Scalar-Plain">template</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">src</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/srv/httpd.j2</span>
+      <span class="l l-Scalar l-Scalar-Plain">dest</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/httpd.conf</span>
+    <span class="l l-Scalar l-Scalar-Plain">notify</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">restart apache</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ensure apache is running</span>
+    <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">httpd</span>
+      <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">started</span>
+  <span class="l l-Scalar l-Scalar-Plain">handlers</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">restart apache</span>
+      <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">httpd</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">restarted</span>
+</pre></div>
+</div>
+<p>Playbooks can contain multiple plays. You may have a playbook that targets first
+the web servers, and then the database servers. For example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">webservers</span>
+  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ensure apache is at the latest version</span>
+    <span class="l l-Scalar l-Scalar-Plain">yum</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=httpd state=latest</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">write the apache config file</span>
+    <span class="l l-Scalar l-Scalar-Plain">template</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">src=/srv/httpd.j2 dest=/etc/httpd.conf</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">databases</span>
+  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ensure postgresql is at the latest version</span>
+    <span class="l l-Scalar l-Scalar-Plain">yum</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=postgresql state=latest</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ensure that postgresql is started</span>
+    <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=postgresql state=started</span>
+</pre></div>
+</div>
+<p>You can use this method to switch between the host group you&#8217;re targeting,
+the username logging into the remote servers, whether to sudo or not, and so
+forth. Plays, like tasks, run in the order specified in the playbook: top to
+bottom.</p>
+<p>Below, we&#8217;ll break down what the various features of the playbook language are.</p>
+</div>
+<div class="section" id="basics">
+<span id="playbook-basics"></span><h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">露</a></h2>
+<div class="section" id="hosts-and-users">
+<span id="playbook-hosts-and-users"></span><h3>Hosts and Users<a class="headerlink" href="#hosts-and-users" title="Permalink to this headline">露</a></h3>
+<p>For each play in a playbook, you get to choose which machines in your infrastructure
+to target and what remote user to complete the steps (called tasks) as.</p>
+<p>The <code class="docutils literal"><span class="pre">hosts</span></code> line is a list of one or more groups or host patterns,
+separated by colons, as described in the <a class="reference internal" href="intro_patterns-1.html" tppabs="http://docs.ansible.com/ansible/intro_patterns.html"><span class="doc">Patterns</span></a>
+documentation.  The <code class="docutils literal"><span class="pre">remote_user</span></code> is just the name of the user account:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">webservers</span>
+  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <code class="docutils literal"><span class="pre">remote_user</span></code> parameter was formerly called just <code class="docutils literal"><span class="pre">user</span></code>. It was renamed in Ansible 1.4 to make it more distinguishable from the <strong>user</strong> module (used to create users on remote systems).</p>
+</div>
+<p>Remote users can also be defined per task:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">webservers</span>
+  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">test connection</span>
+      <span class="l l-Scalar l-Scalar-Plain">ping</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yourname</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <code class="docutils literal"><span class="pre">remote_user</span></code> parameter for tasks was added in 1.4.</p>
+</div>
+<p>Support for running things as another user is also available (see <a class="reference internal" href="become-1.html" tppabs="http://docs.ansible.com/ansible/become.html"><span class="doc">Become (Privilege Escalation)</span></a>):</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">webservers</span>
+  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yourname</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+</pre></div>
+</div>
+<p>You can also use become on a particular task instead of the whole play:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">webservers</span>
+  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yourname</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=nginx state=started</span>
+      <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+      <span class="l l-Scalar l-Scalar-Plain">become_method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">sudo</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The become syntax deprecates the old sudo/su specific syntax beginning in 1.9.</p>
+</div>
+<p>You can also login as you, and then become a user different than root:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">webservers</span>
+  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yourname</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+  <span class="l l-Scalar l-Scalar-Plain">become_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres</span>
+</pre></div>
+</div>
+<p>You can also use other privilege escalation methods, like su:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">webservers</span>
+  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yourname</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+  <span class="l l-Scalar l-Scalar-Plain">become_method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">su</span>
+</pre></div>
+</div>
+<p>If you need to specify a password to sudo, run <code class="docutils literal"><span class="pre">ansible-playbook</span></code> with <code class="docutils literal"><span class="pre">--ask-become-pass</span></code> or
+when using the old sudo syntax <code class="docutils literal"><span class="pre">--ask-sudo-pass</span></code> (<code class="docutils literal"><span class="pre">-K</span></code>).  If you run a become playbook and the
+playbook seems to hang, it&#8217;s probably stuck at the privilege escalation prompt.
+Just <cite>Control-C</cite> to kill it and run it again adding the appropriate password.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">When using <code class="docutils literal"><span class="pre">become_user</span></code> to a user other than root, the module
+arguments are briefly written into a random tempfile in <code class="docutils literal"><span class="pre">/tmp</span></code>.
+These are deleted immediately after the command is executed.  This
+only occurs when changing privileges from a user like &#8216;bob&#8217; to &#8216;timmy&#8217;,
+not when going from &#8216;bob&#8217; to &#8216;root&#8217;, or logging in directly as &#8216;bob&#8217; or
+&#8216;root&#8217;.  If it concerns you that this data is briefly readable
+(not writable), avoid transferring unencrypted passwords with
+<cite>become_user</cite> set.  In other cases, <code class="docutils literal"><span class="pre">/tmp</span></code> is not used and this does
+not come into play. Ansible also takes care to not log password
+parameters.</p>
+</div>
+</div>
+<div class="section" id="tasks-list">
+<span id="id3"></span><h3>Tasks list<a class="headerlink" href="#tasks-list" title="Permalink to this headline">露</a></h3>
+<p>Each play contains a list of tasks.  Tasks are executed in order, one
+at a time, against all machines matched by the host pattern,
+before moving on to the next task.  It is important to understand that, within a play,
+all hosts are going to get the same task directives.  It is the purpose of a play to map
+a selection of hosts to tasks.</p>
+<p>When running the playbook, which runs top to bottom, hosts with failed tasks are
+taken out of the rotation for the entire playbook.  If things fail, simply correct the playbook file and rerun.</p>
+<p>The goal of each task is to execute a module, with very specific arguments.
+Variables, as mentioned above, can be used in arguments to modules.</p>
+<p>Modules are &#8216;idempotent&#8217;, meaning if you run them
+again, they will make only the changes they must in order to bring the
+system to the desired state.  This makes it very safe to rerun
+the same playbook multiple times.  They won&#8217;t change things
+unless they have to change things.</p>
+<p>The <strong>command</strong> and <strong>shell</strong> modules will typically rerun the same command again,
+which is totally ok if the command is something like
+<code class="docutils literal"><span class="pre">chmod</span></code> or <code class="docutils literal"><span class="pre">setsebool</span></code>, etc.  Though there is a <code class="docutils literal"><span class="pre">creates</span></code> flag available which can
+be used to make these modules also idempotent.</p>
+<p>Every task should have a <code class="docutils literal"><span class="pre">name</span></code>, which is included in the output from
+running the playbook.   This is output for humans, so it is
+nice to have reasonably good descriptions of each task step.  If the name
+is not provided though, the string fed to &#8216;action&#8217; will be used for
+output.</p>
+<p>Tasks can be declared using the legacy <code class="docutils literal"><span class="pre">action:</span> <span class="pre">module</span> <span class="pre">options</span></code> format, but
+it is recommended that you use the more conventional <code class="docutils literal"><span class="pre">module:</span> <span class="pre">options</span></code> format.
+This recommended format is used throughout the documentation, but you may
+encounter the older format in some playbooks.</p>
+<p>Here is what a basic task looks like. As with most modules,
+the service module takes <code class="docutils literal"><span class="pre">key=value</span></code> arguments:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">make sure apache is running</span>
+    <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=httpd state=started</span>
+</pre></div>
+</div>
+<p>The <strong>command</strong> and <strong>shell</strong> modules are the only modules that just take a list
+of arguments and don&#8217;t use the <code class="docutils literal"><span class="pre">key=value</span></code> form.  This makes
+them work as simply as you would expect:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">disable selinux</span>
+    <span class="l l-Scalar l-Scalar-Plain">command</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/sbin/setenforce 0</span>
+</pre></div>
+</div>
+<p>The <strong>command</strong> and <strong>shell</strong> module care about return codes, so if you have a command
+whose successful exit code is not zero, you may wish to do this:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">run this command and ignore the result</span>
+    <span class="l l-Scalar l-Scalar-Plain">shell</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/usr/bin/somecommand || /bin/true</span>
+</pre></div>
+</div>
+<p>Or this:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">run this command and ignore the result</span>
+    <span class="l l-Scalar l-Scalar-Plain">shell</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/usr/bin/somecommand</span>
+    <span class="l l-Scalar l-Scalar-Plain">ignore_errors</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+</pre></div>
+</div>
+<p>If the action line is getting too long for comfort you can break it on
+a space and indent any continuation lines:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Copy ansible inventory file to client</span>
+    <span class="l l-Scalar l-Scalar-Plain">copy</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">src=/etc/ansible/hosts dest=/etc/ansible/hosts</span>
+            <span class="l l-Scalar l-Scalar-Plain">owner=root group=root mode=0644</span>
+</pre></div>
+</div>
+<p>Variables can be used in action lines.   Suppose you defined
+a variable called <code class="docutils literal"><span class="pre">vhost</span></code> in the <code class="docutils literal"><span class="pre">vars</span></code> section, you could do this:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">create a virtual host file for {{ vhost }}</span>
+    <span class="l l-Scalar l-Scalar-Plain">template</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">src=somefile.j2 dest=/etc/httpd/conf.d/{{ vhost }}</span>
+</pre></div>
+</div>
+<p>Those same variables are usable in templates, which we&#8217;ll get to later.</p>
+<p>Now in a very basic playbook all the tasks will be listed directly in that play, though it will usually
+make more sense to break up tasks using the <code class="docutils literal"><span class="pre">include:</span></code> directive.  We&#8217;ll show that a bit later.</p>
+</div>
+</div>
+<div class="section" id="action-shorthand">
+<span id="id4"></span><h2>Action Shorthand<a class="headerlink" href="#action-shorthand" title="Permalink to this headline">露</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.8.</span></p>
+</div>
+<p>Ansible prefers listing modules like this in 0.8 and later:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">template</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">src=templates/foo.j2 dest=/etc/foo.conf</span>
+</pre></div>
+</div>
+<p>You will notice in earlier versions, this was only available as:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">action</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">template src=templates/foo.j2 dest=/etc/foo.conf</span>
+</pre></div>
+</div>
+<p>The old form continues to work in newer versions without any plan of deprecation.</p>
+</div>
+<div class="section" id="handlers-running-operations-on-change">
+<span id="handlers"></span><h2>Handlers: Running Operations On Change<a class="headerlink" href="#handlers-running-operations-on-change" title="Permalink to this headline">露</a></h2>
+<p>As we&#8217;ve mentioned, modules are written to be &#8216;idempotent&#8217; and can relay when
+they have made a change on the remote system.   Playbooks recognize this and
+have a basic event system that can be used to respond to change.</p>
+<p>These &#8216;notify&#8217; actions are triggered at the end of each block of tasks in a playbook, and will only be
+triggered once even if notified by multiple different tasks.</p>
+<p>For instance, multiple resources may indicate
+that apache needs to be restarted because they have changed a config file,
+but apache will only be bounced once to avoid unnecessary restarts.</p>
+<p>Here&#8217;s an example of restarting two services when the contents of a file
+change, but only if the file changes:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">template configuration file</span>
+  <span class="l l-Scalar l-Scalar-Plain">template</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">src=template.j2 dest=/etc/foo.conf</span>
+  <span class="l l-Scalar l-Scalar-Plain">notify</span><span class="p p-Indicator">:</span>
+     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">restart memcached</span>
+     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">restart apache</span>
+</pre></div>
+</div>
+<p>The things listed in the <code class="docutils literal"><span class="pre">notify</span></code> section of a task are called
+handlers.</p>
+<p>Handlers are lists of tasks, not really any different from regular
+tasks, that are referenced by a globally unique name.  Handlers are
+what notifiers notify.  If nothing notifies a handler, it will not
+run.  Regardless of how many things notify a handler, it will run only
+once, after all of the tasks complete in a particular play.</p>
+<p>Here&#8217;s an example handlers section:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">handlers</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">restart memcached</span>
+      <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=memcached state=restarted</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">restart apache</span>
+      <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=apache state=restarted</span>
+</pre></div>
+</div>
+<p>As of Ansible 2.2, handlers can also &#8220;listen&#8221; to generic topics, and tasks can notify those topics as follows:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">handlers</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">restart memcached</span>
+      <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=memcached state=restarted</span>
+      <span class="l l-Scalar l-Scalar-Plain">listen</span><span class="p p-Indicator">:</span> <span class="s">&quot;restart</span><span class="nv"> </span><span class="s">web</span><span class="nv"> </span><span class="s">services&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">restart apache</span>
+      <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=apache state=restarted</span>
+      <span class="l l-Scalar l-Scalar-Plain">listen</span><span class="p p-Indicator">:</span> <span class="s">&quot;restart</span><span class="nv"> </span><span class="s">web</span><span class="nv"> </span><span class="s">services&quot;</span>
+
+<span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">restart everything</span>
+      <span class="l l-Scalar l-Scalar-Plain">command</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">echo &quot;this task will restart the web services&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">notify</span><span class="p p-Indicator">:</span> <span class="s">&quot;restart</span><span class="nv"> </span><span class="s">web</span><span class="nv"> </span><span class="s">services&quot;</span>
+</pre></div>
+</div>
+<p>This use makes it much easier to trigger multiple handlers. It also decouples handlers from their names,
+making it easier to share handlers among playbooks and roles (especially when using 3rd party roles from
+a shared source like Galaxy).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>Notify handlers are always run in the same order they are defined, <cite>not</cite> in the order listed in the notify-statement. This is also the case for handlers using <cite>listen</cite>.</li>
+<li>Handler names and <cite>listen</cite> topics live in a global namespace.</li>
+<li>If two handler tasks have the same name, only one will run.
+<a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible/issues/4943  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible/issues/4943'" tppabs="https://github.com/ansible/ansible/issues/4943">*</a></li>
+<li>You cannot notify a handler that is defined inside of an include. As of Ansible 2.1, this does work, however the include must be <cite>static</cite>.</li>
+</ul>
+</div>
+<p>Roles are described later on, but it&#8217;s worthwhile to point out that:</p>
+<ul class="simple">
+<li>handlers notified within <code class="docutils literal"><span class="pre">pre_tasks</span></code>, <code class="docutils literal"><span class="pre">tasks</span></code>, and <code class="docutils literal"><span class="pre">post_tasks</span></code> sections are automatically flushed in the end of section where they were notified;</li>
+<li>handlers notified within <code class="docutils literal"><span class="pre">roles</span></code> section are automatically flushed in the end of <code class="docutils literal"><span class="pre">tasks</span></code> section, but before any <code class="docutils literal"><span class="pre">tasks</span></code> handlers.</li>
+</ul>
+<p>If you ever want to flush all the handler commands immediately though, in 1.2 and later, you can:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">shell</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">some tasks go here</span>
+   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">meta</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">flush_handlers</span>
+   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">shell</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">some other tasks</span>
+</pre></div>
+</div>
+<p>In the above example any queued up handlers would be processed early when the <code class="docutils literal"><span class="pre">meta</span></code>
+statement was reached.  This is a bit of a niche case but can come in handy from
+time to time.</p>
+</div>
+<div class="section" id="executing-a-playbook">
+<span id="id6"></span><h2>Executing A Playbook<a class="headerlink" href="#executing-a-playbook" title="Permalink to this headline">露</a></h2>
+<p>Now that you&#8217;ve learned playbook syntax, how do you run a playbook?  It&#8217;s simple.
+Let&#8217;s run a playbook using a parallelism level of 10:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible-playbook playbook.yml -f 10</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ansible-pull">
+<span id="id7"></span><h2>Ansible-Pull<a class="headerlink" href="#ansible-pull" title="Permalink to this headline">露</a></h2>
+<p>Should you want to invert the architecture of Ansible, so that nodes check in to a central location, instead
+of pushing configuration out to them, you can.</p>
+<p>The <code class="docutils literal"><span class="pre">ansible-pull</span></code> is a small script that will checkout a repo of configuration instructions from git, and then
+run <code class="docutils literal"><span class="pre">ansible-playbook</span></code> against that content.</p>
+<p>Assuming you load balance your checkout location, <code class="docutils literal"><span class="pre">ansible-pull</span></code> scales essentially infinitely.</p>
+<p>Run <code class="docutils literal"><span class="pre">ansible-pull</span> <span class="pre">--help</span></code> for details.</p>
+<p>There&#8217;s also a <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible-examples/blob/master/language_features/ansible_pull.yml  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible-examples/blob/master/language_features/ansible_pull.yml'" tppabs="https://github.com/ansible/ansible-examples/blob/master/language_features/ansible_pull.yml">clever playbook</a> available to configure <code class="docutils literal"><span class="pre">ansible-pull</span></code> via a crontab from push mode.</p>
+</div>
+<div class="section" id="tips-and-tricks">
+<span id="id8"></span><h2>Tips and Tricks<a class="headerlink" href="#tips-and-tricks" title="Permalink to this headline">露</a></h2>
+<p>Look at the bottom of the playbook execution for a summary of the nodes that were targeted
+and how they performed.   General failures and fatal &#8220;unreachable&#8221; communication attempts are
+kept separate in the counts.</p>
+<p>If you ever want to see detailed output from successful modules as well as unsuccessful ones,
+use the <code class="docutils literal"><span class="pre">--verbose</span></code> flag.  This is available in Ansible 0.5 and later.</p>
+<p>Ansible playbook output is vastly upgraded if the cowsay
+package is installed.  Try it!</p>
+<p>To see what hosts would be affected by a playbook before you run it, you
+can do this:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible-playbook playbook.yml --list-hosts</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="YAMLSyntax-1.html" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html"><span class="doc">YAML Syntax</span></a></dt>
+<dd>Learn about YAML syntax</dd>
+<dt><a class="reference internal" href="playbooks_best_practices-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_best_practices.html"><span class="doc">Best Practices</span></a></dt>
+<dd>Various tips about managing playbooks in the real world</dd>
+<dt><a class="reference internal" href="index-1.html" tppabs="http://docs.ansible.com/ansible/index.html"><span class="doc">Ansible Documentation</span></a></dt>
+<dd>Hop back to the documentation index for a lot of special topics about playbooks</dd>
+<dt><a class="reference internal" href="modules-1.html" tppabs="http://docs.ansible.com/ansible/modules.html"><span class="doc">About Modules</span></a></dt>
+<dd>Learn about available modules</dd>
+<dt><a class="reference internal" href="developing_modules-1.html" tppabs="http://docs.ansible.com/ansible/developing_modules.html"><span class="doc">Developing Modules</span></a></dt>
+<dd>Learn how to extend Ansible by writing your own modules</dd>
+<dt><a class="reference internal" href="intro_patterns-1.html" tppabs="http://docs.ansible.com/ansible/intro_patterns.html"><span class="doc">Patterns</span></a></dt>
+<dd>Learn about how to select hosts</dd>
+<dt><a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible-examples  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible-examples'" tppabs="https://github.com/ansible/ansible-examples">Github examples directory</a></dt>
+<dd>Complete end-to-end playbook examples</dd>
+<dt><a class="reference external" href="javascript:if(confirm('http://groups.google.com/group/ansible-project  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://groups.google.com/group/ansible-project'" tppabs="http://groups.google.com/group/ansible-project">Mailing List</a></dt>
+<dd>Questions? Help? Ideas?  Stop by the list on Google Groups</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div id="search-results"><gcse:searchresults-only></div>
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+        <a href="playbooks_roles-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_roles.html" class="btn btn-neutral float-right" title="Playbook Roles and Include Statements"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="playbooks-1.html" tppabs="http://docs.ansible.com/ansible/playbooks.html" class="btn btn-neutral" title="Playbooks"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','st-1.js'/*tpa=http://s.swiftypecdn.com/install/v2/st.js*/,'_st');
+
+  _st('install','yABGvz2N8PwcwBxyfzUc','2.0.0');
+</script>
+
+  <p>
+  Copyright 漏 2016 Red Hat, Inc.
+  <br>
+    Last updated on Jun 22, 2016.
+  </p>
+<p>
+Ansible docs are generated from <a href="javascript:if(confirm('https://github.com/ansible/ansible  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible'" tppabs="https://github.com/ansible/ansible">GitHub sources</A> using <A HREF="javascript:if(confirm('http://sphinx-doc.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://sphinx-doc.org/'" tppabs="http://sphinx-doc.org/">Sphinx</A> using a theme provided by <a href="javascript:if(confirm('http://readthedocs.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://readthedocs.org/'" tppabs="http://readthedocs.org/">Read the Docs</a>. 
+</p>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+<!-- begin analytics -->
+<script type="text/javascript">
+var _hsq = _hsq || [];
+_hsq.push(["setContentType", "standard-page"]);
+        (function(d,s,i,r) {
+        if (d.getElementById(i)){return;}
+        var n = d.createElement(s),e = document.getElementsByTagName(s)[0];
+        n.id=i;n.src = '//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/330046.js';
+        e.parentNode.insertBefore(n, e);
+        })(document, "script", "hs-analytics",300000);
+</script>
+<!-- end analytics -->
+
+</body>
+</html>

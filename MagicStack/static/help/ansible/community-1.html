@@ -1,0 +1,788 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset=UTF-8"utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Tag Manager Data Layer -->
+  <script>
+   dataLayer = [];
+  </script>
+  <!-- End Google Tag Manager Data Layer -->
+
+  
+  <title>Community Information &amp; Contributing &mdash; Ansible Documentation</title>
+  
+
+  
+  
+
+  
+  <link href="css-family=Lato-400,700-Roboto+Slab-400,700-Inconsolata-400,700.css" tppabs="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel='stylesheet' type='text/css'>
+  <link href="font-awesome.min.css" tppabs="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'http://docs.ansible.com/ansible/0.01',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+      <script type="text/javascript" src="jquery-1.js" tppabs="http://docs.ansible.com/ansible/_static/jquery.js"></script>
+      <script type="text/javascript" src="underscore-1.js" tppabs="http://docs.ansible.com/ansible/_static/underscore.js"></script>
+      <script type="text/javascript" src="doctools-1.js" tppabs="http://docs.ansible.com/ansible/_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="theme.min-1.css" tppabs="http://docs.ansible.com/ansible/_static/css/theme.min.css" type="text/css" />
+    <script type="text/javascript" src="theme-1.js" tppabs="http://docs.ansible.com/ansible/_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="Ansible Documentation" href="index.html"/>
+        <link rel="next" title="Ansible Galaxy" href="galaxy.html"/>
+        <link rel="prev" title="Ansible Tower" href="tower.html"/> 
+
+  <script src="modernizr.min-1.js" tppabs="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  <style>
+    .search-reset-start {
+        color: #463E3F;
+        float: right;
+        position: relative;
+        top: -25px;
+        left: -10px;
+        z-index: 10;
+     }
+     .search-reset-start:hover {
+        cursor: pointer;
+        color: #2980B9;
+     }
+     #search-box-id {
+        padding-right: 25px;
+     }
+  </style>
+
+  <link href="css-family=Open+Sans-400,300.css" tppabs="https://fonts.googleapis.com/css?family=Open+Sans:400,300"
+    rel='stylesheet' type='text/css'>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="ns-1.html-id=gtm-psb293" tppabs="http://www.googletagmanager.com/ns.html?id=GTM-PSB293" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm-1.js'/*tpa=http://docs.ansible.com/ansible/gtm.js*/});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-PSB293');</script>
+  <!-- End Google Tag Manager -->
+
+  <a class="DocSite-nav" href="javascript:if(confirm('http://docs.ansible.com/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">
+    <img class="DocSiteNav-logo"
+      src="logo_invert-1.png" tppabs="http://docs.ansible.com/ansible/_static/images/logo_invert.png"
+      alt="Ansible Logo">
+    <div class="DocSiteNav-title">
+      Documentation
+    </div>
+  </a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+
+      <div style="background-color:#5bbdbf;height=80px;margin:'auto auto auto auto'">
+        <a class="DocSiteProduct-header DocSiteProduct-header--core"
+          href="index.htm" tppabs="http://docs.ansible.com/ansible/">
+          <div class="DocSiteProduct-productName">
+            <div class="DocSiteProduct-logoText">
+              ANSIBLE
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div id="menu-id" class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro-1.html" tppabs="http://docs.ansible.com/ansible/intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro_installation-1.html" tppabs="http://docs.ansible.com/ansible/intro_installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_getting_started-1.html" tppabs="http://docs.ansible.com/ansible/intro_getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_inventory.html">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_dynamic_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_dynamic_inventory.html">Dynamic Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_patterns-1.html" tppabs="http://docs.ansible.com/ansible/intro_patterns.html">Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_adhoc-1.html" tppabs="http://docs.ansible.com/ansible/intro_adhoc.html">Introduction To Ad-Hoc Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_configuration-1.html" tppabs="http://docs.ansible.com/ansible/intro_configuration.html">Configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_bsd-1.html" tppabs="http://docs.ansible.com/ansible/intro_bsd.html">BSD Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_windows-1.html" tppabs="http://docs.ansible.com/ansible/intro_windows.html">Windows Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_networking-1.html" tppabs="http://docs.ansible.com/ansible/intro_networking.html">Networking Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart-1.html" tppabs="http://docs.ansible.com/ansible/quickstart.html">Quickstart Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks-1.html" tppabs="http://docs.ansible.com/ansible/playbooks.html">Playbooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_intro-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_intro.html">Intro to Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_roles-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_roles.html">Playbook Roles and Include Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_variables-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_filters-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_filters.html">Jinja2 filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_conditionals-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_conditionals.html">Conditionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_loops-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_loops.html">Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_blocks-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_blocks.html">Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_strategies-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_strategies.html">Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_best_practices-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_best_practices.html">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks_special_topics-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_special_topics.html">Playbooks: Special Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="become-1.html" tppabs="http://docs.ansible.com/ansible/become.html">Become (Privilege Escalation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_acceleration-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_acceleration.html">Accelerated Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_async-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_async.html">Asynchronous Actions and Polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_checkmode-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_checkmode.html">Check Mode (&#8220;Dry Run&#8221;)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_debugger-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_debugger.html">Playbook Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_delegation-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_delegation.html">Delegation, Rolling Updates, and Local Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_environment-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_environment.html">Setting the Environment (and Working With Proxies)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_error_handling-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_error_handling.html">Error Handling In Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_advanced_syntax-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_advanced_syntax.html">Advanced Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_lookups-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_lookups.html">Using Lookups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_prompts-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_prompts.html">Prompts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_tags-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_tags.html">Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_vault-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_vault.html">Vault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_startnstep-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_startnstep.html">Start and Step</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_directives-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_directives.html">Directives Glossary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules-1.html" tppabs="http://docs.ansible.com/ansible/modules.html">About Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules_intro-1.html" tppabs="http://docs.ansible.com/ansible/modules_intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_core-1.html" tppabs="http://docs.ansible.com/ansible/modules_core.html">Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_extra-1.html" tppabs="http://docs.ansible.com/ansible/modules_extra.html">Extras Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_return_values-1.html" tppabs="http://docs.ansible.com/ansible/common_return_values.html">Common Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules_by_category-1.html" tppabs="http://docs.ansible.com/ansible/modules_by_category.html">Module Index</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="list_of_all_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_all_modules.html">All Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_cloud_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_cloud_modules.html">Cloud Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_clustering_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_clustering_modules.html">Clustering Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_commands_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_commands_modules.html">Commands Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_database_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_database_modules.html">Database Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_files_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_files_modules.html">Files Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_inventory_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_inventory_modules.html">Inventory Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_messaging_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_messaging_modules.html">Messaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_monitoring_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_monitoring_modules.html">Monitoring Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_network_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_network_modules.html">Network Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_notification_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_notification_modules.html">Notification Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_packaging_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_packaging_modules.html">Packaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_source_control_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_source_control_modules.html">Source Control Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_system_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_system_modules.html">System Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_utilities_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_utilities_modules.html">Utilities Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_web_infrastructure_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_web_infrastructure_modules.html">Web Infrastructure Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_windows_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_windows_modules.html">Windows Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guides-1.html" tppabs="http://docs.ansible.com/ansible/guides.html">Detailed Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_aws-1.html" tppabs="http://docs.ansible.com/ansible/guide_aws.html">Amazon Web Services Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_azure-1.html" tppabs="http://docs.ansible.com/ansible/guide_azure.html">Getting Started with Azure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rax-1.html" tppabs="http://docs.ansible.com/ansible/guide_rax.html">Rackspace Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_gce-1.html" tppabs="http://docs.ansible.com/ansible/guide_gce.html">Google Cloud Platform Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_cloudstack-1.html" tppabs="http://docs.ansible.com/ansible/guide_cloudstack.html">CloudStack Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_vagrant-1.html" tppabs="http://docs.ansible.com/ansible/guide_vagrant.html">Using Vagrant and Ansible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rolling_upgrade-1.html" tppabs="http://docs.ansible.com/ansible/guide_rolling_upgrade.html">Continuous Delivery and Rolling Upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_docker-1.html" tppabs="http://docs.ansible.com/ansible/guide_docker.html">Getting Started with Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developing-1.html" tppabs="http://docs.ansible.com/ansible/developing.html">Developer Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developing_api-1.html" tppabs="http://docs.ansible.com/ansible/developing_api.html">Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_inventory-1.html" tppabs="http://docs.ansible.com/ansible/developing_inventory.html">Developing Dynamic Inventory Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_modules-1.html" tppabs="http://docs.ansible.com/ansible/developing_modules.html">Developing Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_plugins-1.html" tppabs="http://docs.ansible.com/ansible/developing_plugins.html">Developing Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_core-1.html" tppabs="http://docs.ansible.com/ansible/developing_core.html">Developing the Ansible Core Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_test_pr-1.html" tppabs="http://docs.ansible.com/ansible/developing_test_pr.html">Helping Testing PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_releases-1.html" tppabs="http://docs.ansible.com/ansible/developing_releases.html">Releases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tower-1.html" tppabs="http://docs.ansible.com/ansible/tower.html">Ansible Tower</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Community Information &amp; Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ansible-users">Ansible Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#for-current-and-prospective-developers">For Current and Prospective Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#other-topics">Other Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#community-code-of-conduct">Community Code of Conduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contributors-license-agreement">Contributors License Agreement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="galaxy-1.html" tppabs="http://docs.ansible.com/ansible/galaxy.html">Ansible Galaxy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="galaxy-1.html#the-website" tppabs="http://docs.ansible.com/ansible/galaxy.html#the-website">The Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="galaxy-1.html#the-ansible-galaxy-command-line-tool" tppabs="http://docs.ansible.com/ansible/galaxy.html#the-ansible-galaxy-command-line-tool">The ansible-galaxy command line tool</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test_strategies-1.html" tppabs="http://docs.ansible.com/ansible/test_strategies.html">Testing Strategies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#integrating-testing-with-ansible-playbooks" tppabs="http://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-ansible-playbooks">Integrating Testing With Ansible Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#the-right-level-of-testing" tppabs="http://docs.ansible.com/ansible/test_strategies.html#the-right-level-of-testing">The Right Level of Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#check-mode-as-a-drift-test" tppabs="http://docs.ansible.com/ansible/test_strategies.html#check-mode-as-a-drift-test">Check Mode As A Drift Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#modules-that-are-useful-for-testing" tppabs="http://docs.ansible.com/ansible/test_strategies.html#modules-that-are-useful-for-testing">Modules That Are Useful for Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#testing-lifecycle" tppabs="http://docs.ansible.com/ansible/test_strategies.html#testing-lifecycle">Testing Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#integrating-testing-with-rolling-updates" tppabs="http://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-rolling-updates">Integrating Testing With Rolling Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#achieving-continuous-deployment" tppabs="http://docs.ansible.com/ansible/test_strategies.html#achieving-continuous-deployment">Achieving Continuous Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#conclusion" tppabs="http://docs.ansible.com/ansible/test_strategies.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq-1.html" tppabs="http://docs.ansible.com/ansible/faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook" tppabs="http://docs.ansible.com/ansible/faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook">How can I set the PATH or any other environment variable for a task or entire playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with">How do I handle different machines needing different user accounts or ports to log in with?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file">How do I get ansible to reuse connections, enable Kerberized SSH, or have Ansible pay attention to my local SSH config file?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">How do I configure a jump host to access servers that I have no direct access to?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-speed-up-management-inside-ec2" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-speed-up-management-inside-ec2">How do I speed up management inside EC2?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine">How do I handle python pathing not having a Python 2.X in /usr/bin/python on a remote machine?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#what-is-the-best-way-to-make-content-reusable-redistributable" tppabs="http://docs.ansible.com/ansible/faq.html#what-is-the-best-way-to-make-content-reusable-redistributable">What is the best way to make content reusable/redistributable?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it" tppabs="http://docs.ansible.com/ansible/faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it">Where does the configuration file live and what can I configure in it?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-disable-cowsay" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-disable-cowsay">How do I disable cowsay?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-see-a-list-of-all-of-the-ansible-variables" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables">How do I see a list of all of the ansible_ variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host">How do I see all the inventory vars defined for my host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template">How do I loop over a list of hosts in a group, inside of a template?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-a-variable-name-programmatically" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-name-programmatically">How do I access a variable name programmatically?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-a-variable-of-the-first-host-in-a-group" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group">How do I access a variable of the first host in a group?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-copy-files-recursively-onto-a-target-host" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-copy-files-recursively-onto-a-target-host">How do I copy files recursively onto a target host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-shell-environment-variables" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-shell-environment-variables">How do I access shell environment variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-generate-crypted-passwords-for-the-user-module" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module">How do I generate crypted passwords for the user module?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#can-i-get-training-on-ansible-or-find-commercial-support" tppabs="http://docs.ansible.com/ansible/faq.html#can-i-get-training-on-ansible-or-find-commercial-support">Can I get training on Ansible or find commercial support?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#is-there-a-web-interface-rest-api-etc" tppabs="http://docs.ansible.com/ansible/faq.html#is-there-a-web-interface-rest-api-etc">Is there a web interface / REST API / etc?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-submit-a-change-to-the-documentation" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-submit-a-change-to-the-documentation">How do I submit a change to the documentation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-keep-secret-data-in-my-playbook" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-keep-secret-data-in-my-playbook">How do I keep secret data in my playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names" tppabs="http://docs.ansible.com/ansible/faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names">When should I use {{ }}? Also, how to interpolate variables or dynamic variable names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#i-don-t-see-my-question-here" tppabs="http://docs.ansible.com/ansible/faq.html#i-don-t-see-my-question-here">I don&#8217;t see my question here</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary-1.html" tppabs="http://docs.ansible.com/ansible/glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YAMLSyntax-1.html" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html">YAML Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax-1.html#yaml-basics" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html#yaml-basics">YAML Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax-1.html#gotchas" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html#gotchas">Gotchas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html">Porting Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#playbook" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#playbook">Playbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#deprecated" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#deprecated">Deprecated</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#other-caveats" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#other-caveats">Other caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#porting-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#porting-plugins">Porting plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#lookup-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#lookup-plugins">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#connection-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#connection-plugins">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#action-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#action-plugins">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#callback-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#callback-plugins">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id1" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id1">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#hybrid-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#hybrid-plugins">Hybrid plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id2" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id2">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id3" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id3">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id4" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id4">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id5" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id5">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id6" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id6">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#porting-custom-scripts" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#porting-custom-scripts">Porting custom scripts</a></li>
+</ul>
+
+        
+
+<!-- changeable widget -->
+<center>
+<br/>
+<a href="javascript:if(confirm('http://www.ansible.com/docs-left?utm_source=docs  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ansible.com/docs-left?utm_source=docs'" tppabs="http://www.ansible.com/docs-left?utm_source=docs">
+    <img style="border-width:0px;" src="ASB-docs-left-rail.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-left-rail.png" />
+</a>
+</center>
+
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="javascript:if(confirm('http://docs.ansible.com/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">Ansible Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+
+          <!-- Banner ads -->
+          <div class="DocSiteBanner">
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-left.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-left.png">
+            </a>
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-right.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-right.png">
+            </a>
+        </div>
+
+          <ul class="wy-breadcrumbs">
+  <li><a href="index-1.html" tppabs="http://docs.ansible.com/ansible/index.html">Docs</a> &raquo;</li>
+  <li><a href="">Community Information &amp; Contributing</a></li>
+  
+    <li class="wy-breadcrumbs-aside">
+      <a href="javascript:if(confirm('https://github.com/ansible/ansible/blob/devel/docsite/rst/community.rst  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible/blob/devel/docsite/rst/community.rst'" tppabs="https://github.com/ansible/ansible/blob/devel/docsite/rst/community.rst" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  
+</ul>
+<hr/>
+
+          <div id="page-content">
+          
+  <div class="section" id="community-information-contributing">
+<h1><a class="toc-backref" href="#id3">Community Information &amp; Contributing</a><a class="headerlink" href="#community-information-contributing" title="Permalink to this headline">¬∂</a></h1>
+<p>Ansible is an open source project designed to bring together administrators and developers of all kinds to collaborate on building
+IT automation solutions that work well for them.</p>
+<p>Should you wish to get more involved &#8211; whether in terms of just asking a question, helping other users, introducing new people to Ansible, or helping with the software or documentation, we welcome your contributions to the project.</p>
+<div class="contents topic" id="topics">
+<p class="topic-title first">Topics</p>
+<ul class="simple">
+<li><a class="reference internal" href="#community-information-contributing" id="id3">Community Information &amp; Contributing</a><ul>
+<li><a class="reference internal" href="#ansible-users" id="id4">Ansible Users</a><ul>
+<li><a class="reference internal" href="#i-ve-got-a-question" id="id5">I&#8217;ve Got A Question</a></li>
+<li><a class="reference internal" href="#i-d-like-to-keep-up-with-release-announcements" id="id6">I&#8217;d Like To Keep Up With Release Announcements</a></li>
+<li><a class="reference internal" href="#i-d-like-to-help-share-and-promote-ansible" id="id7">I&#8217;d Like To Help Share and Promote Ansible</a></li>
+<li><a class="reference internal" href="#i-d-like-to-help-ansible-move-faster" id="id8">I&#8217;d Like To Help Ansible Move Faster</a></li>
+<li><a class="reference internal" href="#i-d-like-to-report-a-bug" id="id9">I&#8217;d Like To Report A Bug</a></li>
+<li><a class="reference internal" href="#i-d-like-to-help-with-documentation" id="id10">I&#8217;d Like To Help With Documentation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#for-current-and-prospective-developers" id="id11">For Current and Prospective Developers</a><ul>
+<li><a class="reference internal" href="#i-d-like-to-learn-how-to-develop-on-ansible" id="id12">I&#8217;d Like To Learn How To Develop on Ansible</a></li>
+<li><a class="reference internal" href="#contributing-code-features-or-bugfixes" id="id13">Contributing Code (Features or Bugfixes)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#other-topics" id="id14">Other Topics</a><ul>
+<li><a class="reference internal" href="#ansible-staff" id="id15">Ansible Staff</a></li>
+<li><a class="reference internal" href="#mailing-list-information" id="id16">Mailing List Information</a></li>
+<li><a class="reference internal" href="#irc-meetings" id="id17">IRC Meetings</a></li>
+<li><a class="reference internal" href="#release-numbering" id="id18">Release Numbering</a></li>
+<li><a class="reference internal" href="#tower-support-questions" id="id19">Tower Support Questions</a></li>
+<li><a class="reference internal" href="#irc-channel" id="id20">IRC Channel</a></li>
+<li><a class="reference internal" href="#notes-on-priority-flags" id="id21">Notes on Priority Flags</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#community-code-of-conduct" id="id22">Community Code of Conduct</a><ul>
+<li><a class="reference internal" href="#anti-harassment-policy" id="id23">Anti-harassment policy</a></li>
+<li><a class="reference internal" href="#policy-violations" id="id24">Policy violations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#contributors-license-agreement" id="id25">Contributors License Agreement</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="ansible-users">
+<h2><a class="toc-backref" href="#id4">Ansible Users</a><a class="headerlink" href="#ansible-users" title="Permalink to this headline">¬∂</a></h2>
+<div class="section" id="i-ve-got-a-question">
+<h3><a class="toc-backref" href="#id5">I&#8217;ve Got A Question</a><a class="headerlink" href="#i-ve-got-a-question" title="Permalink to this headline">¬∂</a></h3>
+<p>We&#8217;re happy to help!</p>
+<p>Ansible questions are best asked on the <a class="reference external" href="javascript:if(confirm('http://groups.google.com/group/ansible-project  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://groups.google.com/group/ansible-project'" tppabs="http://groups.google.com/group/ansible-project">Ansible Google Group Mailing List</a>.</p>
+<p>This is a very large high-traffic list for answering questions and sharing tips
+and tricks. Anyone can join, and email delivery is optional if you just want to read the group online.  To cut down on spam, your first post is moderated, though posts are approved quickly.</p>
+<p>Please be sure to share any relevant commands you ran, output, and detail, indicate the version of Ansible you are using when asking a question.</p>
+<p>Where needed, link to gists or github repos to show examples, rather than sending attachments to the list.</p>
+<p>We recommend using Google search to see if a topic has been answered recently, but comments found in older threads may no longer apply, depending on the topic.</p>
+<p>Before you post, be sure you are running the latest stable version of Ansible.  You can check this by comparing the output of <code class="docutils literal"><span class="pre">ansible</span> <span class="pre">--version</span></code> with the version indicated on <a class="reference external" href="javascript:if(confirm('https://pypi.python.org/pypi/ansible  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://pypi.python.org/pypi/ansible'" tppabs="https://pypi.python.org/pypi/ansible">PyPi</a>.</p>
+<p>Alternatively, you can also join our IRC channel - #ansible on irc.freenode.net.  It&#8217;s a very high traffic channel as well, if you don&#8217;t get an answer you like, please stop by our mailing list, which is more likely
+to get attention of core developers since it&#8217;s asynchronous.</p>
+</div>
+<div class="section" id="i-d-like-to-keep-up-with-release-announcements">
+<h3><a class="toc-backref" href="#id6">I&#8217;d Like To Keep Up With Release Announcements</a><a class="headerlink" href="#i-d-like-to-keep-up-with-release-announcements" title="Permalink to this headline">¬∂</a></h3>
+<p>Release announcements are posted to ansible-project, though if you don&#8217;t want to keep up with the very active list, you can join the <a class="reference external" href="javascript:if(confirm('http://groups.google.com/group/ansible-announce  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://groups.google.com/group/ansible-announce'" tppabs="http://groups.google.com/group/ansible-announce">Ansible Announce Mailing List</a></p>
+<p>This is a low-traffic read-only list, where we&#8217;ll share release announcements and occasionally links to major Ansible Events around the world.</p>
+</div>
+<div class="section" id="i-d-like-to-help-share-and-promote-ansible">
+<h3><a class="toc-backref" href="#id7">I&#8217;d Like To Help Share and Promote Ansible</a><a class="headerlink" href="#i-d-like-to-help-share-and-promote-ansible" title="Permalink to this headline">¬∂</a></h3>
+<p>You can help share Ansible with others by telling friends and colleagues, writing a blog post,
+or presenting at user groups (like DevOps groups or the local LUG).</p>
+<p>You are also welcome to share slides on speakerdeck, sign up for a free account and tag it ‚ÄúAnsible‚Äù. On Twitter,
+you can also share things with #ansible and may wish to <a class="reference external" href="javascript:if(confirm('https://twitter.com/ansible  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://twitter.com/ansible'" tppabs="https://twitter.com/ansible">follow us</a>.</p>
+</div>
+<div class="section" id="i-d-like-to-help-ansible-move-faster">
+<h3><a class="toc-backref" href="#id8">I&#8217;d Like To Help Ansible Move Faster</a><a class="headerlink" href="#i-d-like-to-help-ansible-move-faster" title="Permalink to this headline">¬∂</a></h3>
+<p>If you&#8217;re a developer, one of the most valuable things you can do is look at the github issues list and help fix bugs.  We almost always prioritize bug fixing over
+feature development, so clearing bugs out of the way is one of the best things you can do.</p>
+<p>If you&#8217;re not a developer, helping test pull requests for bug fixes and features is still immensely valuable.  You can do this by checking out ansible, making a test
+branch off the main one, merging a GitHub issue, testing, and then commenting on that particular issue on GitHub.</p>
+</div>
+<div class="section" id="i-d-like-to-report-a-bug">
+<h3><a class="toc-backref" href="#id9">I&#8217;d Like To Report A Bug</a><a class="headerlink" href="#i-d-like-to-report-a-bug" title="Permalink to this headline">¬∂</a></h3>
+<p>Ansible practices responsible disclosure - if this is a security related bug, email <a class="reference external" href="javascript:if(confirm('http://docs.ansible.com/cdn-cgi/l/email-protection  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/cdn-cgi/l/email-protection#582b3d3b2d2a312c217e7b6b6f637e7b6d6a637e7b6c606339362b313a343d7e7b6c6e633b3735'" tppabs="http://docs.ansible.com/cdn-cgi/l/email-protection#582b3d3b2d2a312c217e7b6b6f637e7b6d6a637e7b6c606339362b313a343d7e7b6c6e633b3735">security<span>&#64;</span>ansible<span>&#46;</span>com</a> instead of filing a ticket or posting to the Google Group and you will receive a prompt response.</p>
+<p>Bugs related to the core language should be reported to <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible'" tppabs="https://github.com/ansible/ansible">github.com/ansible/ansible</a> after
+signing up for a free github account.  Before reporting a bug, please use the bug/issue search
+to see if the issue has already been reported.</p>
+<p>MODULE related bugs however should go to <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible-modules-core  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible-modules-core'" tppabs="https://github.com/ansible/ansible-modules-core">ansible-modules-core</a> or <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible-modules-extras  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible-modules-extras'" tppabs="https://github.com/ansible/ansible-modules-extras">ansible-modules-extras</a> based on the classification of the module.  This is listed on the bottom of the docs page for any module.</p>
+<p>When filing a bug, please use the <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible/raw/devel/.github/ISSUE_TEMPLATE.md  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible/raw/devel/.github/ISSUE_TEMPLATE.md'" tppabs="https://github.com/ansible/ansible/raw/devel/.github/ISSUE_TEMPLATE.md">issue template</a> to provide all relevant information, regardless of what repo you are filing a ticket against.</p>
+<p>Knowing your ansible version and the exact commands you are running, and what you expect, saves time and helps us help everyone with their issues
+more quickly.</p>
+<p>Do not use the issue tracker for &#8220;how do I do this&#8221; type questions.  These are great candidates
+for IRC or the mailing list instead where things are likely to be more of a discussion.</p>
+<p>To be respectful of reviewers time and allow us to help everyone efficiently, please
+provide minimal well-reduced and well-commented examples versus sharing your entire production
+playbook.  Include playbook snippets and output where possible.</p>
+<p>When sharing YAML in playbooks, formatting can be preserved by using <a class="reference external" href="javascript:if(confirm('https://help.github.com/articles/github-flavored-markdown  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://help.github.com/articles/github-flavored-markdown#fenced-code-blocks'" tppabs="https://help.github.com/articles/github-flavored-markdown#fenced-code-blocks">code blocks</a>.</p>
+<p>For multiple-file content, we encourage use of gist.github.com.  Online pastebin content can expire, so it&#8217;s nice to have things around for a longer term if they
+are referenced in a ticket.</p>
+<p>If you are not sure if something is a bug yet, you are welcome to ask about something on
+the mailing list or IRC first.</p>
+<p>As we are a very high volume project, if you determine that
+you do have a bug, please be sure to open the issue yourself to ensure we have a record of
+it. Don‚Äôt rely on someone else in the community to file the bug report for you.</p>
+<p>It may take some time to get to your report, see our information about priority flags below.</p>
+</div>
+<div class="section" id="i-d-like-to-help-with-documentation">
+<h3><a class="toc-backref" href="#id10">I&#8217;d Like To Help With Documentation</a><a class="headerlink" href="#i-d-like-to-help-with-documentation" title="Permalink to this headline">¬∂</a></h3>
+<p>Ansible documentation is a community project too!</p>
+<p>If you would like to help with the
+documentation, whether correcting a typo or improving a section, or maybe even
+documenting a new feature, submit a github pull request to  the code that
+lives in the <code class="docutils literal"><span class="pre">docsite/rst</span></code> subdirectory of the project for most pages, and there is an &#8220;Edit on GitHub&#8221;
+link up on those.</p>
+<p>Module documentation is generated from a DOCUMENTATION structure embedded in the source code of each module, which is in either the ansible-modules-core or ansible-modules-extra repos on github, depending on the module.  Information about this is always listed on the bottom of the web documentation for each module.</p>
+<p>Aside from modules, the main docs are in restructured text
+format.</p>
+<p>If you aren‚Äôt comfortable with restructured text, you can also open a ticket on
+github about any errors you spot or sections you would like to see added. For more information
+on creating pull requests, please refer to the
+<a class="reference external" href="javascript:if(confirm('https://help.github.com/articles/using-pull-requests  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://help.github.com/articles/using-pull-requests'" tppabs="https://help.github.com/articles/using-pull-requests">github help guide</a>.</p>
+</div>
+</div>
+<div class="section" id="for-current-and-prospective-developers">
+<h2><a class="toc-backref" href="#id11">For Current and Prospective Developers</a><a class="headerlink" href="#for-current-and-prospective-developers" title="Permalink to this headline">¬∂</a></h2>
+<div class="section" id="i-d-like-to-learn-how-to-develop-on-ansible">
+<h3><a class="toc-backref" href="#id12">I&#8217;d Like To Learn How To Develop on Ansible</a><a class="headerlink" href="#i-d-like-to-learn-how-to-develop-on-ansible" title="Permalink to this headline">¬∂</a></h3>
+<p>If you&#8217;re new to Ansible and would like to figure out how to work on things, stop by the ansible-devel mailing list
+and say hi, and we can hook you up.</p>
+<p>A great way to get started would be reading over some of the development documentation on the module site, and then
+finding a bug to fix or small feature to add.</p>
+<p>Modules are some of the easiest places to get started.</p>
+</div>
+<div class="section" id="contributing-code-features-or-bugfixes">
+<h3><a class="toc-backref" href="#id13">Contributing Code (Features or Bugfixes)</a><a class="headerlink" href="#contributing-code-features-or-bugfixes" title="Permalink to this headline">¬∂</a></h3>
+<p>The Ansible project keeps its source on github at <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible'" tppabs="https://github.com/ansible/ansible">github.com/ansible/ansible</a> for
+the core application, and two sub repos <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible-modules-core  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible-modules-core'" tppabs="https://github.com/ansible/ansible-modules-core">github.com/ansible/ansible-modules-core</a>
+and <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible-modules-extras  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible-modules-extras'" tppabs="https://github.com/ansible/ansible-modules-extras">ansible/ansible-modules-extras</a> for module related items.
+If you need to know if a module is in &#8216;core&#8217; or &#8216;extras&#8217;, consult the web documentation page for that module.</p>
+<p>The project takes contributions through <a class="reference external" href="javascript:if(confirm('https://help.github.com/articles/using-pull-requests  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://help.github.com/articles/using-pull-requests'" tppabs="https://help.github.com/articles/using-pull-requests">github pull requests</a>.</p>
+<p>It is usually a good idea to join the ansible-devel list to discuss any large features prior to submission,
+and this especially helps in avoiding duplicate work or efforts where we decide, upon seeing a pull request
+for the first time, that revisions are needed. (This is not usually needed for module development, but can be nice for large changes).</p>
+<p>Note that we do keep Ansible to a particular aesthetic, so if you are unclear about whether a feature
+is a good fit or not, having the discussion on the development list is often a lot easier than having
+to modify a pull request later.</p>
+<p>When submitting patches, be sure to run the unit tests first <code class="docutils literal"><span class="pre">make</span> <span class="pre">tests</span></code> and always use, these are the same basic
+tests that will automatically run on Travis when creating the PR. There are more in depth tests in the <code class="docutils literal"><span class="pre">tests/integration</span></code>
+directory, classified as destructive and non_destructive, run these if they pertain to your modification. They are setup
+with tags so you can run subsets, some of the tests require cloud credentials and will only run if they are provided.
+When adding new features of fixing bugs it would be nice to add new tests to avoid regressions. For more information about testing see <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible/blob/devel/test/README.md  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible/blob/devel/test/README.md'" tppabs="https://github.com/ansible/ansible/blob/devel/test/README.md">test/README.md</a>.</p>
+<p>In order to keep the history clean and better audit incoming code, we will require resubmission of pull requests that
+contain merge commits.  Use <code class="docutils literal"><span class="pre">git</span> <span class="pre">pull</span> <span class="pre">--rebase</span></code> (rather than <code class="docutils literal"><span class="pre">git</span> <span class="pre">pull</span></code>) and <code class="docutils literal"><span class="pre">git</span> <span class="pre">rebase</span></code> (rather than <code class="docutils literal"><span class="pre">git</span> <span class="pre">merge</span></code>). Also be sure to use topic
+branches to keep your additions on different branches, such that they won&#8217;t pick up stray commits later.</p>
+<p>If you make a mistake you do not need to close your PR, create a clean branch locally and then push to github
+with <code class="docutils literal"><span class="pre">--force</span></code> to overwrite the existing branch (permissible in this case as no one else should be using that
+branch as reference). Code comments won&#8217;t be lost, they just won&#8217;t be attached to the existing branch.</p>
+<p>We‚Äôll then review your contributions and engage with you about questions and  so on.</p>
+<p>As we have a very large and active community, so it may take awhile to get your contributions
+in!  See the notes about priorities in a later section for understanding our work queue.
+Be patient, your request might not get merged right away, we also try to keep the devel branch more
+or less usable so we like to examine Pull requests carefully, which takes time.</p>
+<p>Patches should always be made against the <code class="docutils literal"><span class="pre">devel</span></code> branch.</p>
+<p>Keep in mind that small and focused requests are easier to examine and accept, having example cases
+also help us understand the utility of a bug fix or a new feature.</p>
+<p>Contributions can be for new features like modules, or to fix bugs you or others have found. If you
+are interested in writing new modules to be included in the core Ansible distribution, please refer
+to the <a class="reference external" href="javascript:if(confirm('http://docs.ansible.com/developing_modules.html  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/developing_modules.html'" tppabs="http://docs.ansible.com/developing_modules.html">module development documentation</a>.</p>
+<p>Ansible&#8217;s aesthetic encourages simple, readable code and consistent, conservatively extending,
+backwards-compatible improvements.  Code developed for Ansible needs to support Python 2.6+,
+while code in modules must run under Python 2.4 or higher.  Please also use a 4-space indent
+and no tabs, we do not enforce 80 column lines, we are fine with 120-140. We do not take &#8216;style only&#8217;
+requests unless the code is nearly unreadable, we are &#8220;PEP8ish&#8221;, but not strictly compliant.</p>
+<p>You can also contribute by testing and revising other requests, specially if it is one you are interested
+in using. Please keep your comments clear and to the point, courteous and constructive, tickets are not a
+good place to start discussions (ansible-devel and IRC exist for this).</p>
+<p>Tip: To easily run from a checkout, source <code class="docutils literal"><span class="pre">./hacking/env-setup</span></code> and that&#8217;s it &#8211; no install
+required.  You&#8217;re now live! For more information see <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible/blob/devel/hacking/README.md  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible/blob/devel/hacking/README.md'" tppabs="https://github.com/ansible/ansible/blob/devel/hacking/README.md">hacking/README.md</a>.</p>
+</div>
+</div>
+<div class="section" id="other-topics">
+<h2><a class="toc-backref" href="#id14">Other Topics</a><a class="headerlink" href="#other-topics" title="Permalink to this headline">¬∂</a></h2>
+<div class="section" id="ansible-staff">
+<h3><a class="toc-backref" href="#id15">Ansible Staff</a><a class="headerlink" href="#ansible-staff" title="Permalink to this headline">¬∂</a></h3>
+<p>Ansible, Inc is a company supporting Ansible and building additional solutions based on
+Ansible.  We also do services and support for those that are interested. We also offer an
+enterprise web front end to Ansible (see Tower below).</p>
+<p>Our most important task however is enabling all the great things that happen in the Ansible
+community, including organizing software releases of Ansible.  For more information about
+any of these things, contact <a class="reference external" href="javascript:if(confirm('http://docs.ansible.com/cdn-cgi/l/email-protection  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/cdn-cgi/l/email-protection#8ee7e0e8e1a8adbdb9b5a8adbbbcb5a8adbab6b5efe0fde7ece2eba8adbab8b5ede1e3'" tppabs="http://docs.ansible.com/cdn-cgi/l/email-protection#8ee7e0e8e1a8adbdb9b5a8adbbbcb5a8adbab6b5efe0fde7ece2eba8adbab8b5ede1e3">info<span>&#64;</span>ansible<span>&#46;</span>com</a></p>
+<p>On IRC, you can find us as jimi_c, abadger1999, Tybstar, bcoca, and others.   On the mailing list,
+we post with an &#64;ansible.com address.</p>
+</div>
+<div class="section" id="mailing-list-information">
+<h3><a class="toc-backref" href="#id16">Mailing List Information</a><a class="headerlink" href="#mailing-list-information" title="Permalink to this headline">¬∂</a></h3>
+<p>Ansible has several mailing lists.  Your first post to the mailing list will be
+moderated (to reduce spam), so please allow a day or less for your first post.</p>
+<p><a class="reference external" href="javascript:if(confirm('https://groups.google.com/forum/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://groups.google.com/forum/#!forum/ansible-project'" tppabs="https://groups.google.com/forum/#!forum/ansible-project">Ansible Project List</a> is for sharing Ansible Tips,
+answering questions, and general user discussion.</p>
+<p><a class="reference external" href="javascript:if(confirm('https://groups.google.com/forum/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://groups.google.com/forum/#!forum/ansible-devel'" tppabs="https://groups.google.com/forum/#!forum/ansible-devel">Ansible Development List</a> is for learning how to develop on Ansible,
+asking about prospective feature design, or discussions about extending ansible or features in progress.</p>
+<p><a class="reference external" href="javascript:if(confirm('https://groups.google.com/forum/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://groups.google.com/forum/#!forum/ansible-announce'" tppabs="https://groups.google.com/forum/#!forum/ansible-announce">Ansible Announce list</a> is a read-only list that shares information
+about new releases of Ansible, and also rare infrequent event information, such as announcements about an AnsibleFest coming up,
+which is our official conference series.</p>
+<p><a class="reference external" href="javascript:if(confirm('https://groups.google.com/forum/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://groups.google.com/forum/#!forum/ansible-lockdown'" tppabs="https://groups.google.com/forum/#!forum/ansible-lockdown">Ansible Lockdown List</a> is for all things related to Ansible Lockdown projects, including DISA STIG automation and CIS Benchmarks.</p>
+<p>To subscribe to a group from a non-google account, you can send an email to the subscription address requesting the subscription. For example: <a class="reference external" href="javascript:if(confirm('http://docs.ansible.com/cdn-cgi/l/email-protection  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/cdn-cgi/l/email-protection#7e1f100d171c121b531a1b081b12550d0b1c0d1d0c171c1b585d4d4945585d4b4c45585d4a464519111119121b190c110b0e0d585d4a48451d1113'" tppabs="http://docs.ansible.com/cdn-cgi/l/email-protection#7e1f100d171c121b531a1b081b12550d0b1c0d1d0c171c1b585d4d4945585d4b4c45585d4a464519111119121b190c110b0e0d585d4a48451d1113">ansible-devel+subscribe<span>&#64;</span>googlegroups<span>&#46;</span>com</a></p>
+</div>
+<div class="section" id="irc-meetings">
+<h3><a class="toc-backref" href="#id17">IRC Meetings</a><a class="headerlink" href="#irc-meetings" title="Permalink to this headline">¬∂</a></h3>
+<p>The Ansible community holds regular IRC meetings on various topics, and anyone who is interested is invited to
+participate. For more information about Ansible meetings, consult the <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/community/blob/master/MEETINGS.md  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/community/blob/master/MEETINGS.md'" tppabs="https://github.com/ansible/community/blob/master/MEETINGS.md">meeting schedule and agenda page</a>.</p>
+</div>
+<div class="section" id="release-numbering">
+<h3><a class="toc-backref" href="#id18">Release Numbering</a><a class="headerlink" href="#release-numbering" title="Permalink to this headline">¬∂</a></h3>
+<p>Releases ending in &#8221;.0&#8221; are major releases and this is where all new features land.  Releases ending
+in another integer, like &#8220;0.X.1&#8221; and &#8220;0.X.2&#8221; are dot releases, and these are only going to contain
+bugfixes.</p>
+<p>Typically we don&#8217;t do dot releases for minor bugfixes (reserving these for larger items),
+but may occasionally decide to cut dot releases containing a large number of smaller fixes if it&#8217;s still a fairly long time before
+the next release comes out.</p>
+<p>Releases are also given code names based on Van Halen songs, that no one really uses.</p>
+</div>
+<div class="section" id="tower-support-questions">
+<h3><a class="toc-backref" href="#id19">Tower Support Questions</a><a class="headerlink" href="#tower-support-questions" title="Permalink to this headline">¬∂</a></h3>
+<p>Ansible <a class="reference external" href="javascript:if(confirm('http://ansible.com/tower  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://ansible.com/tower'" tppabs="http://ansible.com/tower">Tower</a> is a UI, Server, and REST endpoint for Ansible, produced by Ansible, Inc.</p>
+<p>If you have a question about tower, email <a class="reference external" href="javascript:if(confirm('http://docs.ansible.com/cdn-cgi/l/email-protection  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/cdn-cgi/l/email-protection#1665636666796462303525212d303523242d3035222e2d7778657f747a73303522202d75797b'" tppabs="http://docs.ansible.com/cdn-cgi/l/email-protection#1665636666796462303525212d303523242d3035222e2d7778657f747a73303522202d75797b">support<span>&#64;</span>ansible<span>&#46;</span>com</a> rather than using the IRC
+channel or the general project mailing list.</p>
+</div>
+<div class="section" id="irc-channel">
+<h3><a class="toc-backref" href="#id20">IRC Channel</a><a class="headerlink" href="#irc-channel" title="Permalink to this headline">¬∂</a></h3>
+<p>Ansible has several IRC channels on Freenode (irc.freenode.net):</p>
+<ul class="simple">
+<li>#ansible - For general use questions and support.</li>
+<li>#ansible-devel - For discussions on developer topics and code related to features/bugs.</li>
+<li>#ansible-meeting - For public community meetings. We will generally announce these on one or more of the above mailing lists. See the <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/community/blob/master/MEETINGS.md  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/community/blob/master/MEETINGS.md'" tppabs="https://github.com/ansible/community/blob/master/MEETINGS.md">meeting schedule and agenda page</a></li>
+<li>#ansible-notices - Mostly bot output from things like Github, etc.</li>
+</ul>
+</div>
+<div class="section" id="notes-on-priority-flags">
+<h3><a class="toc-backref" href="#id21">Notes on Priority Flags</a><a class="headerlink" href="#notes-on-priority-flags" title="Permalink to this headline">¬∂</a></h3>
+<p>Ansible was one of the top 5 projects with the most OSS contributors on GitHub in 2013, and has over 800 contributors
+to the project to date, not to mention a very large user community that has downloaded the application well over a million
+times.</p>
+<p>As a result, we have a LOT of incoming activity to process.</p>
+<p>In the interest of transparency, we&#8217;re telling you how we sort incoming requests.</p>
+<p>In our bug tracker you&#8217;ll notice some labels - P1, P2, P3, P4, and P5.  These are our internal
+priority orders that we use to sort tickets.</p>
+<p>With some exceptions for easy merges (like documentation typos for instance),
+we&#8217;re going to spend most of our time working on P1 and P2 items first, including pull requests.
+These usually relate to important bugs or features affecting large segments of the userbase.  So if you see something categorized
+&#8220;P3 or P4&#8221;, and it&#8217;s not appearing to get a lot of immediate attention, this is why.</p>
+<p>These labels don&#8217;t really have definition - they are a simple ordering.  However something
+affecting a major module (yum, apt, etc) is likely to be prioritized higher than a module
+affecting a smaller number of users.</p>
+<p>Since we place a strong emphasis on testing and code review, it may take a few months for a minor feature to get merged.</p>
+<p>Don&#8217;t worry though &#8211; we&#8217;ll also take periodic sweeps through the lower priority queues and give
+them some attention as well, particularly in the area of new module changes.  So it doesn&#8217;t necessarily
+mean that we&#8217;ll be exhausting all of the higher-priority queues before getting to your ticket.</p>
+<p>Every bit of effort helps - if you&#8217;re wishing to expedite the inclusion of a P3 feature pull request for instance, the best thing you can do
+is help close P2 bug reports.</p>
+</div>
+</div>
+<div class="section" id="community-code-of-conduct">
+<h2><a class="toc-backref" href="#id22">Community Code of Conduct</a><a class="headerlink" href="#community-code-of-conduct" title="Permalink to this headline">¬∂</a></h2>
+<p>Every community can be strengthened by a diverse variety of viewpoints, insights,
+opinions, skillsets, and skill levels. However, with diversity comes the potential for
+disagreement and miscommunication. The purpose of this Code of Conduct is to ensure that
+disagreements and differences of opinion are conducted respectfully and on their own
+merits, without personal attacks or other behavior that might create an unsafe or
+unwelcoming environment.</p>
+<p>These policies are not designed to be a comprehensive set of Things You Cannot Do. We ask
+that you treat your fellow community members with respect and courtesy, and in general,
+Don&#8217;t Be A Jerk. This Code of Conduct is meant to be followed in spirit as much as in
+letter and is not exhaustive.</p>
+<p>All Ansible events and participants therein are governed by this Code of Conduct and
+anti-harassment policy. We expect organizers to enforce these guidelines throughout all events,
+and we expect attendees, speakers, sponsors, and volunteers to help ensure a safe
+environment for our whole community. Specifically, this Code of Conduct covers
+participation in all Ansible-related forums and mailing lists, code and documentation
+contributions, public IRC channels, private correspondence, and public meetings.</p>
+<p>Ansible community members are...</p>
+<p><strong>Considerate</strong></p>
+<p>Contributions of every kind have far-ranging consequences. Just as your work depends on
+the work of others, decisions you make surrounding your contributions to the Ansible
+community will affect your fellow community members. You are strongly encouraged to take
+those consequences into account while making decisions.</p>
+<p><strong>Patient</strong></p>
+<p>Asynchronous communication can come with its own frustrations, even in the most responsive
+of communities. Please remember that our community is largely built on volunteered time,
+and that questions, contributions, and requests for support may take some time to receive
+a response. Repeated &#8220;bumps&#8221; or &#8220;reminders&#8221; in rapid succession are not good displays of
+patience. Additionally, it is considered poor manners to ping a specific person with
+general questions. Pose your question to the community as a whole, and wait patiently for
+a response.</p>
+<p><strong>Respectful</strong></p>
+<p>Every community inevitably has disagreements, but remember that it is
+possible to disagree respectfully and courteously. Disagreements are never an excuse for
+rudeness, hostility, threatening behavior, abuse (verbal or physical), or personal attacks.</p>
+<p><strong>Kind</strong></p>
+<p>Everyone should feel welcome in the Ansible community, regardless of their background.
+Please be courteous, respectful and polite to fellow community members. Do not make or
+post offensive comments related to skill level, gender, gender identity or expression,
+sexual orientation, disability, physical appearance, body size, race, or religion.
+Sexualized images or imagery, real or implied violence, intimidation, oppression,
+stalking, sustained disruption of activities, publishing the personal information of
+others without explicit permission to do so, unwanted physical contact, and unwelcome
+sexual attention are all strictly prohibited.  Additionally, you are encouraged not to
+make assumptions about the background or identity of your fellow community members.</p>
+<p><strong>Inquisitive</strong></p>
+<p>The only stupid question is the one that does not get asked. We
+encourage our users to ask early and ask often. Rather than asking whether you can ask a
+question (the answer is always yes!), instead, simply ask your question. You are
+encouraged to provide as many specifics as possible. Code snippets in the form of Gists or
+other paste site links are almost always needed in order to get the most helpful answers.
+Refrain from pasting multiple lines of code directly into the IRC channels - instead use
+gist.github.com or another paste site to provide code snippets.</p>
+<p><strong>Helpful</strong></p>
+<p>The Ansible community is committed to being a welcoming environment for all users,
+regardless of skill level. We were all beginners once upon a time, and our community
+cannot grow without an environment where new users feel safe and comfortable asking questions.
+It can become frustrating to answer the same questions repeatedly; however, community
+members are expected to remain courteous and helpful to all users equally, regardless of
+skill or knowledge level. Avoid providing responses that prioritize snideness and snark over
+useful information. At the same time, everyone is expected to read the provided
+documentation thoroughly. We are happy to answer questions, provide strategic guidance,
+and suggest effective workflows, but we are not here to do your job for you.</p>
+<div class="section" id="anti-harassment-policy">
+<h3><a class="toc-backref" href="#id23">Anti-harassment policy</a><a class="headerlink" href="#anti-harassment-policy" title="Permalink to this headline">¬∂</a></h3>
+<p>Harassment includes (but is not limited to) all of the following behaviors:</p>
+<ul class="simple">
+<li>Offensive comments related to gender (including gender expression and identity), age, sexual orientation, disability, physical appearance, body size, race, and religion</li>
+<li>Derogatory terminology including words commonly known to be slurs</li>
+<li>Posting sexualized images or imagery in public spaces</li>
+<li>Deliberate intimidation</li>
+<li>Stalking</li>
+<li>Posting others&#8217; personal information without explicit permission</li>
+<li>Sustained disruption of talks or other events</li>
+<li>Inappropriate physical contact</li>
+<li>Unwelcome sexual attention</li>
+</ul>
+<p>Participants asked to stop any harassing behavior are expected to comply immediately.
+Sponsors are also subject to the anti-harassment policy. In particular, sponsors should
+not use sexualized images, activities, or other material. Meetup organizing staff and
+other volunteer organizers should not use sexualized attire or otherwise create a
+sexualized environment at community events.</p>
+<p>In addition to the behaviors outlined above, continuing to behave a certain way after you
+have been asked to stop also constitutes harassment, even if that behavior is not
+specifically outlined in this policy. It is considerate and respectful to stop doing
+something after you have been asked to stop, and all community members are expected to
+comply with such requests immediately.</p>
+</div>
+<div class="section" id="policy-violations">
+<h3><a class="toc-backref" href="#id24">Policy violations</a><a class="headerlink" href="#policy-violations" title="Permalink to this headline">¬∂</a></h3>
+<p>Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by
+contacting <a class="reference external" href="javascript:if(confirm('http://docs.ansible.com/cdn-cgi/l/email-protection  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/cdn-cgi/l/email-protection#3057425557161303070b161305020b161304080b515e4359525c55161304060b535f5d'" tppabs="http://docs.ansible.com/cdn-cgi/l/email-protection#3057425557161303070b161305020b161304080b515e4359525c55161304060b535f5d">greg<span>&#64;</span>ansible<span>&#46;</span>com</a>, to any channel operator in the community IRC
+channels, or to the local organizers of an event. Meetup organizers are encouraged to
+prominently display points of contact for reporting unacceptable behavior at local events.</p>
+<p>If a participant engages in harassing behavior, the meetup organizers may take any action
+they deem appropriate. These actions may include but are not limited to warning the
+offender, expelling the offender from the event, and barring the offender from future
+community events.</p>
+<p>Organizers will be happy to help participants contact security or local law enforcement,
+provide escorts to an alternate location, or otherwise assist those experiencing
+harassment to feel safe for the duration of the meetup. We value the safety and well-being
+of our community members and want everyone to feel welcome at our events, both online and
+offline.</p>
+<p>We expect all participants, organizers, speakers, and attendees to follow these policies at
+our all of our event venues and event-related social events.</p>
+<p>The Ansible Community Code of Conduct is licensed under the Creative Commons
+Attribution-Share Alike 3.0 license. Our Code of Conduct was adapted from Codes of Conduct
+of other open source projects, including:</p>
+<ul class="simple">
+<li>Contributor Covenant</li>
+<li>Elastic</li>
+<li>The Fedora Project</li>
+<li>OpenStack</li>
+<li>Puppet Labs</li>
+<li>Ubuntu</li>
+</ul>
+</div>
+</div>
+<div class="section" id="contributors-license-agreement">
+<h2><a class="toc-backref" href="#id25">Contributors License Agreement</a><a class="headerlink" href="#contributors-license-agreement" title="Permalink to this headline">¬∂</a></h2>
+<p>By contributing you agree that these contributions are your own (or approved by your employer) and you grant a full, complete, irrevocable
+copyright license to all users and developers of the project, present and future, pursuant to the license of the project.</p>
+</div>
+</div>
+
+
+          </div>
+          <div id="search-results"><gcse:searchresults-only></div>
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+        <a href="galaxy-1.html" tppabs="http://docs.ansible.com/ansible/galaxy.html" class="btn btn-neutral float-right" title="Ansible Galaxy"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="tower-1.html" tppabs="http://docs.ansible.com/ansible/tower.html" class="btn btn-neutral" title="Ansible Tower"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','st-1.js'/*tpa=http://s.swiftypecdn.com/install/v2/st.js*/,'_st');
+
+  _st('install','yABGvz2N8PwcwBxyfzUc','2.0.0');
+</script>
+
+  <p>
+  Copyright ¬© 2016 Red Hat, Inc.
+  <br>
+    Last updated on Jun 22, 2016.
+  </p>
+<p>
+Ansible docs are generated from <a href="javascript:if(confirm('https://github.com/ansible/ansible  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible'" tppabs="https://github.com/ansible/ansible">GitHub sources</A> using <A HREF="javascript:if(confirm('http://sphinx-doc.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://sphinx-doc.org/'" tppabs="http://sphinx-doc.org/">Sphinx</A> using a theme provided by <a href="javascript:if(confirm('http://readthedocs.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://readthedocs.org/'" tppabs="http://readthedocs.org/">Read the Docs</a>. 
+</p>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+<!-- begin analytics -->
+<script type="text/javascript">
+var _hsq = _hsq || [];
+_hsq.push(["setContentType", "standard-page"]);
+        (function(d,s,i,r) {
+        if (d.getElementById(i)){return;}
+        var n = d.createElement(s),e = document.getElementsByTagName(s)[0];
+        n.id=i;n.src = '//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/330046.js';
+        e.parentNode.insertBefore(n, e);
+        })(document, "script", "hs-analytics",300000);
+</script>
+<!-- end analytics -->
+
+<script type="text/javascript">/* <![CDATA[ */(function(d,s,a,i,j,r,l,m,t){try{l=d.getElementsByTagName('a');t=d.createElement('textarea');for(i=0;l.length-i;i++){try{a=l[i].href;s=a.indexOf('/cdn-cgi/l/email-protection');m=a.length;if(a&&s>-1&&m>28){j=28+s;s='';if(j<m){r='0x'+a.substr(j,2)|0;for(j+=2;j<m&&a.charAt(j)!='X';j+=2)s+='%'+('0'+('0x'+a.substr(j,2)^r).toString(16)).slice(-2);j++;s=decodeURIComponent(s)+a.substr(j,m-j)}t.innerHTML=s.replace(/</g,'&lt;').replace(/>/g,'&gt;');l[i].href='mailto:'+t.value}}catch(e){}}}catch(e){}})(document);/* ]]> */</script></body>
+</html>

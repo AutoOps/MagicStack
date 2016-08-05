@@ -43,9 +43,9 @@ class APIRequest(object):
                 msg = e.message
         return msg, codes
 
-    def req_post(self, data):
+    def req_post(self, data, **kwargs):
         try:
-            req = requests.post(self.url, headers=self.header, data=data)
+            req = requests.post(self.url, headers=self.header, data=data, **kwargs)
             msg = req.json()
             codes = req.status_code
         except Exception as e:

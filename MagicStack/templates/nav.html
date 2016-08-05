@@ -199,6 +199,25 @@
                 <span class="arrow"></span>
             </a>
         </li>
+        <li class="nav-item  ">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-cloud-upload"></i>
+                <span class="title">上传下载</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item  ">
+                    <a href="{% url 'file_upload' %}" class="nav-link ">
+                        <span class="title">文件上传</span>
+                    </a>
+                </li>
+                <li class="nav-item  ">
+                    <a href="{% url 'file_download' %}" class="nav-link ">
+                        <span class="title">文件下载</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul>
 </div>
 <!-- END SIDEBAR -->

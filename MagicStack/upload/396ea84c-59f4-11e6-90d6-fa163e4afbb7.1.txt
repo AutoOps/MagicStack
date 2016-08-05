@@ -1,0 +1,95 @@
+HTTP/HTTPS
+    
+    
+django
+    启动过程
+        通过settings中的WSGI_APPLICATION来设置wsgi的application
+        在runserver.py中指定了application，然后调用basehttp.py中的run，将整个服务启动
+        同时在setup中设置了一些apps的信息及校验（设置什么信息呢？）
+            1. 将install_apps中指定的模块，放入到app_configs，并校验是否重复
+                apps/registry.py 将模块都import
+            2. 根据命令（runserver）找到相应的脚本，并执行启动函数run，到此，服务就已经启动
+    middlerware
+        wsgi工作顺序
+        服务器程序 >> 中间件1>>中间件2>>中间件N >> 应用程序 >> 中间件N>>中间件2>>中间件1 >> 响应到服务端程序
+        
+        
+        wsgi
+        
+            WSGIRequestHandler
+            2. Socket.BaseRequestHandler --> Socket.StreamRequestHandler --> Http.BaseHTTPRequestHandler --> Wsgi.WSGIRequestHandler <-- Wsgi.BaseHandler
+            WSGIServer
+            1. Socket.BaseServer --> Socket.TCPServer --> Socket.HTTPServer --> wsgi.WSGIServer
+            
+            
+            wsgi接收请求丢给handler处理
+                handler包含BaseHTTPRequestHandler和WsgiReqeustHandler以及WsgiHandler
+                HTTPRequestHandler负责解析method，contenttype，path等信息
+                WsgiRequestHandler负责将解析的信息放入到env中，然后调用WSGIHandler
+                WSGIHandler将设置一些WSGI自身的参数，然后调用application，将env和回调函数start_response给application运行
+                
+                application将start_response返回的结果返回给handler，最终通过socket makefile返回给浏览器
+                
+        
+        中间件相对应用程序是服务端程序，相对于服务端程序是应用端程序，
+        
+        就是在实际请求处理前，增加一些统一验证等操作
+        
+        在django中，middleware的样子是：
+        
+        http://lukejin.iteye.com/blog/599783
+        
+        django中的middleware中有几个关键函数
+        process_request  接收request请求之后，确定所要执行view之前
+        process_view     确定所要执行view之后，实际执行view之前
+        process_response view执行之后
+        process_exception(self, request, exception)  view抛出异常
+        
+        django中的middlerware通过设置MIDDLEWARE_CLASSES，重点实现上述方法即可
+        
+        middleware有顺序关联，顺序执行，返回None则继续执行下一个，否则正常返回Response
+        http://djangobook.py3k.cn/2.0/chapter17/
+        
+        根据上述分析，django将所有的middleware中的方法进行分类
+        request_middleware
+        view_middleware
+        responese_middleware
+        
+        然后在handler中进行处理，通过的继续执行，不通过的就直接返回
+        
+    csrf
+        称之为cross-size request forgery
+        网站是通过cookie来识别网站的
+        网站A是我想登录的正确网站、网站B是另一个木马网站。        
+        我正确登录网站A之后，已经生成了cookie，所以网站A认为我这个浏览器是正确的
+        而网站B知道我已经有网站A的cookie并且知道网站A的URL，当我浏览网站B的时候，从网站B伪装成网站A的URL，相当于从网站B执行了网站A的URL
+        这就是跨站请求伪装。
+        怎么解决呢？
+        1. 尽可能的对有变更操作的不用GET而使用POST，但是这样也无法防止所有的问题
+        2. 通过referer来判断，但是也不完全能排除
+        3. 在请求中放入token并验证
+            关键在于在请求中放入别人所不能伪装的信息，并且该信息不存在与cookie中，可以在服务端生成一个验证码放入到form表单的hidden元素，form提交时在服务器端检查
+        django具体实现
+        
+        在django中有两种方式来进行csrf处理
+        1. 通过中间件
+            每次在执行view执行，会进行检索校验
+            
+            通过模版标签是将csrf设置到post的form中
+            
+            
+            看看模版具体如何实现？？
+            
+        2. 通过函数手工构建
+            使用django提供的函数csrf_protect来保护你想要保护的视图
+            1. 在你的模版中引入{% csrf_token %}
+            
+    session
+        
+        
+Flask
+    
+    
+WSGI
+    
+    

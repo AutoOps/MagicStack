@@ -36,6 +36,11 @@ LOG_LEVEL = config.get('base', 'log')
 IP = config.get('base', 'ip')
 PORT = config.get('base', 'port')
 
+# 上传下载目录
+UPLOAD_DIR = os.path.join(BASE_DIR, 'upload')
+DOWNLOAD_DIR = os.path.join(BASE_DIR, 'download')
+
+
 # 自定义setting配置
 HOST_IP = '172.16.50.82'
 HOST_PORT = 8801
@@ -72,6 +77,7 @@ INSTALLED_APPS = (
     'common',
     'emergency',
     'backupManage',
+    'fileManage',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -154,4 +160,5 @@ CRONJOBS = [
     ('*/2 * * * *', 'emergency.cron.get_emergency_event'),
     ('*/10 * * * *', 'taskManage.cron.get_task_exec_info'),
     ('*/10 * * * *', 'backupManage.cron.get_backup_exec_info'),
+    ('*/1 * * * *', 'fileManage.cron.get_file_upload_info'),
 ]

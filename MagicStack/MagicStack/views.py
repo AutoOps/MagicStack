@@ -14,10 +14,9 @@ from MagicStack.api import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from logManage.models import Log, FileLog
-from permManage.perm_api import get_group_user_perm, gen_resource,user_have_perm
+from permManage.perm_api import get_group_user_perm, gen_resource, user_have_perm
 from assetManage.models import Asset, IDC
 from permManage.models import PermRole
-
 
 
 def getDaysByNum(num):
@@ -29,13 +28,12 @@ def getDaysByNum(num):
     oneday = datetime.timedelta(days=1)
     date_li, date_str = [], []
     for i in range(0, num):
-        today = today-oneday
+        today = today - oneday
         date_li.append(today)
         date_str.append(str(today)[5:10])
     date_li.reverse()
     date_str.reverse()
     return date_li, date_str
-
 
 
 def get_data_by_day(date_li, item):
@@ -189,6 +187,11 @@ def Logout(request):
     return HttpResponseRedirect(reverse('index'))
 
 
+@require_role('user')
+def Help(request):
+    # todo
+    return render_to_response('help/ansible/index.html')
+
 # @login_required(login_url='/login')
 # def upload(request):
 #     user = request.user
@@ -275,7 +278,7 @@ def web_terminal(request):
     user = request.user
     asset_id = request.GET.get('id')
     role_id = request.GET.get('role_id')
-    logger.debug('web_terminal:%s'%role_id)
+    logger.debug('web_terminal:%s' % role_id)
     role = PermRole.objects.get(id=int(role_id))
     role_name = role.name
     asset = get_object(Asset, id_unique=asset_id)

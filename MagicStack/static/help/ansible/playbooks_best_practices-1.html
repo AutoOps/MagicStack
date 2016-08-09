@@ -1,0 +1,807 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset=UTF-8"utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Tag Manager Data Layer -->
+  <script>
+   dataLayer = [];
+  </script>
+  <!-- End Google Tag Manager Data Layer -->
+
+  
+  <title>Best Practices &mdash; Ansible Documentation</title>
+  
+
+  
+  
+
+  
+  <link href="css-family=Lato-400,700-Roboto+Slab-400,700-Inconsolata-400,700.css" tppabs="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel='stylesheet' type='text/css'>
+  <link href="font-awesome.min.css" tppabs="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'http://docs.ansible.com/ansible/0.01',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+      <script type="text/javascript" src="jquery-1.js" tppabs="http://docs.ansible.com/ansible/_static/jquery.js"></script>
+      <script type="text/javascript" src="underscore-1.js" tppabs="http://docs.ansible.com/ansible/_static/underscore.js"></script>
+      <script type="text/javascript" src="doctools-1.js" tppabs="http://docs.ansible.com/ansible/_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="theme.min-1.css" tppabs="http://docs.ansible.com/ansible/_static/css/theme.min.css" type="text/css" />
+    <script type="text/javascript" src="theme-1.js" tppabs="http://docs.ansible.com/ansible/_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="Ansible Documentation" href="index.html"/>
+        <link rel="up" title="Playbooks" href="playbooks.html"/>
+        <link rel="next" title="Playbooks: Special Topics" href="playbooks_special_topics.html"/>
+        <link rel="prev" title="Strategies" href="playbooks_strategies.html"/> 
+
+  <script src="modernizr.min-1.js" tppabs="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  <style>
+    .search-reset-start {
+        color: #463E3F;
+        float: right;
+        position: relative;
+        top: -25px;
+        left: -10px;
+        z-index: 10;
+     }
+     .search-reset-start:hover {
+        cursor: pointer;
+        color: #2980B9;
+     }
+     #search-box-id {
+        padding-right: 25px;
+     }
+  </style>
+
+  <link href="css-family=Open+Sans-400,300.css" tppabs="https://fonts.googleapis.com/css?family=Open+Sans:400,300"
+    rel='stylesheet' type='text/css'>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="ns-1.html-id=gtm-psb293" tppabs="http://www.googletagmanager.com/ns.html?id=GTM-PSB293" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm-1.js'/*tpa=http://docs.ansible.com/ansible/gtm.js*/});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-PSB293');</script>
+  <!-- End Google Tag Manager -->
+
+  <a class="DocSite-nav" href="javascript:if(confirm('http://docs.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">
+    <img class="DocSiteNav-logo"
+      src="logo_invert-1.png" tppabs="http://docs.ansible.com/ansible/_static/images/logo_invert.png"
+      alt="Ansible Logo">
+    <div class="DocSiteNav-title">
+      Documentation
+    </div>
+  </a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+
+      <div style="background-color:#5bbdbf;height=80px;margin:'auto auto auto auto'">
+        <a class="DocSiteProduct-header DocSiteProduct-header--core"
+          href="index.htm" tppabs="http://docs.ansible.com/ansible/">
+          <div class="DocSiteProduct-productName">
+            <div class="DocSiteProduct-logoText">
+              ANSIBLE
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div id="menu-id" class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro-1.html" tppabs="http://docs.ansible.com/ansible/intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro_installation-1.html" tppabs="http://docs.ansible.com/ansible/intro_installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_getting_started-1.html" tppabs="http://docs.ansible.com/ansible/intro_getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_inventory.html">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_dynamic_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_dynamic_inventory.html">Dynamic Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_patterns-1.html" tppabs="http://docs.ansible.com/ansible/intro_patterns.html">Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_adhoc-1.html" tppabs="http://docs.ansible.com/ansible/intro_adhoc.html">Introduction To Ad-Hoc Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_configuration-1.html" tppabs="http://docs.ansible.com/ansible/intro_configuration.html">Configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_bsd-1.html" tppabs="http://docs.ansible.com/ansible/intro_bsd.html">BSD Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_windows-1.html" tppabs="http://docs.ansible.com/ansible/intro_windows.html">Windows Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_networking-1.html" tppabs="http://docs.ansible.com/ansible/intro_networking.html">Networking Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart-1.html" tppabs="http://docs.ansible.com/ansible/quickstart.html">Quickstart Video</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="playbooks-1.html" tppabs="http://docs.ansible.com/ansible/playbooks.html">Playbooks</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="playbooks_intro-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_intro.html">Intro to Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_roles-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_roles.html">Playbook Roles and Include Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_variables-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_filters-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_filters.html">Jinja2 filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_conditionals-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_conditionals.html">Conditionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_loops-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_loops.html">Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_blocks-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_blocks.html">Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_strategies-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_strategies.html">Strategies</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks_special_topics-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_special_topics.html">Playbooks: Special Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="become-1.html" tppabs="http://docs.ansible.com/ansible/become.html">Become (Privilege Escalation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_acceleration-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_acceleration.html">Accelerated Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_async-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_async.html">Asynchronous Actions and Polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_checkmode-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_checkmode.html">Check Mode (&#8220;Dry Run&#8221;)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_debugger-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_debugger.html">Playbook Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_delegation-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_delegation.html">Delegation, Rolling Updates, and Local Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_environment-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_environment.html">Setting the Environment (and Working With Proxies)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_error_handling-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_error_handling.html">Error Handling In Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_advanced_syntax-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_advanced_syntax.html">Advanced Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_lookups-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_lookups.html">Using Lookups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_prompts-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_prompts.html">Prompts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_tags-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_tags.html">Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_vault-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_vault.html">Vault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_startnstep-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_startnstep.html">Start and Step</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_directives-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_directives.html">Directives Glossary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules-1.html" tppabs="http://docs.ansible.com/ansible/modules.html">About Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules_intro-1.html" tppabs="http://docs.ansible.com/ansible/modules_intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_core-1.html" tppabs="http://docs.ansible.com/ansible/modules_core.html">Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_extra-1.html" tppabs="http://docs.ansible.com/ansible/modules_extra.html">Extras Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_return_values-1.html" tppabs="http://docs.ansible.com/ansible/common_return_values.html">Common Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules_by_category-1.html" tppabs="http://docs.ansible.com/ansible/modules_by_category.html">Module Index</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="list_of_all_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_all_modules.html">All Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_cloud_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_cloud_modules.html">Cloud Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_clustering_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_clustering_modules.html">Clustering Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_commands_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_commands_modules.html">Commands Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_database_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_database_modules.html">Database Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_files_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_files_modules.html">Files Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_inventory_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_inventory_modules.html">Inventory Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_messaging_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_messaging_modules.html">Messaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_monitoring_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_monitoring_modules.html">Monitoring Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_network_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_network_modules.html">Network Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_notification_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_notification_modules.html">Notification Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_packaging_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_packaging_modules.html">Packaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_source_control_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_source_control_modules.html">Source Control Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_system_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_system_modules.html">System Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_utilities_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_utilities_modules.html">Utilities Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_web_infrastructure_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_web_infrastructure_modules.html">Web Infrastructure Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_windows_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_windows_modules.html">Windows Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guides-1.html" tppabs="http://docs.ansible.com/ansible/guides.html">Detailed Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_aws-1.html" tppabs="http://docs.ansible.com/ansible/guide_aws.html">Amazon Web Services Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_azure-1.html" tppabs="http://docs.ansible.com/ansible/guide_azure.html">Getting Started with Azure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rax-1.html" tppabs="http://docs.ansible.com/ansible/guide_rax.html">Rackspace Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_gce-1.html" tppabs="http://docs.ansible.com/ansible/guide_gce.html">Google Cloud Platform Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_cloudstack-1.html" tppabs="http://docs.ansible.com/ansible/guide_cloudstack.html">CloudStack Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_vagrant-1.html" tppabs="http://docs.ansible.com/ansible/guide_vagrant.html">Using Vagrant and Ansible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rolling_upgrade-1.html" tppabs="http://docs.ansible.com/ansible/guide_rolling_upgrade.html">Continuous Delivery and Rolling Upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_docker-1.html" tppabs="http://docs.ansible.com/ansible/guide_docker.html">Getting Started with Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developing-1.html" tppabs="http://docs.ansible.com/ansible/developing.html">Developer Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developing_api-1.html" tppabs="http://docs.ansible.com/ansible/developing_api.html">Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_inventory-1.html" tppabs="http://docs.ansible.com/ansible/developing_inventory.html">Developing Dynamic Inventory Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_modules-1.html" tppabs="http://docs.ansible.com/ansible/developing_modules.html">Developing Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_plugins-1.html" tppabs="http://docs.ansible.com/ansible/developing_plugins.html">Developing Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_core-1.html" tppabs="http://docs.ansible.com/ansible/developing_core.html">Developing the Ansible Core Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_test_pr-1.html" tppabs="http://docs.ansible.com/ansible/developing_test_pr.html">Helping Testing PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_releases-1.html" tppabs="http://docs.ansible.com/ansible/developing_releases.html">Releases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tower-1.html" tppabs="http://docs.ansible.com/ansible/tower.html">Ansible Tower</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community-1.html" tppabs="http://docs.ansible.com/ansible/community.html">Community Information &amp; Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#ansible-users" tppabs="http://docs.ansible.com/ansible/community.html#ansible-users">Ansible Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#for-current-and-prospective-developers" tppabs="http://docs.ansible.com/ansible/community.html#for-current-and-prospective-developers">For Current and Prospective Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#other-topics" tppabs="http://docs.ansible.com/ansible/community.html#other-topics">Other Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#community-code-of-conduct" tppabs="http://docs.ansible.com/ansible/community.html#community-code-of-conduct">Community Code of Conduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#contributors-license-agreement" tppabs="http://docs.ansible.com/ansible/community.html#contributors-license-agreement">Contributors License Agreement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="galaxy-1.html" tppabs="http://docs.ansible.com/ansible/galaxy.html">Ansible Galaxy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="galaxy-1.html#the-website" tppabs="http://docs.ansible.com/ansible/galaxy.html#the-website">The Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="galaxy-1.html#the-ansible-galaxy-command-line-tool" tppabs="http://docs.ansible.com/ansible/galaxy.html#the-ansible-galaxy-command-line-tool">The ansible-galaxy command line tool</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test_strategies-1.html" tppabs="http://docs.ansible.com/ansible/test_strategies.html">Testing Strategies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#integrating-testing-with-ansible-playbooks" tppabs="http://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-ansible-playbooks">Integrating Testing With Ansible Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#the-right-level-of-testing" tppabs="http://docs.ansible.com/ansible/test_strategies.html#the-right-level-of-testing">The Right Level of Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#check-mode-as-a-drift-test" tppabs="http://docs.ansible.com/ansible/test_strategies.html#check-mode-as-a-drift-test">Check Mode As A Drift Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#modules-that-are-useful-for-testing" tppabs="http://docs.ansible.com/ansible/test_strategies.html#modules-that-are-useful-for-testing">Modules That Are Useful for Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#testing-lifecycle" tppabs="http://docs.ansible.com/ansible/test_strategies.html#testing-lifecycle">Testing Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#integrating-testing-with-rolling-updates" tppabs="http://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-rolling-updates">Integrating Testing With Rolling Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#achieving-continuous-deployment" tppabs="http://docs.ansible.com/ansible/test_strategies.html#achieving-continuous-deployment">Achieving Continuous Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#conclusion" tppabs="http://docs.ansible.com/ansible/test_strategies.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq-1.html" tppabs="http://docs.ansible.com/ansible/faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook" tppabs="http://docs.ansible.com/ansible/faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook">How can I set the PATH or any other environment variable for a task or entire playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with">How do I handle different machines needing different user accounts or ports to log in with?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file">How do I get ansible to reuse connections, enable Kerberized SSH, or have Ansible pay attention to my local SSH config file?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">How do I configure a jump host to access servers that I have no direct access to?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-speed-up-management-inside-ec2" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-speed-up-management-inside-ec2">How do I speed up management inside EC2?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine">How do I handle python pathing not having a Python 2.X in /usr/bin/python on a remote machine?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#what-is-the-best-way-to-make-content-reusable-redistributable" tppabs="http://docs.ansible.com/ansible/faq.html#what-is-the-best-way-to-make-content-reusable-redistributable">What is the best way to make content reusable/redistributable?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it" tppabs="http://docs.ansible.com/ansible/faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it">Where does the configuration file live and what can I configure in it?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-disable-cowsay" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-disable-cowsay">How do I disable cowsay?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-see-a-list-of-all-of-the-ansible-variables" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables">How do I see a list of all of the ansible_ variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host">How do I see all the inventory vars defined for my host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template">How do I loop over a list of hosts in a group, inside of a template?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-a-variable-name-programmatically" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-name-programmatically">How do I access a variable name programmatically?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-a-variable-of-the-first-host-in-a-group" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group">How do I access a variable of the first host in a group?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-copy-files-recursively-onto-a-target-host" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-copy-files-recursively-onto-a-target-host">How do I copy files recursively onto a target host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-shell-environment-variables" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-shell-environment-variables">How do I access shell environment variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-generate-crypted-passwords-for-the-user-module" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module">How do I generate crypted passwords for the user module?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#can-i-get-training-on-ansible-or-find-commercial-support" tppabs="http://docs.ansible.com/ansible/faq.html#can-i-get-training-on-ansible-or-find-commercial-support">Can I get training on Ansible or find commercial support?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#is-there-a-web-interface-rest-api-etc" tppabs="http://docs.ansible.com/ansible/faq.html#is-there-a-web-interface-rest-api-etc">Is there a web interface / REST API / etc?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-submit-a-change-to-the-documentation" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-submit-a-change-to-the-documentation">How do I submit a change to the documentation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-keep-secret-data-in-my-playbook" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-keep-secret-data-in-my-playbook">How do I keep secret data in my playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names" tppabs="http://docs.ansible.com/ansible/faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names">When should I use {{ }}? Also, how to interpolate variables or dynamic variable names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#i-don-t-see-my-question-here" tppabs="http://docs.ansible.com/ansible/faq.html#i-don-t-see-my-question-here">I don&#8217;t see my question here</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary-1.html" tppabs="http://docs.ansible.com/ansible/glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YAMLSyntax-1.html" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html">YAML Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax-1.html#yaml-basics" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html#yaml-basics">YAML Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax-1.html#gotchas" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html#gotchas">Gotchas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html">Porting Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#playbook" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#playbook">Playbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#deprecated" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#deprecated">Deprecated</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#other-caveats" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#other-caveats">Other caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#porting-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#porting-plugins">Porting plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#lookup-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#lookup-plugins">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#connection-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#connection-plugins">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#action-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#action-plugins">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#callback-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#callback-plugins">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id1" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id1">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#hybrid-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#hybrid-plugins">Hybrid plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id2" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id2">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id3" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id3">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id4" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id4">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id5" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id5">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id6" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id6">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#porting-custom-scripts" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#porting-custom-scripts">Porting custom scripts</a></li>
+</ul>
+
+        
+
+<!-- changeable widget -->
+<center>
+<br/>
+<a href="javascript:if(confirm('http://www.ansible.com/docs-left?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-left?utm_source=docs'" tppabs="http://www.ansible.com/docs-left?utm_source=docs">
+    <img style="border-width:0px;" src="ASB-docs-left-rail.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-left-rail.png" />
+</a>
+</center>
+
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="javascript:if(confirm('http://docs.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">Ansible Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+
+          <!-- Banner ads -->
+          <div class="DocSiteBanner">
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-left.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-left.png">
+            </a>
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-right.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-right.png">
+            </a>
+        </div>
+
+          <ul class="wy-breadcrumbs">
+  <li><a href="index-1.html" tppabs="http://docs.ansible.com/ansible/index.html">Docs</a> &raquo;</li>
+  <li><a href="">Best Practices</a></li>
+  
+    <li class="wy-breadcrumbs-aside">
+      <a href="javascript:if(confirm('https://github.com/ansible/ansible/blob/devel/docsite/rst/playbooks_best_practices.rst  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible/blob/devel/docsite/rst/playbooks_best_practices.rst'" tppabs="https://github.com/ansible/ansible/blob/devel/docsite/rst/playbooks_best_practices.rst" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  
+</ul>
+<hr/>
+
+          <div id="page-content">
+          
+  <div class="section" id="best-practices">
+<h1><a class="toc-backref" href="#id8">Best Practices</a><a class="headerlink" href="#best-practices" title="Permalink to this headline">露</a></h1>
+<p>Here are some tips for making the most of Ansible and Ansible playbooks.</p>
+<p>You can find some example playbooks illustrating these best practices in our <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible-examples  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible-examples'" tppabs="https://github.com/ansible/ansible-examples">ansible-examples repository</a>.  (NOTE: These may not use all of the features in the latest release, but are still an excellent reference!).</p>
+<div class="contents topic" id="topics">
+<p class="topic-title first">Topics</p>
+<ul class="simple">
+<li><a class="reference internal" href="#best-practices" id="id8">Best Practices</a><ul>
+<li><a class="reference internal" href="#content-organization" id="id9">Content Organization</a><ul>
+<li><a class="reference internal" href="#directory-layout" id="id10">Directory Layout</a></li>
+<li><a class="reference internal" href="#use-dynamic-inventory-with-clouds" id="id11">Use Dynamic Inventory With Clouds</a></li>
+<li><a class="reference internal" href="#how-to-differentiate-staging-vs-production" id="id12">How to Differentiate Staging vs Production</a></li>
+<li><a class="reference internal" href="#group-and-host-variables" id="id13">Group And Host Variables</a></li>
+<li><a class="reference internal" href="#top-level-playbooks-are-separated-by-role" id="id14">Top Level Playbooks Are Separated By Role</a></li>
+<li><a class="reference internal" href="#task-and-handler-organization-for-a-role" id="id15">Task And Handler Organization For A Role</a></li>
+<li><a class="reference internal" href="#what-this-organization-enables-examples" id="id16">What This Organization Enables (Examples)</a></li>
+<li><a class="reference internal" href="#deployment-vs-configuration-organization" id="id17">Deployment vs Configuration Organization</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#staging-vs-production" id="id18">Staging vs Production</a></li>
+<li><a class="reference internal" href="#rolling-updates" id="id19">Rolling Updates</a></li>
+<li><a class="reference internal" href="#always-mention-the-state" id="id20">Always Mention The State</a></li>
+<li><a class="reference internal" href="#group-by-roles" id="id21">Group By Roles</a></li>
+<li><a class="reference internal" href="#operating-system-and-distribution-variance" id="id22">Operating System and Distribution Variance</a></li>
+<li><a class="reference internal" href="#bundling-ansible-modules-with-playbooks" id="id23">Bundling Ansible Modules With Playbooks</a></li>
+<li><a class="reference internal" href="#whitespace-and-comments" id="id24">Whitespace and Comments</a></li>
+<li><a class="reference internal" href="#always-name-tasks" id="id25">Always Name Tasks</a></li>
+<li><a class="reference internal" href="#keep-it-simple" id="id26">Keep It Simple</a></li>
+<li><a class="reference internal" href="#version-control" id="id27">Version Control</a></li>
+<li><a class="reference internal" href="#variables-and-vaults" id="id28">Variables and Vaults</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="content-organization">
+<span id="id1"></span><h2><a class="toc-backref" href="#id9">Content Organization</a><a class="headerlink" href="#content-organization" title="Permalink to this headline">露</a></h2>
+<p>The following section shows one of many possible ways to organize playbook content.</p>
+<p>Your usage of Ansible should fit your needs, however, not ours, so feel free to modify this approach and organize as you see fit.</p>
+<p>One thing you will definitely want to do though, is use the &#8220;roles&#8221; organization feature, which is documented as part
+of the main playbooks page.  See <a class="reference internal" href="playbooks_roles-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_roles.html"><span class="doc">Playbook Roles and Include Statements</span></a>.  You absolutely should be using roles.  Roles are great.  Use roles.  Roles!
+Did we say that enough?  Roles are great.</p>
+<div class="section" id="directory-layout">
+<span id="id2"></span><h3><a class="toc-backref" href="#id10">Directory Layout</a><a class="headerlink" href="#directory-layout" title="Permalink to this headline">露</a></h3>
+<p>The top level of the directory would contain files and directories like so:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">production</span>                <span class="c1"># inventory file for production servers</span>
+<span class="l l-Scalar l-Scalar-Plain">staging</span>                   <span class="c1"># inventory file for staging environment</span>
+
+<span class="l l-Scalar l-Scalar-Plain">group_vars/</span>
+   <span class="l l-Scalar l-Scalar-Plain">group1</span>                 <span class="c1"># here we assign variables to particular groups</span>
+   <span class="l l-Scalar l-Scalar-Plain">group2</span>                 <span class="c1"># &quot;&quot;</span>
+<span class="l l-Scalar l-Scalar-Plain">host_vars/</span>
+   <span class="l l-Scalar l-Scalar-Plain">hostname1</span>              <span class="c1"># if systems need specific variables, put them here</span>
+   <span class="l l-Scalar l-Scalar-Plain">hostname2</span>              <span class="c1"># &quot;&quot;</span>
+
+<span class="l l-Scalar l-Scalar-Plain">library/</span>                  <span class="c1"># if any custom modules, put them here (optional)</span>
+<span class="l l-Scalar l-Scalar-Plain">filter_plugins/</span>           <span class="c1"># if any custom filter plugins, put them here (optional)</span>
+
+<span class="l l-Scalar l-Scalar-Plain">site.yml</span>                  <span class="c1"># master playbook</span>
+<span class="l l-Scalar l-Scalar-Plain">webservers.yml</span>            <span class="c1"># playbook for webserver tier</span>
+<span class="l l-Scalar l-Scalar-Plain">dbservers.yml</span>             <span class="c1"># playbook for dbserver tier</span>
+
+<span class="l l-Scalar l-Scalar-Plain">roles/</span>
+    <span class="l l-Scalar l-Scalar-Plain">common/</span>               <span class="c1"># this hierarchy represents a &quot;role&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">tasks/</span>            <span class="c1">#</span>
+            <span class="l l-Scalar l-Scalar-Plain">main.yml</span>      <span class="c1">#  &lt;-- tasks file can include smaller files if warranted</span>
+        <span class="l l-Scalar l-Scalar-Plain">handlers/</span>         <span class="c1">#</span>
+            <span class="l l-Scalar l-Scalar-Plain">main.yml</span>      <span class="c1">#  &lt;-- handlers file</span>
+        <span class="l l-Scalar l-Scalar-Plain">templates/</span>        <span class="c1">#  &lt;-- files for use with the template resource</span>
+            <span class="l l-Scalar l-Scalar-Plain">ntp.conf.j2</span>   <span class="c1">#  &lt;------- templates end in .j2</span>
+        <span class="l l-Scalar l-Scalar-Plain">files/</span>            <span class="c1">#</span>
+            <span class="l l-Scalar l-Scalar-Plain">bar.txt</span>       <span class="c1">#  &lt;-- files for use with the copy resource</span>
+            <span class="l l-Scalar l-Scalar-Plain">foo.sh</span>        <span class="c1">#  &lt;-- script files for use with the script resource</span>
+        <span class="l l-Scalar l-Scalar-Plain">vars/</span>             <span class="c1">#</span>
+            <span class="l l-Scalar l-Scalar-Plain">main.yml</span>      <span class="c1">#  &lt;-- variables associated with this role</span>
+        <span class="l l-Scalar l-Scalar-Plain">defaults/</span>         <span class="c1">#</span>
+            <span class="l l-Scalar l-Scalar-Plain">main.yml</span>      <span class="c1">#  &lt;-- default lower priority variables for this role</span>
+        <span class="l l-Scalar l-Scalar-Plain">meta/</span>             <span class="c1">#</span>
+            <span class="l l-Scalar l-Scalar-Plain">main.yml</span>      <span class="c1">#  &lt;-- role dependencies</span>
+
+    <span class="l l-Scalar l-Scalar-Plain">webtier/</span>              <span class="c1"># same kind of structure as &quot;common&quot; was above, done for the webtier role</span>
+    <span class="l l-Scalar l-Scalar-Plain">monitoring/</span>           <span class="c1"># &quot;&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">fooapp/</span>               <span class="c1"># &quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="use-dynamic-inventory-with-clouds">
+<span id="id3"></span><h3><a class="toc-backref" href="#id11">Use Dynamic Inventory With Clouds</a><a class="headerlink" href="#use-dynamic-inventory-with-clouds" title="Permalink to this headline">露</a></h3>
+<p>If you are using a cloud provider, you should not be managing your inventory in a static file.  See <a class="reference internal" href="intro_dynamic_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_dynamic_inventory.html"><span class="doc">Dynamic Inventory</span></a>.</p>
+<p>This does not just apply to clouds &#8211; If you have another system maintaining a canonical list of systems
+in your infrastructure, usage of dynamic inventory is a great idea in general.</p>
+</div>
+<div class="section" id="how-to-differentiate-staging-vs-production">
+<span id="staging-vs-prod"></span><h3><a class="toc-backref" href="#id12">How to Differentiate Staging vs Production</a><a class="headerlink" href="#how-to-differentiate-staging-vs-production" title="Permalink to this headline">露</a></h3>
+<p>If managing static inventory, it is frequently asked how to differentiate different types of environments.  The following example
+shows a good way to do this.  Similar methods of grouping could be adapted to dynamic inventory (for instance, consider applying the AWS
+tag &#8220;environment:production&#8221;, and you&#8217;ll get a group of systems automatically discovered named &#8220;ec2_tag_environment_production&#8221;.</p>
+<p>Let&#8217;s show a static inventory example though.  Below, the <em>production</em> file contains the inventory of all of your production hosts.</p>
+<p>It is suggested that you define groups based on purpose of the host (roles) and also geography or datacenter location (if applicable):</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># file: production</span>
+
+<span class="p p-Indicator">[</span><span class="nv">atlanta-webservers</span><span class="p p-Indicator">]</span>
+<span class="l l-Scalar l-Scalar-Plain">www-atl-1.example.com</span>
+<span class="l l-Scalar l-Scalar-Plain">www-atl-2.example.com</span>
+
+<span class="l l-Scalar l-Scalar-Plain">[boston-webservers]</span>
+<span class="l l-Scalar l-Scalar-Plain">www-bos-1.example.com</span>
+<span class="l l-Scalar l-Scalar-Plain">www-bos-2.example.com</span>
+
+<span class="l l-Scalar l-Scalar-Plain">[atlanta-dbservers]</span>
+<span class="l l-Scalar l-Scalar-Plain">db-atl-1.example.com</span>
+<span class="l l-Scalar l-Scalar-Plain">db-atl-2.example.com</span>
+
+<span class="l l-Scalar l-Scalar-Plain">[boston-dbservers]</span>
+<span class="l l-Scalar l-Scalar-Plain">db-bos-1.example.com</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># webservers in all geos</span>
+<span class="l l-Scalar l-Scalar-Plain">[webservers:children]</span>
+<span class="l l-Scalar l-Scalar-Plain">atlanta-webservers</span>
+<span class="l l-Scalar l-Scalar-Plain">boston-webservers</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># dbservers in all geos</span>
+<span class="l l-Scalar l-Scalar-Plain">[dbservers:children]</span>
+<span class="l l-Scalar l-Scalar-Plain">atlanta-dbservers</span>
+<span class="l l-Scalar l-Scalar-Plain">boston-dbservers</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># everything in the atlanta geo</span>
+<span class="l l-Scalar l-Scalar-Plain">[atlanta:children]</span>
+<span class="l l-Scalar l-Scalar-Plain">atlanta-webservers</span>
+<span class="l l-Scalar l-Scalar-Plain">atlanta-dbservers</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># everything in the boston geo</span>
+<span class="l l-Scalar l-Scalar-Plain">[boston:children]</span>
+<span class="l l-Scalar l-Scalar-Plain">boston-webservers</span>
+<span class="l l-Scalar l-Scalar-Plain">boston-dbservers</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="group-and-host-variables">
+<span id="groups-and-hosts"></span><h3><a class="toc-backref" href="#id13">Group And Host Variables</a><a class="headerlink" href="#group-and-host-variables" title="Permalink to this headline">露</a></h3>
+<p>This section extends on the previous example.</p>
+<p>Groups are nice for organization, but that&#8217;s not all groups are good for.  You can also assign variables to them!  For instance, atlanta has its own NTP servers, so when setting up ntp.conf, we should use them.  Let&#8217;s set those now:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># file: group_vars/atlanta</span>
+<span class="l l-Scalar l-Scalar-Plain">ntp</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ntp-atlanta.example.com</span>
+<span class="l l-Scalar l-Scalar-Plain">backup</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">backup-atlanta.example.com</span>
+</pre></div>
+</div>
+<p>Variables aren&#8217;t just for geographic information either!  Maybe the webservers have some configuration that doesn&#8217;t make sense for the database servers:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># file: group_vars/webservers</span>
+<span class="l l-Scalar l-Scalar-Plain">apacheMaxRequestsPerChild</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3000</span>
+<span class="l l-Scalar l-Scalar-Plain">apacheMaxClients</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">900</span>
+</pre></div>
+</div>
+<p>If we had any default values, or values that were universally true, we would put them in a file called group_vars/all:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># file: group_vars/all</span>
+<span class="l l-Scalar l-Scalar-Plain">ntp</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ntp-boston.example.com</span>
+<span class="l l-Scalar l-Scalar-Plain">backup</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">backup-boston.example.com</span>
+</pre></div>
+</div>
+<p>We can define specific hardware variance in systems in a host_vars file, but avoid doing this unless you need to:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># file: host_vars/db-bos-1.example.com</span>
+<span class="l l-Scalar l-Scalar-Plain">foo_agent_port</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">86</span>
+<span class="l l-Scalar l-Scalar-Plain">bar_agent_port</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">99</span>
+</pre></div>
+</div>
+<p>Again, if we are using dynamic inventory sources, many dynamic groups are automatically created.  So a tag like &#8220;class:webserver&#8221; would load in
+variables from the file &#8220;group_vars/ec2_tag_class_webserver&#8221; automatically.</p>
+</div>
+<div class="section" id="top-level-playbooks-are-separated-by-role">
+<span id="split-by-role"></span><h3><a class="toc-backref" href="#id14">Top Level Playbooks Are Separated By Role</a><a class="headerlink" href="#top-level-playbooks-are-separated-by-role" title="Permalink to this headline">露</a></h3>
+<p>In site.yml, we include a playbook that defines our entire infrastructure.  Note this is SUPER short, because it&#8217;s just including
+some other playbooks.  Remember, playbooks are nothing more than lists of plays:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># file: site.yml</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">include</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">webservers.yml</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">include</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dbservers.yml</span>
+</pre></div>
+</div>
+<p>In a file like webservers.yml (also at the top level), we simply map the configuration of the webservers group to the roles performed by the webservers group.  Also notice this is incredibly short.  For example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># file: webservers.yml</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">webservers</span>
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">common</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">webtier</span>
+</pre></div>
+</div>
+<p>The idea here is that we can choose to configure our whole infrastructure by &#8220;running&#8221; site.yml or we could just choose to run a subset by running
+webservers.yml.  This is analogous to the &#8220;&#8211;limit&#8221; parameter to ansible but a little more explicit:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible-playbook site.yml --limit webservers</span>
+<span class="l l-Scalar l-Scalar-Plain">ansible-playbook webservers.yml</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="task-and-handler-organization-for-a-role">
+<span id="role-organization"></span><h3><a class="toc-backref" href="#id15">Task And Handler Organization For A Role</a><a class="headerlink" href="#task-and-handler-organization-for-a-role" title="Permalink to this headline">露</a></h3>
+<p>Below is an example tasks file that explains how a role works.  Our common role here just sets up NTP, but it could do more if we wanted:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># file: roles/common/tasks/main.yml</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">be sure ntp is installed</span>
+  <span class="l l-Scalar l-Scalar-Plain">yum</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=ntp state=installed</span>
+  <span class="l l-Scalar l-Scalar-Plain">tags</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ntp</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">be sure ntp is configured</span>
+  <span class="l l-Scalar l-Scalar-Plain">template</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">src=ntp.conf.j2 dest=/etc/ntp.conf</span>
+  <span class="l l-Scalar l-Scalar-Plain">notify</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">restart ntpd</span>
+  <span class="l l-Scalar l-Scalar-Plain">tags</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ntp</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">be sure ntpd is running and enabled</span>
+  <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=ntpd state=started enabled=yes</span>
+  <span class="l l-Scalar l-Scalar-Plain">tags</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ntp</span>
+</pre></div>
+</div>
+<p>Here is an example handlers file.  As a review, handlers are only fired when certain tasks report changes, and are run at the end
+of each play:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># file: roles/common/handlers/main.yml</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">restart ntpd</span>
+  <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=ntpd state=restarted</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="playbooks_roles-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_roles.html"><span class="doc">Playbook Roles and Include Statements</span></a> for more information.</p>
+</div>
+<div class="section" id="what-this-organization-enables-examples">
+<span id="organization-examples"></span><h3><a class="toc-backref" href="#id16">What This Organization Enables (Examples)</a><a class="headerlink" href="#what-this-organization-enables-examples" title="Permalink to this headline">露</a></h3>
+<p>Above we&#8217;ve shared our basic organizational structure.</p>
+<p>Now what sort of use cases does this layout enable?  Lots!  If I want to reconfigure my whole infrastructure, it&#8217;s just:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible-playbook -i production site.yml</span>
+</pre></div>
+</div>
+<p>What about just reconfiguring NTP on everything?  Easy.:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible-playbook -i production site.yml --tags ntp</span>
+</pre></div>
+</div>
+<p>What about just reconfiguring my webservers?:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible-playbook -i production webservers.yml</span>
+</pre></div>
+</div>
+<p>What about just my webservers in Boston?:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible-playbook -i production webservers.yml --limit boston</span>
+</pre></div>
+</div>
+<p>What about just the first 10, and then the next 10?:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible-playbook -i production webservers.yml --limit boston[1-10]</span>
+<span class="l l-Scalar l-Scalar-Plain">ansible-playbook -i production webservers.yml --limit boston[11-20]</span>
+</pre></div>
+</div>
+<p>And of course just basic ad-hoc stuff is also possible.:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible boston -i production -m ping</span>
+<span class="l l-Scalar l-Scalar-Plain">ansible boston -i production -m command -a &#39;/sbin/reboot&#39;</span>
+</pre></div>
+</div>
+<p>And there are some useful commands to know (at least in 1.1 and higher):</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># confirm what task names would be run if I ran this command and said &quot;just ntp tasks&quot;</span>
+<span class="l l-Scalar l-Scalar-Plain">ansible-playbook -i production webservers.yml --tags ntp --list-tasks</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># confirm what hostnames might be communicated with if I said &quot;limit to boston&quot;</span>
+<span class="l l-Scalar l-Scalar-Plain">ansible-playbook -i production webservers.yml --limit boston --list-hosts</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deployment-vs-configuration-organization">
+<span id="dep-vs-config"></span><h3><a class="toc-backref" href="#id17">Deployment vs Configuration Organization</a><a class="headerlink" href="#deployment-vs-configuration-organization" title="Permalink to this headline">露</a></h3>
+<p>The above setup models a typical configuration topology.  When doing multi-tier deployments, there are going
+to be some additional playbooks that hop between tiers to roll out an application.  In this case, &#8216;site.yml&#8217;
+may be augmented by playbooks like &#8216;deploy_exampledotcom.yml&#8217; but the general concepts can still apply.</p>
+<p>Consider &#8220;playbooks&#8221; as a sports metaphor &#8211; you don&#8217;t have to just have one set of plays to use against your infrastructure
+all the time &#8211; you can have situational plays that you use at different times and for different purposes.</p>
+<p>Ansible allows you to deploy and configure using the same tool, so you would likely reuse groups and just
+keep the OS configuration in separate playbooks from the app deployment.</p>
+</div>
+</div>
+<div class="section" id="staging-vs-production">
+<span id="id4"></span><h2><a class="toc-backref" href="#id18">Staging vs Production</a><a class="headerlink" href="#staging-vs-production" title="Permalink to this headline">露</a></h2>
+<p>As also mentioned above, a good way to keep your staging (or testing) and production environments separate is to use a separate inventory file for staging and production.   This way you pick with -i what you are targeting.  Keeping them all in one file can lead to surprises!</p>
+<p>Testing things in a staging environment before trying in production is always a great idea.  Your environments need not be the same
+size and you can use group variables to control the differences between those environments.</p>
+</div>
+<div class="section" id="rolling-updates">
+<span id="rolling-update"></span><h2><a class="toc-backref" href="#id19">Rolling Updates</a><a class="headerlink" href="#rolling-updates" title="Permalink to this headline">露</a></h2>
+<p>Understand the &#8216;serial&#8217; keyword.  If updating a webserver farm you really want to use it to control how many machines you are
+updating at once in the batch.</p>
+<p>See <a class="reference internal" href="playbooks_delegation-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_delegation.html"><span class="doc">Delegation, Rolling Updates, and Local Actions</span></a>.</p>
+</div>
+<div class="section" id="always-mention-the-state">
+<span id="mention-the-state"></span><h2><a class="toc-backref" href="#id20">Always Mention The State</a><a class="headerlink" href="#always-mention-the-state" title="Permalink to this headline">露</a></h2>
+<p>The &#8216;state&#8217; parameter is optional to a lot of modules.  Whether &#8216;state=present&#8217; or &#8216;state=absent&#8217;, it&#8217;s always best to leave that
+parameter in your playbooks to make it clear, especially as some modules support additional states.</p>
+</div>
+<div class="section" id="group-by-roles">
+<span id="id5"></span><h2><a class="toc-backref" href="#id21">Group By Roles</a><a class="headerlink" href="#group-by-roles" title="Permalink to this headline">露</a></h2>
+<p>We&#8217;re somewhat repeating ourselves with this tip, but it&#8217;s worth repeating. A system can be in multiple groups.  See <a class="reference internal" href="intro_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_inventory.html"><span class="doc">Inventory</span></a> and <a class="reference internal" href="intro_patterns-1.html" tppabs="http://docs.ansible.com/ansible/intro_patterns.html"><span class="doc">Patterns</span></a>.   Having groups named after things like
+<em>webservers</em> and <em>dbservers</em> is repeated in the examples because it&#8217;s a very powerful concept.</p>
+<p>This allows playbooks to target machines based on role, as well as to assign role specific variables
+using the group variable system.</p>
+<p>See <a class="reference internal" href="playbooks_roles-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_roles.html"><span class="doc">Playbook Roles and Include Statements</span></a>.</p>
+</div>
+<div class="section" id="operating-system-and-distribution-variance">
+<span id="os-variance"></span><h2><a class="toc-backref" href="#id22">Operating System and Distribution Variance</a><a class="headerlink" href="#operating-system-and-distribution-variance" title="Permalink to this headline">露</a></h2>
+<p>When dealing with a parameter that is different between two different operating systems, a great way to handle this is
+by using the group_by module.</p>
+<p>This makes a dynamic group of hosts matching certain criteria, even if that group is not defined in the inventory file:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+
+<span class="c1"># talk to all hosts just so we can learn about them</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">group_by</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">key=os_{{ ansible_distribution }}</span>
+
+<span class="c1"># now just on the CentOS hosts...</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">os_CentOS</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+     <span class="p p-Indicator">-</span> <span class="c1"># tasks that only happen on CentOS go here</span>
+</pre></div>
+</div>
+<p>This will throw all systems into a dynamic group based on the operating system name.</p>
+<p>If group-specific settings are needed, this can also be done. For example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># file: group_vars/all</span>
+<span class="l l-Scalar l-Scalar-Plain">asdf</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+
+<span class="nn">---</span>
+<span class="c1"># file: group_vars/os_CentOS</span>
+<span class="l l-Scalar l-Scalar-Plain">asdf</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">42</span>
+</pre></div>
+</div>
+<p>In the above example, CentOS machines get the value of &#8216;42&#8217; for asdf, but other machines get &#8216;10&#8217;.
+This can be used not only to set variables, but also to apply certain roles to only certain systems.</p>
+<p>Alternatively, if only variables are needed:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">include_vars</span><span class="p p-Indicator">:</span> <span class="s">&quot;os_{{</span><span class="nv"> </span><span class="s">ansible_distribution</span><span class="nv"> </span><span class="s">}}.yml&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">debug</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">var=asdf</span>
+</pre></div>
+</div>
+<p>This will pull in variables based on the OS name.</p>
+</div>
+<div class="section" id="bundling-ansible-modules-with-playbooks">
+<span id="ship-modules-with-playbooks"></span><h2><a class="toc-backref" href="#id23">Bundling Ansible Modules With Playbooks</a><a class="headerlink" href="#bundling-ansible-modules-with-playbooks" title="Permalink to this headline">露</a></h2>
+<p>If a playbook has a &#8221;./library&#8221; directory relative to its YAML file, this directory can be used to add ansible modules that will
+automatically be in the ansible module path.  This is a great way to keep modules that go with a playbook together.  This is shown
+in the directory structure example at the start of this section.</p>
+</div>
+<div class="section" id="whitespace-and-comments">
+<span id="whitespace"></span><h2><a class="toc-backref" href="#id24">Whitespace and Comments</a><a class="headerlink" href="#whitespace-and-comments" title="Permalink to this headline">露</a></h2>
+<p>Generous use of whitespace to break things up, and use of comments (which start with &#8216;#&#8217;), is encouraged.</p>
+</div>
+<div class="section" id="always-name-tasks">
+<span id="name-tasks"></span><h2><a class="toc-backref" href="#id25">Always Name Tasks</a><a class="headerlink" href="#always-name-tasks" title="Permalink to this headline">露</a></h2>
+<p>It is possible to leave off the &#8216;name&#8217; for a given task, though it is recommended to provide a description
+about why something is being done instead.  This name is shown when the playbook is run.</p>
+</div>
+<div class="section" id="keep-it-simple">
+<span id="id6"></span><h2><a class="toc-backref" href="#id26">Keep It Simple</a><a class="headerlink" href="#keep-it-simple" title="Permalink to this headline">露</a></h2>
+<p>When you can do something simply, do something simply.  Do not reach
+to use every feature of Ansible together, all at once.  Use what works
+for you.  For example, you will probably not need <code class="docutils literal"><span class="pre">vars</span></code>,
+<code class="docutils literal"><span class="pre">vars_files</span></code>, <code class="docutils literal"><span class="pre">vars_prompt</span></code> and <code class="docutils literal"><span class="pre">--extra-vars</span></code> all at once,
+while also using an external inventory file.</p>
+<p>If something feels complicated, it probably is, and may be a good opportunity to simplify things.</p>
+</div>
+<div class="section" id="version-control">
+<span id="id7"></span><h2><a class="toc-backref" href="#id27">Version Control</a><a class="headerlink" href="#version-control" title="Permalink to this headline">露</a></h2>
+<p>Use version control.  Keep your playbooks and inventory file in git
+(or another version control system), and commit when you make changes
+to them.  This way you have an audit trail describing when and why you
+changed the rules that are automating your infrastructure.</p>
+</div>
+<div class="section" id="variables-and-vaults">
+<span id="best-practices-for-variables-and-vaults"></span><h2><a class="toc-backref" href="#id28">Variables and Vaults</a><a class="headerlink" href="#variables-and-vaults" title="Permalink to this headline">露</a></h2>
+<p>For general maintenance, it is often easier to use <code class="docutils literal"><span class="pre">grep</span></code>, or similar tools, to find variables in your Ansible setup. Since vaults obscure these variables, it is best to work with a layer of indirection. When running a playbook, Ansible finds the variables in the unencrypted file and all sensitive variables come from the encrypted file.</p>
+<p>A best practice approach for this is to start with a <code class="docutils literal"><span class="pre">group_vars/</span></code> subdirectory named after the group. Inside of this subdirectory, create two files named <code class="docutils literal"><span class="pre">vars</span></code> and <code class="docutils literal"><span class="pre">vault</span></code>. Inside of the <code class="docutils literal"><span class="pre">vars</span></code> file, define all of the variables needed, including any sensitive ones. Next, copy all of the sensitive variables over to the <code class="docutils literal"><span class="pre">vault</span></code> file and prefix these variables with <code class="docutils literal"><span class="pre">vault_</span></code>. You should adjust the variables in the <code class="docutils literal"><span class="pre">vars</span></code> file to point to the matching <code class="docutils literal"><span class="pre">vault_</span></code> variables and ensure that the <code class="docutils literal"><span class="pre">vault</span></code> file is vault encrypted.</p>
+<p>This best practice has no limit on the amount of variable and vault files or their names.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="YAMLSyntax-1.html" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html"><span class="doc">YAML Syntax</span></a></dt>
+<dd>Learn about YAML syntax</dd>
+<dt><a class="reference internal" href="playbooks-1.html" tppabs="http://docs.ansible.com/ansible/playbooks.html"><span class="doc">Playbooks</span></a></dt>
+<dd>Review the basic playbook features</dd>
+<dt><a class="reference internal" href="modules-1.html" tppabs="http://docs.ansible.com/ansible/modules.html"><span class="doc">About Modules</span></a></dt>
+<dd>Learn about available modules</dd>
+<dt><a class="reference internal" href="developing_modules-1.html" tppabs="http://docs.ansible.com/ansible/developing_modules.html"><span class="doc">Developing Modules</span></a></dt>
+<dd>Learn how to extend Ansible by writing your own modules</dd>
+<dt><a class="reference internal" href="intro_patterns-1.html" tppabs="http://docs.ansible.com/ansible/intro_patterns.html"><span class="doc">Patterns</span></a></dt>
+<dd>Learn about how to select hosts</dd>
+<dt><a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible/tree/devel/examples/playbooks  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible/tree/devel/examples/playbooks'" tppabs="https://github.com/ansible/ansible/tree/devel/examples/playbooks">GitHub examples directory</a></dt>
+<dd>Complete playbook files from the github project source</dd>
+<dt><a class="reference external" href="javascript:if(confirm('http://groups.google.com/group/ansible-project  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://groups.google.com/group/ansible-project'" tppabs="http://groups.google.com/group/ansible-project">Mailing List</a></dt>
+<dd>Questions? Help? Ideas?  Stop by the list on Google Groups</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div id="search-results"><gcse:searchresults-only></div>
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+        <a href="playbooks_special_topics-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_special_topics.html" class="btn btn-neutral float-right" title="Playbooks: Special Topics"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="playbooks_strategies-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_strategies.html" class="btn btn-neutral" title="Strategies"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','st-1.js'/*tpa=http://s.swiftypecdn.com/install/v2/st.js*/,'_st');
+
+  _st('install','yABGvz2N8PwcwBxyfzUc','2.0.0');
+</script>
+
+  <p>
+  Copyright 漏 2016 Red Hat, Inc.
+  <br>
+    Last updated on Jun 22, 2016.
+  </p>
+<p>
+Ansible docs are generated from <a href="javascript:if(confirm('https://github.com/ansible/ansible  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible'" tppabs="https://github.com/ansible/ansible">GitHub sources</A> using <A HREF="javascript:if(confirm('http://sphinx-doc.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://sphinx-doc.org/'" tppabs="http://sphinx-doc.org/">Sphinx</A> using a theme provided by <a href="javascript:if(confirm('http://readthedocs.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://readthedocs.org/'" tppabs="http://readthedocs.org/">Read the Docs</a>. 
+</p>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+<!-- begin analytics -->
+<script type="text/javascript">
+var _hsq = _hsq || [];
+_hsq.push(["setContentType", "standard-page"]);
+        (function(d,s,i,r) {
+        if (d.getElementById(i)){return;}
+        var n = d.createElement(s),e = document.getElementsByTagName(s)[0];
+        n.id=i;n.src = '//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/330046.js';
+        e.parentNode.insertBefore(n, e);
+        })(document, "script", "hs-analytics",300000);
+</script>
+<!-- end analytics -->
+
+</body>
+</html>

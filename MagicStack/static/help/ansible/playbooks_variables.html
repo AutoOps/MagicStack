@@ -1,0 +1,1321 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset=UTF-8"utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Tag Manager Data Layer -->
+  <script>
+   dataLayer = [];
+  </script>
+  <!-- End Google Tag Manager Data Layer -->
+
+  
+  <title>Variables &mdash; Ansible Documentation</title>
+  
+
+  
+  
+
+  
+  <link href="css-family=Lato-400,700-Roboto+Slab-400,700-Inconsolata-400,700.css" tppabs="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel='stylesheet' type='text/css'>
+  <link href="font-awesome.min.css" tppabs="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'https://docs.ansible.com/ansible/0.01',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+      <script type="text/javascript" src="jquery.js" tppabs="https://docs.ansible.com/ansible/_static/jquery.js"></script>
+      <script type="text/javascript" src="underscore.js" tppabs="https://docs.ansible.com/ansible/_static/underscore.js"></script>
+      <script type="text/javascript" src="doctools.js" tppabs="https://docs.ansible.com/ansible/_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="theme.min.css" tppabs="https://docs.ansible.com/ansible/_static/css/theme.min.css" type="text/css" />
+    <script type="text/javascript" src="theme.js" tppabs="https://docs.ansible.com/ansible/_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="Ansible Documentation" href="index.html"/>
+        <link rel="up" title="Playbooks" href="playbooks.html"/>
+        <link rel="next" title="Jinja2 filters" href="playbooks_filters.html"/>
+        <link rel="prev" title="Playbook Roles and Include Statements" href="playbooks_roles.html"/> 
+
+  <script src="modernizr.min.js" tppabs="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  <style>
+    .search-reset-start {
+        color: #463E3F;
+        float: right;
+        position: relative;
+        top: -25px;
+        left: -10px;
+        z-index: 10;
+     }
+     .search-reset-start:hover {
+        cursor: pointer;
+        color: #2980B9;
+     }
+     #search-box-id {
+        padding-right: 25px;
+     }
+  </style>
+
+  <link href="css-family=Open+Sans-400,300.css" tppabs="https://fonts.googleapis.com/css?family=Open+Sans:400,300"
+    rel='stylesheet' type='text/css'>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="ns.html-id=GTM-PSB293" tppabs="https://www.googletagmanager.com/ns.html?id=GTM-PSB293" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'/*tpa=https://docs.ansible.com/ansible/gtm.js*/});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-PSB293');</script>
+  <!-- End Google Tag Manager -->
+
+  <a class="DocSite-nav" href="javascript:if(confirm('http://docs.ansible.com/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">
+    <img class="DocSiteNav-logo"
+      src="logo_invert.png" tppabs="https://docs.ansible.com/ansible/_static/images/logo_invert.png"
+      alt="Ansible Logo">
+    <div class="DocSiteNav-title">
+      Documentation
+    </div>
+  </a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+
+      <div style="background-color:#5bbdbf;height=80px;margin:'auto auto auto auto'">
+        <a class="DocSiteProduct-header DocSiteProduct-header--core"
+          href="index.htm" tppabs="http://docs.ansible.com/ansible/">
+          <div class="DocSiteProduct-productName">
+            <div class="DocSiteProduct-logoText">
+              ANSIBLE
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div id="menu-id" class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html" tppabs="https://docs.ansible.com/ansible/intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro_installation.html" tppabs="https://docs.ansible.com/ansible/intro_installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_getting_started.html" tppabs="https://docs.ansible.com/ansible/intro_getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_inventory.html" tppabs="https://docs.ansible.com/ansible/intro_inventory.html">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_dynamic_inventory.html" tppabs="https://docs.ansible.com/ansible/intro_dynamic_inventory.html">Dynamic Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_patterns.html" tppabs="https://docs.ansible.com/ansible/intro_patterns.html">Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_adhoc.html" tppabs="https://docs.ansible.com/ansible/intro_adhoc.html">Introduction To Ad-Hoc Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_configuration.html" tppabs="https://docs.ansible.com/ansible/intro_configuration.html">Configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_bsd.html" tppabs="https://docs.ansible.com/ansible/intro_bsd.html">BSD Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_windows.html" tppabs="https://docs.ansible.com/ansible/intro_windows.html">Windows Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_networking.html" tppabs="https://docs.ansible.com/ansible/intro_networking.html">Networking Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html" tppabs="https://docs.ansible.com/ansible/quickstart.html">Quickstart Video</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="playbooks.html" tppabs="https://docs.ansible.com/ansible/playbooks.html">Playbooks</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="playbooks_intro.html" tppabs="https://docs.ansible.com/ansible/playbooks_intro.html">Intro to Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_roles.html" tppabs="https://docs.ansible.com/ansible/playbooks_roles.html">Playbook Roles and Include Statements</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_filters.html" tppabs="https://docs.ansible.com/ansible/playbooks_filters.html">Jinja2 filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_conditionals.html" tppabs="https://docs.ansible.com/ansible/playbooks_conditionals.html">Conditionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_loops.html" tppabs="https://docs.ansible.com/ansible/playbooks_loops.html">Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_blocks.html" tppabs="https://docs.ansible.com/ansible/playbooks_blocks.html">Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_strategies.html" tppabs="https://docs.ansible.com/ansible/playbooks_strategies.html">Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_best_practices.html" tppabs="https://docs.ansible.com/ansible/playbooks_best_practices.html">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks_special_topics.html" tppabs="https://docs.ansible.com/ansible/playbooks_special_topics.html">Playbooks: Special Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="become.html" tppabs="https://docs.ansible.com/ansible/become.html">Become (Privilege Escalation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_acceleration.html" tppabs="https://docs.ansible.com/ansible/playbooks_acceleration.html">Accelerated Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_async.html" tppabs="https://docs.ansible.com/ansible/playbooks_async.html">Asynchronous Actions and Polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_checkmode.html" tppabs="https://docs.ansible.com/ansible/playbooks_checkmode.html">Check Mode (&#8220;Dry Run&#8221;)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_debugger.html" tppabs="https://docs.ansible.com/ansible/playbooks_debugger.html">Playbook Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_delegation.html" tppabs="https://docs.ansible.com/ansible/playbooks_delegation.html">Delegation, Rolling Updates, and Local Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_environment.html" tppabs="https://docs.ansible.com/ansible/playbooks_environment.html">Setting the Environment (and Working With Proxies)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_error_handling.html" tppabs="https://docs.ansible.com/ansible/playbooks_error_handling.html">Error Handling In Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_advanced_syntax.html" tppabs="https://docs.ansible.com/ansible/playbooks_advanced_syntax.html">Advanced Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_lookups.html" tppabs="https://docs.ansible.com/ansible/playbooks_lookups.html">Using Lookups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_prompts.html" tppabs="https://docs.ansible.com/ansible/playbooks_prompts.html">Prompts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_tags.html" tppabs="https://docs.ansible.com/ansible/playbooks_tags.html">Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_vault.html" tppabs="https://docs.ansible.com/ansible/playbooks_vault.html">Vault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_startnstep.html" tppabs="https://docs.ansible.com/ansible/playbooks_startnstep.html">Start and Step</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_directives.html" tppabs="https://docs.ansible.com/ansible/playbooks_directives.html">Directives Glossary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html" tppabs="https://docs.ansible.com/ansible/modules.html">About Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules_intro.html" tppabs="https://docs.ansible.com/ansible/modules_intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_core.html" tppabs="https://docs.ansible.com/ansible/modules_core.html">Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_extra.html" tppabs="https://docs.ansible.com/ansible/modules_extra.html">Extras Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_return_values.html" tppabs="https://docs.ansible.com/ansible/common_return_values.html">Common Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules_by_category.html" tppabs="https://docs.ansible.com/ansible/modules_by_category.html">Module Index</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="list_of_all_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_all_modules.html">All Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascript:if(confirm('https://docs.ansible.com/ansible/list_of_cloud_modules.html  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ ≤ªø…”√, ªÚ∑≈∆˙¡Àœ¬‘ÿ, ªÚœÓƒøº¥Ω´Õ£÷π°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://docs.ansible.com/ansible/list_of_cloud_modules.html'" tppabs="https://docs.ansible.com/ansible/list_of_cloud_modules.html">Cloud Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_clustering_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_clustering_modules.html">Clustering Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_commands_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_commands_modules.html">Commands Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_database_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_database_modules.html">Database Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_files_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_files_modules.html">Files Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_inventory_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_inventory_modules.html">Inventory Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_messaging_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_messaging_modules.html">Messaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_monitoring_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_monitoring_modules.html">Monitoring Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_network_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_network_modules.html">Network Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_notification_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_notification_modules.html">Notification Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_packaging_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_packaging_modules.html">Packaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_source_control_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_source_control_modules.html">Source Control Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_system_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_system_modules.html">System Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_utilities_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_utilities_modules.html">Utilities Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_web_infrastructure_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_web_infrastructure_modules.html">Web Infrastructure Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_windows_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_windows_modules.html">Windows Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guides.html" tppabs="https://docs.ansible.com/ansible/guides.html">Detailed Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_aws.html" tppabs="https://docs.ansible.com/ansible/guide_aws.html">Amazon Web Services Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_azure.html" tppabs="https://docs.ansible.com/ansible/guide_azure.html">Getting Started with Azure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rax.html" tppabs="https://docs.ansible.com/ansible/guide_rax.html">Rackspace Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_gce.html" tppabs="https://docs.ansible.com/ansible/guide_gce.html">Google Cloud Platform Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_cloudstack.html" tppabs="https://docs.ansible.com/ansible/guide_cloudstack.html">CloudStack Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_vagrant.html" tppabs="https://docs.ansible.com/ansible/guide_vagrant.html">Using Vagrant and Ansible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rolling_upgrade.html" tppabs="https://docs.ansible.com/ansible/guide_rolling_upgrade.html">Continuous Delivery and Rolling Upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_docker.html" tppabs="https://docs.ansible.com/ansible/guide_docker.html">Getting Started with Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developing.html" tppabs="https://docs.ansible.com/ansible/developing.html">Developer Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developing_api.html" tppabs="https://docs.ansible.com/ansible/developing_api.html">Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_inventory.html" tppabs="https://docs.ansible.com/ansible/developing_inventory.html">Developing Dynamic Inventory Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_modules.html" tppabs="https://docs.ansible.com/ansible/developing_modules.html">Developing Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_plugins.html" tppabs="https://docs.ansible.com/ansible/developing_plugins.html">Developing Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_core.html" tppabs="https://docs.ansible.com/ansible/developing_core.html">Developing the Ansible Core Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_test_pr.html" tppabs="https://docs.ansible.com/ansible/developing_test_pr.html">Helping Testing PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_releases.html" tppabs="https://docs.ansible.com/ansible/developing_releases.html">Releases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tower.html" tppabs="https://docs.ansible.com/ansible/tower.html">Ansible Tower</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html" tppabs="https://docs.ansible.com/ansible/community.html">Community Information &amp; Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community.html#ansible-users" tppabs="https://docs.ansible.com/ansible/community.html#ansible-users">Ansible Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#for-current-and-prospective-developers" tppabs="https://docs.ansible.com/ansible/community.html#for-current-and-prospective-developers">For Current and Prospective Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#other-topics" tppabs="https://docs.ansible.com/ansible/community.html#other-topics">Other Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#community-code-of-conduct" tppabs="https://docs.ansible.com/ansible/community.html#community-code-of-conduct">Community Code of Conduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#contributors-license-agreement" tppabs="https://docs.ansible.com/ansible/community.html#contributors-license-agreement">Contributors License Agreement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="galaxy.html" tppabs="https://docs.ansible.com/ansible/galaxy.html">Ansible Galaxy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="galaxy.html#the-website" tppabs="https://docs.ansible.com/ansible/galaxy.html#the-website">The Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="galaxy.html#the-ansible-galaxy-command-line-tool" tppabs="https://docs.ansible.com/ansible/galaxy.html#the-ansible-galaxy-command-line-tool">The ansible-galaxy command line tool</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test_strategies.html" tppabs="https://docs.ansible.com/ansible/test_strategies.html">Testing Strategies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#integrating-testing-with-ansible-playbooks" tppabs="https://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-ansible-playbooks">Integrating Testing With Ansible Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#the-right-level-of-testing" tppabs="https://docs.ansible.com/ansible/test_strategies.html#the-right-level-of-testing">The Right Level of Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#check-mode-as-a-drift-test" tppabs="https://docs.ansible.com/ansible/test_strategies.html#check-mode-as-a-drift-test">Check Mode As A Drift Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#modules-that-are-useful-for-testing" tppabs="https://docs.ansible.com/ansible/test_strategies.html#modules-that-are-useful-for-testing">Modules That Are Useful for Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#testing-lifecycle" tppabs="https://docs.ansible.com/ansible/test_strategies.html#testing-lifecycle">Testing Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#integrating-testing-with-rolling-updates" tppabs="https://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-rolling-updates">Integrating Testing With Rolling Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#achieving-continuous-deployment" tppabs="https://docs.ansible.com/ansible/test_strategies.html#achieving-continuous-deployment">Achieving Continuous Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#conclusion" tppabs="https://docs.ansible.com/ansible/test_strategies.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html" tppabs="https://docs.ansible.com/ansible/faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook" tppabs="https://docs.ansible.com/ansible/faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook">How can I set the PATH or any other environment variable for a task or entire playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with">How do I handle different machines needing different user accounts or ports to log in with?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file">How do I get ansible to reuse connections, enable Kerberized SSH, or have Ansible pay attention to my local SSH config file?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">How do I configure a jump host to access servers that I have no direct access to?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-speed-up-management-inside-ec2" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-speed-up-management-inside-ec2">How do I speed up management inside EC2?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine">How do I handle python pathing not having a Python 2.X in /usr/bin/python on a remote machine?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#what-is-the-best-way-to-make-content-reusable-redistributable" tppabs="https://docs.ansible.com/ansible/faq.html#what-is-the-best-way-to-make-content-reusable-redistributable">What is the best way to make content reusable/redistributable?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it" tppabs="https://docs.ansible.com/ansible/faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it">Where does the configuration file live and what can I configure in it?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-disable-cowsay" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-disable-cowsay">How do I disable cowsay?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables">How do I see a list of all of the ansible_ variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host">How do I see all the inventory vars defined for my host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template">How do I loop over a list of hosts in a group, inside of a template?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-a-variable-name-programmatically" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-name-programmatically">How do I access a variable name programmatically?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group">How do I access a variable of the first host in a group?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-copy-files-recursively-onto-a-target-host" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-copy-files-recursively-onto-a-target-host">How do I copy files recursively onto a target host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-shell-environment-variables" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-shell-environment-variables">How do I access shell environment variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-generate-crypted-passwords-for-the-user-module" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module">How do I generate crypted passwords for the user module?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#can-i-get-training-on-ansible-or-find-commercial-support" tppabs="https://docs.ansible.com/ansible/faq.html#can-i-get-training-on-ansible-or-find-commercial-support">Can I get training on Ansible or find commercial support?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#is-there-a-web-interface-rest-api-etc" tppabs="https://docs.ansible.com/ansible/faq.html#is-there-a-web-interface-rest-api-etc">Is there a web interface / REST API / etc?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-submit-a-change-to-the-documentation" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-submit-a-change-to-the-documentation">How do I submit a change to the documentation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-keep-secret-data-in-my-playbook" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-keep-secret-data-in-my-playbook">How do I keep secret data in my playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names" tppabs="https://docs.ansible.com/ansible/faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names">When should I use {{ }}? Also, how to interpolate variables or dynamic variable names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#i-don-t-see-my-question-here" tppabs="https://docs.ansible.com/ansible/faq.html#i-don-t-see-my-question-here">I don&#8217;t see my question here</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html" tppabs="https://docs.ansible.com/ansible/glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YAMLSyntax.html" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html">YAML Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax.html#yaml-basics" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html#yaml-basics">YAML Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax.html#gotchas" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html#gotchas">Gotchas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html">Porting Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#playbook" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#playbook">Playbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#deprecated" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#deprecated">Deprecated</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#other-caveats" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#other-caveats">Other caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#porting-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#porting-plugins">Porting plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#lookup-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#lookup-plugins">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#connection-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#connection-plugins">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#action-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#action-plugins">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#callback-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#callback-plugins">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id1" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id1">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#hybrid-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#hybrid-plugins">Hybrid plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id2" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id2">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id3" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id3">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id4" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id4">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id5" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id5">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id6" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id6">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#porting-custom-scripts" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#porting-custom-scripts">Porting custom scripts</a></li>
+</ul>
+
+        
+
+<!-- changeable widget -->
+<center>
+<br/>
+<a href="javascript:if(confirm('http://www.ansible.com/docs-left?utm_source=docs  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ansible.com/docs-left?utm_source=docs'" tppabs="http://www.ansible.com/docs-left?utm_source=docs">
+    <img style="border-width:0px;" src="ASB-docs-left-rail.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-left-rail.png" />
+</a>
+</center>
+
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="javascript:if(confirm('https://docs.ansible.com/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://docs.ansible.com/'" tppabs="https://docs.ansible.com/">Ansible Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+
+          <!-- Banner ads -->
+          <div class="DocSiteBanner">
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-left.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-left.png">
+            </a>
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-right.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-right.png">
+            </a>
+        </div>
+
+          <ul class="wy-breadcrumbs">
+  <li><a href="index.html" tppabs="https://docs.ansible.com/ansible/index.html">Docs</a> &raquo;</li>
+  <li><a href="">Variables</a></li>
+  
+    <li class="wy-breadcrumbs-aside">
+      <a href="javascript:if(confirm('https://github.com/ansible/ansible/blob/devel/docsite/rst/playbooks_variables.rst  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible/blob/devel/docsite/rst/playbooks_variables.rst'" tppabs="https://github.com/ansible/ansible/blob/devel/docsite/rst/playbooks_variables.rst" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  
+</ul>
+<hr/>
+
+          <div id="page-content">
+          
+  <div class="section" id="variables">
+<h1><a class="toc-backref" href="#id13">Variables</a><a class="headerlink" href="#variables" title="Permalink to this headline">¬∂</a></h1>
+<div class="contents topic" id="topics">
+<p class="topic-title first">Topics</p>
+<ul class="simple">
+<li><a class="reference internal" href="#variables" id="id13">Variables</a><ul>
+<li><a class="reference internal" href="#what-makes-a-valid-variable-name" id="id14">What Makes A Valid Variable Name</a></li>
+<li><a class="reference internal" href="#variables-defined-in-inventory" id="id15">Variables Defined in Inventory</a></li>
+<li><a class="reference internal" href="#variables-defined-in-a-playbook" id="id16">Variables Defined in a Playbook</a></li>
+<li><a class="reference internal" href="#variables-defined-from-included-files-and-roles" id="id17">Variables defined from included files and roles</a></li>
+<li><a class="reference internal" href="#using-variables-about-jinja2" id="id18">Using Variables: About Jinja2</a></li>
+<li><a class="reference internal" href="#jinja2-filters" id="id19">Jinja2 Filters</a></li>
+<li><a class="reference internal" href="#hey-wait-a-yaml-gotcha" id="id20">Hey Wait, A YAML Gotcha</a></li>
+<li><a class="reference internal" href="#information-discovered-from-systems-facts" id="id21">Information discovered from systems: Facts</a></li>
+<li><a class="reference internal" href="#turning-off-facts" id="id22">Turning Off Facts</a></li>
+<li><a class="reference internal" href="#local-facts-facts-d" id="id23">Local Facts (Facts.d)</a></li>
+<li><a class="reference internal" href="#ansible-version" id="id24">Ansible version</a></li>
+<li><a class="reference internal" href="#fact-caching" id="id25">Fact Caching</a></li>
+<li><a class="reference internal" href="#registered-variables" id="id26">Registered Variables</a></li>
+<li><a class="reference internal" href="#accessing-complex-variable-data" id="id27">Accessing Complex Variable Data</a></li>
+<li><a class="reference internal" href="#magic-variables-and-how-to-access-information-about-other-hosts" id="id28">Magic Variables, and How To Access Information About Other Hosts</a></li>
+<li><a class="reference internal" href="#variable-file-separation" id="id29">Variable File Separation</a></li>
+<li><a class="reference internal" href="#passing-variables-on-the-command-line" id="id30">Passing Variables On The Command Line</a></li>
+<li><a class="reference internal" href="#variable-precedence-where-should-i-put-a-variable" id="id31">Variable Precedence: Where Should I Put A Variable?</a></li>
+<li><a class="reference internal" href="#variable-scopes" id="id32">Variable Scopes</a></li>
+<li><a class="reference internal" href="#variable-examples" id="id33">Variable Examples</a></li>
+<li><a class="reference internal" href="#advanced-syntax" id="id34">Advanced Syntax</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>While automation exists to make it easier to make things repeatable, all of your systems are likely not exactly alike.</p>
+<p>On some systems you may want to set some behavior or configuration that is slightly different from others.</p>
+<p>Also, some of the observed behavior or state
+of remote systems might need to influence how you configure those systems.  (Such as you might need to find out the IP
+address of a system and even use it as a configuration value on another system).</p>
+<p>You might have some templates for configuration files that are mostly the same, but slightly different based on those variables.</p>
+<p>Variables in Ansible are how we deal with differences between systems.</p>
+<p>To understand variables you&#8217;ll also want to dig into <a class="reference internal" href="playbooks_conditionals.html" tppabs="https://docs.ansible.com/ansible/playbooks_conditionals.html"><span class="doc">Conditionals</span></a> and <a class="reference internal" href="playbooks_loops.html" tppabs="https://docs.ansible.com/ansible/playbooks_loops.html"><span class="doc">Loops</span></a>.
+Useful things like the <strong>group_by</strong> module
+and the <code class="docutils literal"><span class="pre">when</span></code> conditional can also be used with variables, and to help manage differences between systems.</p>
+<p>It&#8217;s highly recommended that you consult the ansible-examples github repository to see a lot of examples of variables put to use.</p>
+<p>For best practices advice, refer to <a class="reference internal" href="playbooks_best_practices.html#best-practices-for-variables-and-vaults" tppabs="https://docs.ansible.com/ansible/playbooks_best_practices.html#best-practices-for-variables-and-vaults"><span class="std std-ref">Variables and Vaults</span></a> in the <em>Best Practices</em> chapter.</p>
+<div class="section" id="what-makes-a-valid-variable-name">
+<span id="valid-variable-names"></span><h2><a class="toc-backref" href="#id14">What Makes A Valid Variable Name</a><a class="headerlink" href="#what-makes-a-valid-variable-name" title="Permalink to this headline">¬∂</a></h2>
+<p>Before we start using variables it&#8217;s important to know what are valid variable names.</p>
+<p>Variable names should be letters, numbers, and underscores.  Variables should always start with a letter.</p>
+<p><code class="docutils literal"><span class="pre">foo_port</span></code> is a great variable.  <code class="docutils literal"><span class="pre">foo5</span></code> is fine too.</p>
+<p><code class="docutils literal"><span class="pre">foo-port</span></code>, <code class="docutils literal"><span class="pre">foo</span> <span class="pre">port</span></code>, <code class="docutils literal"><span class="pre">foo.port</span></code> and <code class="docutils literal"><span class="pre">12</span></code> are not valid variable names.</p>
+<p>YAML also supports dictionaries which map keys to values.  For instance:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">foo</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">field1</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">one</span>
+  <span class="l l-Scalar l-Scalar-Plain">field2</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">two</span>
+</pre></div>
+</div>
+<p>You can then reference a specific field in the dictionary using either bracket
+notation or dot notation:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">foo[&#39;field1&#39;]</span>
+<span class="l l-Scalar l-Scalar-Plain">foo.field1</span>
+</pre></div>
+</div>
+<p>These will both reference the same value (&#8220;one&#8221;).  However, if you choose to
+use dot notation be aware that some keys can cause problems because they
+collide with attributes and methods of python dictionaries.  You should use
+bracket notation instead of dot notation if you use keys which start and end
+with two underscores (Those are reserved for special meanings in python) or
+are any of the known public attributes:</p>
+<p><code class="docutils literal"><span class="pre">add</span></code>, <code class="docutils literal"><span class="pre">append</span></code>, <code class="docutils literal"><span class="pre">as_integer_ratio</span></code>, <code class="docutils literal"><span class="pre">bit_length</span></code>, <code class="docutils literal"><span class="pre">capitalize</span></code>, <code class="docutils literal"><span class="pre">center</span></code>, <code class="docutils literal"><span class="pre">clear</span></code>, <code class="docutils literal"><span class="pre">conjugate</span></code>, <code class="docutils literal"><span class="pre">copy</span></code>, <code class="docutils literal"><span class="pre">count</span></code>, <code class="docutils literal"><span class="pre">decode</span></code>, <code class="docutils literal"><span class="pre">denominator</span></code>, <code class="docutils literal"><span class="pre">difference</span></code>, <code class="docutils literal"><span class="pre">difference_update</span></code>, <code class="docutils literal"><span class="pre">discard</span></code>, <code class="docutils literal"><span class="pre">encode</span></code>, <code class="docutils literal"><span class="pre">endswith</span></code>, <code class="docutils literal"><span class="pre">expandtabs</span></code>, <code class="docutils literal"><span class="pre">extend</span></code>, <code class="docutils literal"><span class="pre">find</span></code>, <code class="docutils literal"><span class="pre">format</span></code>, <code class="docutils literal"><span class="pre">fromhex</span></code>, <code class="docutils literal"><span class="pre">fromkeys</span></code>, <code class="docutils literal"><span class="pre">get</span></code>, <code class="docutils literal"><span class="pre">has_key</span></code>, <code class="docutils literal"><span class="pre">hex</span></code>, <code class="docutils literal"><span class="pre">imag</span></code>, <code class="docutils literal"><span class="pre">index</span></code>, <code class="docutils literal"><span class="pre">insert</span></code>, <code class="docutils literal"><span class="pre">intersection</span></code>, <code class="docutils literal"><span class="pre">intersection_update</span></code>, <code class="docutils literal"><span class="pre">isalnum</span></code>, <code class="docutils literal"><span class="pre">isalpha</span></code>, <code class="docutils literal"><span class="pre">isdecimal</span></code>, <code class="docutils literal"><span class="pre">isdigit</span></code>, <code class="docutils literal"><span class="pre">isdisjoint</span></code>, <code class="docutils literal"><span class="pre">is_integer</span></code>, <code class="docutils literal"><span class="pre">islower</span></code>, <code class="docutils literal"><span class="pre">isnumeric</span></code>, <code class="docutils literal"><span class="pre">isspace</span></code>, <code class="docutils literal"><span class="pre">issubset</span></code>, <code class="docutils literal"><span class="pre">issuperset</span></code>, <code class="docutils literal"><span class="pre">istitle</span></code>, <code class="docutils literal"><span class="pre">isupper</span></code>, <code class="docutils literal"><span class="pre">items</span></code>, <code class="docutils literal"><span class="pre">iteritems</span></code>, <code class="docutils literal"><span class="pre">iterkeys</span></code>, <code class="docutils literal"><span class="pre">itervalues</span></code>, <code class="docutils literal"><span class="pre">join</span></code>, <code class="docutils literal"><span class="pre">keys</span></code>, <code class="docutils literal"><span class="pre">ljust</span></code>, <code class="docutils literal"><span class="pre">lower</span></code>, <code class="docutils literal"><span class="pre">lstrip</span></code>, <code class="docutils literal"><span class="pre">numerator</span></code>, <code class="docutils literal"><span class="pre">partition</span></code>, <code class="docutils literal"><span class="pre">pop</span></code>, <code class="docutils literal"><span class="pre">popitem</span></code>, <code class="docutils literal"><span class="pre">real</span></code>, <code class="docutils literal"><span class="pre">remove</span></code>, <code class="docutils literal"><span class="pre">replace</span></code>, <code class="docutils literal"><span class="pre">reverse</span></code>, <code class="docutils literal"><span class="pre">rfind</span></code>, <code class="docutils literal"><span class="pre">rindex</span></code>, <code class="docutils literal"><span class="pre">rjust</span></code>, <code class="docutils literal"><span class="pre">rpartition</span></code>, <code class="docutils literal"><span class="pre">rsplit</span></code>, <code class="docutils literal"><span class="pre">rstrip</span></code>, <code class="docutils literal"><span class="pre">setdefault</span></code>, <code class="docutils literal"><span class="pre">sort</span></code>, <code class="docutils literal"><span class="pre">split</span></code>, <code class="docutils literal"><span class="pre">splitlines</span></code>, <code class="docutils literal"><span class="pre">startswith</span></code>, <code class="docutils literal"><span class="pre">strip</span></code>, <code class="docutils literal"><span class="pre">swapcase</span></code>, <code class="docutils literal"><span class="pre">symmetric_difference</span></code>, <code class="docutils literal"><span class="pre">symmetric_difference_update</span></code>, <code class="docutils literal"><span class="pre">title</span></code>, <code class="docutils literal"><span class="pre">translate</span></code>, <code class="docutils literal"><span class="pre">union</span></code>, <code class="docutils literal"><span class="pre">update</span></code>, <code class="docutils literal"><span class="pre">upper</span></code>, <code class="docutils literal"><span class="pre">values</span></code>, <code class="docutils literal"><span class="pre">viewitems</span></code>, <code class="docutils literal"><span class="pre">viewkeys</span></code>, <code class="docutils literal"><span class="pre">viewvalues</span></code>, <code class="docutils literal"><span class="pre">zfill</span></code>.</p>
+</div>
+<div class="section" id="variables-defined-in-inventory">
+<span id="variables-in-inventory"></span><h2><a class="toc-backref" href="#id15">Variables Defined in Inventory</a><a class="headerlink" href="#variables-defined-in-inventory" title="Permalink to this headline">¬∂</a></h2>
+<p>We&#8217;ve actually already covered a lot about variables in another section, so far this shouldn&#8217;t be terribly new, but
+a bit of a refresher.</p>
+<p>Often you&#8217;ll want to set variables based on what groups a machine is in.  For instance, maybe machines in Boston
+want to use &#8216;boston.ntp.example.com&#8217; as an NTP server.</p>
+<p>See the <a class="reference internal" href="intro_inventory.html" tppabs="https://docs.ansible.com/ansible/intro_inventory.html"><span class="doc">Inventory</span></a> document for multiple ways on how to define variables in inventory.</p>
+</div>
+<div class="section" id="variables-defined-in-a-playbook">
+<span id="playbook-variables"></span><h2><a class="toc-backref" href="#id16">Variables Defined in a Playbook</a><a class="headerlink" href="#variables-defined-in-a-playbook" title="Permalink to this headline">¬∂</a></h2>
+<p>In a playbook, it&#8217;s possible to define variables directly inline like so:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">webservers</span>
+  <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">http_port</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
+</pre></div>
+</div>
+<p>This can be nice as it&#8217;s right there when you are reading the playbook.</p>
+</div>
+<div class="section" id="variables-defined-from-included-files-and-roles">
+<span id="included-variables"></span><h2><a class="toc-backref" href="#id17">Variables defined from included files and roles</a><a class="headerlink" href="#variables-defined-from-included-files-and-roles" title="Permalink to this headline">¬∂</a></h2>
+<p>It turns out we&#8217;ve already talked about variables in another place too.</p>
+<p>As described in <a class="reference internal" href="playbooks_roles.html" tppabs="https://docs.ansible.com/ansible/playbooks_roles.html"><span class="doc">Playbook Roles and Include Statements</span></a>, variables can also be included in the playbook via include files, which may or may
+not be part of an &#8220;Ansible Role&#8221;.  Usage of roles is preferred as it provides a nice organizational system.</p>
+</div>
+<div class="section" id="using-variables-about-jinja2">
+<span id="about-jinja2"></span><h2><a class="toc-backref" href="#id18">Using Variables: About Jinja2</a><a class="headerlink" href="#using-variables-about-jinja2" title="Permalink to this headline">¬∂</a></h2>
+<p>It&#8217;s nice enough to know about how to define variables, but how do you use them?</p>
+<p>Ansible allows you to
+reference variables in your playbooks using the Jinja2 templating system.  While you can do a lot of complex
+things in Jinja, only the basics are things you really need to learn at first.</p>
+<p>For instance, in a simple template, you can do something like:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">My amp goes to {{ max_amp_value }}</span>
+</pre></div>
+</div>
+<p>And that will provide the most basic form of variable substitution.</p>
+<p>This is also valid directly in playbooks, and you&#8217;ll occasionally want to do things like:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">template</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">src=foo.cfg.j2 dest={{ remote_install_path }}/foo.cfg</span>
+</pre></div>
+</div>
+<p>In the above example, we used a variable to help decide where to place a file.</p>
+<p>Inside a template you automatically have access to all of the variables that are in scope for a host.  Actually
+it&#8217;s more than that &#8211; you can also read variables about other hosts.  We&#8217;ll show how to do that in a bit.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">ansible allows Jinja2 loops and conditionals in templates, but in playbooks, we do not use them.  Ansible
+playbooks are pure machine-parseable YAML.  This is a rather important feature as it means it is possible to code-generate
+pieces of files, or to have other ecosystem tools read Ansible files.  Not everyone will need this but it can unlock
+possibilities.</p>
+</div>
+</div>
+<div class="section" id="jinja2-filters">
+<span id="id1"></span><h2><a class="toc-backref" href="#id19">Jinja2 Filters</a><a class="headerlink" href="#jinja2-filters" title="Permalink to this headline">¬∂</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These are infrequently utilized features.  Use them if they fit a use case you have, but this is optional knowledge.</p>
+</div>
+<p>Filters in Jinja2 are a way of transforming template expressions from one kind of data into another.  Jinja2
+ships with many of these. See <a class="reference external" href="javascript:if(confirm('http://jinja.pocoo.org/docs/templates/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://jinja.pocoo.org/docs/templates/#builtin-filters'" tppabs="http://jinja.pocoo.org/docs/templates/#builtin-filters">builtin filters</a> in the official Jinja2 template documentation.</p>
+<p>In addition to those, Ansible supplies many more. See the <a class="reference internal" href="playbooks_filters.html" tppabs="https://docs.ansible.com/ansible/playbooks_filters.html"><span class="doc">Jinja2 filters</span></a> document
+for a list of available filters and example usage guide.</p>
+</div>
+<div class="section" id="hey-wait-a-yaml-gotcha">
+<span id="yaml-gotchas"></span><h2><a class="toc-backref" href="#id20">Hey Wait, A YAML Gotcha</a><a class="headerlink" href="#hey-wait-a-yaml-gotcha" title="Permalink to this headline">¬∂</a></h2>
+<p>YAML syntax requires that if you start a value with <code class="docutils literal"><span class="pre">{{</span> <span class="pre">foo</span> <span class="pre">}}</span></code> you quote the whole line, since it wants to be
+sure you aren&#8217;t trying to start a YAML dictionary.  This is covered on the <a class="reference internal" href="YAMLSyntax.html" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html"><span class="doc">YAML Syntax</span></a> page.</p>
+<p>This won&#8217;t work:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">app_servers</span>
+  <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">app_path</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">{{</span> <span class="nv">base_path</span> <span class="p p-Indicator">}}</span><span class="l l-Scalar l-Scalar-Plain">/22</span>
+</pre></div>
+</div>
+<p>Do it like this and you&#8217;ll be fine:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">app_servers</span>
+  <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+       <span class="l l-Scalar l-Scalar-Plain">app_path</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">base_path</span><span class="nv"> </span><span class="s">}}/22&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="information-discovered-from-systems-facts">
+<span id="vars-and-facts"></span><h2><a class="toc-backref" href="#id21">Information discovered from systems: Facts</a><a class="headerlink" href="#information-discovered-from-systems-facts" title="Permalink to this headline">¬∂</a></h2>
+<p>There are other places where variables can come from, but these are a type of variable that are discovered, not set by the user.</p>
+<p>Facts are information derived from speaking with your remote systems.</p>
+<p>An example of this might be the ip address of the remote host, or what the operating system is.</p>
+<p>To see what information is available, try the following:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible hostname -m setup</span>
+</pre></div>
+</div>
+<p>This will return a ginormous amount of variable data, which may look like this, as taken from Ansible 1.4 on a Ubuntu 12.04 system:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span>&quot;ansible_all_ipv4_addresses&quot;: [
+    &quot;REDACTED IP ADDRESS&quot;
+],
+&quot;ansible_all_ipv6_addresses&quot;: [
+    &quot;REDACTED IPV6 ADDRESS&quot;
+],
+&quot;ansible_architecture&quot;: &quot;x86_64&quot;,
+&quot;ansible_bios_date&quot;: &quot;09/20/2012&quot;,
+&quot;ansible_bios_version&quot;: &quot;6.00&quot;,
+&quot;ansible_cmdline&quot;: {
+    &quot;BOOT_IMAGE&quot;: &quot;/boot/vmlinuz-3.5.0-23-generic&quot;,
+    &quot;quiet&quot;: true,
+    &quot;ro&quot;: true,
+    &quot;root&quot;: &quot;UUID=4195bff4-e157-4e41-8701-e93f0aec9e22&quot;,
+    &quot;splash&quot;: true
+},
+&quot;ansible_date_time&quot;: {
+    &quot;date&quot;: &quot;2013-10-02&quot;,
+    &quot;day&quot;: &quot;02&quot;,
+    &quot;epoch&quot;: &quot;1380756810&quot;,
+    &quot;hour&quot;: &quot;19&quot;,
+    &quot;iso8601&quot;: &quot;2013-10-02T23:33:30Z&quot;,
+    &quot;iso8601_micro&quot;: &quot;2013-10-02T23:33:30.036070Z&quot;,
+    &quot;minute&quot;: &quot;33&quot;,
+    &quot;month&quot;: &quot;10&quot;,
+    &quot;second&quot;: &quot;30&quot;,
+    &quot;time&quot;: &quot;19:33:30&quot;,
+    &quot;tz&quot;: &quot;EDT&quot;,
+    &quot;year&quot;: &quot;2013&quot;
+},
+&quot;ansible_default_ipv4&quot;: {
+    &quot;address&quot;: &quot;REDACTED&quot;,
+    &quot;alias&quot;: &quot;eth0&quot;,
+    &quot;gateway&quot;: &quot;REDACTED&quot;,
+    &quot;interface&quot;: &quot;eth0&quot;,
+    &quot;macaddress&quot;: &quot;REDACTED&quot;,
+    &quot;mtu&quot;: 1500,
+    &quot;netmask&quot;: &quot;255.255.255.0&quot;,
+    &quot;network&quot;: &quot;REDACTED&quot;,
+    &quot;type&quot;: &quot;ether&quot;
+},
+&quot;ansible_default_ipv6&quot;: {},
+&quot;ansible_devices&quot;: {
+    &quot;fd0&quot;: {
+        &quot;holders&quot;: [],
+        &quot;host&quot;: &quot;&quot;,
+        &quot;model&quot;: null,
+        &quot;partitions&quot;: {},
+        &quot;removable&quot;: &quot;1&quot;,
+        &quot;rotational&quot;: &quot;1&quot;,
+        &quot;scheduler_mode&quot;: &quot;deadline&quot;,
+        &quot;sectors&quot;: &quot;0&quot;,
+        &quot;sectorsize&quot;: &quot;512&quot;,
+        &quot;size&quot;: &quot;0.00 Bytes&quot;,
+        &quot;support_discard&quot;: &quot;0&quot;,
+        &quot;vendor&quot;: null
+    },
+    &quot;sda&quot;: {
+        &quot;holders&quot;: [],
+        &quot;host&quot;: &quot;SCSI storage controller: LSI Logic / Symbios Logic 53c1030 PCI-X Fusion-MPT Dual Ultra320 SCSI (rev 01)&quot;,
+        &quot;model&quot;: &quot;VMware Virtual S&quot;,
+        &quot;partitions&quot;: {
+            &quot;sda1&quot;: {
+                &quot;sectors&quot;: &quot;39843840&quot;,
+                &quot;sectorsize&quot;: 512,
+                &quot;size&quot;: &quot;19.00 GB&quot;,
+                &quot;start&quot;: &quot;2048&quot;
+            },
+            &quot;sda2&quot;: {
+                &quot;sectors&quot;: &quot;2&quot;,
+                &quot;sectorsize&quot;: 512,
+                &quot;size&quot;: &quot;1.00 KB&quot;,
+                &quot;start&quot;: &quot;39847934&quot;
+            },
+            &quot;sda5&quot;: {
+                &quot;sectors&quot;: &quot;2093056&quot;,
+                &quot;sectorsize&quot;: 512,
+                &quot;size&quot;: &quot;1022.00 MB&quot;,
+                &quot;start&quot;: &quot;39847936&quot;
+            }
+        },
+        &quot;removable&quot;: &quot;0&quot;,
+        &quot;rotational&quot;: &quot;1&quot;,
+        &quot;scheduler_mode&quot;: &quot;deadline&quot;,
+        &quot;sectors&quot;: &quot;41943040&quot;,
+        &quot;sectorsize&quot;: &quot;512&quot;,
+        &quot;size&quot;: &quot;20.00 GB&quot;,
+        &quot;support_discard&quot;: &quot;0&quot;,
+        &quot;vendor&quot;: &quot;VMware,&quot;
+    },
+    &quot;sr0&quot;: {
+        &quot;holders&quot;: [],
+        &quot;host&quot;: &quot;IDE interface: Intel Corporation 82371AB/EB/MB PIIX4 IDE (rev 01)&quot;,
+        &quot;model&quot;: &quot;VMware IDE CDR10&quot;,
+        &quot;partitions&quot;: {},
+        &quot;removable&quot;: &quot;1&quot;,
+        &quot;rotational&quot;: &quot;1&quot;,
+        &quot;scheduler_mode&quot;: &quot;deadline&quot;,
+        &quot;sectors&quot;: &quot;2097151&quot;,
+        &quot;sectorsize&quot;: &quot;512&quot;,
+        &quot;size&quot;: &quot;1024.00 MB&quot;,
+        &quot;support_discard&quot;: &quot;0&quot;,
+        &quot;vendor&quot;: &quot;NECVMWar&quot;
+    }
+},
+&quot;ansible_distribution&quot;: &quot;Ubuntu&quot;,
+&quot;ansible_distribution_release&quot;: &quot;precise&quot;,
+&quot;ansible_distribution_version&quot;: &quot;12.04&quot;,
+&quot;ansible_domain&quot;: &quot;&quot;,
+&quot;ansible_env&quot;: {
+    &quot;COLORTERM&quot;: &quot;gnome-terminal&quot;,
+    &quot;DISPLAY&quot;: &quot;:0&quot;,
+    &quot;HOME&quot;: &quot;/home/mdehaan&quot;,
+    &quot;LANG&quot;: &quot;C&quot;,
+    &quot;LESSCLOSE&quot;: &quot;/usr/bin/lesspipe %s %s&quot;,
+    &quot;LESSOPEN&quot;: &quot;| /usr/bin/lesspipe %s&quot;,
+    &quot;LOGNAME&quot;: &quot;root&quot;,
+    &quot;LS_COLORS&quot;: &quot;rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lz=01;31:*.xz=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.axv=01;35:*.anx=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.axa=00;36:*.oga=00;36:*.spx=00;36:*.xspf=00;36:&quot;,
+    &quot;MAIL&quot;: &quot;/var/mail/root&quot;,
+    &quot;OLDPWD&quot;: &quot;/root/ansible/docsite&quot;,
+    &quot;PATH&quot;: &quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;,
+    &quot;PWD&quot;: &quot;/root/ansible&quot;,
+    &quot;SHELL&quot;: &quot;/bin/bash&quot;,
+    &quot;SHLVL&quot;: &quot;1&quot;,
+    &quot;SUDO_COMMAND&quot;: &quot;/bin/bash&quot;,
+    &quot;SUDO_GID&quot;: &quot;1000&quot;,
+    &quot;SUDO_UID&quot;: &quot;1000&quot;,
+    &quot;SUDO_USER&quot;: &quot;mdehaan&quot;,
+    &quot;TERM&quot;: &quot;xterm&quot;,
+    &quot;USER&quot;: &quot;root&quot;,
+    &quot;USERNAME&quot;: &quot;root&quot;,
+    &quot;XAUTHORITY&quot;: &quot;/home/mdehaan/.Xauthority&quot;,
+    &quot;_&quot;: &quot;/usr/local/bin/ansible&quot;
+},
+&quot;ansible_eth0&quot;: {
+    &quot;active&quot;: true,
+    &quot;device&quot;: &quot;eth0&quot;,
+    &quot;ipv4&quot;: {
+        &quot;address&quot;: &quot;REDACTED&quot;,
+        &quot;netmask&quot;: &quot;255.255.255.0&quot;,
+        &quot;network&quot;: &quot;REDACTED&quot;
+    },
+    &quot;ipv6&quot;: [
+        {
+            &quot;address&quot;: &quot;REDACTED&quot;,
+            &quot;prefix&quot;: &quot;64&quot;,
+            &quot;scope&quot;: &quot;link&quot;
+        }
+    ],
+    &quot;macaddress&quot;: &quot;REDACTED&quot;,
+    &quot;module&quot;: &quot;e1000&quot;,
+    &quot;mtu&quot;: 1500,
+    &quot;type&quot;: &quot;ether&quot;
+},
+&quot;ansible_form_factor&quot;: &quot;Other&quot;,
+&quot;ansible_fqdn&quot;: &quot;ubuntu2.example.com&quot;,
+&quot;ansible_hostname&quot;: &quot;ubuntu2&quot;,
+&quot;ansible_interfaces&quot;: [
+    &quot;lo&quot;,
+    &quot;eth0&quot;
+],
+&quot;ansible_kernel&quot;: &quot;3.5.0-23-generic&quot;,
+&quot;ansible_lo&quot;: {
+    &quot;active&quot;: true,
+    &quot;device&quot;: &quot;lo&quot;,
+    &quot;ipv4&quot;: {
+        &quot;address&quot;: &quot;127.0.0.1&quot;,
+        &quot;netmask&quot;: &quot;255.0.0.0&quot;,
+        &quot;network&quot;: &quot;127.0.0.0&quot;
+    },
+    &quot;ipv6&quot;: [
+        {
+            &quot;address&quot;: &quot;::1&quot;,
+            &quot;prefix&quot;: &quot;128&quot;,
+            &quot;scope&quot;: &quot;host&quot;
+        }
+    ],
+    &quot;mtu&quot;: 16436,
+    &quot;type&quot;: &quot;loopback&quot;
+},
+&quot;ansible_lsb&quot;: {
+    &quot;codename&quot;: &quot;precise&quot;,
+    &quot;description&quot;: &quot;Ubuntu 12.04.2 LTS&quot;,
+    &quot;id&quot;: &quot;Ubuntu&quot;,
+    &quot;major_release&quot;: &quot;12&quot;,
+    &quot;release&quot;: &quot;12.04&quot;
+},
+&quot;ansible_machine&quot;: &quot;x86_64&quot;,
+&quot;ansible_memfree_mb&quot;: 74,
+&quot;ansible_memtotal_mb&quot;: 991,
+&quot;ansible_mounts&quot;: [
+    {
+        &quot;device&quot;: &quot;/dev/sda1&quot;,
+        &quot;fstype&quot;: &quot;ext4&quot;,
+        &quot;mount&quot;: &quot;/&quot;,
+        &quot;options&quot;: &quot;rw,errors=remount-ro&quot;,
+        &quot;size_available&quot;: 15032406016,
+        &quot;size_total&quot;: 20079898624
+    }
+],
+&quot;ansible_nodename&quot;: &quot;ubuntu2.example.com&quot;,
+&quot;ansible_os_family&quot;: &quot;Debian&quot;,
+&quot;ansible_pkg_mgr&quot;: &quot;apt&quot;,
+&quot;ansible_processor&quot;: [
+    &quot;Intel(R) Core(TM) i7 CPU         860  @ 2.80GHz&quot;
+],
+&quot;ansible_processor_cores&quot;: 1,
+&quot;ansible_processor_count&quot;: 1,
+&quot;ansible_processor_threads_per_core&quot;: 1,
+&quot;ansible_processor_vcpus&quot;: 1,
+&quot;ansible_product_name&quot;: &quot;VMware Virtual Platform&quot;,
+&quot;ansible_product_serial&quot;: &quot;REDACTED&quot;,
+&quot;ansible_product_uuid&quot;: &quot;REDACTED&quot;,
+&quot;ansible_product_version&quot;: &quot;None&quot;,
+&quot;ansible_python_version&quot;: &quot;2.7.3&quot;,
+&quot;ansible_selinux&quot;: false,
+&quot;ansible_ssh_host_key_dsa_public&quot;: &quot;REDACTED KEY VALUE&quot;
+&quot;ansible_ssh_host_key_ecdsa_public&quot;: &quot;REDACTED KEY VALUE&quot;
+&quot;ansible_ssh_host_key_rsa_public&quot;: &quot;REDACTED KEY VALUE&quot;
+&quot;ansible_swapfree_mb&quot;: 665,
+&quot;ansible_swaptotal_mb&quot;: 1021,
+&quot;ansible_system&quot;: &quot;Linux&quot;,
+&quot;ansible_system_vendor&quot;: &quot;VMware, Inc.&quot;,
+&quot;ansible_user_id&quot;: &quot;root&quot;,
+&quot;ansible_userspace_architecture&quot;: &quot;x86_64&quot;,
+&quot;ansible_userspace_bits&quot;: &quot;64&quot;,
+&quot;ansible_virtualization_role&quot;: &quot;guest&quot;,
+&quot;ansible_virtualization_type&quot;: &quot;VMware&quot;
+</pre></div>
+</div>
+<p>In the above the model of the first harddrive may be referenced in a template or playbook as:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">{{</span> <span class="nv">ansible_devices.sda.model</span> <span class="p p-Indicator">}}</span>
+</pre></div>
+</div>
+<p>Similarly, the hostname as the system reports it is:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">{{</span> <span class="nv">ansible_nodename</span> <span class="p p-Indicator">}}</span>
+</pre></div>
+</div>
+<p>and the unqualified hostname shows the string before the first period(.):</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">{{</span> <span class="nv">ansible_hostname</span> <span class="p p-Indicator">}}</span>
+</pre></div>
+</div>
+<p>Facts are frequently used in conditionals (see <a class="reference internal" href="playbooks_conditionals.html" tppabs="https://docs.ansible.com/ansible/playbooks_conditionals.html"><span class="doc">Conditionals</span></a>) and also in templates.</p>
+<p>Facts can be also used to create dynamic groups of hosts that match particular criteria, see the <a class="reference internal" href="modules.html" tppabs="https://docs.ansible.com/ansible/modules.html"><span class="doc">About Modules</span></a> documentation on <strong>group_by</strong> for details, as well as in generalized conditional statements as discussed in the <a class="reference internal" href="playbooks_conditionals.html" tppabs="https://docs.ansible.com/ansible/playbooks_conditionals.html"><span class="doc">Conditionals</span></a> chapter.</p>
+</div>
+<div class="section" id="turning-off-facts">
+<span id="disabling-facts"></span><h2><a class="toc-backref" href="#id22">Turning Off Facts</a><a class="headerlink" href="#turning-off-facts" title="Permalink to this headline">¬∂</a></h2>
+<p>If you know you don&#8217;t need any fact data about your hosts, and know everything about your systems centrally, you
+can turn off fact gathering.  This has advantages in scaling Ansible in push mode with very large numbers of
+systems, mainly, or if you are using Ansible on experimental platforms.   In any play, just do this:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">whatever</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">no</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="local-facts-facts-d">
+<span id="local-facts"></span><h2><a class="toc-backref" href="#id23">Local Facts (Facts.d)</a><a class="headerlink" href="#local-facts-facts-d" title="Permalink to this headline">¬∂</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.3.</span></p>
+</div>
+<p>As discussed in the playbooks chapter, Ansible facts are a way of getting data about remote systems for use in playbook variables.</p>
+<p>Usually these are discovered automatically by the <strong>setup</strong> module in Ansible. Users can also write custom facts modules, as described
+in the API guide.  However, what if you want to have a simple way to provide system or user
+provided data for use in Ansible variables, without writing a fact module?</p>
+<p>For instance, what if you want users to be able to control some aspect about how their systems are managed? &#8220;Facts.d&#8221; is one such mechanism.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Perhaps &#8220;local facts&#8221; is a bit of a misnomer, it means &#8220;locally supplied user values&#8221; as opposed to &#8220;centrally supplied user values&#8221;, or what facts are &#8211; &#8220;locally dynamically determined values&#8221;.</p>
+</div>
+<p>If a remotely managed system has an <code class="docutils literal"><span class="pre">/etc/ansible/facts.d</span></code> directory, any files in this directory
+ending in <code class="docutils literal"><span class="pre">.fact</span></code>, can be JSON, INI, or executable files returning JSON, and these can supply local facts in Ansible.</p>
+<p>For instance assume a <code class="docutils literal"><span class="pre">/etc/ansible/facts.d/preferences.fact</span></code>:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">[</span><span class="nv">general</span><span class="p p-Indicator">]</span>
+<span class="l l-Scalar l-Scalar-Plain">asdf=1</span>
+<span class="l l-Scalar l-Scalar-Plain">bar=2</span>
+</pre></div>
+</div>
+<p>This will produce a hash variable fact named <code class="docutils literal"><span class="pre">general</span></code> with <code class="docutils literal"><span class="pre">asdf</span></code> and <code class="docutils literal"><span class="pre">bar</span></code> as members.
+To validate this, run the following:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible &lt;hostname&gt; -m setup -a &quot;filter=ansible_local&quot;</span>
+</pre></div>
+</div>
+<p>And you will see the following fact added:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="s">&quot;ansible_local&quot;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">{</span>
+        <span class="s">&quot;preferences&quot;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">{</span>
+            <span class="s">&quot;general&quot;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">{</span>
+                <span class="s">&quot;asdf&quot;</span> <span class="p p-Indicator">:</span> <span class="s">&quot;1&quot;</span><span class="p p-Indicator">,</span>
+                <span class="s">&quot;bar&quot;</span>  <span class="p p-Indicator">:</span> <span class="s">&quot;2&quot;</span>
+            <span class="p p-Indicator">}</span>
+        <span class="p p-Indicator">}</span>
+ <span class="p p-Indicator">}</span>
+</pre></div>
+</div>
+<p>And this data can be accessed in a <code class="docutils literal"><span class="pre">template/playbook</span></code> as:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">{{</span> <span class="nv">ansible_local.preferences.general.asdf</span> <span class="p p-Indicator">}}</span>
+</pre></div>
+</div>
+<p>The local namespace prevents any user supplied fact from overriding system facts
+or variables defined elsewhere in the playbook.</p>
+<p>If you have a playbook that is copying over a custom fact and then running it, making an explicit call to re-run the setup module
+can allow that fact to be used during that particular play.  Otherwise, it will be available in the next play that gathers fact information.
+Here is an example of what that might look like:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">webservers</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">create directory for ansible custom facts</span>
+      <span class="l l-Scalar l-Scalar-Plain">file</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">state=directory recurse=yes path=/etc/ansible/facts.d</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">install custom impi fact</span>
+      <span class="l l-Scalar l-Scalar-Plain">copy</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">src=ipmi.fact dest=/etc/ansible/facts.d</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">re-read facts after adding custom fact</span>
+      <span class="l l-Scalar l-Scalar-Plain">setup</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">filter=ansible_local</span>
+</pre></div>
+</div>
+<p>In this pattern however, you could also write a fact module as well, and may wish to consider this as an option.</p>
+</div>
+<div class="section" id="ansible-version">
+<span id="id2"></span><h2><a class="toc-backref" href="#id24">Ansible version</a><a class="headerlink" href="#ansible-version" title="Permalink to this headline">¬∂</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.8.</span></p>
+</div>
+<p>To adapt playbook behavior to specific version of ansible, a variable ansible_version is available, with the following
+structure:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="s">&quot;ansible_version&quot;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">{</span>
+    <span class="s">&quot;full&quot;</span><span class="p p-Indicator">:</span> <span class="s">&quot;2.0.0.2&quot;</span><span class="p p-Indicator">,</span>
+    <span class="s">&quot;major&quot;</span><span class="p p-Indicator">:</span> <span class="nv">2</span><span class="p p-Indicator">,</span>
+    <span class="s">&quot;minor&quot;</span><span class="p p-Indicator">:</span> <span class="nv">0</span><span class="p p-Indicator">,</span>
+    <span class="s">&quot;revision&quot;</span><span class="p p-Indicator">:</span> <span class="nv">0</span><span class="p p-Indicator">,</span>
+    <span class="s">&quot;string&quot;</span><span class="p p-Indicator">:</span> <span class="s">&quot;2.0.0.2&quot;</span>
+<span class="p p-Indicator">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fact-caching">
+<span id="id3"></span><h2><a class="toc-backref" href="#id25">Fact Caching</a><a class="headerlink" href="#fact-caching" title="Permalink to this headline">¬∂</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.8.</span></p>
+</div>
+<p>As shown elsewhere in the docs, it is possible for one server to reference variables about another, like so:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">{{</span> <span class="nv">hostvars</span><span class="p p-Indicator">[</span><span class="s">&#39;asdf.example.com&#39;</span><span class="p p-Indicator">][</span><span class="s">&#39;ansible_os_family&#39;</span><span class="p p-Indicator">]</span> <span class="p p-Indicator">}}</span>
+</pre></div>
+</div>
+<p>With &#8220;Fact Caching&#8221; disabled, in order to do this, Ansible must have already talked to &#8216;asdf.example.com&#8217; in the
+current play, or another play up higher in the playbook.  This is the default configuration of ansible.</p>
+<p>To avoid this, Ansible 1.8 allows the ability to save facts between playbook runs, but this feature must be manually
+enabled.  Why might this be useful?</p>
+<p>Imagine, for instance, a very large infrastructure with thousands of hosts.  Fact caching could be configured to run nightly, but
+configuration of a small set of servers could run ad-hoc or periodically throughout the day.  With fact-caching enabled, it would
+not be necessary to &#8220;hit&#8221; all servers to reference variables and information about them.</p>
+<p>With fact caching enabled, it is possible for machine in one group to reference variables about machines in the other group, despite
+the fact that they have not been communicated with in the current execution of /usr/bin/ansible-playbook.</p>
+<p>To benefit from cached facts, you will want to change the <code class="docutils literal"><span class="pre">gathering</span></code> setting to <code class="docutils literal"><span class="pre">smart</span></code> or <code class="docutils literal"><span class="pre">explicit</span></code> or set <code class="docutils literal"><span class="pre">gather_facts</span></code> to <code class="docutils literal"><span class="pre">False</span></code> in most plays.</p>
+<p>Currently, Ansible ships with two persistent cache plugins: redis and jsonfile.</p>
+<p>To configure fact caching using redis, enable it in <code class="docutils literal"><span class="pre">ansible.cfg</span></code> as follows:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">[</span><span class="nv">defaults</span><span class="p p-Indicator">]</span>
+<span class="l l-Scalar l-Scalar-Plain">gathering = smart</span>
+<span class="l l-Scalar l-Scalar-Plain">fact_caching = redis</span>
+<span class="l l-Scalar l-Scalar-Plain">fact_caching_timeout = 86400</span>
+<span class="l l-Scalar l-Scalar-Plain"># seconds</span>
+</pre></div>
+</div>
+<p>To get redis up and running, perform the equivalent OS commands:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">yum install redis</span>
+<span class="l l-Scalar l-Scalar-Plain">service redis start</span>
+<span class="l l-Scalar l-Scalar-Plain">pip install redis</span>
+</pre></div>
+</div>
+<p>Note that the Python redis library should be installed from pip, the version packaged in EPEL is too old for use by Ansible.</p>
+<p>In current embodiments, this feature is in beta-level state and the Redis plugin does not support port or password configuration, this is expected to change in the near future.</p>
+<p>To configure fact caching using jsonfile, enable it in <code class="docutils literal"><span class="pre">ansible.cfg</span></code> as follows:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">[</span><span class="nv">defaults</span><span class="p p-Indicator">]</span>
+<span class="l l-Scalar l-Scalar-Plain">gathering = smart</span>
+<span class="l l-Scalar l-Scalar-Plain">fact_caching = jsonfile</span>
+<span class="l l-Scalar l-Scalar-Plain">fact_caching_connection = /path/to/cachedir</span>
+<span class="l l-Scalar l-Scalar-Plain">fact_caching_timeout = 86400</span>
+<span class="l l-Scalar l-Scalar-Plain"># seconds</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">fact_caching_connection</span></code> is a local filesystem path to a writeable
+directory (ansible will attempt to create the directory if one does not exist).</p>
+<p><code class="docutils literal"><span class="pre">fact_caching_timeout</span></code> is the number of seconds to cache the recorded facts.</p>
+</div>
+<div class="section" id="registered-variables">
+<span id="id4"></span><h2><a class="toc-backref" href="#id26">Registered Variables</a><a class="headerlink" href="#registered-variables" title="Permalink to this headline">¬∂</a></h2>
+<p>Another major use of variables is running a command and using the result of that command to save the result into a variable. Results will vary from module to module. Use of <code class="docutils literal"><span class="pre">-v</span></code> when executing playbooks will show possible values for the results.</p>
+<p>The value of a task being executed in ansible can be saved in a variable and used later.  See some examples of this in the
+<a class="reference internal" href="playbooks_conditionals.html" tppabs="https://docs.ansible.com/ansible/playbooks_conditionals.html"><span class="doc">Conditionals</span></a> chapter.</p>
+<p>While it&#8217;s mentioned elsewhere in that document too, here&#8217;s a quick syntax example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">web_servers</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+
+     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">shell</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/usr/bin/foo</span>
+       <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">foo_result</span>
+       <span class="l l-Scalar l-Scalar-Plain">ignore_errors</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">shell</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/usr/bin/bar</span>
+       <span class="l l-Scalar l-Scalar-Plain">when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">foo_result.rc == 5</span>
+</pre></div>
+</div>
+<p>Registered variables are valid on the host the remainder of the playbook run, which is the same as the lifetime of &#8220;facts&#8221;
+in Ansible.  Effectively registered variables are just like facts.</p>
+<p>When using <code class="docutils literal"><span class="pre">register</span></code> with a loop the data structure placed in the variable during a loop, will contain a <code class="docutils literal"><span class="pre">results</span></code> attribute, that is a list of all responses from the module. For a more in-depth example of how this works, see the <span class="xref doc">playbook_loops</span> section on using register with a loop.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If a task fails or is skipped, the variable still is registered with a failure or skipped status, the only way to avoid registering a variable is using tags.</p>
+</div>
+</div>
+<div class="section" id="accessing-complex-variable-data">
+<span id="id5"></span><h2><a class="toc-backref" href="#id27">Accessing Complex Variable Data</a><a class="headerlink" href="#accessing-complex-variable-data" title="Permalink to this headline">¬∂</a></h2>
+<p>We already talked about facts a little higher up in the documentation.</p>
+<p>Some provided facts, like networking information, are made available as nested data structures.  To access
+them a simple <code class="docutils literal"><span class="pre">{{</span> <span class="pre">foo</span> <span class="pre">}}</span></code> is not sufficient, but it is still easy to do.   Here&#8217;s how we get an IP address:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">{{</span> <span class="nv">ansible_eth0</span><span class="p p-Indicator">[</span><span class="s">&quot;ipv4&quot;</span><span class="p p-Indicator">][</span><span class="s">&quot;address&quot;</span><span class="p p-Indicator">]</span> <span class="p p-Indicator">}}</span>
+</pre></div>
+</div>
+<p>OR alternatively:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">{{</span> <span class="nv">ansible_eth0.ipv4.address</span> <span class="p p-Indicator">}}</span>
+</pre></div>
+</div>
+<p>Similarly, this is how we access the first element of an array:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">{{</span> <span class="nv">foo</span><span class="p p-Indicator">[</span><span class="nv">0</span><span class="p p-Indicator">]</span> <span class="p p-Indicator">}}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="magic-variables-and-how-to-access-information-about-other-hosts">
+<span id="magic-variables-and-hostvars"></span><h2><a class="toc-backref" href="#id28">Magic Variables, and How To Access Information About Other Hosts</a><a class="headerlink" href="#magic-variables-and-how-to-access-information-about-other-hosts" title="Permalink to this headline">¬∂</a></h2>
+<p>Even if you didn&#8217;t define them yourself, Ansible provides a few variables for you automatically.
+The most important of these are <code class="docutils literal"><span class="pre">hostvars</span></code>, <code class="docutils literal"><span class="pre">group_names</span></code>, and <code class="docutils literal"><span class="pre">groups</span></code>.  Users should not use
+these names themselves as they are reserved.  <code class="docutils literal"><span class="pre">environment</span></code> is also reserved.</p>
+<p><code class="docutils literal"><span class="pre">hostvars</span></code> lets you ask about the variables of another host, including facts that have been gathered
+about that host.  If, at this point, you haven&#8217;t talked to that host yet in any play in the playbook
+or set of playbooks, you can still get the variables, but you will not be able to see the facts.</p>
+<p>If your database server wants to use the value of a &#8216;fact&#8217; from another node, or an inventory variable
+assigned to another node, it&#8217;s easy to do so within a template or even an action line:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">{{</span> <span class="nv">hostvars</span><span class="p p-Indicator">[</span><span class="s">&#39;test.example.com&#39;</span><span class="p p-Indicator">][</span><span class="s">&#39;ansible_distribution&#39;</span><span class="p p-Indicator">]</span> <span class="p p-Indicator">}}</span>
+</pre></div>
+</div>
+<p>Additionally, <code class="docutils literal"><span class="pre">group_names</span></code> is a list (array) of all the groups the current host is in.  This can be used in templates using Jinja2 syntax to make template source files that vary based on the group membership (or role) of the host:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span>{% if &#39;webserver&#39; in group_names %}
+   # some part of a configuration file that only applies to webservers
+{% endif %}
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">groups</span></code> is a list of all the groups (and hosts) in the inventory.  This can be used to enumerate all hosts within a group.
+For example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span>{% for host in groups[&#39;app_servers&#39;] %}
+   # something that applies to all app servers.
+{% endfor %}
+</pre></div>
+</div>
+<p>A frequently used idiom is walking a group to find all IP addresses in that group:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span>{% for host in groups[&#39;app_servers&#39;] %}
+   {{ hostvars[host][&#39;ansible_eth0&#39;][&#39;ipv4&#39;][&#39;address&#39;] }}
+{% endfor %}
+</pre></div>
+</div>
+<p>An example of this could include pointing a frontend proxy server to all of the app servers, setting up the correct firewall rules between servers, etc.
+You need to make sure that the facts of those hosts have been populated before though, for example by running a play against them if the facts have not been cached recently (fact caching was added in Ansible 1.8).</p>
+<p>Additionally, <code class="docutils literal"><span class="pre">inventory_hostname</span></code> is the name of the hostname as configured in Ansible&#8217;s inventory host file.  This can
+be useful for when you don&#8217;t want to rely on the discovered hostname <code class="docutils literal"><span class="pre">ansible_hostname</span></code> or for other mysterious
+reasons.  If you have a long FQDN, <code class="docutils literal"><span class="pre">inventory_hostname_short</span></code> also contains the part up to the first
+period, without the rest of the domain.</p>
+<p><code class="docutils literal"><span class="pre">play_hosts</span></code> is available as a list of hostnames that are in scope for the current play. This may be useful for filling out templates with multiple hostnames or for injecting the list into the rules for a load balancer.</p>
+<p>Don&#8217;t worry about any of this unless you think you need it.  You&#8217;ll know when you do.</p>
+<p>Also available, <code class="docutils literal"><span class="pre">inventory_dir</span></code> is the pathname of the directory holding Ansible&#8217;s inventory host file, <code class="docutils literal"><span class="pre">inventory_file</span></code> is the pathname and the filename pointing to the Ansible&#8217;s inventory host file.</p>
+<p><code class="docutils literal"><span class="pre">playbook_dir</span></code> contains the playbook base directory.</p>
+<p>We then have <code class="docutils literal"><span class="pre">role_path</span></code> which will return the current role&#8217;s pathname (since 1.8). This will only work inside a role.</p>
+<p>And finally, <code class="docutils literal"><span class="pre">ansible_check_mode</span></code> (added in version 2.1), a boolean magic variable which will be set to <code class="docutils literal"><span class="pre">True</span></code> if you run Ansible with <code class="docutils literal"><span class="pre">--check</span></code>.</p>
+</div>
+<div class="section" id="variable-file-separation">
+<span id="variable-file-separation-details"></span><h2><a class="toc-backref" href="#id29">Variable File Separation</a><a class="headerlink" href="#variable-file-separation" title="Permalink to this headline">¬∂</a></h2>
+<p>It&#8217;s a great idea to keep your playbooks under source control, but
+you may wish to make the playbook source public while keeping certain
+important variables private.  Similarly, sometimes you may just
+want to keep certain information in different files, away from
+the main playbook.</p>
+<p>You can do this by using an external variables file, or files, just like this:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+  <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">favcolor</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">blue</span>
+  <span class="l l-Scalar l-Scalar-Plain">vars_files</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">/vars/external_vars.yml</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">this is just a placeholder</span>
+    <span class="l l-Scalar l-Scalar-Plain">command</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/bin/echo foo</span>
+</pre></div>
+</div>
+<p>This removes the risk of sharing sensitive data with others when
+sharing your playbook source with them.</p>
+<p>The contents of each variables file is a simple YAML dictionary, like this:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># in the above example, this would be vars/external_vars.yml</span>
+<span class="l l-Scalar l-Scalar-Plain">somevar</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">somevalue</span>
+<span class="l l-Scalar l-Scalar-Plain">password</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">magic</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It&#8217;s also possible to keep per-host and per-group variables in very
+similar files, this is covered in <a class="reference internal" href="intro_inventory.html#splitting-out-vars" tppabs="https://docs.ansible.com/ansible/intro_inventory.html#splitting-out-vars"><span class="std std-ref">Splitting Out Host and Group Specific Data</span></a>.</p>
+</div>
+</div>
+<div class="section" id="passing-variables-on-the-command-line">
+<span id="id6"></span><h2><a class="toc-backref" href="#id30">Passing Variables On The Command Line</a><a class="headerlink" href="#passing-variables-on-the-command-line" title="Permalink to this headline">¬∂</a></h2>
+<p>In addition to <code class="docutils literal"><span class="pre">vars_prompt</span></code> and <code class="docutils literal"><span class="pre">vars_files</span></code>, it is possible to send variables over
+the Ansible command line.  This is particularly useful when writing a generic release playbook
+where you may want to pass in the version of the application to deploy:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible-playbook release.yml --extra-vars &quot;version=1.23.45 other_variable=foo&quot;</span>
+</pre></div>
+</div>
+<p>This is useful, for, among other things, setting the hosts group or the user for the playbook.</p>
+<p>Example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">hosts</span><span class="nv"> </span><span class="s">}}&#39;</span>
+  <span class="l l-Scalar l-Scalar-Plain">remote_user</span><span class="p p-Indicator">:</span> <span class="s">&#39;{{</span><span class="nv"> </span><span class="s">user</span><span class="nv"> </span><span class="s">}}&#39;</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">...</span>
+
+<span class="l l-Scalar l-Scalar-Plain">ansible-playbook release.yml --extra-vars &quot;hosts=vipers user=starbuck&quot;</span>
+</pre></div>
+</div>
+<p>As of Ansible 1.2, you can also pass in extra vars as quoted JSON, like so:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">--extra-vars &#39;{&quot;pacman&quot;:&quot;mrs&quot;,&quot;ghosts&quot;:[&quot;inky&quot;,&quot;pinky&quot;,&quot;clyde&quot;,&quot;sue&quot;]}&#39;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">key=value</span></code> form is obviously simpler, but it&#8217;s there if you need it!</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Values passed in using the <code class="docutils literal"><span class="pre">key=value</span></code> syntax are interpreted as strings.
+Use the JSON format if you need to pass in anything that shouldn&#8217;t be a string (Booleans, integers, floats, lists etc).</p>
+</div>
+<p>As of Ansible 1.3, extra vars can be loaded from a JSON file with the <code class="docutils literal"><span class="pre">&#64;</span></code> syntax:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">--extra-vars &quot;@some_file.json&quot;</span>
+</pre></div>
+</div>
+<p>Also as of Ansible 1.3, extra vars can be formatted as YAML, either on the command line
+or in a file as above.</p>
+</div>
+<div class="section" id="variable-precedence-where-should-i-put-a-variable">
+<span id="variable-precedence"></span><h2><a class="toc-backref" href="#id31">Variable Precedence: Where Should I Put A Variable?</a><a class="headerlink" href="#variable-precedence-where-should-i-put-a-variable" title="Permalink to this headline">¬∂</a></h2>
+<p>A lot of folks may ask about how variables override another.  Ultimately it&#8217;s Ansible&#8217;s philosophy that it&#8217;s better
+you know where to put a variable, and then you have to think about it a lot less.</p>
+<p>Avoid defining the variable &#8220;x&#8221; in 47 places and then ask the question &#8220;which x gets used&#8221;.
+Why?  Because that&#8217;s not Ansible&#8217;s Zen philosophy of doing things.</p>
+<p>There is only one Empire State Building. One Mona Lisa, etc.  Figure out where to define a variable, and don&#8217;t make
+it complicated.</p>
+<p>However, let&#8217;s go ahead and get precedence out of the way!  It exists.  It&#8217;s a real thing, and you might have
+a use for it.</p>
+<p>If multiple variables of the same name are defined in different places, they get overwritten in a certain order.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Ansible 2.0 has deprecated the ‚Äússh‚Äù from <code class="docutils literal"><span class="pre">ansible_ssh_user</span></code>, <code class="docutils literal"><span class="pre">ansible_ssh_host</span></code>, and <code class="docutils literal"><span class="pre">ansible_ssh_port</span></code> to become <code class="docutils literal"><span class="pre">ansible_user</span></code>, <code class="docutils literal"><span class="pre">ansible_host</span></code>, and <code class="docutils literal"><span class="pre">ansible_port</span></code>. If you are using a version of Ansible prior to 2.0,  you should continue using the older style variables (<code class="docutils literal"><span class="pre">ansible_ssh_*</span></code>). These shorter variables are ignored, without warning, in older versions of Ansible.</p>
+</div>
+<p>In 1.x, the precedence is as follows (with the last listed variables winning prioritization):</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8220;role defaults&#8221;, which lose in priority to everything and are the most easily overridden</li>
+<li>variables defined in inventory</li>
+<li>facts discovered about a system</li>
+<li>&#8220;most everything else&#8221; (command line switches, vars in play, included vars, role vars, etc.)</li>
+<li>connection variables (<code class="docutils literal"><span class="pre">ansible_user</span></code>, etc.)</li>
+<li>extra vars (<code class="docutils literal"><span class="pre">-e</span></code> in the command line) always win</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In versions prior to 1.5.4, facts discovered about a system were in the &#8220;most everything else&#8221; category above.</p>
+</div>
+<p>In 2.x, we have made the order of precedence more specific (with the last listed variables winning prioritization):</p>
+<blockquote>
+<div><ul class="simple">
+<li>role defaults <a class="footnote-reference" href="#id9" id="id7">[1]</a></li>
+<li>inventory vars <a class="footnote-reference" href="#id10" id="id8">[2]</a></li>
+<li>inventory group_vars</li>
+<li>inventory host_vars</li>
+<li>playbook group_vars</li>
+<li>playbook host_vars</li>
+<li>host facts</li>
+<li>play vars</li>
+<li>play vars_prompt</li>
+<li>play vars_files</li>
+<li>registered vars</li>
+<li>set_facts</li>
+<li>role and include vars</li>
+<li>block vars (only for tasks in block)</li>
+<li>task vars (only for the task)</li>
+<li>extra vars (always win precedence)</li>
+</ul>
+</div></blockquote>
+<p>Basically, anything that goes into &#8220;role defaults&#8221; (the defaults folder inside the role) is the most malleable and easily overridden. Anything in the vars directory of the role overrides previous versions of that variable in namespace.  The idea here to follow is that the more explicit you get in scope, the more precedence it takes with command line <code class="docutils literal"><span class="pre">-e</span></code> extra vars always winning.  Host and/or inventory variables can win over role defaults, but not explicit includes like the vars directory or an <code class="docutils literal"><span class="pre">include_vars</span></code> task.</p>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="id9" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id7">[1]</a></td><td>Tasks in each role will see their own role&#8217;s defaults. Tasks defined outside of a role will see the last role&#8217;s defaults.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id8">[2]</a></td><td>Variables defined in inventory file or provided by dynamic inventory.</td></tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Within any section, redefining a var will overwrite the previous instance.
+If multiple groups have the same variable, the last one loaded wins.
+If you define a variable twice in a play&#8217;s vars: section, the 2nd one wins.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">the previous describes the default config <cite>hash_behavior=replace</cite>, switch to &#8216;merge&#8217; to only partially overwrite.</p>
+</div>
+<p>Another important thing to consider (for all versions) is that connection specific variables override config, command line and play specific options and directives.  For example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible_ssh_user will override `-u &lt;user&gt;` and `remote_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;user&gt;`</span>
+</pre></div>
+</div>
+<p>This is done so host specific settings can override the general settings. These variables are normally defined per host or group in inventory,
+but they behave like other variables, so if you really want to override the remote user globally even over inventory you can use extra vars:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible... -e &quot;ansible_ssh_user=&lt;user&gt;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="variable-scopes">
+<span id="id11"></span><h2><a class="toc-backref" href="#id32">Variable Scopes</a><a class="headerlink" href="#variable-scopes" title="Permalink to this headline">¬∂</a></h2>
+<p>Ansible has 3 main scopes:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Global: this is set by config, environment variables and the command line</li>
+<li>Play: each play and contained structures, vars entries, include_vars, role defaults and vars.</li>
+<li>Host: variables directly associated to a host, like inventory, facts or registered task outputs</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="variable-examples">
+<span id="id12"></span><h2><a class="toc-backref" href="#id33">Variable Examples</a><a class="headerlink" href="#variable-examples" title="Permalink to this headline">¬∂</a></h2>
+<p>That seems a little theoretical.  Let&#8217;s show some examples and where you would choose to put what based on the kind of control you might want over values.</p>
+<p>First off, group variables are super powerful.</p>
+<p>Site wide defaults should be defined as a <code class="docutils literal"><span class="pre">group_vars/all</span></code> setting.  Group variables are generally placed alongside
+your inventory file.  They can also be returned by a dynamic inventory script (see <a class="reference internal" href="intro_dynamic_inventory.html" tppabs="https://docs.ansible.com/ansible/intro_dynamic_inventory.html"><span class="doc">Dynamic Inventory</span></a>) or defined
+in things like <a class="reference internal" href="tower.html" tppabs="https://docs.ansible.com/ansible/tower.html"><span class="doc">Ansible Tower</span></a> from the UI or API:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># file: /etc/ansible/group_vars/all</span>
+<span class="c1"># this is the site wide default</span>
+<span class="l l-Scalar l-Scalar-Plain">ntp_server</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">default-time.example.com</span>
+</pre></div>
+</div>
+<p>Regional information might be defined in a <code class="docutils literal"><span class="pre">group_vars/region</span></code> variable.  If this group is a child of the <code class="docutils literal"><span class="pre">all</span></code> group (which it is, because all groups are), it will override the group that is higher up and more general:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># file: /etc/ansible/group_vars/boston</span>
+<span class="l l-Scalar l-Scalar-Plain">ntp_server</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">boston-time.example.com</span>
+</pre></div>
+</div>
+<p>If for some crazy reason we wanted to tell just a specific host to use a specific NTP server, it would then override the group variable!:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># file: /etc/ansible/host_vars/xyz.boston.example.com</span>
+<span class="l l-Scalar l-Scalar-Plain">ntp_server</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">override.example.com</span>
+</pre></div>
+</div>
+<p>So that covers inventory and what you would normally set there.  It&#8217;s a great place for things that deal with geography or behavior.  Since groups are frequently the entity that maps roles onto hosts, it is sometimes a shortcut to set variables on the group instead of defining them on a role.  You could go either way.</p>
+<p>Remember:  Child groups override parent groups, and hosts always override their groups.</p>
+<p>Next up: learning about role variable precedence.</p>
+<p>We&#8217;ll pretty much assume you are using roles at this point.  You should be using roles for sure.  Roles are great.  You are using
+roles aren&#8217;t you?  Hint hint.</p>
+<p>Ok, so if you are writing a redistributable role with reasonable defaults, put those in the <code class="docutils literal"><span class="pre">roles/x/defaults/main.yml</span></code> file.  This means
+the role will bring along a default value but ANYTHING in Ansible will override it.  It&#8217;s just a default.  That&#8217;s why it says &#8220;defaults&#8221; :)
+See <a class="reference internal" href="playbooks_roles.html" tppabs="https://docs.ansible.com/ansible/playbooks_roles.html"><span class="doc">Playbook Roles and Include Statements</span></a> for more info about this:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># file: roles/x/defaults/main.yml</span>
+<span class="c1"># if not overridden in inventory or as a parameter, this is the value that will be used</span>
+<span class="l l-Scalar l-Scalar-Plain">http_port</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
+</pre></div>
+</div>
+<p>If you are writing a role and want to ensure the value in the role is absolutely used in that role, and is not going to be overridden
+by inventory, you should put it in <code class="docutils literal"><span class="pre">roles/x/vars/main.yml</span></code> like so, and inventory values cannot override it.  <code class="docutils literal"><span class="pre">-e</span></code> however, still will:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="c1"># file: roles/x/vars/main.yml</span>
+<span class="c1"># this will absolutely be used in this role</span>
+<span class="l l-Scalar l-Scalar-Plain">http_port</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
+</pre></div>
+</div>
+<p>So the above is a great way to plug in constants about the role that are always true.  If you are not sharing your role with others,
+app specific behaviors like ports is fine to put in here.  But if you are sharing roles with others, putting variables in here might
+be bad. Nobody will be able to override them with inventory, but they still can by passing a parameter to the role.</p>
+<p>Parameterized roles are useful.</p>
+<p>If you are using a role and want to override a default, pass it as a parameter to the role like so:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+   <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span> <span class="nv">role</span><span class="p p-Indicator">:</span> <span class="nv">apache</span><span class="p p-Indicator">,</span> <span class="nv">http_port</span><span class="p p-Indicator">:</span> <span class="nv">8080</span> <span class="p p-Indicator">}</span>
+</pre></div>
+</div>
+<p>This makes it clear to the playbook reader that you&#8217;ve made a conscious choice to override some default in the role, or pass in some
+configuration that the role can&#8217;t assume by itself.  It also allows you to pass something site-specific that isn&#8217;t really part of the
+role you are sharing with others.</p>
+<p>This can often be used for things that might apply to some hosts multiple times,
+like so:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+   <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span> <span class="nv">role</span><span class="p p-Indicator">:</span> <span class="nv">app_user</span><span class="p p-Indicator">,</span> <span class="nv">name</span><span class="p p-Indicator">:</span> <span class="nv">Ian</span>    <span class="p p-Indicator">}</span>
+   <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span> <span class="nv">role</span><span class="p p-Indicator">:</span> <span class="nv">app_user</span><span class="p p-Indicator">,</span> <span class="nv">name</span><span class="p p-Indicator">:</span> <span class="nv">Terry</span>  <span class="p p-Indicator">}</span>
+   <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span> <span class="nv">role</span><span class="p p-Indicator">:</span> <span class="nv">app_user</span><span class="p p-Indicator">,</span> <span class="nv">name</span><span class="p p-Indicator">:</span> <span class="nv">Graham</span> <span class="p p-Indicator">}</span>
+   <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span> <span class="nv">role</span><span class="p p-Indicator">:</span> <span class="nv">app_user</span><span class="p p-Indicator">,</span> <span class="nv">name</span><span class="p p-Indicator">:</span> <span class="nv">John</span>   <span class="p p-Indicator">}</span>
+</pre></div>
+</div>
+<p>That&#8217;s a bit arbitrary, but you can see how the same role was invoked multiple Times.  In that example it&#8217;s quite likely there was
+no default for &#8216;name&#8217; supplied at all.  Ansible can yell at you when variables aren&#8217;t defined &#8211; it&#8217;s the default behavior in fact.</p>
+<p>So that&#8217;s a bit about roles.</p>
+<p>There are a few bonus things that go on with roles.</p>
+<p>Generally speaking, variables set in one role are available to others.  This means if you have a <code class="docutils literal"><span class="pre">roles/common/vars/main.yml</span></code> you
+can set variables in there and make use of them in other roles and elsewhere in your playbook:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+   <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span> <span class="nv">role</span><span class="p p-Indicator">:</span> <span class="nv">common_settings</span> <span class="p p-Indicator">}</span>
+   <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span> <span class="nv">role</span><span class="p p-Indicator">:</span> <span class="nv">something</span><span class="p p-Indicator">,</span> <span class="nv">foo</span><span class="p p-Indicator">:</span> <span class="nv">12</span> <span class="p p-Indicator">}</span>
+   <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span> <span class="nv">role</span><span class="p p-Indicator">:</span> <span class="nv">something_else</span> <span class="p p-Indicator">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There are some protections in place to avoid the need to namespace variables.
+In the above, variables defined in common_settings are most definitely available to &#8216;something&#8217; and &#8216;something_else&#8217; tasks, but if
+&#8220;something&#8217;s&#8221; guaranteed to have foo set at 12, even if somewhere deep in common settings it set foo to 20.</p>
+</div>
+<p>So, that&#8217;s precedence, explained in a more direct way.  Don&#8217;t worry about precedence, just think about if your role is defining a
+variable that is a default, or a &#8220;live&#8221; variable you definitely want to use.  Inventory lies in precedence right in the middle, and
+if you want to forcibly override something, use <code class="docutils literal"><span class="pre">-e</span></code>.</p>
+<p>If you found that a little hard to understand, take a look at the <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible-examples  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible-examples'" tppabs="https://github.com/ansible/ansible-examples">ansible-examples</a> repo on our github for a bit more about
+how all of these things can work together.</p>
+</div>
+<div class="section" id="advanced-syntax">
+<h2><a class="toc-backref" href="#id34">Advanced Syntax</a><a class="headerlink" href="#advanced-syntax" title="Permalink to this headline">¬∂</a></h2>
+<p>For information about advanced YAML syntax used to declare variables and have more control over the data placed in YAML files used by Ansible, see <a class="reference internal" href="playbooks_advanced_syntax.html" tppabs="https://docs.ansible.com/ansible/playbooks_advanced_syntax.html"><span class="doc">Advanced Syntax</span></a>.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="playbooks.html" tppabs="https://docs.ansible.com/ansible/playbooks.html"><span class="doc">Playbooks</span></a></dt>
+<dd>An introduction to playbooks</dd>
+<dt><a class="reference internal" href="playbooks_conditionals.html" tppabs="https://docs.ansible.com/ansible/playbooks_conditionals.html"><span class="doc">Conditionals</span></a></dt>
+<dd>Conditional statements in playbooks</dd>
+<dt><a class="reference internal" href="playbooks_filters.html" tppabs="https://docs.ansible.com/ansible/playbooks_filters.html"><span class="doc">Jinja2 filters</span></a></dt>
+<dd>Jinja2 filters and their uses</dd>
+<dt><a class="reference internal" href="playbooks_loops.html" tppabs="https://docs.ansible.com/ansible/playbooks_loops.html"><span class="doc">Loops</span></a></dt>
+<dd>Looping in playbooks</dd>
+<dt><a class="reference internal" href="playbooks_roles.html" tppabs="https://docs.ansible.com/ansible/playbooks_roles.html"><span class="doc">Playbook Roles and Include Statements</span></a></dt>
+<dd>Playbook organization by roles</dd>
+<dt><a class="reference internal" href="playbooks_best_practices.html" tppabs="https://docs.ansible.com/ansible/playbooks_best_practices.html"><span class="doc">Best Practices</span></a></dt>
+<dd>Best practices in playbooks</dd>
+<dt><a class="reference external" href="javascript:if(confirm('http://groups.google.com/group/ansible-devel  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://groups.google.com/group/ansible-devel'" tppabs="http://groups.google.com/group/ansible-devel">User Mailing List</a></dt>
+<dd>Have a question?  Stop by the google group!</dd>
+<dt><a class="reference external" href="javascript:if(confirm('http://irc.freenode.net/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://irc.freenode.net/'" tppabs="http://irc.freenode.net/">irc.freenode.net</a></dt>
+<dd>#ansible IRC chat channel</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div id="search-results"><gcse:searchresults-only></div>
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+        <a href="playbooks_filters.html" tppabs="https://docs.ansible.com/ansible/playbooks_filters.html" class="btn btn-neutral float-right" title="Jinja2 filters"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="playbooks_roles.html" tppabs="https://docs.ansible.com/ansible/playbooks_roles.html" class="btn btn-neutral" title="Playbook Roles and Include Statements"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','st.js'/*tpa=https://s.swiftypecdn.com/install/v2/st.js*/,'_st');
+
+  _st('install','yABGvz2N8PwcwBxyfzUc','2.0.0');
+</script>
+
+  <p>
+  Copyright ¬© 2016 Red Hat, Inc.
+  <br>
+    Last updated on Jun 22, 2016.
+  </p>
+<p>
+Ansible docs are generated from <a href="javascript:if(confirm('https://github.com/ansible/ansible  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible'" tppabs="https://github.com/ansible/ansible">GitHub sources</A> using <A HREF="javascript:if(confirm('http://sphinx-doc.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://sphinx-doc.org/'" tppabs="http://sphinx-doc.org/">Sphinx</A> using a theme provided by <a href="javascript:if(confirm('http://readthedocs.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://readthedocs.org/'" tppabs="http://readthedocs.org/">Read the Docs</a>. 
+</p>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+<!-- begin analytics -->
+<script type="text/javascript">
+var _hsq = _hsq || [];
+_hsq.push(["setContentType", "standard-page"]);
+        (function(d,s,i,r) {
+        if (d.getElementById(i)){return;}
+        var n = d.createElement(s),e = document.getElementsByTagName(s)[0];
+        n.id=i;n.src = '//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/330046.js';
+        e.parentNode.insertBefore(n, e);
+        })(document, "script", "hs-analytics",300000);
+</script>
+<!-- end analytics -->
+
+</body>
+</html>

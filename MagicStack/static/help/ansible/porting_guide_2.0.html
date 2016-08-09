@@ -1,0 +1,804 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset=UTF-8"utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Tag Manager Data Layer -->
+  <script>
+   dataLayer = [];
+  </script>
+  <!-- End Google Tag Manager Data Layer -->
+
+  
+  <title>Porting Guide &mdash; Ansible Documentation</title>
+  
+
+  
+  
+
+  
+  <link href="css-family=Lato-400,700-Roboto+Slab-400,700-Inconsolata-400,700.css" tppabs="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel='stylesheet' type='text/css'>
+  <link href="font-awesome.min.css" tppabs="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'https://docs.ansible.com/ansible/0.01',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+      <script type="text/javascript" src="jquery.js" tppabs="https://docs.ansible.com/ansible/_static/jquery.js"></script>
+      <script type="text/javascript" src="underscore.js" tppabs="https://docs.ansible.com/ansible/_static/underscore.js"></script>
+      <script type="text/javascript" src="doctools.js" tppabs="https://docs.ansible.com/ansible/_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="theme.min.css" tppabs="https://docs.ansible.com/ansible/_static/css/theme.min.css" type="text/css" />
+    <script type="text/javascript" src="theme.js" tppabs="https://docs.ansible.com/ansible/_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="Ansible Documentation" href="index.html"/>
+        <link rel="prev" title="YAML Syntax" href="YAMLSyntax.html"/> 
+
+  <script src="modernizr.min.js" tppabs="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  <style>
+    .search-reset-start {
+        color: #463E3F;
+        float: right;
+        position: relative;
+        top: -25px;
+        left: -10px;
+        z-index: 10;
+     }
+     .search-reset-start:hover {
+        cursor: pointer;
+        color: #2980B9;
+     }
+     #search-box-id {
+        padding-right: 25px;
+     }
+  </style>
+
+  <link href="css-family=Open+Sans-400,300.css" tppabs="https://fonts.googleapis.com/css?family=Open+Sans:400,300"
+    rel='stylesheet' type='text/css'>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="ns.html-id=GTM-PSB293" tppabs="https://www.googletagmanager.com/ns.html?id=GTM-PSB293" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'/*tpa=https://docs.ansible.com/ansible/gtm.js*/});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-PSB293');</script>
+  <!-- End Google Tag Manager -->
+
+  <a class="DocSite-nav" href="javascript:if(confirm('http://docs.ansible.com/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">
+    <img class="DocSiteNav-logo"
+      src="logo_invert.png" tppabs="https://docs.ansible.com/ansible/_static/images/logo_invert.png"
+      alt="Ansible Logo">
+    <div class="DocSiteNav-title">
+      Documentation
+    </div>
+  </a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+
+      <div style="background-color:#5bbdbf;height=80px;margin:'auto auto auto auto'">
+        <a class="DocSiteProduct-header DocSiteProduct-header--core"
+          href="index.htm" tppabs="http://docs.ansible.com/ansible/">
+          <div class="DocSiteProduct-productName">
+            <div class="DocSiteProduct-logoText">
+              ANSIBLE
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div id="menu-id" class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html" tppabs="https://docs.ansible.com/ansible/intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro_installation.html" tppabs="https://docs.ansible.com/ansible/intro_installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_getting_started.html" tppabs="https://docs.ansible.com/ansible/intro_getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_inventory.html" tppabs="https://docs.ansible.com/ansible/intro_inventory.html">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_dynamic_inventory.html" tppabs="https://docs.ansible.com/ansible/intro_dynamic_inventory.html">Dynamic Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_patterns.html" tppabs="https://docs.ansible.com/ansible/intro_patterns.html">Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_adhoc.html" tppabs="https://docs.ansible.com/ansible/intro_adhoc.html">Introduction To Ad-Hoc Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_configuration.html" tppabs="https://docs.ansible.com/ansible/intro_configuration.html">Configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_bsd.html" tppabs="https://docs.ansible.com/ansible/intro_bsd.html">BSD Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_windows.html" tppabs="https://docs.ansible.com/ansible/intro_windows.html">Windows Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_networking.html" tppabs="https://docs.ansible.com/ansible/intro_networking.html">Networking Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html" tppabs="https://docs.ansible.com/ansible/quickstart.html">Quickstart Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks.html" tppabs="https://docs.ansible.com/ansible/playbooks.html">Playbooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_intro.html" tppabs="https://docs.ansible.com/ansible/playbooks_intro.html">Intro to Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_roles.html" tppabs="https://docs.ansible.com/ansible/playbooks_roles.html">Playbook Roles and Include Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_variables.html" tppabs="https://docs.ansible.com/ansible/playbooks_variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_filters.html" tppabs="https://docs.ansible.com/ansible/playbooks_filters.html">Jinja2 filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_conditionals.html" tppabs="https://docs.ansible.com/ansible/playbooks_conditionals.html">Conditionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_loops.html" tppabs="https://docs.ansible.com/ansible/playbooks_loops.html">Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_blocks.html" tppabs="https://docs.ansible.com/ansible/playbooks_blocks.html">Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_strategies.html" tppabs="https://docs.ansible.com/ansible/playbooks_strategies.html">Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_best_practices.html" tppabs="https://docs.ansible.com/ansible/playbooks_best_practices.html">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks_special_topics.html" tppabs="https://docs.ansible.com/ansible/playbooks_special_topics.html">Playbooks: Special Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="become.html" tppabs="https://docs.ansible.com/ansible/become.html">Become (Privilege Escalation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_acceleration.html" tppabs="https://docs.ansible.com/ansible/playbooks_acceleration.html">Accelerated Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_async.html" tppabs="https://docs.ansible.com/ansible/playbooks_async.html">Asynchronous Actions and Polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_checkmode.html" tppabs="https://docs.ansible.com/ansible/playbooks_checkmode.html">Check Mode (&#8220;Dry Run&#8221;)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_debugger.html" tppabs="https://docs.ansible.com/ansible/playbooks_debugger.html">Playbook Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_delegation.html" tppabs="https://docs.ansible.com/ansible/playbooks_delegation.html">Delegation, Rolling Updates, and Local Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_environment.html" tppabs="https://docs.ansible.com/ansible/playbooks_environment.html">Setting the Environment (and Working With Proxies)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_error_handling.html" tppabs="https://docs.ansible.com/ansible/playbooks_error_handling.html">Error Handling In Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_advanced_syntax.html" tppabs="https://docs.ansible.com/ansible/playbooks_advanced_syntax.html">Advanced Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_lookups.html" tppabs="https://docs.ansible.com/ansible/playbooks_lookups.html">Using Lookups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_prompts.html" tppabs="https://docs.ansible.com/ansible/playbooks_prompts.html">Prompts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_tags.html" tppabs="https://docs.ansible.com/ansible/playbooks_tags.html">Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_vault.html" tppabs="https://docs.ansible.com/ansible/playbooks_vault.html">Vault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_startnstep.html" tppabs="https://docs.ansible.com/ansible/playbooks_startnstep.html">Start and Step</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_directives.html" tppabs="https://docs.ansible.com/ansible/playbooks_directives.html">Directives Glossary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html" tppabs="https://docs.ansible.com/ansible/modules.html">About Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules_intro.html" tppabs="https://docs.ansible.com/ansible/modules_intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_core.html" tppabs="https://docs.ansible.com/ansible/modules_core.html">Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_extra.html" tppabs="https://docs.ansible.com/ansible/modules_extra.html">Extras Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_return_values.html" tppabs="https://docs.ansible.com/ansible/common_return_values.html">Common Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules_by_category.html" tppabs="https://docs.ansible.com/ansible/modules_by_category.html">Module Index</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="list_of_all_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_all_modules.html">All Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascript:if(confirm('https://docs.ansible.com/ansible/list_of_cloud_modules.html  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ ≤ªø…”√, ªÚ∑≈∆˙¡Àœ¬‘ÿ, ªÚœÓƒøº¥Ω´Õ£÷π°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://docs.ansible.com/ansible/list_of_cloud_modules.html'" tppabs="https://docs.ansible.com/ansible/list_of_cloud_modules.html">Cloud Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_clustering_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_clustering_modules.html">Clustering Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_commands_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_commands_modules.html">Commands Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_database_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_database_modules.html">Database Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_files_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_files_modules.html">Files Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_inventory_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_inventory_modules.html">Inventory Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_messaging_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_messaging_modules.html">Messaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_monitoring_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_monitoring_modules.html">Monitoring Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_network_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_network_modules.html">Network Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_notification_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_notification_modules.html">Notification Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_packaging_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_packaging_modules.html">Packaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_source_control_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_source_control_modules.html">Source Control Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_system_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_system_modules.html">System Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_utilities_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_utilities_modules.html">Utilities Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_web_infrastructure_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_web_infrastructure_modules.html">Web Infrastructure Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_windows_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_windows_modules.html">Windows Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guides.html" tppabs="https://docs.ansible.com/ansible/guides.html">Detailed Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_aws.html" tppabs="https://docs.ansible.com/ansible/guide_aws.html">Amazon Web Services Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_azure.html" tppabs="https://docs.ansible.com/ansible/guide_azure.html">Getting Started with Azure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rax.html" tppabs="https://docs.ansible.com/ansible/guide_rax.html">Rackspace Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_gce.html" tppabs="https://docs.ansible.com/ansible/guide_gce.html">Google Cloud Platform Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_cloudstack.html" tppabs="https://docs.ansible.com/ansible/guide_cloudstack.html">CloudStack Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_vagrant.html" tppabs="https://docs.ansible.com/ansible/guide_vagrant.html">Using Vagrant and Ansible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rolling_upgrade.html" tppabs="https://docs.ansible.com/ansible/guide_rolling_upgrade.html">Continuous Delivery and Rolling Upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_docker.html" tppabs="https://docs.ansible.com/ansible/guide_docker.html">Getting Started with Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developing.html" tppabs="https://docs.ansible.com/ansible/developing.html">Developer Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developing_api.html" tppabs="https://docs.ansible.com/ansible/developing_api.html">Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_inventory.html" tppabs="https://docs.ansible.com/ansible/developing_inventory.html">Developing Dynamic Inventory Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_modules.html" tppabs="https://docs.ansible.com/ansible/developing_modules.html">Developing Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_plugins.html" tppabs="https://docs.ansible.com/ansible/developing_plugins.html">Developing Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_core.html" tppabs="https://docs.ansible.com/ansible/developing_core.html">Developing the Ansible Core Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_test_pr.html" tppabs="https://docs.ansible.com/ansible/developing_test_pr.html">Helping Testing PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_releases.html" tppabs="https://docs.ansible.com/ansible/developing_releases.html">Releases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tower.html" tppabs="https://docs.ansible.com/ansible/tower.html">Ansible Tower</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html" tppabs="https://docs.ansible.com/ansible/community.html">Community Information &amp; Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community.html#ansible-users" tppabs="https://docs.ansible.com/ansible/community.html#ansible-users">Ansible Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#for-current-and-prospective-developers" tppabs="https://docs.ansible.com/ansible/community.html#for-current-and-prospective-developers">For Current and Prospective Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#other-topics" tppabs="https://docs.ansible.com/ansible/community.html#other-topics">Other Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#community-code-of-conduct" tppabs="https://docs.ansible.com/ansible/community.html#community-code-of-conduct">Community Code of Conduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#contributors-license-agreement" tppabs="https://docs.ansible.com/ansible/community.html#contributors-license-agreement">Contributors License Agreement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="galaxy.html" tppabs="https://docs.ansible.com/ansible/galaxy.html">Ansible Galaxy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="galaxy.html#the-website" tppabs="https://docs.ansible.com/ansible/galaxy.html#the-website">The Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="galaxy.html#the-ansible-galaxy-command-line-tool" tppabs="https://docs.ansible.com/ansible/galaxy.html#the-ansible-galaxy-command-line-tool">The ansible-galaxy command line tool</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test_strategies.html" tppabs="https://docs.ansible.com/ansible/test_strategies.html">Testing Strategies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#integrating-testing-with-ansible-playbooks" tppabs="https://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-ansible-playbooks">Integrating Testing With Ansible Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#the-right-level-of-testing" tppabs="https://docs.ansible.com/ansible/test_strategies.html#the-right-level-of-testing">The Right Level of Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#check-mode-as-a-drift-test" tppabs="https://docs.ansible.com/ansible/test_strategies.html#check-mode-as-a-drift-test">Check Mode As A Drift Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#modules-that-are-useful-for-testing" tppabs="https://docs.ansible.com/ansible/test_strategies.html#modules-that-are-useful-for-testing">Modules That Are Useful for Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#testing-lifecycle" tppabs="https://docs.ansible.com/ansible/test_strategies.html#testing-lifecycle">Testing Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#integrating-testing-with-rolling-updates" tppabs="https://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-rolling-updates">Integrating Testing With Rolling Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#achieving-continuous-deployment" tppabs="https://docs.ansible.com/ansible/test_strategies.html#achieving-continuous-deployment">Achieving Continuous Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#conclusion" tppabs="https://docs.ansible.com/ansible/test_strategies.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html" tppabs="https://docs.ansible.com/ansible/faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook" tppabs="https://docs.ansible.com/ansible/faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook">How can I set the PATH or any other environment variable for a task or entire playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with">How do I handle different machines needing different user accounts or ports to log in with?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file">How do I get ansible to reuse connections, enable Kerberized SSH, or have Ansible pay attention to my local SSH config file?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">How do I configure a jump host to access servers that I have no direct access to?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-speed-up-management-inside-ec2" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-speed-up-management-inside-ec2">How do I speed up management inside EC2?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine">How do I handle python pathing not having a Python 2.X in /usr/bin/python on a remote machine?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#what-is-the-best-way-to-make-content-reusable-redistributable" tppabs="https://docs.ansible.com/ansible/faq.html#what-is-the-best-way-to-make-content-reusable-redistributable">What is the best way to make content reusable/redistributable?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it" tppabs="https://docs.ansible.com/ansible/faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it">Where does the configuration file live and what can I configure in it?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-disable-cowsay" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-disable-cowsay">How do I disable cowsay?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables">How do I see a list of all of the ansible_ variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host">How do I see all the inventory vars defined for my host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template">How do I loop over a list of hosts in a group, inside of a template?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-a-variable-name-programmatically" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-name-programmatically">How do I access a variable name programmatically?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group">How do I access a variable of the first host in a group?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-copy-files-recursively-onto-a-target-host" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-copy-files-recursively-onto-a-target-host">How do I copy files recursively onto a target host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-shell-environment-variables" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-shell-environment-variables">How do I access shell environment variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-generate-crypted-passwords-for-the-user-module" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module">How do I generate crypted passwords for the user module?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#can-i-get-training-on-ansible-or-find-commercial-support" tppabs="https://docs.ansible.com/ansible/faq.html#can-i-get-training-on-ansible-or-find-commercial-support">Can I get training on Ansible or find commercial support?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#is-there-a-web-interface-rest-api-etc" tppabs="https://docs.ansible.com/ansible/faq.html#is-there-a-web-interface-rest-api-etc">Is there a web interface / REST API / etc?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-submit-a-change-to-the-documentation" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-submit-a-change-to-the-documentation">How do I submit a change to the documentation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-keep-secret-data-in-my-playbook" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-keep-secret-data-in-my-playbook">How do I keep secret data in my playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names" tppabs="https://docs.ansible.com/ansible/faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names">When should I use {{ }}? Also, how to interpolate variables or dynamic variable names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#i-don-t-see-my-question-here" tppabs="https://docs.ansible.com/ansible/faq.html#i-don-t-see-my-question-here">I don&#8217;t see my question here</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html" tppabs="https://docs.ansible.com/ansible/glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YAMLSyntax.html" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html">YAML Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax.html#yaml-basics" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html#yaml-basics">YAML Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax.html#gotchas" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html#gotchas">Gotchas</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Porting Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#playbook">Playbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deprecated">Deprecated</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#other-caveats">Other caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#porting-plugins">Porting plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lookup-plugins">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#connection-plugins">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#action-plugins">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#callback-plugins">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#hybrid-plugins">Hybrid plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#porting-custom-scripts">Porting custom scripts</a></li>
+</ul>
+
+        
+
+<!-- changeable widget -->
+<center>
+<br/>
+<a href="javascript:if(confirm('http://www.ansible.com/docs-left?utm_source=docs  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ansible.com/docs-left?utm_source=docs'" tppabs="http://www.ansible.com/docs-left?utm_source=docs">
+    <img style="border-width:0px;" src="ASB-docs-left-rail.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-left-rail.png" />
+</a>
+</center>
+
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="javascript:if(confirm('https://docs.ansible.com/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://docs.ansible.com/'" tppabs="https://docs.ansible.com/">Ansible Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+
+          <!-- Banner ads -->
+          <div class="DocSiteBanner">
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-left.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-left.png">
+            </a>
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-right.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-right.png">
+            </a>
+        </div>
+
+          <ul class="wy-breadcrumbs">
+  <li><a href="index.html" tppabs="https://docs.ansible.com/ansible/index.html">Docs</a> &raquo;</li>
+  <li><a href="">Porting Guide</a></li>
+  
+    <li class="wy-breadcrumbs-aside">
+      <a href="javascript:if(confirm('https://github.com/ansible/ansible/blob/devel/docsite/rst/porting_guide_2.0.rst  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible/blob/devel/docsite/rst/porting_guide_2.0.rst'" tppabs="https://github.com/ansible/ansible/blob/devel/docsite/rst/porting_guide_2.0.rst" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  
+</ul>
+<hr/>
+
+          <div id="page-content">
+          
+  <div class="section" id="porting-guide">
+<h1>Porting Guide<a class="headerlink" href="#porting-guide" title="Permalink to this headline">¬∂</a></h1>
+<div class="section" id="playbook">
+<h2>Playbook<a class="headerlink" href="#playbook" title="Permalink to this headline">¬∂</a></h2>
+<ul>
+<li><p class="first">backslash escapes When specifying parameters in jinja2 expressions in YAML
+dicts, backslashes sometimes needed to be escaped twice. This has been fixed
+in 2.0.x so that escaping once works. The following example shows how
+playbooks must be modified:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># Syntax in 1.9.x</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">debug</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">msg</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">&#39;test1_junk</span><span class="nv"> </span><span class="s">1\\\\3&#39;</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">regex_replace(&#39;(.*)_junk</span><span class="nv"> </span><span class="s">(.*)&#39;,</span><span class="nv"> </span><span class="s">&#39;\\\\1</span><span class="nv"> </span><span class="s">\\\\2&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="c1"># Syntax in 2.0.x</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">debug</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">msg</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">&#39;test1_junk</span><span class="nv"> </span><span class="s">1\\3&#39;</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">regex_replace(&#39;(.*)_junk</span><span class="nv"> </span><span class="s">(.*)&#39;,</span><span class="nv"> </span><span class="s">&#39;\\1</span><span class="nv"> </span><span class="s">\\2&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+
+<span class="c1"># Output:</span>
+<span class="s">&quot;msg&quot;</span><span class="p p-Indicator">:</span> <span class="s">&quot;test1</span><span class="nv"> </span><span class="s">1\\3&quot;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>To make an escaped string that will work on all versions you have two options:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">debug</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">msg=&quot;{{ &#39;test1_junk 1\\3&#39; | regex_replace(&#39;(.*)_junk (.*)&#39;, &#39;\\1 \\2&#39;) }}&quot;</span>
+</pre></div>
+</div>
+<p>uses key=value escaping which has not changed.  The other option is to check for the ansible version:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">(ansible_version|version_compare(&#39;ge&#39;,</span><span class="nv"> </span><span class="s">&#39;2.0&#39;))|ternary(</span><span class="nv"> </span><span class="s">&#39;test1_junk</span><span class="nv"> </span><span class="s">1\\3&#39;</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">regex_replace(&#39;(.*)_junk</span><span class="nv"> </span><span class="s">(.*)&#39;,</span><span class="nv"> </span><span class="s">&#39;\\1</span><span class="nv"> </span><span class="s">\\2&#39;)</span><span class="nv"> </span><span class="s">,</span><span class="nv"> </span><span class="s">&#39;test1_junk</span><span class="nv"> </span><span class="s">1\\\\3&#39;</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">regex_replace(&#39;(.*)_junk</span><span class="nv"> </span><span class="s">(.*)&#39;,</span><span class="nv"> </span><span class="s">&#39;\\\\1</span><span class="nv"> </span><span class="s">\\\\2&#39;)</span><span class="nv"> </span><span class="s">)</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</pre></div>
+</div>
+<ul>
+<li><p class="first">trailing newline When a string with a trailing newline was specified in the
+playbook via yaml dict format, the trailing newline was stripped. When
+specified in key=value format, the trailing newlines were kept. In v2, both
+methods of specifying the string will keep the trailing newlines. If you
+relied on the trailing newline being stripped, you can change your playbook
+using the following as an example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># Syntax in 1.9.x</span>
+<span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">message</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">&gt;</span>
+    <span class="no">Testing</span>
+    <span class="no">some things</span>
+<span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">debug</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">msg</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">message</span><span class="nv"> </span><span class="s">}}&quot;</span>
+
+<span class="c1"># Syntax in 2.0.x</span>
+<span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">old_message</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">&gt;</span>
+    <span class="no">Testing</span>
+    <span class="no">some things</span>
+  <span class="l l-Scalar l-Scalar-Plain">message</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">old_messsage[:-1]</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">debug</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">msg</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">message</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="c1"># Output</span>
+<span class="s">&quot;msg&quot;</span><span class="p p-Indicator">:</span> <span class="s">&quot;Testing</span><span class="nv"> </span><span class="s">some</span><span class="nv"> </span><span class="s">things&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Behavior of templating DOS-type text files changes with Ansible v2.</p>
+<p>A bug in Ansible v1 causes DOS-type text files (using a carriage return and newline) to be templated to Unix-type text files (using only a newline). In Ansible v2 this long-standing bug was finally fixed and DOS-type text files are preserved correctly. This may be confusing when you expect your playbook to not show any differences when migrating to Ansible v2, while in fact you will see every DOS-type file being completely replaced (with what appears to be the exact same content).</p>
+</li>
+<li><p class="first">When specifying complex args as a variable, the variable must use the full jinja2
+variable syntax (<code class="docutils literal"><span class="pre">`{{var_name}}`</span></code>) - bare variable names there are no longer accepted.
+In fact, even specifying args with variables has been deprecated, and will not be
+allowed in future versions:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span>
+  <span class="l l-Scalar l-Scalar-Plain">connection</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+  <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">my_dirs</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span> <span class="nv">path</span><span class="p p-Indicator">:</span> <span class="nv">/tmp/3a</span><span class="p p-Indicator">,</span> <span class="nv">state</span><span class="p p-Indicator">:</span> <span class="nv">directory</span><span class="p p-Indicator">,</span> <span class="nv">mode</span><span class="p p-Indicator">:</span> <span class="nv">0755</span> <span class="p p-Indicator">}</span>
+      <span class="p p-Indicator">-</span> <span class="p p-Indicator">{</span> <span class="nv">path</span><span class="p p-Indicator">:</span> <span class="nv">/tmp/3b</span><span class="p p-Indicator">,</span> <span class="nv">state</span><span class="p p-Indicator">:</span> <span class="nv">directory</span><span class="p p-Indicator">,</span> <span class="nv">mode</span><span class="p p-Indicator">:</span> <span class="nv">0700</span> <span class="p p-Indicator">}</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">file</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">args</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{item}}&quot;</span> <span class="c1"># &lt;- args here uses the full variable syntax</span>
+      <span class="l l-Scalar l-Scalar-Plain">with_items</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{my_dirs}}&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">porting task includes</p>
+</li>
+<li><p class="first">More dynamic. Corner-case formats that were not supposed to work now do not, as expected.</p>
+</li>
+<li><p class="first">variables defined in the yaml dict format <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible/issues/13324  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible/issues/13324'" tppabs="https://github.com/ansible/ansible/issues/13324">https://github.com/ansible/ansible/issues/13324</a></p>
+</li>
+<li><p class="first">templating (variables in playbooks and template lookups) has improved with regard to keeping the original instead of turning everything into a string.
+If you need the old behavior, quote the value to pass it around as a string.</p>
+</li>
+<li><p class="first">Empty variables and variables set to null in yaml are no longer converted to empty strings. They will retain the value of <cite>None</cite>.
+You can override the <cite>null_representation</cite> setting to an empty string in your config file by setting the <cite>ANSIBLE_NULL_REPRESENTATION</cite> environment variable.</p>
+</li>
+<li><p class="first">Extras callbacks must be whitelisted in ansible.cfg. Copying is no longer necessary but whitelisting in ansible.cfg must be completed.</p>
+</li>
+<li><p class="first">dnf module has been rewritten. Some minor changes in behavior may be observed.</p>
+</li>
+<li><p class="first">win_updates has been rewritten and works as expected now.</p>
+</li>
+<li><p class="first">from 2.0.1 onwards, the implicit setup task from gather_facts now correctly inherits everything from play, but this might cause issues for those setting
+<cite>environment</cite> at the play level and depending on <cite>ansible_env</cite> existing. Previouslly this was ignored but now might issue an &#8216;Undefined&#8217; error.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="deprecated">
+<h2>Deprecated<a class="headerlink" href="#deprecated" title="Permalink to this headline">¬∂</a></h2>
+<p>While all items listed here will show a deprecation warning message, they still work as they did in 1.9.x. Please note that they will be removed in 2.2 (Ansible always waits two major releases to remove a deprecated feature).</p>
+<ul>
+<li><p class="first">Bare variables in <cite>with_</cite> loops should instead use the ‚Äú{{var}}‚Äù syntax, which helps eliminate ambiguity.</p>
+</li>
+<li><p class="first">The ansible-galaxy text format requirements file. Users should use the YAML format for requirements instead.</p>
+</li>
+<li><p class="first">Undefined variables within a <cite>with_</cite> loop‚Äôs list currently do not interrupt the loop, but they do issue a warning; in the future, they will issue an error.</p>
+</li>
+<li><p class="first">Using dictionary variables to set all task parameters is unsafe and will be removed in a future version. For example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">no</span>
+  <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">debug_params</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">msg</span><span class="p p-Indicator">:</span> <span class="s">&quot;hello</span><span class="nv"> </span><span class="s">there&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="c1"># These are both deprecated:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">debug</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{debug_params}}&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">debug</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">args</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{debug_params}}&quot;</span>
+
+    <span class="c1"># Use this instead:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">debug</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">msg</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{debug_params[&#39;msg&#39;]}}&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Host patterns should use a comma (,) or colon (:) instead of a semicolon (;) to separate hosts/groups in the pattern.</p>
+</li>
+<li><p class="first">Ranges specified in host patterns should use the [x:y] syntax, instead of [x-y].</p>
+</li>
+<li><p class="first">Playbooks using privilege escalation should always use ‚Äúbecome*‚Äù options rather than the old su*/sudo* options.</p>
+</li>
+<li><p class="first">The ‚Äúshort form‚Äù for vars_prompt is no longer supported.
+For example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">vars_prompt</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">variable_name</span><span class="p p-Indicator">:</span> <span class="s">&quot;Prompt</span><span class="nv"> </span><span class="s">string&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Specifying variables at the top level of a task include statement is no longer supported. For example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">include</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">foo.yml</span>
+    <span class="l l-Scalar l-Scalar-Plain">a</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Should now be:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">include</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">foo.yml</span>
+  <span class="l l-Scalar l-Scalar-Plain">vars</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">a</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+</pre></div>
+</div>
+<ul>
+<li><p class="first">Setting any_errors_fatal on a task is no longer supported. This should be set at the play level only.</p>
+</li>
+<li><p class="first">Bare variables in the <cite>environment</cite> dictionary (for plays/tasks/etc.) are no longer supported. Variables specified there should use the full variable syntax: ‚Äò{{foo}}‚Äô.</p>
+</li>
+<li><p class="first">Tags (or any directive) should no longer be specified with other parameters in a task include. Instead, they should be specified as an option on the task.
+For example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">include</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">foo.yml tags=a,b,c</span>
+</pre></div>
+</div>
+<p>Should be:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">include</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">foo.yml</span>
+  <span class="l l-Scalar l-Scalar-Plain">tags</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="nv">a</span><span class="p p-Indicator">,</span> <span class="nv">b</span><span class="p p-Indicator">,</span> <span class="nv">c</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">The first_available_file option on tasks has been deprecated. Users should use the with_first_found option or lookup (‚Äòfirst_found‚Äô, ‚Ä¶) plugin.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="other-caveats">
+<h2>Other caveats<a class="headerlink" href="#other-caveats" title="Permalink to this headline">¬∂</a></h2>
+<p>Here are some corner cases encountered when updating, these are mostly caused by the more stringent parser validation and the capture of errors that were previouslly ignored.</p>
+<ul>
+<li><p class="first">Bad variable composition:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">with_items</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">myvar_{{rest_of_name}}</span>
+</pre></div>
+</div>
+<p>This worked &#8216;by accident&#8217; as the errors were retemplated and ended up resolving the variable, it was never intended as valid syntax and now properly returns an error, use the following instead.:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">with_items</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{vars[&#39;myvar_&#39;</span><span class="nv"> </span><span class="s">+</span><span class="nv"> </span><span class="s">res_of_name]}}&quot;</span>
+</pre></div>
+</div>
+<p>Or <cite>hostvars[inventory_hostname][&#8216;myvar_&#8217; + rest_of_name]</cite> if appropriate.</p>
+</li>
+<li><p class="first">Misspelled directives:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">task</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dostuf</span>
+  <span class="l l-Scalar l-Scalar-Plain">becom</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+</pre></div>
+</div>
+<p>The task always ran without using privilege escalation (for that you need <cite>become</cite>) but was also silently ignored so the play &#8216;ran&#8217; even though it should not, now this is a parsing error.</p>
+</li>
+<li><p class="first">Duplicate directives:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">task</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dostuf</span>
+  <span class="l l-Scalar l-Scalar-Plain">when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+  <span class="l l-Scalar l-Scalar-Plain">when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+</pre></div>
+</div>
+<p>The first <cite>when</cite> was ignored and only the 2nd one was used as the play ran w/o warning it was ignoring one of the directives, now this produces a parsing error.</p>
+</li>
+<li><p class="first">Conflating variables and directives:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">role</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">{</span><span class="nv">name=rosy</span><span class="p p-Indicator">,</span> <span class="nv">port=435</span> <span class="p p-Indicator">}</span>
+
+<span class="c1"># in tasks/main.yml</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">wait_for</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">port={{port}}</span>
+</pre></div>
+</div>
+<p>The <cite>port</cite> variable is reserved as a play/task directive for overriding the connection port, in previous versions this got conflated with a variable named <cite>port</cite> and was usable
+later in the play, this created issues if a host tried to reconnect or was using a non caching connection. Now it will be correctly identified as a directive and the <cite>port</cite> variable
+will appear as undefined, this now forces the use of non conflicting names and removes ambiguity when adding settings and variables to a role invocation.</p>
+</li>
+<li><p class="first">Bare operations on <cite>with_</cite>:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">with_items</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">var1 + var2</span>
+</pre></div>
+</div>
+<p>An issue with the &#8216;bare variable&#8217; features, which was supposed only template a single variable without the need of braces ({{ )}}, would in some versions of Ansible template full expressions.
+Now you need to use proper templating and braces for all expressions everywhere except conditionals (<cite>when</cite>):</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">with_items</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{var1</span><span class="nv"> </span><span class="s">+</span><span class="nv"> </span><span class="s">var2}}&quot;</span>
+</pre></div>
+</div>
+<p>The bare feature itself is deprecated as an undefined variable is indistiguishable from a string which makes it difficult to display a proper error.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="porting-plugins">
+<h1>Porting plugins<a class="headerlink" href="#porting-plugins" title="Permalink to this headline">¬∂</a></h1>
+<p>In ansible-1.9.x, you would generally copy an existing plugin to create a new one. Simply implementing the methods and attributes that the caller of the plugin expected made it a plugin of that type. In ansible-2.0, most plugins are implemented by subclassing a base class for each plugin type. This way the custom plugin does not need to contain methods which are not customized.</p>
+<div class="section" id="lookup-plugins">
+<h2>Lookup plugins<a class="headerlink" href="#lookup-plugins" title="Permalink to this headline">¬∂</a></h2>
+<ul class="simple">
+<li>lookup plugins ; import version</li>
+</ul>
+</div>
+<div class="section" id="connection-plugins">
+<h2>Connection plugins<a class="headerlink" href="#connection-plugins" title="Permalink to this headline">¬∂</a></h2>
+<ul class="simple">
+<li>connection plugins</li>
+</ul>
+</div>
+<div class="section" id="action-plugins">
+<h2>Action plugins<a class="headerlink" href="#action-plugins" title="Permalink to this headline">¬∂</a></h2>
+<ul class="simple">
+<li>action plugins</li>
+</ul>
+</div>
+<div class="section" id="callback-plugins">
+<h2>Callback plugins<a class="headerlink" href="#callback-plugins" title="Permalink to this headline">¬∂</a></h2>
+<p>Although Ansible 2.0 provides a new callback API the old one continues to work
+for most callback plugins.  However, if your callback plugin makes use of
+<code class="xref py py-attr docutils literal"><span class="pre">self.playbook</span></code>, <code class="xref py py-attr docutils literal"><span class="pre">self.play</span></code>, or <code class="xref py py-attr docutils literal"><span class="pre">self.task</span></code> then you will
+have to store the values for these yourself as ansible no longer automatically
+populates the callback with them.  Here&#8217;s a short snippet that shows you how:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span>import os
+from ansible.plugins.callback import CallbackBase
+
+class CallbackModule(CallbackBase):
+    def __init__(self):
+        self.playbook = None
+        self.playbook_name = None
+        self.play = None
+        self.task = None
+
+    def v2_playbook_on_start(self, playbook):
+        self.playbook = playbook
+        self.playbook_name = os.path.basename(self.playbook._file_name)
+
+    def v2_playbook_on_play_start(self, play):
+        self.play = play
+
+    def v2_playbook_on_task_start(self, task, is_conditional):
+        self.task = task
+
+    def v2_on_any(self, *args, **kwargs):
+        self._display.display(&#39;%s: %s: %s&#39; % (self.playbook_name,
+        self.play.name, self.task))
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Connection plugins<a class="headerlink" href="#id1" title="Permalink to this headline">¬∂</a></h2>
+<ul class="simple">
+<li>connection plugins</li>
+</ul>
+</div>
+</div>
+<div class="section" id="hybrid-plugins">
+<h1>Hybrid plugins<a class="headerlink" href="#hybrid-plugins" title="Permalink to this headline">¬∂</a></h1>
+<p>In specific cases you may want a plugin that supports both ansible-1.9.x <em>and</em> ansible-2.0. Much like porting plugins from v1 to v2, you need to understand how plugins work in each version and support both requirements. It may mean playing tricks on Ansible.</p>
+<p>Since the ansible-2.0 plugin system is more advanced, it is easier to adapt your plugin to provide similar pieces (subclasses, methods) for ansible-1.9.x as ansible-2.0 expects. This way your code will look a lot cleaner.</p>
+<p>You may find the following tips useful:</p>
+<ul class="simple">
+<li>Check whether the ansible-2.0 class(es) are available and if they are missing (ansible-1.9.x) mimic them with the needed methods (e.g. <code class="docutils literal"><span class="pre">__init__</span></code>)</li>
+<li>When ansible-2.0 python modules are imported, and they fail (ansible-1.9.x), catch the <code class="docutils literal"><span class="pre">ImportError</span></code> exception and perform the equivalent imports for ansible-1.9.x. With possible translations (e.g. importing specific methods).</li>
+<li>Use the existence of these methods as a qualifier to what version of Ansible you are running. So rather than using version checks, you can do capability checks instead. (See examples below)</li>
+<li>Document for each if-then-else case for which specific version each block is needed. This will help others to understand how they have to adapt their plugins, but it will also help you to remove the older ansible-1.9.x support when it is deprecated.</li>
+<li>When doing plugin development, it is very useful to have the <code class="docutils literal"><span class="pre">warning()</span></code> method during development, but it is also important to emit warnings for deadends (cases that you expect should never be triggered) or corner cases (e.g. cases where you expect misconfigurations).</li>
+<li>It helps to look at other plugins in ansible-1.9.x and ansible-2.0 to understand how the API works and what modules, classes and methods are available.</li>
+</ul>
+<div class="section" id="id2">
+<h2>Lookup plugins<a class="headerlink" href="#id2" title="Permalink to this headline">¬∂</a></h2>
+<p>As a simple example we are going to make a hybrid <code class="docutils literal"><span class="pre">fileglob</span></code> lookup plugin.  The <code class="docutils literal"><span class="pre">fileglob</span></code> lookup plugin is pretty simple to understand:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">from __future__ import (absolute_import, division, print_function)</span>
+<span class="l l-Scalar l-Scalar-Plain">__metaclass__ = type</span>
+
+<span class="l l-Scalar l-Scalar-Plain">import os</span>
+<span class="l l-Scalar l-Scalar-Plain">import glob</span>
+
+<span class="l l-Scalar l-Scalar-Plain">try</span><span class="p p-Indicator">:</span>
+    <span class="c1"># ansible-2.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">from ansible.plugins.lookup import LookupBase</span>
+<span class="l l-Scalar l-Scalar-Plain">except ImportError</span><span class="p p-Indicator">:</span>
+    <span class="c1"># ansible-1.9.x</span>
+
+    <span class="l l-Scalar l-Scalar-Plain">class LookupBase(object)</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">def __init__(self, basedir=None, runner=None, **kwargs)</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">self.runner = runner</span>
+            <span class="l l-Scalar l-Scalar-Plain">self.basedir = self.runner.basedir</span>
+
+        <span class="l l-Scalar l-Scalar-Plain">def get_basedir(self, variables)</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">return self.basedir</span>
+
+<span class="l l-Scalar l-Scalar-Plain">try</span><span class="p p-Indicator">:</span>
+    <span class="c1"># ansible-1.9.x</span>
+    <span class="l l-Scalar l-Scalar-Plain">from ansible.utils import (listify_lookup_plugin_terms, path_dwim, warning)</span>
+<span class="l l-Scalar l-Scalar-Plain">except ImportError</span><span class="p p-Indicator">:</span>
+    <span class="c1"># ansible-2.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">from __main__ import display</span>
+    <span class="l l-Scalar l-Scalar-Plain">warning = display.warning</span>
+
+<span class="l l-Scalar l-Scalar-Plain">class LookupModule(LookupBase)</span><span class="p p-Indicator">:</span>
+
+    <span class="c1"># For ansible-1.9.x, we added inject=None as valid argument</span>
+    <span class="l l-Scalar l-Scalar-Plain">def run(self, terms, inject=None, variables=None, **kwargs)</span><span class="p p-Indicator">:</span>
+
+        <span class="c1"># ansible-2.0, but we made this work for ansible-1.9.x too !</span>
+        <span class="l l-Scalar l-Scalar-Plain">basedir = self.get_basedir(variables)</span>
+
+        <span class="l l-Scalar l-Scalar-Plain"># ansible-1.9.x</span>
+        <span class="l l-Scalar l-Scalar-Plain">if &#39;listify_lookup_plugin_terms&#39; in globals()</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">terms = listify_lookup_plugin_terms(terms, basedir, inject)</span>
+
+        <span class="l l-Scalar l-Scalar-Plain">ret = []</span>
+        <span class="l l-Scalar l-Scalar-Plain">for term in terms</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">term_file = os.path.basename(term)</span>
+
+            <span class="l l-Scalar l-Scalar-Plain"># For ansible-1.9.x, we imported path_dwim() from ansible.utils</span>
+            <span class="l l-Scalar l-Scalar-Plain">if &#39;path_dwim&#39; in globals()</span><span class="p p-Indicator">:</span>
+                <span class="c1"># ansible-1.9.x</span>
+                <span class="l l-Scalar l-Scalar-Plain">dwimmed_path = path_dwim(basedir, os.path.dirname(term))</span>
+            <span class="l l-Scalar l-Scalar-Plain">else</span><span class="p p-Indicator">:</span>
+                <span class="c1"># ansible-2.0</span>
+                <span class="l l-Scalar l-Scalar-Plain">dwimmed_path = self._loader.path_dwim_relative(basedir, &#39;files&#39;, os.path.dirname(term))</span>
+
+            <span class="l l-Scalar l-Scalar-Plain">globbed = glob.glob(os.path.join(dwimmed_path, term_file))</span>
+            <span class="l l-Scalar l-Scalar-Plain">ret.extend(g for g in globbed if os.path.isfile(g))</span>
+
+        <span class="l l-Scalar l-Scalar-Plain">return ret</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In the above example we did not use the <code class="docutils literal"><span class="pre">warning()</span></code> method as we had no direct use for it in the final version. However we left this code in so people can use this part during development/porting/use.</p>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>Connection plugins<a class="headerlink" href="#id3" title="Permalink to this headline">¬∂</a></h2>
+<ul class="simple">
+<li>connection plugins</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2>Action plugins<a class="headerlink" href="#id4" title="Permalink to this headline">¬∂</a></h2>
+<ul class="simple">
+<li>action plugins</li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h2>Callback plugins<a class="headerlink" href="#id5" title="Permalink to this headline">¬∂</a></h2>
+<ul class="simple">
+<li>callback plugins</li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h2>Connection plugins<a class="headerlink" href="#id6" title="Permalink to this headline">¬∂</a></h2>
+<ul class="simple">
+<li>connection plugins</li>
+</ul>
+</div>
+</div>
+<div class="section" id="porting-custom-scripts">
+<h1>Porting custom scripts<a class="headerlink" href="#porting-custom-scripts" title="Permalink to this headline">¬∂</a></h1>
+<p>Custom scripts that used the <code class="docutils literal"><span class="pre">ansible.runner.Runner</span></code> API in 1.x have to be ported in 2.x.  Please refer to:
+<a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible/blob/devel/docsite/rst/developing_api.rst  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible/blob/devel/docsite/rst/developing_api.rst'" tppabs="https://github.com/ansible/ansible/blob/devel/docsite/rst/developing_api.rst">https://github.com/ansible/ansible/blob/devel/docsite/rst/developing_api.rst</a></p>
+</div>
+
+
+          </div>
+          <div id="search-results"><gcse:searchresults-only></div>
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+      
+        <a href="YAMLSyntax.html" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html" class="btn btn-neutral" title="YAML Syntax"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','st.js'/*tpa=https://s.swiftypecdn.com/install/v2/st.js*/,'_st');
+
+  _st('install','yABGvz2N8PwcwBxyfzUc','2.0.0');
+</script>
+
+  <p>
+  Copyright ¬© 2016 Red Hat, Inc.
+  <br>
+    Last updated on Jun 22, 2016.
+  </p>
+<p>
+Ansible docs are generated from <a href="javascript:if(confirm('https://github.com/ansible/ansible  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible'" tppabs="https://github.com/ansible/ansible">GitHub sources</A> using <A HREF="javascript:if(confirm('http://sphinx-doc.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://sphinx-doc.org/'" tppabs="http://sphinx-doc.org/">Sphinx</A> using a theme provided by <a href="javascript:if(confirm('http://readthedocs.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://readthedocs.org/'" tppabs="http://readthedocs.org/">Read the Docs</a>. 
+</p>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+<!-- begin analytics -->
+<script type="text/javascript">
+var _hsq = _hsq || [];
+_hsq.push(["setContentType", "standard-page"]);
+        (function(d,s,i,r) {
+        if (d.getElementById(i)){return;}
+        var n = d.createElement(s),e = document.getElementsByTagName(s)[0];
+        n.id=i;n.src = '//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/330046.js';
+        e.parentNode.insertBefore(n, e);
+        })(document, "script", "hs-analytics",300000);
+</script>
+<!-- end analytics -->
+
+</body>
+</html>

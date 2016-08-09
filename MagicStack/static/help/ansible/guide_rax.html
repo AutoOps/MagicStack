@@ -1,0 +1,1131 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset=UTF-8"utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Tag Manager Data Layer -->
+  <script>
+   dataLayer = [];
+  </script>
+  <!-- End Google Tag Manager Data Layer -->
+
+  
+  <title>Rackspace Cloud Guide &mdash; Ansible Documentation</title>
+  
+
+  
+  
+
+  
+  <link href="css-family=Lato-400,700-Roboto+Slab-400,700-Inconsolata-400,700.css" tppabs="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel='stylesheet' type='text/css'>
+  <link href="font-awesome.min.css" tppabs="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'https://docs.ansible.com/ansible/0.01',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+      <script type="text/javascript" src="jquery.js" tppabs="https://docs.ansible.com/ansible/_static/jquery.js"></script>
+      <script type="text/javascript" src="underscore.js" tppabs="https://docs.ansible.com/ansible/_static/underscore.js"></script>
+      <script type="text/javascript" src="doctools.js" tppabs="https://docs.ansible.com/ansible/_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="theme.min.css" tppabs="https://docs.ansible.com/ansible/_static/css/theme.min.css" type="text/css" />
+    <script type="text/javascript" src="theme.js" tppabs="https://docs.ansible.com/ansible/_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="Ansible Documentation" href="index.html"/>
+        <link rel="up" title="Detailed Guides" href="guides.html"/>
+        <link rel="next" title="Google Cloud Platform Guide" href="guide_gce.html"/>
+        <link rel="prev" title="Getting Started with Azure" href="guide_azure.html"/> 
+
+  <script src="modernizr.min.js" tppabs="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  <style>
+    .search-reset-start {
+        color: #463E3F;
+        float: right;
+        position: relative;
+        top: -25px;
+        left: -10px;
+        z-index: 10;
+     }
+     .search-reset-start:hover {
+        cursor: pointer;
+        color: #2980B9;
+     }
+     #search-box-id {
+        padding-right: 25px;
+     }
+  </style>
+
+  <link href="css-family=Open+Sans-400,300.css" tppabs="https://fonts.googleapis.com/css?family=Open+Sans:400,300"
+    rel='stylesheet' type='text/css'>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="ns.html-id=GTM-PSB293" tppabs="https://www.googletagmanager.com/ns.html?id=GTM-PSB293" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'/*tpa=https://docs.ansible.com/ansible/gtm.js*/});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-PSB293');</script>
+  <!-- End Google Tag Manager -->
+
+  <a class="DocSite-nav" href="javascript:if(confirm('http://docs.ansible.com/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">
+    <img class="DocSiteNav-logo"
+      src="logo_invert.png" tppabs="https://docs.ansible.com/ansible/_static/images/logo_invert.png"
+      alt="Ansible Logo">
+    <div class="DocSiteNav-title">
+      Documentation
+    </div>
+  </a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+
+      <div style="background-color:#5bbdbf;height=80px;margin:'auto auto auto auto'">
+        <a class="DocSiteProduct-header DocSiteProduct-header--core"
+          href="index.htm" tppabs="http://docs.ansible.com/ansible/">
+          <div class="DocSiteProduct-productName">
+            <div class="DocSiteProduct-logoText">
+              ANSIBLE
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div id="menu-id" class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html" tppabs="https://docs.ansible.com/ansible/intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro_installation.html" tppabs="https://docs.ansible.com/ansible/intro_installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_getting_started.html" tppabs="https://docs.ansible.com/ansible/intro_getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_inventory.html" tppabs="https://docs.ansible.com/ansible/intro_inventory.html">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_dynamic_inventory.html" tppabs="https://docs.ansible.com/ansible/intro_dynamic_inventory.html">Dynamic Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_patterns.html" tppabs="https://docs.ansible.com/ansible/intro_patterns.html">Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_adhoc.html" tppabs="https://docs.ansible.com/ansible/intro_adhoc.html">Introduction To Ad-Hoc Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_configuration.html" tppabs="https://docs.ansible.com/ansible/intro_configuration.html">Configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_bsd.html" tppabs="https://docs.ansible.com/ansible/intro_bsd.html">BSD Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_windows.html" tppabs="https://docs.ansible.com/ansible/intro_windows.html">Windows Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_networking.html" tppabs="https://docs.ansible.com/ansible/intro_networking.html">Networking Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html" tppabs="https://docs.ansible.com/ansible/quickstart.html">Quickstart Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks.html" tppabs="https://docs.ansible.com/ansible/playbooks.html">Playbooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_intro.html" tppabs="https://docs.ansible.com/ansible/playbooks_intro.html">Intro to Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_roles.html" tppabs="https://docs.ansible.com/ansible/playbooks_roles.html">Playbook Roles and Include Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_variables.html" tppabs="https://docs.ansible.com/ansible/playbooks_variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_filters.html" tppabs="https://docs.ansible.com/ansible/playbooks_filters.html">Jinja2 filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_conditionals.html" tppabs="https://docs.ansible.com/ansible/playbooks_conditionals.html">Conditionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_loops.html" tppabs="https://docs.ansible.com/ansible/playbooks_loops.html">Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_blocks.html" tppabs="https://docs.ansible.com/ansible/playbooks_blocks.html">Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_strategies.html" tppabs="https://docs.ansible.com/ansible/playbooks_strategies.html">Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_best_practices.html" tppabs="https://docs.ansible.com/ansible/playbooks_best_practices.html">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks_special_topics.html" tppabs="https://docs.ansible.com/ansible/playbooks_special_topics.html">Playbooks: Special Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="become.html" tppabs="https://docs.ansible.com/ansible/become.html">Become (Privilege Escalation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_acceleration.html" tppabs="https://docs.ansible.com/ansible/playbooks_acceleration.html">Accelerated Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_async.html" tppabs="https://docs.ansible.com/ansible/playbooks_async.html">Asynchronous Actions and Polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_checkmode.html" tppabs="https://docs.ansible.com/ansible/playbooks_checkmode.html">Check Mode (&#8220;Dry Run&#8221;)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_debugger.html" tppabs="https://docs.ansible.com/ansible/playbooks_debugger.html">Playbook Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_delegation.html" tppabs="https://docs.ansible.com/ansible/playbooks_delegation.html">Delegation, Rolling Updates, and Local Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_environment.html" tppabs="https://docs.ansible.com/ansible/playbooks_environment.html">Setting the Environment (and Working With Proxies)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_error_handling.html" tppabs="https://docs.ansible.com/ansible/playbooks_error_handling.html">Error Handling In Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_advanced_syntax.html" tppabs="https://docs.ansible.com/ansible/playbooks_advanced_syntax.html">Advanced Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_lookups.html" tppabs="https://docs.ansible.com/ansible/playbooks_lookups.html">Using Lookups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_prompts.html" tppabs="https://docs.ansible.com/ansible/playbooks_prompts.html">Prompts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_tags.html" tppabs="https://docs.ansible.com/ansible/playbooks_tags.html">Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_vault.html" tppabs="https://docs.ansible.com/ansible/playbooks_vault.html">Vault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_startnstep.html" tppabs="https://docs.ansible.com/ansible/playbooks_startnstep.html">Start and Step</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_directives.html" tppabs="https://docs.ansible.com/ansible/playbooks_directives.html">Directives Glossary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html" tppabs="https://docs.ansible.com/ansible/modules.html">About Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules_intro.html" tppabs="https://docs.ansible.com/ansible/modules_intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_core.html" tppabs="https://docs.ansible.com/ansible/modules_core.html">Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_extra.html" tppabs="https://docs.ansible.com/ansible/modules_extra.html">Extras Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_return_values.html" tppabs="https://docs.ansible.com/ansible/common_return_values.html">Common Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules_by_category.html" tppabs="https://docs.ansible.com/ansible/modules_by_category.html">Module Index</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="list_of_all_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_all_modules.html">All Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascript:if(confirm('https://docs.ansible.com/ansible/list_of_cloud_modules.html  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ ≤ªø…”√, ªÚ∑≈∆˙¡Àœ¬‘ÿ, ªÚœÓƒøº¥Ω´Õ£÷π°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://docs.ansible.com/ansible/list_of_cloud_modules.html'" tppabs="https://docs.ansible.com/ansible/list_of_cloud_modules.html">Cloud Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_clustering_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_clustering_modules.html">Clustering Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_commands_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_commands_modules.html">Commands Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_database_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_database_modules.html">Database Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_files_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_files_modules.html">Files Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_inventory_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_inventory_modules.html">Inventory Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_messaging_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_messaging_modules.html">Messaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_monitoring_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_monitoring_modules.html">Monitoring Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_network_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_network_modules.html">Network Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_notification_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_notification_modules.html">Notification Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_packaging_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_packaging_modules.html">Packaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_source_control_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_source_control_modules.html">Source Control Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_system_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_system_modules.html">System Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_utilities_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_utilities_modules.html">Utilities Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_web_infrastructure_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_web_infrastructure_modules.html">Web Infrastructure Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_windows_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_windows_modules.html">Windows Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="guides.html" tppabs="https://docs.ansible.com/ansible/guides.html">Detailed Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="guide_aws.html" tppabs="https://docs.ansible.com/ansible/guide_aws.html">Amazon Web Services Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_azure.html" tppabs="https://docs.ansible.com/ansible/guide_azure.html">Getting Started with Azure</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Rackspace Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_gce.html" tppabs="https://docs.ansible.com/ansible/guide_gce.html">Google Cloud Platform Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_cloudstack.html" tppabs="https://docs.ansible.com/ansible/guide_cloudstack.html">CloudStack Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_vagrant.html" tppabs="https://docs.ansible.com/ansible/guide_vagrant.html">Using Vagrant and Ansible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rolling_upgrade.html" tppabs="https://docs.ansible.com/ansible/guide_rolling_upgrade.html">Continuous Delivery and Rolling Upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_docker.html" tppabs="https://docs.ansible.com/ansible/guide_docker.html">Getting Started with Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developing.html" tppabs="https://docs.ansible.com/ansible/developing.html">Developer Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developing_api.html" tppabs="https://docs.ansible.com/ansible/developing_api.html">Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_inventory.html" tppabs="https://docs.ansible.com/ansible/developing_inventory.html">Developing Dynamic Inventory Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_modules.html" tppabs="https://docs.ansible.com/ansible/developing_modules.html">Developing Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_plugins.html" tppabs="https://docs.ansible.com/ansible/developing_plugins.html">Developing Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_core.html" tppabs="https://docs.ansible.com/ansible/developing_core.html">Developing the Ansible Core Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_test_pr.html" tppabs="https://docs.ansible.com/ansible/developing_test_pr.html">Helping Testing PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_releases.html" tppabs="https://docs.ansible.com/ansible/developing_releases.html">Releases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tower.html" tppabs="https://docs.ansible.com/ansible/tower.html">Ansible Tower</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html" tppabs="https://docs.ansible.com/ansible/community.html">Community Information &amp; Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community.html#ansible-users" tppabs="https://docs.ansible.com/ansible/community.html#ansible-users">Ansible Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#for-current-and-prospective-developers" tppabs="https://docs.ansible.com/ansible/community.html#for-current-and-prospective-developers">For Current and Prospective Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#other-topics" tppabs="https://docs.ansible.com/ansible/community.html#other-topics">Other Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#community-code-of-conduct" tppabs="https://docs.ansible.com/ansible/community.html#community-code-of-conduct">Community Code of Conduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#contributors-license-agreement" tppabs="https://docs.ansible.com/ansible/community.html#contributors-license-agreement">Contributors License Agreement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="galaxy.html" tppabs="https://docs.ansible.com/ansible/galaxy.html">Ansible Galaxy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="galaxy.html#the-website" tppabs="https://docs.ansible.com/ansible/galaxy.html#the-website">The Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="galaxy.html#the-ansible-galaxy-command-line-tool" tppabs="https://docs.ansible.com/ansible/galaxy.html#the-ansible-galaxy-command-line-tool">The ansible-galaxy command line tool</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test_strategies.html" tppabs="https://docs.ansible.com/ansible/test_strategies.html">Testing Strategies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#integrating-testing-with-ansible-playbooks" tppabs="https://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-ansible-playbooks">Integrating Testing With Ansible Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#the-right-level-of-testing" tppabs="https://docs.ansible.com/ansible/test_strategies.html#the-right-level-of-testing">The Right Level of Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#check-mode-as-a-drift-test" tppabs="https://docs.ansible.com/ansible/test_strategies.html#check-mode-as-a-drift-test">Check Mode As A Drift Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#modules-that-are-useful-for-testing" tppabs="https://docs.ansible.com/ansible/test_strategies.html#modules-that-are-useful-for-testing">Modules That Are Useful for Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#testing-lifecycle" tppabs="https://docs.ansible.com/ansible/test_strategies.html#testing-lifecycle">Testing Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#integrating-testing-with-rolling-updates" tppabs="https://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-rolling-updates">Integrating Testing With Rolling Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#achieving-continuous-deployment" tppabs="https://docs.ansible.com/ansible/test_strategies.html#achieving-continuous-deployment">Achieving Continuous Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#conclusion" tppabs="https://docs.ansible.com/ansible/test_strategies.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html" tppabs="https://docs.ansible.com/ansible/faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook" tppabs="https://docs.ansible.com/ansible/faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook">How can I set the PATH or any other environment variable for a task or entire playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with">How do I handle different machines needing different user accounts or ports to log in with?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file">How do I get ansible to reuse connections, enable Kerberized SSH, or have Ansible pay attention to my local SSH config file?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">How do I configure a jump host to access servers that I have no direct access to?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-speed-up-management-inside-ec2" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-speed-up-management-inside-ec2">How do I speed up management inside EC2?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine">How do I handle python pathing not having a Python 2.X in /usr/bin/python on a remote machine?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#what-is-the-best-way-to-make-content-reusable-redistributable" tppabs="https://docs.ansible.com/ansible/faq.html#what-is-the-best-way-to-make-content-reusable-redistributable">What is the best way to make content reusable/redistributable?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it" tppabs="https://docs.ansible.com/ansible/faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it">Where does the configuration file live and what can I configure in it?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-disable-cowsay" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-disable-cowsay">How do I disable cowsay?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables">How do I see a list of all of the ansible_ variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host">How do I see all the inventory vars defined for my host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template">How do I loop over a list of hosts in a group, inside of a template?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-a-variable-name-programmatically" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-name-programmatically">How do I access a variable name programmatically?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group">How do I access a variable of the first host in a group?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-copy-files-recursively-onto-a-target-host" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-copy-files-recursively-onto-a-target-host">How do I copy files recursively onto a target host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-shell-environment-variables" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-shell-environment-variables">How do I access shell environment variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-generate-crypted-passwords-for-the-user-module" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module">How do I generate crypted passwords for the user module?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#can-i-get-training-on-ansible-or-find-commercial-support" tppabs="https://docs.ansible.com/ansible/faq.html#can-i-get-training-on-ansible-or-find-commercial-support">Can I get training on Ansible or find commercial support?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#is-there-a-web-interface-rest-api-etc" tppabs="https://docs.ansible.com/ansible/faq.html#is-there-a-web-interface-rest-api-etc">Is there a web interface / REST API / etc?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-submit-a-change-to-the-documentation" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-submit-a-change-to-the-documentation">How do I submit a change to the documentation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-keep-secret-data-in-my-playbook" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-keep-secret-data-in-my-playbook">How do I keep secret data in my playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names" tppabs="https://docs.ansible.com/ansible/faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names">When should I use {{ }}? Also, how to interpolate variables or dynamic variable names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#i-don-t-see-my-question-here" tppabs="https://docs.ansible.com/ansible/faq.html#i-don-t-see-my-question-here">I don&#8217;t see my question here</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html" tppabs="https://docs.ansible.com/ansible/glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YAMLSyntax.html" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html">YAML Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax.html#yaml-basics" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html#yaml-basics">YAML Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax.html#gotchas" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html#gotchas">Gotchas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html">Porting Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#playbook" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#playbook">Playbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#deprecated" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#deprecated">Deprecated</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#other-caveats" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#other-caveats">Other caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#porting-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#porting-plugins">Porting plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#lookup-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#lookup-plugins">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#connection-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#connection-plugins">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#action-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#action-plugins">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#callback-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#callback-plugins">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id1" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id1">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#hybrid-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#hybrid-plugins">Hybrid plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id2" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id2">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id3" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id3">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id4" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id4">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id5" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id5">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id6" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id6">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#porting-custom-scripts" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#porting-custom-scripts">Porting custom scripts</a></li>
+</ul>
+
+        
+
+<!-- changeable widget -->
+<center>
+<br/>
+<a href="javascript:if(confirm('http://www.ansible.com/docs-left?utm_source=docs  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ansible.com/docs-left?utm_source=docs'" tppabs="http://www.ansible.com/docs-left?utm_source=docs">
+    <img style="border-width:0px;" src="ASB-docs-left-rail.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-left-rail.png" />
+</a>
+</center>
+
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="javascript:if(confirm('https://docs.ansible.com/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://docs.ansible.com/'" tppabs="https://docs.ansible.com/">Ansible Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+
+          <!-- Banner ads -->
+          <div class="DocSiteBanner">
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-left.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-left.png">
+            </a>
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-right.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-right.png">
+            </a>
+        </div>
+
+          <ul class="wy-breadcrumbs">
+  <li><a href="index.html" tppabs="https://docs.ansible.com/ansible/index.html">Docs</a> &raquo;</li>
+  <li><a href="">Rackspace Cloud Guide</a></li>
+  
+    <li class="wy-breadcrumbs-aside">
+      <a href="javascript:if(confirm('https://github.com/ansible/ansible/blob/devel/docsite/rst/guide_rax.rst  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible/blob/devel/docsite/rst/guide_rax.rst'" tppabs="https://github.com/ansible/ansible/blob/devel/docsite/rst/guide_rax.rst" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  
+</ul>
+<hr/>
+
+          <div id="page-content">
+          
+  <div class="section" id="rackspace-cloud-guide">
+<h1>Rackspace Cloud Guide<a class="headerlink" href="#rackspace-cloud-guide" title="Permalink to this headline">¬∂</a></h1>
+<div class="section" id="introduction">
+<span id="rax-introduction"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¬∂</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This section of the documentation is under construction. We are in the process of adding more examples about the Rackspace modules and how they work together.  Once complete, there will also be examples for Rackspace Cloud in <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible-examples/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible-examples/'" tppabs="https://github.com/ansible/ansible-examples/">ansible-examples</a>.</p>
+</div>
+<p>Ansible contains a number of core modules for interacting with Rackspace Cloud.</p>
+<p>The purpose of this section is to explain how to put Ansible modules together
+(and use inventory scripts) to use Ansible in a Rackspace Cloud context.</p>
+<p>Prerequisites for using the rax modules are minimal.  In addition to ansible itself,
+all of the modules require and are tested against pyrax 1.5 or higher.
+You&#8217;ll need this Python module installed on the execution host.</p>
+<p>pyrax is not currently available in many operating system
+package repositories, so you will likely need to install it via pip:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install pyrax
+</pre></div>
+</div>
+<p>The following steps will often execute from the control machine against the Rackspace Cloud API, so it makes sense
+to add localhost to the inventory file.  (Ansible may not require this manual step in the future):</p>
+<div class="highlight-ini"><div class="highlight"><pre><span></span><span class="k">[localhost]</span>
+<span class="na">localhost ansible_connection</span><span class="o">=</span><span class="s">local</span>
+</pre></div>
+</div>
+<p>In playbook steps, we&#8217;ll typically be using the following pattern:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span>
+  <span class="l l-Scalar l-Scalar-Plain">connection</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="credentials-file">
+<span id="id1"></span><h2>Credentials File<a class="headerlink" href="#credentials-file" title="Permalink to this headline">¬∂</a></h2>
+<p>The <cite>rax.py</cite> inventory script and all <cite>rax</cite> modules support a standard <cite>pyrax</cite> credentials file that looks like:</p>
+<div class="highlight-ini"><div class="highlight"><pre><span></span><span class="k">[rackspace_cloud]</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">myraxusername</span>
+<span class="na">api_key</span> <span class="o">=</span> <span class="s">d41d8cd98f00b204e9800998ecf8427e</span>
+</pre></div>
+</div>
+<p>Setting the environment parameter RAX_CREDS_FILE to the path of this file will help Ansible find how to load
+this information.</p>
+<p>More information about this credentials file can be found at
+<a class="reference external" href="javascript:if(confirm('https://github.com/rackspace/pyrax/blob/master/docs/getting_started.md  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/rackspace/pyrax/blob/master/docs/getting_started.md#authenticating'" tppabs="https://github.com/rackspace/pyrax/blob/master/docs/getting_started.md#authenticating">https://github.com/rackspace/pyrax/blob/master/docs/getting_started.md#authenticating</a></p>
+<div class="section" id="running-from-a-python-virtual-environment-optional">
+<span id="virtual-environment"></span><h3>Running from a Python Virtual Environment (Optional)<a class="headerlink" href="#running-from-a-python-virtual-environment-optional" title="Permalink to this headline">¬∂</a></h3>
+<p>Most users will not be using virtualenv, but some users, particularly Python developers sometimes like to.</p>
+<p>There are special considerations when Ansible is installed to a Python virtualenv, rather than the default of installing at a global scope. Ansible assumes, unless otherwise instructed, that the python binary will live at /usr/bin/python.  This is done via the interpreter line in modules, however when instructed by setting the inventory variable &#8216;ansible_python_interpreter&#8217;, Ansible will use this specified path instead to find Python.  This can be a cause of confusion as one may assume that modules running on &#8216;localhost&#8217;, or perhaps running via &#8216;local_action&#8217;, are using the virtualenv Python interpreter.  By setting this line in the inventory, the modules will execute in the virtualenv interpreter and have available the virtualenv packages, specifically pyrax. If using virtualenv, you may wish to modify your localhost inventory definition to find this location as follows:</p>
+<div class="highlight-ini"><div class="highlight"><pre><span></span><span class="k">[localhost]</span>
+<span class="na">localhost ansible_connection</span><span class="o">=</span><span class="s">local ansible_python_interpreter=/path/to/ansible_venv/bin/python</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">pyrax may be installed in the global Python package scope or in a virtual environment.  There are no special considerations to keep in mind when installing pyrax.</p>
+</div>
+</div>
+</div>
+<div class="section" id="provisioning">
+<span id="id2"></span><h2>Provisioning<a class="headerlink" href="#provisioning" title="Permalink to this headline">¬∂</a></h2>
+<p>Now for the fun parts.</p>
+<p>The &#8216;rax&#8217; module provides the ability to provision instances within Rackspace Cloud.  Typically the provisioning task will be performed from your Ansible control server (in our example, localhost) against the Rackspace cloud API.  This is done for several reasons:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Avoiding installing the pyrax library on remote nodes</li>
+<li>No need to encrypt and distribute credentials to remote nodes</li>
+<li>Speed and simplicity</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Authentication with the Rackspace-related modules is handled by either
+specifying your username and API key as environment variables or passing
+them as module arguments, or by specifying the location of a credentials
+file.</p>
+</div>
+<p>Here is a basic example of provisioning an instance in ad-hoc mode:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ ansible localhost -m rax -a <span class="s2">&quot;name=awx flavor=4 image=ubuntu-1204-lts-precise-pangolin wait=yes&quot;</span> -c <span class="nb">local</span>
+</pre></div>
+</div>
+<p>Here&#8217;s what it would look like in a playbook, assuming the parameters were defined in variables:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Provision a set of instances</span>
+    <span class="l l-Scalar l-Scalar-Plain">local_action</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">module</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rax_name</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">flavor</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rax_flavor</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">image</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rax_image</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">count</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rax_count</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">group</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">group</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">wait</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+    <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax</span>
+</pre></div>
+</div>
+<p>The rax module returns data about the nodes it creates, like IP addresses, hostnames, and login passwords.  By registering the return value of the step, it is possible used this data to dynamically add the resulting hosts to inventory (temporarily, in memory). This facilitates performing configuration actions on the hosts in a follow-on task.  In the following example, the servers that were successfully created using the above task are dynamically added to a group called &#8220;raxhosts&#8221;, with each nodes hostname, IP address, and root password being added to the inventory.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Ansible 2.0 has deprecated the ‚Äússh‚Äù from <code class="docutils literal"><span class="pre">ansible_ssh_user</span></code>, <code class="docutils literal"><span class="pre">ansible_ssh_host</span></code>, and <code class="docutils literal"><span class="pre">ansible_ssh_port</span></code> to become <code class="docutils literal"><span class="pre">ansible_user</span></code>, <code class="docutils literal"><span class="pre">ansible_host</span></code>, and <code class="docutils literal"><span class="pre">ansible_port</span></code>. If you are using a version of Ansible prior to 2.0,  you should continue using the older style variables (<code class="docutils literal"><span class="pre">ansible_ssh_*</span></code>). These shorter variables are ignored, without warning, in older versions of Ansible.</p>
+</div>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Add the instances we created (by public IP) to the group &#39;raxhosts&#39;</span>
+  <span class="l l-Scalar l-Scalar-Plain">local_action</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">module</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">add_host</span>
+      <span class="l l-Scalar l-Scalar-Plain">hostname</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item.name</span><span class="nv"> </span><span class="s">}}&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">ansible_host</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item.rax_accessipv4</span><span class="nv"> </span><span class="s">}}&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">ansible_ssh_pass</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item.rax_adminpass</span><span class="nv"> </span><span class="s">}}&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">groups</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">raxhosts</span>
+  <span class="l l-Scalar l-Scalar-Plain">with_items</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax.success</span>
+  <span class="l l-Scalar l-Scalar-Plain">when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax.action == &#39;create&#39;</span>
+</pre></div>
+</div>
+<p>With the host group now created, the next play in this playbook could now configure servers belonging to the raxhosts group.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Configuration play</span>
+  <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">raxhosts</span>
+  <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ntp</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">webserver</span>
+</pre></div>
+</div>
+<p>The method above ties the configuration of a host with the provisioning step.  This isn&#8217;t always what you want, and leads us
+to the next section.</p>
+</div>
+<div class="section" id="host-inventory">
+<span id="id3"></span><h2>Host Inventory<a class="headerlink" href="#host-inventory" title="Permalink to this headline">¬∂</a></h2>
+<p>Once your nodes are spun up, you&#8217;ll probably want to talk to them again.  The best way to handle this is to use the &#8220;rax&#8221; inventory plugin, which dynamically queries Rackspace Cloud and tells Ansible what nodes you have to manage.  You might want to use this even if you are spinning up cloud instances via other tools, including the Rackspace Cloud user interface. The inventory plugin can be used to group resources by metadata, region, OS, etc.  Utilizing metadata is highly recommended in &#8220;rax&#8221; and can provide an easy way to sort between host groups and roles. If you don&#8217;t want to use the <code class="docutils literal"><span class="pre">rax.py</span></code> dynamic inventory script, you could also still choose to manually manage your INI inventory file, though this is less recommended.</p>
+<p>In Ansible it is quite possible to use multiple dynamic inventory plugins along with INI file data.  Just put them in a common directory and be sure the scripts are chmod +x, and the INI-based ones are not.</p>
+<div class="section" id="rax-py">
+<span id="raxpy"></span><h3>rax.py<a class="headerlink" href="#rax-py" title="Permalink to this headline">¬∂</a></h3>
+<p>To use the rackspace dynamic inventory script, copy <code class="docutils literal"><span class="pre">rax.py</span></code> into your inventory directory and make it executable. You can specify a credentials file for <code class="docutils literal"><span class="pre">rax.py</span></code> utilizing the <code class="docutils literal"><span class="pre">RAX_CREDS_FILE</span></code> environment variable.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Dynamic inventory scripts (like <code class="docutils literal"><span class="pre">rax.py</span></code>) are saved in <code class="docutils literal"><span class="pre">/usr/share/ansible/inventory</span></code> if Ansible has been installed globally.  If installed to a virtualenv, the inventory scripts are installed to <code class="docutils literal"><span class="pre">$VIRTUALENV/share/inventory</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Users of <a class="reference internal" href="tower.html" tppabs="https://docs.ansible.com/ansible/tower.html"><span class="doc">Ansible Tower</span></a> will note that dynamic inventory is natively supported by Tower, and all you have to do is associate a group with your Rackspace Cloud credentials, and it will easily synchronize without going through these steps:</p>
+<div class="last highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">$ RAX_CREDS_FILE=~/.raxpub ansible all -i rax.py -m setup</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal"><span class="pre">rax.py</span></code> also accepts a <code class="docutils literal"><span class="pre">RAX_REGION</span></code> environment variable, which can contain an individual region, or a comma separated list of regions.</p>
+<p>When using <code class="docutils literal"><span class="pre">rax.py</span></code>, you will not have a &#8216;localhost&#8217; defined in the inventory.</p>
+<p>As mentioned previously, you will often be running most of these modules outside of the host loop, and will need &#8216;localhost&#8217; defined.  The recommended way to do this, would be to create an <code class="docutils literal"><span class="pre">inventory</span></code> directory, and place both the <code class="docutils literal"><span class="pre">rax.py</span></code> script and a file containing <code class="docutils literal"><span class="pre">localhost</span></code> in it.</p>
+<p>Executing <code class="docutils literal"><span class="pre">ansible</span></code> or <code class="docutils literal"><span class="pre">ansible-playbook</span></code> and specifying the <code class="docutils literal"><span class="pre">inventory</span></code> directory instead
+of an individual file, will cause ansible to evaluate each file in that directory for inventory.</p>
+<p>Let&#8217;s test our inventory script to see if it can talk to Rackspace Cloud.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nv">RAX_CREDS_FILE</span><span class="o">=</span>~/.raxpub ansible all -i inventory/ -m setup
+</pre></div>
+</div>
+<p>Assuming things are properly configured, the <code class="docutils literal"><span class="pre">rax.py</span></code> inventory script will output information similar to the
+following information, which will be utilized for inventory and variables.</p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;ORD&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;test&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;_meta&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;hostvars&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;test&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;ansible_host&quot;</span><span class="p">:</span> <span class="s2">&quot;1.1.1.1&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;rax_accessipv4&quot;</span><span class="p">:</span> <span class="s2">&quot;1.1.1.1&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;rax_accessipv6&quot;</span><span class="p">:</span> <span class="s2">&quot;2607:f0d0:1002:51::4&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;rax_addresses&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="nt">&quot;private&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;addr&quot;</span><span class="p">:</span> <span class="s2">&quot;2.2.2.2&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="mi">4</span>
+                        <span class="p">}</span>
+                    <span class="p">],</span>
+                    <span class="nt">&quot;public&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;addr&quot;</span><span class="p">:</span> <span class="s2">&quot;1.1.1.1&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="mi">4</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;addr&quot;</span><span class="p">:</span> <span class="s2">&quot;2607:f0d0:1002:51::4&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="mi">6</span>
+                        <span class="p">}</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="nt">&quot;rax_config_drive&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;rax_created&quot;</span><span class="p">:</span> <span class="s2">&quot;2013-11-14T20:48:22Z&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;rax_flavor&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;performance1-1&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;links&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ord.servers.api.rackspacecloud.com/111111/flavors/performance1-1&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;bookmark&quot;</span>
+                        <span class="p">}</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="nt">&quot;rax_hostid&quot;</span><span class="p">:</span> <span class="s2">&quot;e7b6961a9bd943ee82b13816426f1563bfda6846aad84d52af45a4904660cde0&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;rax_human_id&quot;</span><span class="p">:</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;rax_id&quot;</span><span class="p">:</span> <span class="s2">&quot;099a447b-a644-471f-87b9-a7f580eb0c2a&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;rax_image&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;b211c7bf-b5b4-4ede-a8de-a4368750c653&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;links&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ord.servers.api.rackspacecloud.com/111111/images/b211c7bf-b5b4-4ede-a8de-a4368750c653&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;bookmark&quot;</span>
+                        <span class="p">}</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="nt">&quot;rax_key_name&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+                <span class="nt">&quot;rax_links&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ord.servers.api.rackspacecloud.com/v2/111111/servers/099a447b-a644-471f-87b9-a7f580eb0c2a&quot;</span><span class="p">,</span>
+                        <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;self&quot;</span>
+                    <span class="p">},</span>
+                    <span class="p">{</span>
+                        <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ord.servers.api.rackspacecloud.com/111111/servers/099a447b-a644-471f-87b9-a7f580eb0c2a&quot;</span><span class="p">,</span>
+                        <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;bookmark&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">],</span>
+                <span class="nt">&quot;rax_metadata&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="nt">&quot;foo&quot;</span><span class="p">:</span> <span class="s2">&quot;bar&quot;</span>
+                <span class="p">},</span>
+                <span class="nt">&quot;rax_name&quot;</span><span class="p">:</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;rax_name_attr&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;rax_networks&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="nt">&quot;private&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;2.2.2.2&quot;</span>
+                    <span class="p">],</span>
+                    <span class="nt">&quot;public&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;1.1.1.1&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;2607:f0d0:1002:51::4&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="nt">&quot;rax_os-dcf_diskconfig&quot;</span><span class="p">:</span> <span class="s2">&quot;AUTO&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;rax_os-ext-sts_power_state&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="nt">&quot;rax_os-ext-sts_task_state&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+                <span class="nt">&quot;rax_os-ext-sts_vm_state&quot;</span><span class="p">:</span> <span class="s2">&quot;active&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;rax_progress&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+                <span class="nt">&quot;rax_status&quot;</span><span class="p">:</span> <span class="s2">&quot;ACTIVE&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;rax_tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;111111&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;rax_updated&quot;</span><span class="p">:</span> <span class="s2">&quot;2013-11-14T20:49:27Z&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;rax_user_id&quot;</span><span class="p">:</span> <span class="s2">&quot;22222&quot;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="standard-inventory">
+<span id="id4"></span><h3>Standard Inventory<a class="headerlink" href="#standard-inventory" title="Permalink to this headline">¬∂</a></h3>
+<p>When utilizing a standard ini formatted inventory file (as opposed to the inventory plugin), it may still be advantageous to retrieve discoverable hostvar information  from the Rackspace API.</p>
+<p>This can be achieved with the <code class="docutils literal"><span class="pre">rax_facts</span></code> module and an inventory file similar to the following:</p>
+<div class="highlight-ini"><div class="highlight"><pre><span></span><span class="k">[test_servers]</span>
+<span class="na">hostname1 rax_region</span><span class="o">=</span><span class="s">ORD</span>
+<span class="na">hostname2 rax_region</span><span class="o">=</span><span class="s">ORD</span>
+</pre></div>
+</div>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Gather info about servers</span>
+  <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">test_servers</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Get facts about servers</span>
+      <span class="l l-Scalar l-Scalar-Plain">local_action</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">module</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax_facts</span>
+        <span class="l l-Scalar l-Scalar-Plain">credentials</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">~/.raxpub</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">inventory_hostname</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">region</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rax_region</span><span class="nv"> </span><span class="s">}}&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Map some facts</span>
+      <span class="l l-Scalar l-Scalar-Plain">set_fact</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">ansible_host</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rax_accessipv4</span><span class="nv"> </span><span class="s">}}&quot;</span>
+</pre></div>
+</div>
+<p>While you don&#8217;t need to know how it works, it may be interesting to know what kind of variables are returned.</p>
+<p>The <code class="docutils literal"><span class="pre">rax_facts</span></code> module provides facts as followings, which match the <code class="docutils literal"><span class="pre">rax.py</span></code> inventory script:</p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;ansible_facts&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;rax_accessipv4&quot;</span><span class="p">:</span> <span class="s2">&quot;1.1.1.1&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;rax_accessipv6&quot;</span><span class="p">:</span> <span class="s2">&quot;2607:f0d0:1002:51::4&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;rax_addresses&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;private&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;addr&quot;</span><span class="p">:</span> <span class="s2">&quot;2.2.2.2&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="mi">4</span>
+                <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;public&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;addr&quot;</span><span class="p">:</span> <span class="s2">&quot;1.1.1.1&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="mi">4</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;addr&quot;</span><span class="p">:</span> <span class="s2">&quot;2607:f0d0:1002:51::4&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="mi">6</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;rax_config_drive&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;rax_created&quot;</span><span class="p">:</span> <span class="s2">&quot;2013-11-14T20:48:22Z&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;rax_flavor&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;performance1-1&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;links&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ord.servers.api.rackspacecloud.com/111111/flavors/performance1-1&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;bookmark&quot;</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;rax_hostid&quot;</span><span class="p">:</span> <span class="s2">&quot;e7b6961a9bd943ee82b13816426f1563bfda6846aad84d52af45a4904660cde0&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;rax_human_id&quot;</span><span class="p">:</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;rax_id&quot;</span><span class="p">:</span> <span class="s2">&quot;099a447b-a644-471f-87b9-a7f580eb0c2a&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;rax_image&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;b211c7bf-b5b4-4ede-a8de-a4368750c653&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;links&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ord.servers.api.rackspacecloud.com/111111/images/b211c7bf-b5b4-4ede-a8de-a4368750c653&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;bookmark&quot;</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;rax_key_name&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="nt">&quot;rax_links&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ord.servers.api.rackspacecloud.com/v2/111111/servers/099a447b-a644-471f-87b9-a7f580eb0c2a&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;self&quot;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ord.servers.api.rackspacecloud.com/111111/servers/099a447b-a644-471f-87b9-a7f580eb0c2a&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;rel&quot;</span><span class="p">:</span> <span class="s2">&quot;bookmark&quot;</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+        <span class="nt">&quot;rax_metadata&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;foo&quot;</span><span class="p">:</span> <span class="s2">&quot;bar&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;rax_name&quot;</span><span class="p">:</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;rax_name_attr&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;rax_networks&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;private&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;2.2.2.2&quot;</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;public&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;1.1.1.1&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;2607:f0d0:1002:51::4&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;rax_os-dcf_diskconfig&quot;</span><span class="p">:</span> <span class="s2">&quot;AUTO&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;rax_os-ext-sts_power_state&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;rax_os-ext-sts_task_state&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="nt">&quot;rax_os-ext-sts_vm_state&quot;</span><span class="p">:</span> <span class="s2">&quot;active&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;rax_progress&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="nt">&quot;rax_status&quot;</span><span class="p">:</span> <span class="s2">&quot;ACTIVE&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;rax_tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;111111&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;rax_updated&quot;</span><span class="p">:</span> <span class="s2">&quot;2013-11-14T20:49:27Z&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;rax_user_id&quot;</span><span class="p">:</span> <span class="s2">&quot;22222&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;changed&quot;</span><span class="p">:</span> <span class="kc">false</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="use-cases">
+<h2>Use Cases<a class="headerlink" href="#use-cases" title="Permalink to this headline">¬∂</a></h2>
+<p>This section covers some additional usage examples built around a specific use case.</p>
+<div class="section" id="network-and-server">
+<span id="id5"></span><h3>Network and Server<a class="headerlink" href="#network-and-server" title="Permalink to this headline">¬∂</a></h3>
+<p>Create an isolated cloud network and build a server</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Build Servers on an Isolated Network</span>
+  <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span>
+  <span class="l l-Scalar l-Scalar-Plain">connection</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Network create request</span>
+      <span class="l l-Scalar l-Scalar-Plain">local_action</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">module</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax_network</span>
+        <span class="l l-Scalar l-Scalar-Plain">credentials</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">~/.raxpub</span>
+        <span class="l l-Scalar l-Scalar-Plain">label</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">my-net</span>
+        <span class="l l-Scalar l-Scalar-Plain">cidr</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.3.0/24</span>
+        <span class="l l-Scalar l-Scalar-Plain">region</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">IAD</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Server create request</span>
+      <span class="l l-Scalar l-Scalar-Plain">local_action</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">module</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax</span>
+        <span class="l l-Scalar l-Scalar-Plain">credentials</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">~/.raxpub</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">web%04d.example.org</span>
+        <span class="l l-Scalar l-Scalar-Plain">flavor</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+        <span class="l l-Scalar l-Scalar-Plain">image</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ubuntu-1204-lts-precise-pangolin</span>
+        <span class="l l-Scalar l-Scalar-Plain">disk_config</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">manual</span>
+        <span class="l l-Scalar l-Scalar-Plain">networks</span><span class="p p-Indicator">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">public</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">my-net</span>
+        <span class="l l-Scalar l-Scalar-Plain">region</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">IAD</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+        <span class="l l-Scalar l-Scalar-Plain">count</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+        <span class="l l-Scalar l-Scalar-Plain">exact_count</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+        <span class="l l-Scalar l-Scalar-Plain">group</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">web</span>
+        <span class="l l-Scalar l-Scalar-Plain">wait</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+        <span class="l l-Scalar l-Scalar-Plain">wait_timeout</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">360</span>
+      <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="complete-environment">
+<span id="id6"></span><h3>Complete Environment<a class="headerlink" href="#complete-environment" title="Permalink to this headline">¬∂</a></h3>
+<p>Build a complete webserver environment with servers, custom networks and load balancers, install nginx and create a custom index.html</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Build environment</span>
+  <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span>
+  <span class="l l-Scalar l-Scalar-Plain">connection</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Load Balancer create request</span>
+      <span class="l l-Scalar l-Scalar-Plain">local_action</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">module</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax_clb</span>
+        <span class="l l-Scalar l-Scalar-Plain">credentials</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">~/.raxpub</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">my-lb</span>
+        <span class="l l-Scalar l-Scalar-Plain">port</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
+        <span class="l l-Scalar l-Scalar-Plain">protocol</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">HTTP</span>
+        <span class="l l-Scalar l-Scalar-Plain">algorithm</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ROUND_ROBIN</span>
+        <span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">PUBLIC</span>
+        <span class="l l-Scalar l-Scalar-Plain">timeout</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">30</span>
+        <span class="l l-Scalar l-Scalar-Plain">region</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">IAD</span>
+        <span class="l l-Scalar l-Scalar-Plain">wait</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+        <span class="l l-Scalar l-Scalar-Plain">meta</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">app</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">my-cool-app</span>
+      <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">clb</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Network create request</span>
+      <span class="l l-Scalar l-Scalar-Plain">local_action</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">module</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax_network</span>
+        <span class="l l-Scalar l-Scalar-Plain">credentials</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">~/.raxpub</span>
+        <span class="l l-Scalar l-Scalar-Plain">label</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">my-net</span>
+        <span class="l l-Scalar l-Scalar-Plain">cidr</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">192.168.3.0/24</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+        <span class="l l-Scalar l-Scalar-Plain">region</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">IAD</span>
+      <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">network</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Server create request</span>
+      <span class="l l-Scalar l-Scalar-Plain">local_action</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">module</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax</span>
+        <span class="l l-Scalar l-Scalar-Plain">credentials</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">~/.raxpub</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">web%04d.example.org</span>
+        <span class="l l-Scalar l-Scalar-Plain">flavor</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">performance1-1</span>
+        <span class="l l-Scalar l-Scalar-Plain">image</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ubuntu-1204-lts-precise-pangolin</span>
+        <span class="l l-Scalar l-Scalar-Plain">disk_config</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">manual</span>
+        <span class="l l-Scalar l-Scalar-Plain">networks</span><span class="p p-Indicator">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">public</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">private</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">my-net</span>
+        <span class="l l-Scalar l-Scalar-Plain">region</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">IAD</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+        <span class="l l-Scalar l-Scalar-Plain">count</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+        <span class="l l-Scalar l-Scalar-Plain">exact_count</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+        <span class="l l-Scalar l-Scalar-Plain">group</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">web</span>
+        <span class="l l-Scalar l-Scalar-Plain">wait</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+      <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Add servers to web host group</span>
+      <span class="l l-Scalar l-Scalar-Plain">local_action</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">module</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">add_host</span>
+        <span class="l l-Scalar l-Scalar-Plain">hostname</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item.name</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">ansible_host</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item.rax_accessipv4</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">ansible_ssh_pass</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item.rax_adminpass</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">ansible_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+        <span class="l l-Scalar l-Scalar-Plain">groups</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">web</span>
+      <span class="l l-Scalar l-Scalar-Plain">with_items</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax.success</span>
+      <span class="l l-Scalar l-Scalar-Plain">when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax.action == &#39;create&#39;</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Add servers to Load balancer</span>
+      <span class="l l-Scalar l-Scalar-Plain">local_action</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">module</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax_clb_nodes</span>
+        <span class="l l-Scalar l-Scalar-Plain">credentials</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">~/.raxpub</span>
+        <span class="l l-Scalar l-Scalar-Plain">load_balancer_id</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">clb.balancer.id</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">address</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item.rax_networks.private|first</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">port</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
+        <span class="l l-Scalar l-Scalar-Plain">condition</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">enabled</span>
+        <span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">primary</span>
+        <span class="l l-Scalar l-Scalar-Plain">wait</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+        <span class="l l-Scalar l-Scalar-Plain">region</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">IAD</span>
+      <span class="l l-Scalar l-Scalar-Plain">with_items</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax.success</span>
+      <span class="l l-Scalar l-Scalar-Plain">when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax.action == &#39;create&#39;</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Configure servers</span>
+  <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">web</span>
+  <span class="l l-Scalar l-Scalar-Plain">handlers</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">restart nginx</span>
+      <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=nginx state=restarted</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Install nginx</span>
+      <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">pkg=nginx state=latest update_cache=yes cache_valid_time=86400</span>
+      <span class="l l-Scalar l-Scalar-Plain">notify</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">restart nginx</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Ensure nginx starts on boot</span>
+      <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name=nginx state=started enabled=yes</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Create custom index.html</span>
+      <span class="l l-Scalar l-Scalar-Plain">copy</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">content=&quot;{{ inventory_hostname }}&quot; dest=/usr/share/nginx/www/index.html</span>
+            <span class="l l-Scalar l-Scalar-Plain">owner=root group=root mode=0644</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rackconnect-and-managed-cloud">
+<span id="rackconnect-and-manged-cloud"></span><h3>RackConnect and Managed Cloud<a class="headerlink" href="#rackconnect-and-managed-cloud" title="Permalink to this headline">¬∂</a></h3>
+<p>When using RackConnect version 2 or Rackspace Managed Cloud there are Rackspace automation tasks that are executed on the servers you create after they are successfully built. If your automation executes before the RackConnect or Managed Cloud automation, you can cause failures and un-usable servers.</p>
+<p>These examples show creating servers, and ensuring that the Rackspace automation has completed before Ansible continues onwards.</p>
+<p>For simplicity, these examples are joined, however both are only needed when using RackConnect.  When only using Managed Cloud, the RackConnect portion can be ignored.</p>
+<p>The RackConnect portions only apply to RackConnect version 2.</p>
+<div class="section" id="using-a-control-machine">
+<span id="id7"></span><h4>Using a Control Machine<a class="headerlink" href="#using-a-control-machine" title="Permalink to this headline">¬∂</a></h4>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Create an exact count of servers</span>
+  <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span>
+  <span class="l l-Scalar l-Scalar-Plain">connection</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Server build requests</span>
+      <span class="l l-Scalar l-Scalar-Plain">local_action</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">module</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax</span>
+        <span class="l l-Scalar l-Scalar-Plain">credentials</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">~/.raxpub</span>
+        <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">web%03d.example.org</span>
+        <span class="l l-Scalar l-Scalar-Plain">flavor</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">performance1-1</span>
+        <span class="l l-Scalar l-Scalar-Plain">image</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ubuntu-1204-lts-precise-pangolin</span>
+        <span class="l l-Scalar l-Scalar-Plain">disk_config</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">manual</span>
+        <span class="l l-Scalar l-Scalar-Plain">region</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">DFW</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+        <span class="l l-Scalar l-Scalar-Plain">count</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+        <span class="l l-Scalar l-Scalar-Plain">exact_count</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+        <span class="l l-Scalar l-Scalar-Plain">group</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">web</span>
+        <span class="l l-Scalar l-Scalar-Plain">wait</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+      <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Add servers to in memory groups</span>
+      <span class="l l-Scalar l-Scalar-Plain">local_action</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">module</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">add_host</span>
+        <span class="l l-Scalar l-Scalar-Plain">hostname</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item.name</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">ansible_host</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item.rax_accessipv4</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">ansible_ssh_pass</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item.rax_adminpass</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">ansible_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+        <span class="l l-Scalar l-Scalar-Plain">rax_id</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item.rax_id</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">groups</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">web,new_web</span>
+      <span class="l l-Scalar l-Scalar-Plain">with_items</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax.success</span>
+      <span class="l l-Scalar l-Scalar-Plain">when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax.action == &#39;create&#39;</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Wait for rackconnect and managed cloud automation to complete</span>
+  <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">new_web</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Wait for rackconnnect automation to complete</span>
+      <span class="l l-Scalar l-Scalar-Plain">local_action</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">module</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax_facts</span>
+        <span class="l l-Scalar l-Scalar-Plain">credentials</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">~/.raxpub</span>
+        <span class="l l-Scalar l-Scalar-Plain">id</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rax_id</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">region</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">DFW</span>
+      <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax_facts</span>
+      <span class="l l-Scalar l-Scalar-Plain">until</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax_facts.ansible_facts[&#39;rax_metadata&#39;][&#39;rackconnect_automation_status&#39;]|default(&#39;&#39;) == &#39;DEPLOYED&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">retries</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">30</span>
+      <span class="l l-Scalar l-Scalar-Plain">delay</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Wait for managed cloud automation to complete</span>
+      <span class="l l-Scalar l-Scalar-Plain">local_action</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">module</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax_facts</span>
+        <span class="l l-Scalar l-Scalar-Plain">credentials</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">~/.raxpub</span>
+        <span class="l l-Scalar l-Scalar-Plain">id</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">rax_id</span><span class="nv"> </span><span class="s">}}&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">region</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">DFW</span>
+      <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax_facts</span>
+      <span class="l l-Scalar l-Scalar-Plain">until</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax_facts.ansible_facts[&#39;rax_metadata&#39;][&#39;rax_service_level_automation&#39;]|default(&#39;&#39;) == &#39;Complete&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">retries</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">30</span>
+      <span class="l l-Scalar l-Scalar-Plain">delay</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Base Configure Servers</span>
+  <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">web</span>
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">role</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">users</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">role</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">openssh</span>
+      <span class="l l-Scalar l-Scalar-Plain">opensshd_PermitRootLogin</span><span class="p p-Indicator">:</span> <span class="s">&quot;no&quot;</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">role</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ntp</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-ansible-pull">
+<span id="id8"></span><h4>Using Ansible Pull<a class="headerlink" href="#using-ansible-pull" title="Permalink to this headline">¬∂</a></h4>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Ensure Rackconnect and Managed Cloud Automation is complete</span>
+  <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="l l-Scalar l-Scalar-Plain">connection</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Check for completed bootstrap</span>
+      <span class="l l-Scalar l-Scalar-Plain">stat</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/bootstrap_complete</span>
+      <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bootstrap</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Get region</span>
+      <span class="l l-Scalar l-Scalar-Plain">command</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xenstore-read vm-data/provider_data/region</span>
+      <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rax_region</span>
+      <span class="l l-Scalar l-Scalar-Plain">when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bootstrap.stat.exists != True</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Wait for rackconnect automation to complete</span>
+      <span class="l l-Scalar l-Scalar-Plain">uri</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">url</span><span class="p p-Indicator">:</span> <span class="s">&quot;https://{{</span><span class="nv"> </span><span class="s">rax_region.stdout|trim</span><span class="nv"> </span><span class="s">}}.api.rackconnect.rackspace.com/v1/automation_status?format=json&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">return_content</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+      <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">automation_status</span>
+      <span class="l l-Scalar l-Scalar-Plain">when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bootstrap.stat.exists != True</span>
+      <span class="l l-Scalar l-Scalar-Plain">until</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">automation_status[&#39;automation_status&#39;]|default(&#39;&#39;) == &#39;DEPLOYED&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">retries</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">30</span>
+      <span class="l l-Scalar l-Scalar-Plain">delay</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Wait for managed cloud automation to complete</span>
+      <span class="l l-Scalar l-Scalar-Plain">wait_for</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/tmp/rs_managed_cloud_automation_complete</span>
+        <span class="l l-Scalar l-Scalar-Plain">delay</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+      <span class="l l-Scalar l-Scalar-Plain">when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bootstrap.stat.exists != True</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Set bootstrap completed</span>
+      <span class="l l-Scalar l-Scalar-Plain">file</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/bootstrap_complete</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">touch</span>
+        <span class="l l-Scalar l-Scalar-Plain">owner</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+        <span class="l l-Scalar l-Scalar-Plain">group</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+        <span class="l l-Scalar l-Scalar-Plain">mode</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0400</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Base Configure Servers</span>
+  <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="l l-Scalar l-Scalar-Plain">connection</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">role</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">users</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">role</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">openssh</span>
+      <span class="l l-Scalar l-Scalar-Plain">opensshd_PermitRootLogin</span><span class="p p-Indicator">:</span> <span class="s">&quot;no&quot;</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">role</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ntp</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-ansible-pull-with-xenstore">
+<span id="id9"></span><h4>Using Ansible Pull with XenStore<a class="headerlink" href="#using-ansible-pull-with-xenstore" title="Permalink to this headline">¬∂</a></h4>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Ensure Rackconnect and Managed Cloud Automation is complete</span>
+  <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="l l-Scalar l-Scalar-Plain">connection</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Check for completed bootstrap</span>
+      <span class="l l-Scalar l-Scalar-Plain">stat</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/bootstrap_complete</span>
+      <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bootstrap</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Wait for rackconnect_automation_status xenstore key to exist</span>
+      <span class="l l-Scalar l-Scalar-Plain">command</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xenstore-exists vm-data/user-metadata/rackconnect_automation_status</span>
+      <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rcas_exists</span>
+      <span class="l l-Scalar l-Scalar-Plain">when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bootstrap.stat.exists != True</span>
+      <span class="l l-Scalar l-Scalar-Plain">failed_when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rcas_exists.rc|int &gt; 1</span>
+      <span class="l l-Scalar l-Scalar-Plain">until</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rcas_exists.rc|int == 0</span>
+      <span class="l l-Scalar l-Scalar-Plain">retries</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">30</span>
+      <span class="l l-Scalar l-Scalar-Plain">delay</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Wait for rackconnect automation to complete</span>
+      <span class="l l-Scalar l-Scalar-Plain">command</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xenstore-read vm-data/user-metadata/rackconnect_automation_status</span>
+      <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rcas</span>
+      <span class="l l-Scalar l-Scalar-Plain">when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bootstrap.stat.exists != True</span>
+      <span class="l l-Scalar l-Scalar-Plain">until</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rcas.stdout|replace(&#39;&quot;&#39;, &#39;&#39;) == &#39;DEPLOYED&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">retries</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">30</span>
+      <span class="l l-Scalar l-Scalar-Plain">delay</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Wait for rax_service_level_automation xenstore key to exist</span>
+      <span class="l l-Scalar l-Scalar-Plain">command</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xenstore-exists vm-data/user-metadata/rax_service_level_automation</span>
+      <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rsla_exists</span>
+      <span class="l l-Scalar l-Scalar-Plain">when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bootstrap.stat.exists != True</span>
+      <span class="l l-Scalar l-Scalar-Plain">failed_when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rsla_exists.rc|int &gt; 1</span>
+      <span class="l l-Scalar l-Scalar-Plain">until</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rsla_exists.rc|int == 0</span>
+      <span class="l l-Scalar l-Scalar-Plain">retries</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">30</span>
+      <span class="l l-Scalar l-Scalar-Plain">delay</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Wait for managed cloud automation to complete</span>
+      <span class="l l-Scalar l-Scalar-Plain">command</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xenstore-read vm-data/user-metadata/rackconnect_automation_status</span>
+      <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rsla</span>
+      <span class="l l-Scalar l-Scalar-Plain">when</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bootstrap.stat.exists != True</span>
+      <span class="l l-Scalar l-Scalar-Plain">until</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rsla.stdout|replace(&#39;&quot;&#39;, &#39;&#39;) == &#39;DEPLOYED&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">retries</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">30</span>
+      <span class="l l-Scalar l-Scalar-Plain">delay</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Set bootstrap completed</span>
+      <span class="l l-Scalar l-Scalar-Plain">file</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/bootstrap_complete</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">touch</span>
+        <span class="l l-Scalar l-Scalar-Plain">owner</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+        <span class="l l-Scalar l-Scalar-Plain">group</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+        <span class="l l-Scalar l-Scalar-Plain">mode</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0400</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Base Configure Servers</span>
+  <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+  <span class="l l-Scalar l-Scalar-Plain">connection</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">role</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">users</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">role</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">openssh</span>
+      <span class="l l-Scalar l-Scalar-Plain">opensshd_PermitRootLogin</span><span class="p p-Indicator">:</span> <span class="s">&quot;no&quot;</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">role</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ntp</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="advanced-usage">
+<span id="id10"></span><h2>Advanced Usage<a class="headerlink" href="#advanced-usage" title="Permalink to this headline">¬∂</a></h2>
+<div class="section" id="autoscaling-with-tower">
+<span id="awx-autoscale"></span><h3>Autoscaling with Tower<a class="headerlink" href="#autoscaling-with-tower" title="Permalink to this headline">¬∂</a></h3>
+<p><a class="reference internal" href="tower.html" tppabs="https://docs.ansible.com/ansible/tower.html"><span class="doc">Ansible Tower</span></a> also contains a very nice feature for auto-scaling use cases.
+In this mode, a simple curl script can call a defined URL and the server will &#8220;dial out&#8221; to the requester
+and configure an instance that is spinning up.  This can be a great way to reconfigure ephemeral nodes.
+See the Tower documentation for more details.</p>
+<p>A benefit of using the callback in Tower over pull mode is that job results are still centrally recorded
+and less information has to be shared with remote hosts.</p>
+</div>
+<div class="section" id="orchestration-in-the-rackspace-cloud">
+<span id="pending-information"></span><h3>Orchestration in the Rackspace Cloud<a class="headerlink" href="#orchestration-in-the-rackspace-cloud" title="Permalink to this headline">¬∂</a></h3>
+<p>Ansible is a powerful orchestration tool, and rax modules allow you the opportunity to orchestrate complex tasks, deployments, and configurations.  The key here is to automate provisioning of infrastructure, like any other piece of software in an environment.  Complex deployments might have previously required manual manipulation of load balancers, or manual provisioning of servers.  Utilizing the rax modules included with Ansible, one can make the deployment of additional nodes contingent on the current number of running nodes, or the configuration of a clustered application dependent on the number of nodes with common metadata.  One could automate the following scenarios, for example:</p>
+<ul class="simple">
+<li>Servers that are removed from a Cloud Load Balancer one-by-one, updated, verified, and returned to the load balancer pool</li>
+<li>Expansion of an already-online environment, where nodes are provisioned, bootstrapped, configured, and software installed</li>
+<li>A procedure where app log files are uploaded to a central location, like Cloud Files, before a node is decommissioned</li>
+<li>Servers and load balancers that have DNS records created and destroyed on creation and decommissioning, respectively</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div id="search-results"><gcse:searchresults-only></div>
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+        <a href="guide_gce.html" tppabs="https://docs.ansible.com/ansible/guide_gce.html" class="btn btn-neutral float-right" title="Google Cloud Platform Guide"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="guide_azure.html" tppabs="https://docs.ansible.com/ansible/guide_azure.html" class="btn btn-neutral" title="Getting Started with Azure"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','st.js'/*tpa=https://s.swiftypecdn.com/install/v2/st.js*/,'_st');
+
+  _st('install','yABGvz2N8PwcwBxyfzUc','2.0.0');
+</script>
+
+  <p>
+  Copyright ¬© 2016 Red Hat, Inc.
+  <br>
+    Last updated on Jun 22, 2016.
+  </p>
+<p>
+Ansible docs are generated from <a href="javascript:if(confirm('https://github.com/ansible/ansible  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible'" tppabs="https://github.com/ansible/ansible">GitHub sources</A> using <A HREF="javascript:if(confirm('http://sphinx-doc.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://sphinx-doc.org/'" tppabs="http://sphinx-doc.org/">Sphinx</A> using a theme provided by <a href="javascript:if(confirm('http://readthedocs.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://readthedocs.org/'" tppabs="http://readthedocs.org/">Read the Docs</a>. 
+</p>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+<!-- begin analytics -->
+<script type="text/javascript">
+var _hsq = _hsq || [];
+_hsq.push(["setContentType", "standard-page"]);
+        (function(d,s,i,r) {
+        if (d.getElementById(i)){return;}
+        var n = d.createElement(s),e = document.getElementsByTagName(s)[0];
+        n.id=i;n.src = '//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/330046.js';
+        e.parentNode.insertBefore(n, e);
+        })(document, "script", "hs-analytics",300000);
+</script>
+<!-- end analytics -->
+
+</body>
+</html>

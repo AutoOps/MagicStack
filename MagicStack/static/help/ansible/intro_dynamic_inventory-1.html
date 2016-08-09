@@ -1,0 +1,742 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset=UTF-8"utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Tag Manager Data Layer -->
+  <script>
+   dataLayer = [];
+  </script>
+  <!-- End Google Tag Manager Data Layer -->
+
+  
+  <title>Dynamic Inventory &mdash; Ansible Documentation</title>
+  
+
+  
+  
+
+  
+  <link href="css-family=Lato-400,700-Roboto+Slab-400,700-Inconsolata-400,700.css" tppabs="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel='stylesheet' type='text/css'>
+  <link href="font-awesome.min.css" tppabs="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'http://docs.ansible.com/ansible/0.01',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+      <script type="text/javascript" src="jquery-1.js" tppabs="http://docs.ansible.com/ansible/_static/jquery.js"></script>
+      <script type="text/javascript" src="underscore-1.js" tppabs="http://docs.ansible.com/ansible/_static/underscore.js"></script>
+      <script type="text/javascript" src="doctools-1.js" tppabs="http://docs.ansible.com/ansible/_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="theme.min-1.css" tppabs="http://docs.ansible.com/ansible/_static/css/theme.min.css" type="text/css" />
+    <script type="text/javascript" src="theme-1.js" tppabs="http://docs.ansible.com/ansible/_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="Ansible Documentation" href="index.html"/>
+        <link rel="up" title="Introduction" href="intro.html"/>
+        <link rel="next" title="Patterns" href="intro_patterns.html"/>
+        <link rel="prev" title="Inventory" href="intro_inventory.html"/> 
+
+  <script src="modernizr.min-1.js" tppabs="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  <style>
+    .search-reset-start {
+        color: #463E3F;
+        float: right;
+        position: relative;
+        top: -25px;
+        left: -10px;
+        z-index: 10;
+     }
+     .search-reset-start:hover {
+        cursor: pointer;
+        color: #2980B9;
+     }
+     #search-box-id {
+        padding-right: 25px;
+     }
+  </style>
+
+  <link href="css-family=Open+Sans-400,300.css" tppabs="https://fonts.googleapis.com/css?family=Open+Sans:400,300"
+    rel='stylesheet' type='text/css'>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="ns-1.html-id=gtm-psb293" tppabs="http://www.googletagmanager.com/ns.html?id=GTM-PSB293" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm-1.js'/*tpa=http://docs.ansible.com/ansible/gtm.js*/});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-PSB293');</script>
+  <!-- End Google Tag Manager -->
+
+  <a class="DocSite-nav" href="javascript:if(confirm('http://docs.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">
+    <img class="DocSiteNav-logo"
+      src="logo_invert-1.png" tppabs="http://docs.ansible.com/ansible/_static/images/logo_invert.png"
+      alt="Ansible Logo">
+    <div class="DocSiteNav-title">
+      Documentation
+    </div>
+  </a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+
+      <div style="background-color:#5bbdbf;height=80px;margin:'auto auto auto auto'">
+        <a class="DocSiteProduct-header DocSiteProduct-header--core"
+          href="index.htm" tppabs="http://docs.ansible.com/ansible/">
+          <div class="DocSiteProduct-productName">
+            <div class="DocSiteProduct-logoText">
+              ANSIBLE
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div id="menu-id" class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="intro-1.html" tppabs="http://docs.ansible.com/ansible/intro.html">Introduction</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro_installation-1.html" tppabs="http://docs.ansible.com/ansible/intro_installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_getting_started-1.html" tppabs="http://docs.ansible.com/ansible/intro_getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_inventory.html">Inventory</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Dynamic Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_patterns-1.html" tppabs="http://docs.ansible.com/ansible/intro_patterns.html">Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_adhoc-1.html" tppabs="http://docs.ansible.com/ansible/intro_adhoc.html">Introduction To Ad-Hoc Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_configuration-1.html" tppabs="http://docs.ansible.com/ansible/intro_configuration.html">Configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_bsd-1.html" tppabs="http://docs.ansible.com/ansible/intro_bsd.html">BSD Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_windows-1.html" tppabs="http://docs.ansible.com/ansible/intro_windows.html">Windows Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_networking-1.html" tppabs="http://docs.ansible.com/ansible/intro_networking.html">Networking Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart-1.html" tppabs="http://docs.ansible.com/ansible/quickstart.html">Quickstart Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks-1.html" tppabs="http://docs.ansible.com/ansible/playbooks.html">Playbooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_intro-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_intro.html">Intro to Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_roles-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_roles.html">Playbook Roles and Include Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_variables-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_filters-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_filters.html">Jinja2 filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_conditionals-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_conditionals.html">Conditionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_loops-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_loops.html">Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_blocks-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_blocks.html">Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_strategies-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_strategies.html">Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_best_practices-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_best_practices.html">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks_special_topics-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_special_topics.html">Playbooks: Special Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="become-1.html" tppabs="http://docs.ansible.com/ansible/become.html">Become (Privilege Escalation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_acceleration-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_acceleration.html">Accelerated Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_async-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_async.html">Asynchronous Actions and Polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_checkmode-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_checkmode.html">Check Mode (&#8220;Dry Run&#8221;)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_debugger-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_debugger.html">Playbook Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_delegation-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_delegation.html">Delegation, Rolling Updates, and Local Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_environment-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_environment.html">Setting the Environment (and Working With Proxies)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_error_handling-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_error_handling.html">Error Handling In Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_advanced_syntax-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_advanced_syntax.html">Advanced Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_lookups-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_lookups.html">Using Lookups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_prompts-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_prompts.html">Prompts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_tags-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_tags.html">Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_vault-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_vault.html">Vault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_startnstep-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_startnstep.html">Start and Step</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_directives-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_directives.html">Directives Glossary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules-1.html" tppabs="http://docs.ansible.com/ansible/modules.html">About Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules_intro-1.html" tppabs="http://docs.ansible.com/ansible/modules_intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_core-1.html" tppabs="http://docs.ansible.com/ansible/modules_core.html">Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_extra-1.html" tppabs="http://docs.ansible.com/ansible/modules_extra.html">Extras Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_return_values-1.html" tppabs="http://docs.ansible.com/ansible/common_return_values.html">Common Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules_by_category-1.html" tppabs="http://docs.ansible.com/ansible/modules_by_category.html">Module Index</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="list_of_all_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_all_modules.html">All Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_cloud_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_cloud_modules.html">Cloud Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_clustering_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_clustering_modules.html">Clustering Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_commands_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_commands_modules.html">Commands Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_database_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_database_modules.html">Database Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_files_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_files_modules.html">Files Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_inventory_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_inventory_modules.html">Inventory Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_messaging_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_messaging_modules.html">Messaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_monitoring_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_monitoring_modules.html">Monitoring Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_network_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_network_modules.html">Network Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_notification_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_notification_modules.html">Notification Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_packaging_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_packaging_modules.html">Packaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_source_control_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_source_control_modules.html">Source Control Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_system_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_system_modules.html">System Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_utilities_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_utilities_modules.html">Utilities Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_web_infrastructure_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_web_infrastructure_modules.html">Web Infrastructure Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_windows_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_windows_modules.html">Windows Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guides-1.html" tppabs="http://docs.ansible.com/ansible/guides.html">Detailed Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_aws-1.html" tppabs="http://docs.ansible.com/ansible/guide_aws.html">Amazon Web Services Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_azure-1.html" tppabs="http://docs.ansible.com/ansible/guide_azure.html">Getting Started with Azure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rax-1.html" tppabs="http://docs.ansible.com/ansible/guide_rax.html">Rackspace Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_gce-1.html" tppabs="http://docs.ansible.com/ansible/guide_gce.html">Google Cloud Platform Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_cloudstack-1.html" tppabs="http://docs.ansible.com/ansible/guide_cloudstack.html">CloudStack Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_vagrant-1.html" tppabs="http://docs.ansible.com/ansible/guide_vagrant.html">Using Vagrant and Ansible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rolling_upgrade-1.html" tppabs="http://docs.ansible.com/ansible/guide_rolling_upgrade.html">Continuous Delivery and Rolling Upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_docker-1.html" tppabs="http://docs.ansible.com/ansible/guide_docker.html">Getting Started with Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developing-1.html" tppabs="http://docs.ansible.com/ansible/developing.html">Developer Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developing_api-1.html" tppabs="http://docs.ansible.com/ansible/developing_api.html">Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_inventory-1.html" tppabs="http://docs.ansible.com/ansible/developing_inventory.html">Developing Dynamic Inventory Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_modules-1.html" tppabs="http://docs.ansible.com/ansible/developing_modules.html">Developing Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_plugins-1.html" tppabs="http://docs.ansible.com/ansible/developing_plugins.html">Developing Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_core-1.html" tppabs="http://docs.ansible.com/ansible/developing_core.html">Developing the Ansible Core Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_test_pr-1.html" tppabs="http://docs.ansible.com/ansible/developing_test_pr.html">Helping Testing PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_releases-1.html" tppabs="http://docs.ansible.com/ansible/developing_releases.html">Releases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tower-1.html" tppabs="http://docs.ansible.com/ansible/tower.html">Ansible Tower</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community-1.html" tppabs="http://docs.ansible.com/ansible/community.html">Community Information &amp; Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#ansible-users" tppabs="http://docs.ansible.com/ansible/community.html#ansible-users">Ansible Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#for-current-and-prospective-developers" tppabs="http://docs.ansible.com/ansible/community.html#for-current-and-prospective-developers">For Current and Prospective Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#other-topics" tppabs="http://docs.ansible.com/ansible/community.html#other-topics">Other Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#community-code-of-conduct" tppabs="http://docs.ansible.com/ansible/community.html#community-code-of-conduct">Community Code of Conduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#contributors-license-agreement" tppabs="http://docs.ansible.com/ansible/community.html#contributors-license-agreement">Contributors License Agreement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="galaxy-1.html" tppabs="http://docs.ansible.com/ansible/galaxy.html">Ansible Galaxy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="galaxy-1.html#the-website" tppabs="http://docs.ansible.com/ansible/galaxy.html#the-website">The Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="galaxy-1.html#the-ansible-galaxy-command-line-tool" tppabs="http://docs.ansible.com/ansible/galaxy.html#the-ansible-galaxy-command-line-tool">The ansible-galaxy command line tool</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test_strategies-1.html" tppabs="http://docs.ansible.com/ansible/test_strategies.html">Testing Strategies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#integrating-testing-with-ansible-playbooks" tppabs="http://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-ansible-playbooks">Integrating Testing With Ansible Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#the-right-level-of-testing" tppabs="http://docs.ansible.com/ansible/test_strategies.html#the-right-level-of-testing">The Right Level of Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#check-mode-as-a-drift-test" tppabs="http://docs.ansible.com/ansible/test_strategies.html#check-mode-as-a-drift-test">Check Mode As A Drift Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#modules-that-are-useful-for-testing" tppabs="http://docs.ansible.com/ansible/test_strategies.html#modules-that-are-useful-for-testing">Modules That Are Useful for Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#testing-lifecycle" tppabs="http://docs.ansible.com/ansible/test_strategies.html#testing-lifecycle">Testing Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#integrating-testing-with-rolling-updates" tppabs="http://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-rolling-updates">Integrating Testing With Rolling Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#achieving-continuous-deployment" tppabs="http://docs.ansible.com/ansible/test_strategies.html#achieving-continuous-deployment">Achieving Continuous Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#conclusion" tppabs="http://docs.ansible.com/ansible/test_strategies.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq-1.html" tppabs="http://docs.ansible.com/ansible/faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook" tppabs="http://docs.ansible.com/ansible/faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook">How can I set the PATH or any other environment variable for a task or entire playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with">How do I handle different machines needing different user accounts or ports to log in with?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file">How do I get ansible to reuse connections, enable Kerberized SSH, or have Ansible pay attention to my local SSH config file?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">How do I configure a jump host to access servers that I have no direct access to?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-speed-up-management-inside-ec2" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-speed-up-management-inside-ec2">How do I speed up management inside EC2?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine">How do I handle python pathing not having a Python 2.X in /usr/bin/python on a remote machine?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#what-is-the-best-way-to-make-content-reusable-redistributable" tppabs="http://docs.ansible.com/ansible/faq.html#what-is-the-best-way-to-make-content-reusable-redistributable">What is the best way to make content reusable/redistributable?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it" tppabs="http://docs.ansible.com/ansible/faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it">Where does the configuration file live and what can I configure in it?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-disable-cowsay" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-disable-cowsay">How do I disable cowsay?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-see-a-list-of-all-of-the-ansible-variables" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables">How do I see a list of all of the ansible_ variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host">How do I see all the inventory vars defined for my host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template">How do I loop over a list of hosts in a group, inside of a template?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-a-variable-name-programmatically" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-name-programmatically">How do I access a variable name programmatically?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-a-variable-of-the-first-host-in-a-group" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group">How do I access a variable of the first host in a group?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-copy-files-recursively-onto-a-target-host" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-copy-files-recursively-onto-a-target-host">How do I copy files recursively onto a target host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-shell-environment-variables" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-shell-environment-variables">How do I access shell environment variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-generate-crypted-passwords-for-the-user-module" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module">How do I generate crypted passwords for the user module?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#can-i-get-training-on-ansible-or-find-commercial-support" tppabs="http://docs.ansible.com/ansible/faq.html#can-i-get-training-on-ansible-or-find-commercial-support">Can I get training on Ansible or find commercial support?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#is-there-a-web-interface-rest-api-etc" tppabs="http://docs.ansible.com/ansible/faq.html#is-there-a-web-interface-rest-api-etc">Is there a web interface / REST API / etc?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-submit-a-change-to-the-documentation" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-submit-a-change-to-the-documentation">How do I submit a change to the documentation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-keep-secret-data-in-my-playbook" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-keep-secret-data-in-my-playbook">How do I keep secret data in my playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names" tppabs="http://docs.ansible.com/ansible/faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names">When should I use {{ }}? Also, how to interpolate variables or dynamic variable names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#i-don-t-see-my-question-here" tppabs="http://docs.ansible.com/ansible/faq.html#i-don-t-see-my-question-here">I don&#8217;t see my question here</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary-1.html" tppabs="http://docs.ansible.com/ansible/glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YAMLSyntax-1.html" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html">YAML Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax-1.html#yaml-basics" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html#yaml-basics">YAML Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax-1.html#gotchas" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html#gotchas">Gotchas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html">Porting Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#playbook" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#playbook">Playbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#deprecated" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#deprecated">Deprecated</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#other-caveats" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#other-caveats">Other caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#porting-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#porting-plugins">Porting plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#lookup-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#lookup-plugins">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#connection-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#connection-plugins">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#action-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#action-plugins">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#callback-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#callback-plugins">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id1" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id1">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#hybrid-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#hybrid-plugins">Hybrid plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id2" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id2">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id3" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id3">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id4" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id4">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id5" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id5">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id6" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id6">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#porting-custom-scripts" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#porting-custom-scripts">Porting custom scripts</a></li>
+</ul>
+
+        
+
+<!-- changeable widget -->
+<center>
+<br/>
+<a href="javascript:if(confirm('http://www.ansible.com/docs-left?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-left?utm_source=docs'" tppabs="http://www.ansible.com/docs-left?utm_source=docs">
+    <img style="border-width:0px;" src="ASB-docs-left-rail.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-left-rail.png" />
+</a>
+</center>
+
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="javascript:if(confirm('http://docs.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">Ansible Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+
+          <!-- Banner ads -->
+          <div class="DocSiteBanner">
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-left.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-left.png">
+            </a>
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-right.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-right.png">
+            </a>
+        </div>
+
+          <ul class="wy-breadcrumbs">
+  <li><a href="index-1.html" tppabs="http://docs.ansible.com/ansible/index.html">Docs</a> &raquo;</li>
+  <li><a href="">Dynamic Inventory</a></li>
+  
+    <li class="wy-breadcrumbs-aside">
+      <a href="javascript:if(confirm('https://github.com/ansible/ansible/blob/devel/docsite/rst/intro_dynamic_inventory.rst  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible/blob/devel/docsite/rst/intro_dynamic_inventory.rst'" tppabs="https://github.com/ansible/ansible/blob/devel/docsite/rst/intro_dynamic_inventory.rst" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  
+</ul>
+<hr/>
+
+          <div id="page-content">
+          
+  <div class="section" id="dynamic-inventory">
+<span id="id1"></span><h1><a class="toc-backref" href="#id4">Dynamic Inventory</a><a class="headerlink" href="#dynamic-inventory" title="Permalink to this headline">露</a></h1>
+<div class="contents topic" id="topics">
+<p class="topic-title first">Topics</p>
+<ul class="simple">
+<li><a class="reference internal" href="#dynamic-inventory" id="id4">Dynamic Inventory</a><ul>
+<li><a class="reference internal" href="#example-the-cobbler-external-inventory-script" id="id5">Example: The Cobbler External Inventory Script</a></li>
+<li><a class="reference internal" href="#example-aws-ec2-external-inventory-script" id="id6">Example: AWS EC2 External Inventory Script</a></li>
+<li><a class="reference internal" href="#example-openstack-external-inventory-script" id="id7">Example: OpenStack External Inventory Script</a><ul>
+<li><a class="reference internal" href="#explicit-use-of-inventory-script" id="id8">Explicit use of inventory script</a></li>
+<li><a class="reference internal" href="#implicit-use-of-inventory-script" id="id9">Implicit use of inventory script</a></li>
+<li><a class="reference internal" href="#refresh-the-cache" id="id10">Refresh the cache</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#other-inventory-scripts" id="id11">Other inventory scripts</a></li>
+<li><a class="reference internal" href="#using-inventory-directories-and-multiple-inventory-sources" id="id12">Using Inventory Directories and Multiple Inventory Sources</a></li>
+<li><a class="reference internal" href="#static-groups-of-dynamic-groups" id="id13">Static Groups of Dynamic Groups</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Often a user of a configuration management system will want to keep inventory
+in a different software system.  Ansible provides a basic text-based system as described in
+<a class="reference internal" href="intro_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_inventory.html"><span class="doc">Inventory</span></a> but what if you want to use something else?</p>
+<p>Frequent examples include pulling inventory from a cloud provider, LDAP, <a class="reference external" href="javascript:if(confirm('http://cobbler.github.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://cobbler.github.com/'" tppabs="http://cobbler.github.com/">Cobbler</a>,
+or a piece of expensive enterprisey CMDB software.</p>
+<p>Ansible easily supports all of these options via an external inventory system.  The contrib/inventory directory contains some of these already &#8211; including options for EC2/Eucalyptus, Rackspace Cloud, and OpenStack, examples of some of which will be detailed below.</p>
+<p><a class="reference internal" href="tower-1.html" tppabs="http://docs.ansible.com/ansible/tower.html"><span class="doc">Ansible Tower</span></a> also provides a database to store inventory results that is both web and REST Accessible.  Tower syncs with all Ansible dynamic inventory sources you might be using, and also includes a graphical inventory editor. By having a database record of all of your hosts, it&#8217;s easy to correlate past event history and see which ones have had failures on their last playbook runs.</p>
+<p>For information about writing your own dynamic inventory source, see <a class="reference internal" href="developing_inventory-1.html" tppabs="http://docs.ansible.com/ansible/developing_inventory.html"><span class="doc">Developing Dynamic Inventory Sources</span></a>.</p>
+<div class="section" id="example-the-cobbler-external-inventory-script">
+<span id="cobbler-example"></span><h2><a class="toc-backref" href="#id5">Example: The Cobbler External Inventory Script</a><a class="headerlink" href="#example-the-cobbler-external-inventory-script" title="Permalink to this headline">露</a></h2>
+<p>It is expected that many Ansible users with a reasonable amount of physical hardware may also be <a class="reference external" href="javascript:if(confirm('http://cobbler.github.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://cobbler.github.com/'" tppabs="http://cobbler.github.com/">Cobbler</a> users.  (note: Cobbler was originally written by Michael DeHaan and is now led by James Cammarata, who also works for Ansible, Inc).</p>
+<p>While primarily used to kickoff OS installations and manage DHCP and DNS, Cobbler has a generic
+layer that allows it to represent data for multiple configuration management systems (even at the same time), and has
+been referred to as a &#8216;lightweight CMDB&#8217; by some admins.</p>
+<p>To tie Ansible&#8217;s inventory to Cobbler (optional), copy <a class="reference external" href="javascript:if(confirm('https://raw.github.com/ansible/ansible/devel/contrib/inventory/cobbler.py  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://raw.github.com/ansible/ansible/devel/contrib/inventory/cobbler.py'" tppabs="https://raw.github.com/ansible/ansible/devel/contrib/inventory/cobbler.py">this script</a> to /etc/ansible and <cite>chmod +x</cite> the file.  cobblerd will now need
+to be running when you are using Ansible and you&#8217;ll need to use Ansible&#8217;s  <code class="docutils literal"><span class="pre">-i</span></code> command line option (e.g. <code class="docutils literal"><span class="pre">-i</span> <span class="pre">/etc/ansible/cobbler.py</span></code>).
+This particular script will communicate with Cobbler using Cobbler&#8217;s XMLRPC API.</p>
+<p>Also a cobbler.ini file should be added to /etc/ansible so Ansible knows where the Cobbler server is and some cache improvements can be used. For example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">[</span><span class="nv">cobbler</span><span class="p p-Indicator">]</span>
+
+<span class="c1"># Set Cobbler&#39;s hostname or IP address</span>
+<span class="l l-Scalar l-Scalar-Plain">host = http://127.0.0.1/cobbler_api</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># API calls to Cobbler can be slow. For this reason, we cache the results of an API</span>
+<span class="l l-Scalar l-Scalar-Plain"># call. Set this to the path you want cache files to be written to. Two files</span>
+<span class="l l-Scalar l-Scalar-Plain"># will be written to this directory</span><span class="p p-Indicator">:</span>
+<span class="c1">#   - ansible-cobbler.cache</span>
+<span class="c1">#   - ansible-cobbler.index</span>
+
+<span class="l l-Scalar l-Scalar-Plain">cache_path = /tmp</span>
+
+<span class="c1"># The number of seconds a cache file is considered valid. After this many</span>
+<span class="c1"># seconds, a new API call will be made, and the cache file will be updated.</span>
+
+<span class="l l-Scalar l-Scalar-Plain">cache_max_age = 900</span>
+</pre></div>
+</div>
+<p>First test the script by running <code class="docutils literal"><span class="pre">/etc/ansible/cobbler.py</span></code> directly.   You should see some JSON data output, but it may not have anything in it just yet.</p>
+<p>Let&#8217;s explore what this does.  In cobbler, assume a scenario somewhat like the following:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">cobbler profile add --name=webserver --distro=CentOS6-x86_64</span>
+<span class="l l-Scalar l-Scalar-Plain">cobbler profile edit --name=webserver --mgmt-classes=&quot;webserver&quot; --ksmeta=&quot;a=2 b=3&quot;</span>
+<span class="l l-Scalar l-Scalar-Plain">cobbler system edit --name=foo --dns-name=&quot;foo.example.com&quot; --mgmt-classes=&quot;atlanta&quot; --ksmeta=&quot;c=4&quot;</span>
+<span class="l l-Scalar l-Scalar-Plain">cobbler system edit --name=bar --dns-name=&quot;bar.example.com&quot; --mgmt-classes=&quot;atlanta&quot; --ksmeta=&quot;c=5&quot;</span>
+</pre></div>
+</div>
+<p>In the example above, the system &#8216;foo.example.com&#8217; will be addressable by ansible directly, but will also be addressable when using the group names &#8216;webserver&#8217; or &#8216;atlanta&#8217;.  Since Ansible uses SSH, we&#8217;ll try to contact system foo over &#8216;foo.example.com&#8217;, only, never just &#8216;foo&#8217;.  Similarly, if you try &#8220;ansible foo&#8221; it wouldn&#8217;t find the system... but &#8220;ansible &#8216;foo*&#8217;&#8221; would, because the system DNS name starts with &#8216;foo&#8217;.</p>
+<p>The script doesn&#8217;t just provide host and group info.  In addition, as a bonus, when the &#8216;setup&#8217; module is run (which happens automatically when using playbooks), the variables &#8216;a&#8217;, &#8216;b&#8217;, and &#8216;c&#8217; will all be auto-populated in the templates:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># file: /srv/motd.j2</span>
+<span class="l l-Scalar l-Scalar-Plain">Welcome, I am templated with a value of a={{ a }}, b={{ b }}, and c={{ c }}</span>
+</pre></div>
+</div>
+<p>Which could be executed just like this:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible webserver -m setup</span>
+<span class="l l-Scalar l-Scalar-Plain">ansible webserver -m template -a &quot;src=/tmp/motd.j2 dest=/etc/motd&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The name &#8216;webserver&#8217; came from cobbler, as did the variables for
+the config file.  You can still pass in your own variables like
+normal in Ansible, but variables from the external inventory script
+will override any that have the same name.</p>
+</div>
+<p>So, with the template above (motd.j2), this would result in the following data being written to /etc/motd for system &#8216;foo&#8217;:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">Welcome, I am templated with a value of a=2, b=3, and c=4</span>
+</pre></div>
+</div>
+<p>And on system &#8216;bar&#8217; (bar.example.com):</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">Welcome, I am templated with a value of a=2, b=3, and c=5</span>
+</pre></div>
+</div>
+<p>And technically, though there is no major good reason to do it, this also works too:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible webserver -m shell -a &quot;echo {{ a }}&quot;</span>
+</pre></div>
+</div>
+<p>So in other words, you can use those variables in arguments/actions as well.</p>
+</div>
+<div class="section" id="example-aws-ec2-external-inventory-script">
+<span id="aws-example"></span><h2><a class="toc-backref" href="#id6">Example: AWS EC2 External Inventory Script</a><a class="headerlink" href="#example-aws-ec2-external-inventory-script" title="Permalink to this headline">露</a></h2>
+<p>If you use Amazon Web Services EC2, maintaining an inventory file might not be the best approach, because hosts may come and go over time, be managed by external applications, or you might even be using AWS autoscaling. For this reason, you can use the <a class="reference external" href="javascript:if(confirm('https://raw.github.com/ansible/ansible/devel/contrib/inventory/ec2.py  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://raw.github.com/ansible/ansible/devel/contrib/inventory/ec2.py'" tppabs="https://raw.github.com/ansible/ansible/devel/contrib/inventory/ec2.py">EC2 external inventory</a> script.</p>
+<p>You can use this script in one of two ways. The easiest is to use Ansible&#8217;s <code class="docutils literal"><span class="pre">-i</span></code> command line option and specify the path to the script after
+marking it executable:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible -i ec2.py -u ubuntu us-east-1d -m ping</span>
+</pre></div>
+</div>
+<p>The second option is to copy the script to <cite>/etc/ansible/hosts</cite> and <cite>chmod +x</cite> it. You will also need to copy the <a class="reference external" href="javascript:if(confirm('https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/ec2.ini  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/ec2.ini'" tppabs="https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/ec2.ini">ec2.ini</a> file to <cite>/etc/ansible/ec2.ini</cite>. Then you can run ansible as you would normally.</p>
+<p>To successfully make an API call to AWS, you will need to configure Boto (the Python interface to AWS). There are a <a class="reference external" href="javascript:if(confirm('http://docs.pythonboto.org/en/latest/boto_config_tut.html  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://docs.pythonboto.org/en/latest/boto_config_tut.html'" tppabs="http://docs.pythonboto.org/en/latest/boto_config_tut.html">variety of methods</a> available, but the simplest is just to export two environment variables:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">export AWS_ACCESS_KEY_ID=&#39;AK123&#39;</span>
+<span class="l l-Scalar l-Scalar-Plain">export AWS_SECRET_ACCESS_KEY=&#39;abc123&#39;</span>
+</pre></div>
+</div>
+<p>You can test the script by itself to make sure your config is correct:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">cd contrib/inventory</span>
+<span class="l l-Scalar l-Scalar-Plain">./ec2.py --list</span>
+</pre></div>
+</div>
+<p>After a few moments, you should see your entire EC2 inventory across all regions in JSON.</p>
+<p>If you use boto profiles to manage multiple AWS accounts, you can pass <code class="docutils literal"><span class="pre">--profile</span> <span class="pre">PROFILE</span></code> name to the <code class="docutils literal"><span class="pre">ec2.py</span></code> script. An example profile might be:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">[</span><span class="nv">profile dev</span><span class="p p-Indicator">]</span>
+<span class="l l-Scalar l-Scalar-Plain">aws_access_key_id = &lt;dev access key&gt;</span>
+<span class="l l-Scalar l-Scalar-Plain">aws_secret_access_key = &lt;dev secret key&gt;</span>
+
+<span class="l l-Scalar l-Scalar-Plain">[profile prod]</span>
+<span class="l l-Scalar l-Scalar-Plain">aws_access_key_id = &lt;prod access key&gt;</span>
+<span class="l l-Scalar l-Scalar-Plain">aws_secret_access_key = &lt;prod secret key&gt;</span>
+</pre></div>
+</div>
+<p>You can then run <code class="docutils literal"><span class="pre">ec2.py</span> <span class="pre">--profile</span> <span class="pre">prod</span></code> to get the inventory for the prod account, this option is not supported by <code class="docutils literal"><span class="pre">ansible-playbook</span></code> though.
+But you can use the <code class="docutils literal"><span class="pre">AWS_PROFILE</span></code> variable - e.g. <code class="docutils literal"><span class="pre">AWS_PROFILE=prod</span> <span class="pre">ansible-playbook</span> <span class="pre">-i</span> <span class="pre">ec2.py</span> <span class="pre">myplaybook.yml</span></code></p>
+<p>Since each region requires its own API call, if you are only using a small set of regions, feel free to edit <code class="docutils literal"><span class="pre">ec2.ini</span></code> and list only the regions you are interested in. There are other config options in <code class="docutils literal"><span class="pre">ec2.ini</span></code> including cache control, and destination variables.</p>
+<p>At their heart, inventory files are simply a mapping from some name to a destination address. The default <code class="docutils literal"><span class="pre">ec2.ini</span></code> settings are configured for running Ansible from outside EC2 (from your laptop for example) &#8211; and this is not the most efficient way to manage EC2.</p>
+<p>If you are running Ansible from within EC2, internal DNS names and IP addresses may make more sense than public DNS names. In this case, you can modify the <code class="docutils literal"><span class="pre">destination_variable</span></code> in <code class="docutils literal"><span class="pre">ec2.ini</span></code> to be the private DNS name of an instance. This is particularly important when running Ansible within a private subnet inside a VPC, where the only way to access an instance is via its private IP address. For VPC instances, <cite>vpc_destination_variable</cite> in <code class="docutils literal"><span class="pre">ec2.ini</span></code> provides a means of using which ever <a class="reference external" href="javascript:if(confirm('http://docs.pythonboto.org/en/latest/ref/ec2.html  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://docs.pythonboto.org/en/latest/ref/ec2.html#module-boto.ec2.instance'" tppabs="http://docs.pythonboto.org/en/latest/ref/ec2.html#module-boto.ec2.instance">boto.ec2.instance variable</a> makes the most sense for your use case.</p>
+<p>The EC2 external inventory provides mappings to instances from several groups:</p>
+<dl class="docutils">
+<dt>Global</dt>
+<dd>All instances are in group <code class="docutils literal"><span class="pre">ec2</span></code>.</dd>
+<dt>Instance ID</dt>
+<dd>These are groups of one since instance IDs are unique.
+e.g.
+<code class="docutils literal"><span class="pre">i-00112233</span></code>
+<code class="docutils literal"><span class="pre">i-a1b1c1d1</span></code></dd>
+<dt>Region</dt>
+<dd>A group of all instances in an AWS region.
+e.g.
+<code class="docutils literal"><span class="pre">us-east-1</span></code>
+<code class="docutils literal"><span class="pre">us-west-2</span></code></dd>
+<dt>Availability Zone</dt>
+<dd>A group of all instances in an availability zone.
+e.g.
+<code class="docutils literal"><span class="pre">us-east-1a</span></code>
+<code class="docutils literal"><span class="pre">us-east-1b</span></code></dd>
+<dt>Security Group</dt>
+<dd>Instances belong to one or more security groups. A group is created for each security group, with all characters except alphanumerics, dashes (-) converted to underscores (_). Each group is prefixed by <code class="docutils literal"><span class="pre">security_group_</span></code>
+e.g.
+<code class="docutils literal"><span class="pre">security_group_default</span></code>
+<code class="docutils literal"><span class="pre">security_group_webservers</span></code>
+<code class="docutils literal"><span class="pre">security_group_Pete_s_Fancy_Group</span></code></dd>
+<dt>Tags</dt>
+<dd>Each instance can have a variety of key/value pairs associated with it called Tags. The most common tag key is &#8216;Name&#8217;, though anything is possible. Each key/value pair is its own group of instances, again with special characters converted to underscores, in the format <code class="docutils literal"><span class="pre">tag_KEY_VALUE</span></code>
+e.g.
+<code class="docutils literal"><span class="pre">tag_Name_Web</span></code> can be used as is
+<code class="docutils literal"><span class="pre">tag_Name_redis-master-001</span></code> becomes <code class="docutils literal"><span class="pre">tag_Name_redis_master_001</span></code>
+<code class="docutils literal"><span class="pre">tag_aws_cloudformation_logical-id_WebServerGroup</span></code> becomes <code class="docutils literal"><span class="pre">tag_aws_cloudformation_logical_id_WebServerGroup</span></code></dd>
+</dl>
+<p>When the Ansible is interacting with a specific server, the EC2 inventory script is called again with the <code class="docutils literal"><span class="pre">--host</span> <span class="pre">HOST</span></code> option. This looks up the HOST in the index cache to get the instance ID, and then makes an API call to AWS to get information about that specific instance. It then makes information about that instance available as variables to your playbooks. Each variable is prefixed by <code class="docutils literal"><span class="pre">ec2_</span></code>. Here are some of the variables available:</p>
+<ul class="simple">
+<li>ec2_architecture</li>
+<li>ec2_description</li>
+<li>ec2_dns_name</li>
+<li>ec2_id</li>
+<li>ec2_image_id</li>
+<li>ec2_instance_type</li>
+<li>ec2_ip_address</li>
+<li>ec2_kernel</li>
+<li>ec2_key_name</li>
+<li>ec2_launch_time</li>
+<li>ec2_monitored</li>
+<li>ec2_ownerId</li>
+<li>ec2_placement</li>
+<li>ec2_platform</li>
+<li>ec2_previous_state</li>
+<li>ec2_private_dns_name</li>
+<li>ec2_private_ip_address</li>
+<li>ec2_public_dns_name</li>
+<li>ec2_ramdisk</li>
+<li>ec2_region</li>
+<li>ec2_root_device_name</li>
+<li>ec2_root_device_type</li>
+<li>ec2_security_group_ids</li>
+<li>ec2_security_group_names</li>
+<li>ec2_spot_instance_request_id</li>
+<li>ec2_state</li>
+<li>ec2_state_code</li>
+<li>ec2_state_reason</li>
+<li>ec2_status</li>
+<li>ec2_subnet_id</li>
+<li>ec2_tag_Name</li>
+<li>ec2_tenancy</li>
+<li>ec2_virtualization_type</li>
+<li>ec2_vpc_id</li>
+</ul>
+<p>Both <code class="docutils literal"><span class="pre">ec2_security_group_ids</span></code> and <code class="docutils literal"><span class="pre">ec2_security_group_names</span></code> are comma-separated lists of all security groups. Each EC2 tag is a variable in the format <code class="docutils literal"><span class="pre">ec2_tag_KEY</span></code>.</p>
+<p>To see the complete list of variables available for an instance, run the script by itself:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">cd contrib/inventory</span>
+<span class="l l-Scalar l-Scalar-Plain">./ec2.py --host ec2-12-12-12-12.compute-1.amazonaws.com</span>
+</pre></div>
+</div>
+<p>Note that the AWS inventory script will cache results to avoid repeated API calls, and this cache setting is configurable in ec2.ini.  To
+explicitly clear the cache, you can run the ec2.py script with the <code class="docutils literal"><span class="pre">--refresh-cache</span></code> parameter:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># ./ec2.py --refresh-cache</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-openstack-external-inventory-script">
+<span id="openstack-example"></span><h2><a class="toc-backref" href="#id7">Example: OpenStack External Inventory Script</a><a class="headerlink" href="#example-openstack-external-inventory-script" title="Permalink to this headline">露</a></h2>
+<p>If you use an OpenStack based cloud, instead of manually maintaining your own inventory file, you can use the openstack.py dynamic inventory to pull information about your compute instances directly from OpenStack.</p>
+<p>You can download the latest version of the OpenStack inventory script at: <a class="reference external" href="javascript:if(confirm('https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/openstack.py  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/openstack.py'" tppabs="https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/openstack.py">https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/openstack.py</a></p>
+<p>You can use the inventory script explicitly (by passing the <cite>-i openstack.py</cite> argument to Ansible) or implicitly (by placing the script at <cite>/etc/ansible/hosts</cite>).</p>
+<div class="section" id="explicit-use-of-inventory-script">
+<h3><a class="toc-backref" href="#id8">Explicit use of inventory script</a><a class="headerlink" href="#explicit-use-of-inventory-script" title="Permalink to this headline">露</a></h3>
+<p>Download the latest version of the OpenStack dynamic inventory script and make it executable:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">wget https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/openstack.py</span>
+<span class="l l-Scalar l-Scalar-Plain">chmod +x openstack.py</span>
+</pre></div>
+</div>
+<p>Source an OpenStack RC file:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">source openstack.rc</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">An OpenStack RC file contains the environment variables required by the client tools to establish a connection with the cloud provider, such as the authentication URL, user name, password and region name. For more information on how to download, create or source an OpenStack RC file, please refer to <a class="reference external" href="javascript:if(confirm('http://docs.openstack.org/cli-reference/common/cli_set_environment_variables_using_openstack_rc.html  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://docs.openstack.org/cli-reference/common/cli_set_environment_variables_using_openstack_rc.html'" tppabs="http://docs.openstack.org/cli-reference/common/cli_set_environment_variables_using_openstack_rc.html">Set environment variables using the OpenStack RC file</a>.</p>
+</div>
+<p>You can confirm the file has been successfully sourced by running a simple command, such as <cite>nova list</cite> and ensuring it return no errors.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The OpenStack command line clients are required to run the <cite>nova list</cite> command. For more information on how to install them, please refer to <a class="reference external" href="javascript:if(confirm('http://docs.openstack.org/cli-reference/common/cli_install_openstack_command_line_clients.html  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://docs.openstack.org/cli-reference/common/cli_install_openstack_command_line_clients.html'" tppabs="http://docs.openstack.org/cli-reference/common/cli_install_openstack_command_line_clients.html">Install the OpenStack command-line clients</a>.</p>
+</div>
+<p>You can test the OpenStack dynamic inventory script manually to confirm it is working as expected:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">./openstack.py --list</span>
+</pre></div>
+</div>
+<p>After a few moments you should see some JSON output with information about your compute instances.</p>
+<p>Once you confirm the dynamic inventory script is working as expected, you can tell Ansible to use the <cite>openstack.py</cite> script as an inventory file, as illustrated below:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible -i openstack.py all -m ping</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="implicit-use-of-inventory-script">
+<h3><a class="toc-backref" href="#id9">Implicit use of inventory script</a><a class="headerlink" href="#implicit-use-of-inventory-script" title="Permalink to this headline">露</a></h3>
+<p>Download the latest version of the OpenStack dynamic inventory script, make it executable and copy it to <cite>/etc/ansible/hosts</cite>:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">wget https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/openstack.py</span>
+<span class="l l-Scalar l-Scalar-Plain">chmod +x openstack.py</span>
+<span class="l l-Scalar l-Scalar-Plain">sudo cp openstack.py /etc/ansible/hosts</span>
+</pre></div>
+</div>
+<p>Download the sample configuration file, modify it to suit your needs and copy it to <cite>/etc/ansible/openstack.yml</cite>:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">wget https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/openstack.yml</span>
+<span class="l l-Scalar l-Scalar-Plain">vi openstack.yml</span>
+<span class="l l-Scalar l-Scalar-Plain">sudo cp openstack.yml /etc/ansible/</span>
+</pre></div>
+</div>
+<p>You can test the OpenStack dynamic inventory script manually to confirm it is working as expected:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">/etc/ansible/hosts --list</span>
+</pre></div>
+</div>
+<p>After a few moments you should see some JSON output with information about your compute instances.</p>
+</div>
+<div class="section" id="refresh-the-cache">
+<h3><a class="toc-backref" href="#id10">Refresh the cache</a><a class="headerlink" href="#refresh-the-cache" title="Permalink to this headline">露</a></h3>
+<p>Note that the OpenStack dynamic inventory script will cache results to avoid repeated API calls. To explicitly clear the cache, you can run the openstack.py (or hosts) script with the &#8211;refresh parameter:</p>
+<blockquote>
+<div>./openstack.py &#8211;refresh &#8211;list</div></blockquote>
+</div>
+</div>
+<div class="section" id="other-inventory-scripts">
+<span id="id3"></span><h2><a class="toc-backref" href="#id11">Other inventory scripts</a><a class="headerlink" href="#other-inventory-scripts" title="Permalink to this headline">露</a></h2>
+<p>In addition to Cobbler and EC2, inventory scripts are also available for:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">BSD Jails</span>
+<span class="l l-Scalar l-Scalar-Plain">DigitalOcean</span>
+<span class="l l-Scalar l-Scalar-Plain">Google Compute Engine</span>
+<span class="l l-Scalar l-Scalar-Plain">Linode</span>
+<span class="l l-Scalar l-Scalar-Plain">OpenShift</span>
+<span class="l l-Scalar l-Scalar-Plain">OpenStack Nova</span>
+<span class="l l-Scalar l-Scalar-Plain">Ovirt</span>
+<span class="l l-Scalar l-Scalar-Plain">SpaceWalk</span>
+<span class="l l-Scalar l-Scalar-Plain">Vagrant (not to be confused with the provisioner in vagrant, which is preferred)</span>
+<span class="l l-Scalar l-Scalar-Plain">Zabbix</span>
+</pre></div>
+</div>
+<p>Sections on how to use these in more detail will be added over time, but by looking at the &#8220;contrib/inventory&#8221; directory of the Ansible checkout
+it should be very obvious how to use them.  The process for the AWS inventory script is the same.</p>
+<p>If you develop an interesting inventory script that might be general purpose, please submit a pull request &#8211; we&#8217;d likely be glad
+to include it in the project.</p>
+</div>
+<div class="section" id="using-inventory-directories-and-multiple-inventory-sources">
+<span id="using-multiple-sources"></span><h2><a class="toc-backref" href="#id12">Using Inventory Directories and Multiple Inventory Sources</a><a class="headerlink" href="#using-inventory-directories-and-multiple-inventory-sources" title="Permalink to this headline">露</a></h2>
+<p>If the location given to -i in Ansible is a directory (or as so configured in ansible.cfg), Ansible can use multiple inventory sources
+at the same time.  When doing so, it is possible to mix both dynamic and statically managed inventory sources in the same ansible run.  Instant
+hybrid cloud!</p>
+<p>In an inventory directory, executable files will be treated as dynamic inventory sources and most other files as static sources. Files which end with any of the following will be ignored:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">~, .orig, .bak, .ini, .retry, .pyc, .pyo</span>
+</pre></div>
+</div>
+<p>You can replace this list with your own selection by configuring an <code class="docutils literal"><span class="pre">inventory_ignore_extensions</span></code> list in ansible.cfg, or setting the ANSIBLE_INVENTORY_IGNORE environment variable. The value in either case should be a comma-separated list of patterns, as shown above.</p>
+<p>Any <code class="docutils literal"><span class="pre">group_vars</span></code> and <code class="docutils literal"><span class="pre">host_vars</span></code> subdirectories in an inventory directory will be interpreted as expected, making inventory directories a powerful way to organize different sets of configurations.</p>
+</div>
+<div class="section" id="static-groups-of-dynamic-groups">
+<span id="static-groups-of-dynamic"></span><h2><a class="toc-backref" href="#id13">Static Groups of Dynamic Groups</a><a class="headerlink" href="#static-groups-of-dynamic-groups" title="Permalink to this headline">露</a></h2>
+<p>When defining groups of groups in the static inventory file, the child groups
+must also be defined in the static inventory file, or ansible will return an
+error. If you want to define a static group of dynamic child groups, define
+the dynamic groups as empty in the static inventory file. For example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">[</span><span class="nv">tag_Name_staging_foo</span><span class="p p-Indicator">]</span>
+
+<span class="p p-Indicator">[</span><span class="nv">tag_Name_staging_bar</span><span class="p p-Indicator">]</span>
+
+<span class="p p-Indicator">[</span><span class="nv">staging</span><span class="p p-Indicator">:</span><span class="nv">children</span><span class="p p-Indicator">]</span>
+<span class="l l-Scalar l-Scalar-Plain">tag_Name_staging_foo</span>
+<span class="l l-Scalar l-Scalar-Plain">tag_Name_staging_bar</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="intro_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_inventory.html"><span class="doc">Inventory</span></a></dt>
+<dd>All about static inventory files</dd>
+<dt><a class="reference external" href="javascript:if(confirm('http://groups.google.com/group/ansible-project  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://groups.google.com/group/ansible-project'" tppabs="http://groups.google.com/group/ansible-project">Mailing List</a></dt>
+<dd>Questions? Help? Ideas?  Stop by the list on Google Groups</dd>
+<dt><a class="reference external" href="javascript:if(confirm('http://irc.freenode.net/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://irc.freenode.net/'" tppabs="http://irc.freenode.net/">irc.freenode.net</a></dt>
+<dd>#ansible IRC chat channel</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div id="search-results"><gcse:searchresults-only></div>
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+        <a href="intro_patterns-1.html" tppabs="http://docs.ansible.com/ansible/intro_patterns.html" class="btn btn-neutral float-right" title="Patterns"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="intro_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_inventory.html" class="btn btn-neutral" title="Inventory"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','st-1.js'/*tpa=http://s.swiftypecdn.com/install/v2/st.js*/,'_st');
+
+  _st('install','yABGvz2N8PwcwBxyfzUc','2.0.0');
+</script>
+
+  <p>
+  Copyright 漏 2016 Red Hat, Inc.
+  <br>
+    Last updated on Jun 22, 2016.
+  </p>
+<p>
+Ansible docs are generated from <a href="javascript:if(confirm('https://github.com/ansible/ansible  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible'" tppabs="https://github.com/ansible/ansible">GitHub sources</A> using <A HREF="javascript:if(confirm('http://sphinx-doc.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://sphinx-doc.org/'" tppabs="http://sphinx-doc.org/">Sphinx</A> using a theme provided by <a href="javascript:if(confirm('http://readthedocs.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://readthedocs.org/'" tppabs="http://readthedocs.org/">Read the Docs</a>. 
+</p>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+<!-- begin analytics -->
+<script type="text/javascript">
+var _hsq = _hsq || [];
+_hsq.push(["setContentType", "standard-page"]);
+        (function(d,s,i,r) {
+        if (d.getElementById(i)){return;}
+        var n = d.createElement(s),e = document.getElementsByTagName(s)[0];
+        n.id=i;n.src = '//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/330046.js';
+        e.parentNode.insertBefore(n, e);
+        })(document, "script", "hs-analytics",300000);
+</script>
+<!-- end analytics -->
+
+</body>
+</html>

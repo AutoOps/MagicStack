@@ -1,0 +1,620 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset=UTF-8"utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Tag Manager Data Layer -->
+  <script>
+   dataLayer = [];
+  </script>
+  <!-- End Google Tag Manager Data Layer -->
+
+  
+  <title>Become (Privilege Escalation) &mdash; Ansible Documentation</title>
+  
+
+  
+  
+
+  
+  <link href="css-family=Lato-400,700-Roboto+Slab-400,700-Inconsolata-400,700.css" tppabs="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel='stylesheet' type='text/css'>
+  <link href="font-awesome.min.css" tppabs="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'https://docs.ansible.com/ansible/0.01',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+      <script type="text/javascript" src="jquery.js" tppabs="https://docs.ansible.com/ansible/_static/jquery.js"></script>
+      <script type="text/javascript" src="underscore.js" tppabs="https://docs.ansible.com/ansible/_static/underscore.js"></script>
+      <script type="text/javascript" src="doctools.js" tppabs="https://docs.ansible.com/ansible/_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="theme.min.css" tppabs="https://docs.ansible.com/ansible/_static/css/theme.min.css" type="text/css" />
+    <script type="text/javascript" src="theme.js" tppabs="https://docs.ansible.com/ansible/_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="Ansible Documentation" href="index.html"/>
+        <link rel="up" title="Playbooks: Special Topics" href="playbooks_special_topics.html"/>
+        <link rel="next" title="Accelerated Mode" href="playbooks_acceleration.html"/>
+        <link rel="prev" title="Playbooks: Special Topics" href="playbooks_special_topics.html"/> 
+
+  <script src="modernizr.min.js" tppabs="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  <style>
+    .search-reset-start {
+        color: #463E3F;
+        float: right;
+        position: relative;
+        top: -25px;
+        left: -10px;
+        z-index: 10;
+     }
+     .search-reset-start:hover {
+        cursor: pointer;
+        color: #2980B9;
+     }
+     #search-box-id {
+        padding-right: 25px;
+     }
+  </style>
+
+  <link href="css-family=Open+Sans-400,300.css" tppabs="https://fonts.googleapis.com/css?family=Open+Sans:400,300"
+    rel='stylesheet' type='text/css'>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="ns.html-id=GTM-PSB293" tppabs="https://www.googletagmanager.com/ns.html?id=GTM-PSB293" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'/*tpa=https://docs.ansible.com/ansible/gtm.js*/});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-PSB293');</script>
+  <!-- End Google Tag Manager -->
+
+  <a class="DocSite-nav" href="javascript:if(confirm('http://docs.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">
+    <img class="DocSiteNav-logo"
+      src="logo_invert.png" tppabs="https://docs.ansible.com/ansible/_static/images/logo_invert.png"
+      alt="Ansible Logo">
+    <div class="DocSiteNav-title">
+      Documentation
+    </div>
+  </a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+
+      <div style="background-color:#5bbdbf;height=80px;margin:'auto auto auto auto'">
+        <a class="DocSiteProduct-header DocSiteProduct-header--core"
+          href="index.htm" tppabs="http://docs.ansible.com/ansible/">
+          <div class="DocSiteProduct-productName">
+            <div class="DocSiteProduct-logoText">
+              ANSIBLE
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div id="menu-id" class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html" tppabs="https://docs.ansible.com/ansible/intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro_installation.html" tppabs="https://docs.ansible.com/ansible/intro_installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_getting_started.html" tppabs="https://docs.ansible.com/ansible/intro_getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_inventory.html" tppabs="https://docs.ansible.com/ansible/intro_inventory.html">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_dynamic_inventory.html" tppabs="https://docs.ansible.com/ansible/intro_dynamic_inventory.html">Dynamic Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_patterns.html" tppabs="https://docs.ansible.com/ansible/intro_patterns.html">Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_adhoc.html" tppabs="https://docs.ansible.com/ansible/intro_adhoc.html">Introduction To Ad-Hoc Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_configuration.html" tppabs="https://docs.ansible.com/ansible/intro_configuration.html">Configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_bsd.html" tppabs="https://docs.ansible.com/ansible/intro_bsd.html">BSD Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_windows.html" tppabs="https://docs.ansible.com/ansible/intro_windows.html">Windows Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_networking.html" tppabs="https://docs.ansible.com/ansible/intro_networking.html">Networking Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html" tppabs="https://docs.ansible.com/ansible/quickstart.html">Quickstart Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks.html" tppabs="https://docs.ansible.com/ansible/playbooks.html">Playbooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_intro.html" tppabs="https://docs.ansible.com/ansible/playbooks_intro.html">Intro to Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_roles.html" tppabs="https://docs.ansible.com/ansible/playbooks_roles.html">Playbook Roles and Include Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_variables.html" tppabs="https://docs.ansible.com/ansible/playbooks_variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_filters.html" tppabs="https://docs.ansible.com/ansible/playbooks_filters.html">Jinja2 filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_conditionals.html" tppabs="https://docs.ansible.com/ansible/playbooks_conditionals.html">Conditionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_loops.html" tppabs="https://docs.ansible.com/ansible/playbooks_loops.html">Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_blocks.html" tppabs="https://docs.ansible.com/ansible/playbooks_blocks.html">Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_strategies.html" tppabs="https://docs.ansible.com/ansible/playbooks_strategies.html">Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_best_practices.html" tppabs="https://docs.ansible.com/ansible/playbooks_best_practices.html">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="playbooks_special_topics.html" tppabs="https://docs.ansible.com/ansible/playbooks_special_topics.html">Playbooks: Special Topics</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Become (Privilege Escalation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_acceleration.html" tppabs="https://docs.ansible.com/ansible/playbooks_acceleration.html">Accelerated Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_async.html" tppabs="https://docs.ansible.com/ansible/playbooks_async.html">Asynchronous Actions and Polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_checkmode.html" tppabs="https://docs.ansible.com/ansible/playbooks_checkmode.html">Check Mode (&#8220;Dry Run&#8221;)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_debugger.html" tppabs="https://docs.ansible.com/ansible/playbooks_debugger.html">Playbook Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_delegation.html" tppabs="https://docs.ansible.com/ansible/playbooks_delegation.html">Delegation, Rolling Updates, and Local Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_environment.html" tppabs="https://docs.ansible.com/ansible/playbooks_environment.html">Setting the Environment (and Working With Proxies)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_error_handling.html" tppabs="https://docs.ansible.com/ansible/playbooks_error_handling.html">Error Handling In Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_advanced_syntax.html" tppabs="https://docs.ansible.com/ansible/playbooks_advanced_syntax.html">Advanced Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_lookups.html" tppabs="https://docs.ansible.com/ansible/playbooks_lookups.html">Using Lookups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_prompts.html" tppabs="https://docs.ansible.com/ansible/playbooks_prompts.html">Prompts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_tags.html" tppabs="https://docs.ansible.com/ansible/playbooks_tags.html">Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_vault.html" tppabs="https://docs.ansible.com/ansible/playbooks_vault.html">Vault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_startnstep.html" tppabs="https://docs.ansible.com/ansible/playbooks_startnstep.html">Start and Step</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_directives.html" tppabs="https://docs.ansible.com/ansible/playbooks_directives.html">Directives Glossary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html" tppabs="https://docs.ansible.com/ansible/modules.html">About Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules_intro.html" tppabs="https://docs.ansible.com/ansible/modules_intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_core.html" tppabs="https://docs.ansible.com/ansible/modules_core.html">Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_extra.html" tppabs="https://docs.ansible.com/ansible/modules_extra.html">Extras Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_return_values.html" tppabs="https://docs.ansible.com/ansible/common_return_values.html">Common Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules_by_category.html" tppabs="https://docs.ansible.com/ansible/modules_by_category.html">Module Index</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="list_of_all_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_all_modules.html">All Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascript:if(confirm('https://docs.ansible.com/ansible/list_of_cloud_modules.html  \n\n该文件无法用 Teleport Ultra 下载, 因为 不可用, 或放弃了下载, 或项目即将停止。  \n\n你想在服务器上打开它?'))window.location='https://docs.ansible.com/ansible/list_of_cloud_modules.html'" tppabs="https://docs.ansible.com/ansible/list_of_cloud_modules.html">Cloud Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_clustering_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_clustering_modules.html">Clustering Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_commands_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_commands_modules.html">Commands Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_database_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_database_modules.html">Database Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_files_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_files_modules.html">Files Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_inventory_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_inventory_modules.html">Inventory Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_messaging_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_messaging_modules.html">Messaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_monitoring_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_monitoring_modules.html">Monitoring Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_network_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_network_modules.html">Network Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_notification_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_notification_modules.html">Notification Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_packaging_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_packaging_modules.html">Packaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_source_control_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_source_control_modules.html">Source Control Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_system_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_system_modules.html">System Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_utilities_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_utilities_modules.html">Utilities Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_web_infrastructure_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_web_infrastructure_modules.html">Web Infrastructure Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_windows_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_windows_modules.html">Windows Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guides.html" tppabs="https://docs.ansible.com/ansible/guides.html">Detailed Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_aws.html" tppabs="https://docs.ansible.com/ansible/guide_aws.html">Amazon Web Services Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_azure.html" tppabs="https://docs.ansible.com/ansible/guide_azure.html">Getting Started with Azure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rax.html" tppabs="https://docs.ansible.com/ansible/guide_rax.html">Rackspace Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_gce.html" tppabs="https://docs.ansible.com/ansible/guide_gce.html">Google Cloud Platform Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_cloudstack.html" tppabs="https://docs.ansible.com/ansible/guide_cloudstack.html">CloudStack Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_vagrant.html" tppabs="https://docs.ansible.com/ansible/guide_vagrant.html">Using Vagrant and Ansible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rolling_upgrade.html" tppabs="https://docs.ansible.com/ansible/guide_rolling_upgrade.html">Continuous Delivery and Rolling Upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_docker.html" tppabs="https://docs.ansible.com/ansible/guide_docker.html">Getting Started with Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developing.html" tppabs="https://docs.ansible.com/ansible/developing.html">Developer Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developing_api.html" tppabs="https://docs.ansible.com/ansible/developing_api.html">Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_inventory.html" tppabs="https://docs.ansible.com/ansible/developing_inventory.html">Developing Dynamic Inventory Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_modules.html" tppabs="https://docs.ansible.com/ansible/developing_modules.html">Developing Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_plugins.html" tppabs="https://docs.ansible.com/ansible/developing_plugins.html">Developing Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_core.html" tppabs="https://docs.ansible.com/ansible/developing_core.html">Developing the Ansible Core Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_test_pr.html" tppabs="https://docs.ansible.com/ansible/developing_test_pr.html">Helping Testing PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_releases.html" tppabs="https://docs.ansible.com/ansible/developing_releases.html">Releases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tower.html" tppabs="https://docs.ansible.com/ansible/tower.html">Ansible Tower</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html" tppabs="https://docs.ansible.com/ansible/community.html">Community Information &amp; Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community.html#ansible-users" tppabs="https://docs.ansible.com/ansible/community.html#ansible-users">Ansible Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#for-current-and-prospective-developers" tppabs="https://docs.ansible.com/ansible/community.html#for-current-and-prospective-developers">For Current and Prospective Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#other-topics" tppabs="https://docs.ansible.com/ansible/community.html#other-topics">Other Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#community-code-of-conduct" tppabs="https://docs.ansible.com/ansible/community.html#community-code-of-conduct">Community Code of Conduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#contributors-license-agreement" tppabs="https://docs.ansible.com/ansible/community.html#contributors-license-agreement">Contributors License Agreement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="galaxy.html" tppabs="https://docs.ansible.com/ansible/galaxy.html">Ansible Galaxy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="galaxy.html#the-website" tppabs="https://docs.ansible.com/ansible/galaxy.html#the-website">The Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="galaxy.html#the-ansible-galaxy-command-line-tool" tppabs="https://docs.ansible.com/ansible/galaxy.html#the-ansible-galaxy-command-line-tool">The ansible-galaxy command line tool</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test_strategies.html" tppabs="https://docs.ansible.com/ansible/test_strategies.html">Testing Strategies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#integrating-testing-with-ansible-playbooks" tppabs="https://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-ansible-playbooks">Integrating Testing With Ansible Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#the-right-level-of-testing" tppabs="https://docs.ansible.com/ansible/test_strategies.html#the-right-level-of-testing">The Right Level of Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#check-mode-as-a-drift-test" tppabs="https://docs.ansible.com/ansible/test_strategies.html#check-mode-as-a-drift-test">Check Mode As A Drift Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#modules-that-are-useful-for-testing" tppabs="https://docs.ansible.com/ansible/test_strategies.html#modules-that-are-useful-for-testing">Modules That Are Useful for Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#testing-lifecycle" tppabs="https://docs.ansible.com/ansible/test_strategies.html#testing-lifecycle">Testing Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#integrating-testing-with-rolling-updates" tppabs="https://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-rolling-updates">Integrating Testing With Rolling Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#achieving-continuous-deployment" tppabs="https://docs.ansible.com/ansible/test_strategies.html#achieving-continuous-deployment">Achieving Continuous Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#conclusion" tppabs="https://docs.ansible.com/ansible/test_strategies.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html" tppabs="https://docs.ansible.com/ansible/faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook" tppabs="https://docs.ansible.com/ansible/faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook">How can I set the PATH or any other environment variable for a task or entire playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with">How do I handle different machines needing different user accounts or ports to log in with?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file">How do I get ansible to reuse connections, enable Kerberized SSH, or have Ansible pay attention to my local SSH config file?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">How do I configure a jump host to access servers that I have no direct access to?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-speed-up-management-inside-ec2" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-speed-up-management-inside-ec2">How do I speed up management inside EC2?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine">How do I handle python pathing not having a Python 2.X in /usr/bin/python on a remote machine?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#what-is-the-best-way-to-make-content-reusable-redistributable" tppabs="https://docs.ansible.com/ansible/faq.html#what-is-the-best-way-to-make-content-reusable-redistributable">What is the best way to make content reusable/redistributable?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it" tppabs="https://docs.ansible.com/ansible/faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it">Where does the configuration file live and what can I configure in it?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-disable-cowsay" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-disable-cowsay">How do I disable cowsay?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables">How do I see a list of all of the ansible_ variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host">How do I see all the inventory vars defined for my host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template">How do I loop over a list of hosts in a group, inside of a template?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-a-variable-name-programmatically" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-name-programmatically">How do I access a variable name programmatically?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group">How do I access a variable of the first host in a group?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-copy-files-recursively-onto-a-target-host" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-copy-files-recursively-onto-a-target-host">How do I copy files recursively onto a target host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-shell-environment-variables" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-shell-environment-variables">How do I access shell environment variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-generate-crypted-passwords-for-the-user-module" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module">How do I generate crypted passwords for the user module?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#can-i-get-training-on-ansible-or-find-commercial-support" tppabs="https://docs.ansible.com/ansible/faq.html#can-i-get-training-on-ansible-or-find-commercial-support">Can I get training on Ansible or find commercial support?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#is-there-a-web-interface-rest-api-etc" tppabs="https://docs.ansible.com/ansible/faq.html#is-there-a-web-interface-rest-api-etc">Is there a web interface / REST API / etc?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-submit-a-change-to-the-documentation" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-submit-a-change-to-the-documentation">How do I submit a change to the documentation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-keep-secret-data-in-my-playbook" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-keep-secret-data-in-my-playbook">How do I keep secret data in my playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names" tppabs="https://docs.ansible.com/ansible/faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names">When should I use {{ }}? Also, how to interpolate variables or dynamic variable names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#i-don-t-see-my-question-here" tppabs="https://docs.ansible.com/ansible/faq.html#i-don-t-see-my-question-here">I don&#8217;t see my question here</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html" tppabs="https://docs.ansible.com/ansible/glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YAMLSyntax.html" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html">YAML Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax.html#yaml-basics" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html#yaml-basics">YAML Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax.html#gotchas" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html#gotchas">Gotchas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html">Porting Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#playbook" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#playbook">Playbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#deprecated" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#deprecated">Deprecated</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#other-caveats" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#other-caveats">Other caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#porting-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#porting-plugins">Porting plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#lookup-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#lookup-plugins">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#connection-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#connection-plugins">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#action-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#action-plugins">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#callback-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#callback-plugins">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id1" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id1">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#hybrid-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#hybrid-plugins">Hybrid plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id2" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id2">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id3" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id3">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id4" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id4">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id5" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id5">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id6" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id6">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#porting-custom-scripts" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#porting-custom-scripts">Porting custom scripts</a></li>
+</ul>
+
+        
+
+<!-- changeable widget -->
+<center>
+<br/>
+<a href="javascript:if(confirm('http://www.ansible.com/docs-left?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-left?utm_source=docs'" tppabs="http://www.ansible.com/docs-left?utm_source=docs">
+    <img style="border-width:0px;" src="ASB-docs-left-rail.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-left-rail.png" />
+</a>
+</center>
+
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="javascript:if(confirm('https://docs.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://docs.ansible.com/'" tppabs="https://docs.ansible.com/">Ansible Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+
+          <!-- Banner ads -->
+          <div class="DocSiteBanner">
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-left.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-left.png">
+            </a>
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-right.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-right.png">
+            </a>
+        </div>
+
+          <ul class="wy-breadcrumbs">
+  <li><a href="index.html" tppabs="https://docs.ansible.com/ansible/index.html">Docs</a> &raquo;</li>
+  <li><a href="">Become (Privilege Escalation)</a></li>
+  
+    <li class="wy-breadcrumbs-aside">
+      <a href="javascript:if(confirm('https://github.com/ansible/ansible/blob/devel/docsite/rst/become.rst  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible/blob/devel/docsite/rst/become.rst'" tppabs="https://github.com/ansible/ansible/blob/devel/docsite/rst/become.rst" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  
+</ul>
+<hr/>
+
+          <div id="page-content">
+          
+  <div class="section" id="become-privilege-escalation">
+<h1><a class="toc-backref" href="#id1">Become (Privilege Escalation)</a><a class="headerlink" href="#become-privilege-escalation" title="Permalink to this headline">露</a></h1>
+<p>Ansible can use existing privilege escalation systems to allow a user to execute tasks as another.</p>
+<div class="contents topic" id="topics">
+<p class="topic-title first">Topics</p>
+<ul class="simple">
+<li><a class="reference internal" href="#become-privilege-escalation" id="id1">Become (Privilege Escalation)</a><ul>
+<li><a class="reference internal" href="#become" id="id2">Become</a><ul>
+<li><a class="reference internal" href="#directives" id="id3">Directives</a></li>
+<li><a class="reference internal" href="#connection-variables" id="id4">Connection variables</a></li>
+<li><a class="reference internal" href="#new-command-line-options" id="id5">New command line options</a></li>
+<li><a class="reference internal" href="#for-those-from-pre-1-9-sudo-and-su-still-work" id="id6">For those from Pre 1.9 , sudo and su still work!</a></li>
+<li><a class="reference internal" href="#limitations" id="id7">Limitations</a><ul>
+<li><a class="reference internal" href="#becoming-an-unprivileged-user" id="id8">Becoming an Unprivileged User</a></li>
+<li><a class="reference internal" href="#connection-plugin-support" id="id9">Connection Plugin Support</a></li>
+<li><a class="reference internal" href="#only-one-method-may-be-enabled-per-host" id="id10">Only one method may be enabled per host</a></li>
+<li><a class="reference internal" href="#can-t-limit-escalation-to-certain-commands" id="id11">Can&#8217;t limit escalation to certain commands</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="become">
+<h2><a class="toc-backref" href="#id2">Become</a><a class="headerlink" href="#become" title="Permalink to this headline">露</a></h2>
+<p>Ansible allows you &#8216;become&#8217; another user, different from the user that logged into the machine (remote user). This is done using existing
+privilege escalation tools, which you probably already use or have configured, like &#8216;sudo&#8217;, &#8216;su&#8217;, &#8216;pfexec&#8217;, &#8216;doas&#8217;, &#8216;pbrun&#8217;, &#8216;dzdo&#8217;, and others.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Before 1.9 Ansible mostly allowed the use of <cite>sudo</cite> and a limited use of <cite>su</cite> to allow a login/remote user to become a different user
+and execute tasks, create resources with the 2nd user&#8217;s permissions. As of 1.9 <cite>become</cite> supersedes the old sudo/su, while still being backwards compatible.
+This new system also makes it easier to add other privilege escalation tools like <cite>pbrun</cite> (Powerbroker), <cite>pfexec</cite>, <cite>dzdo</cite> (Centrify), and others.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Become vars &amp; directives are independent, i.e. setting <cite>become_user</cite> does not set <cite>become</cite>.</p>
+</div>
+<div class="section" id="directives">
+<h3><a class="toc-backref" href="#id3">Directives</a><a class="headerlink" href="#directives" title="Permalink to this headline">露</a></h3>
+<p>These can be set from play to task level, but are overriden by connection variables as they can be host specific.</p>
+<dl class="docutils">
+<dt>become</dt>
+<dd>set to &#8216;true&#8217;/&#8217;yes&#8217; to activate privilege escalation.</dd>
+<dt>become_user</dt>
+<dd>set to user with desired privileges, the user you &#8216;become&#8217;, NOT the user you login as. Does NOT imply <cite>become: yes</cite>, to allow it to be set at host level.</dd>
+<dt>become_method</dt>
+<dd>at play or task level overrides the default method set in ansible.cfg, set to &#8216;sudo&#8217;/&#8217;su&#8217;/&#8217;pbrun&#8217;/&#8217;pfexec&#8217;/&#8217;doas&#8217;/&#8217;dzdo&#8217;</dd>
+</dl>
+<p>For example, to manage a system service (which requires <code class="docutils literal"><span class="pre">root</span></code> privileges) when connected as a non-<code class="docutils literal"><span class="pre">root</span></code> user (this takes advantage of the fact that the default value of <code class="docutils literal"><span class="pre">become_user</span></code> is <code class="docutils literal"><span class="pre">root</span></code>):</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Ensure the httpd service is running</span>
+  <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">httpd</span>
+    <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">started</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+<p>To run a command as the <code class="docutils literal"><span class="pre">apache</span></code> user:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Run a command as the apache uesr</span>
+  <span class="l l-Scalar l-Scalar-Plain">command</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">somecommand</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="l l-Scalar l-Scalar-Plain">become_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">apache</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="connection-variables">
+<h3><a class="toc-backref" href="#id4">Connection variables</a><a class="headerlink" href="#connection-variables" title="Permalink to this headline">露</a></h3>
+<p>Each allows you to set an option per group and/or host, these are normally defined in inventory but can be used as normal variables.</p>
+<dl class="docutils">
+<dt>ansible_become</dt>
+<dd>equivalent of the become directive, decides if privilege escalation is used or not.</dd>
+<dt>ansible_become_method</dt>
+<dd>allows to set privilege escalation method</dd>
+<dt>ansible_become_user</dt>
+<dd>allows to set the user you become through privilege escalation, does not imply <cite>ansible_become: True</cite></dd>
+<dt>ansible_become_pass</dt>
+<dd>allows you to set the privilege escalation password</dd>
+</dl>
+<p>For example, if you want to run all tasks as <code class="docutils literal"><span class="pre">root</span></code> on a server named <code class="docutils literal"><span class="pre">webserver</span></code>, but you can only connect as the <code class="docutils literal"><span class="pre">manager</span></code> user, you could use an inventory entry like this:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">webserver ansible_user=manager ansible_become=true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="new-command-line-options">
+<h3><a class="toc-backref" href="#id5">New command line options</a><a class="headerlink" href="#new-command-line-options" title="Permalink to this headline">露</a></h3>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--ask-become-pass</span>, <span class="option">-K</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>ask for privilege escalation password, does not imply become will be used</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--become</span>, <span class="option">-b</span></kbd></td>
+<td>run operations with become (no password implied)</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--become-method=<var>BECOME_METHOD</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>privilege escalation method to use (default=sudo),
+valid choices: [ sudo | su | pbrun | pfexec | doas | dzdo ]</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--become-user=<var>BECOME_USER</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>run operations as this user (default=root), does not imply &#8211;become/-b</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="for-those-from-pre-1-9-sudo-and-su-still-work">
+<h3><a class="toc-backref" href="#id6">For those from Pre 1.9 , sudo and su still work!</a><a class="headerlink" href="#for-those-from-pre-1-9-sudo-and-su-still-work" title="Permalink to this headline">露</a></h3>
+<p>For those using old playbooks will not need to be changed, even though they are deprecated, sudo and su directives, variables and options
+will continue to work. It is recommended to move to become as they may be retired at one point.
+You cannot mix directives on the same object (become and sudo) though, Ansible will complain if you try to.</p>
+<p>Become will default to using the old sudo/su configs and variables if they exist, but will override them if you specify any of the new ones.</p>
+</div>
+<div class="section" id="limitations">
+<h3><a class="toc-backref" href="#id7">Limitations</a><a class="headerlink" href="#limitations" title="Permalink to this headline">露</a></h3>
+<p>Although privilege escalation is mostly intuitive, there are a few limitations
+on how it works.  Users should be aware of these to avoid surprises.</p>
+<div class="section" id="becoming-an-unprivileged-user">
+<h4><a class="toc-backref" href="#id8">Becoming an Unprivileged User</a><a class="headerlink" href="#becoming-an-unprivileged-user" title="Permalink to this headline">露</a></h4>
+<p>Ansible 2.0.x and below has a limitation with regards to becoming an
+unprivileged user that can be a security risk if users are not aware of it.
+Ansible modules are executed on the remote machine by first substituting the
+parameters into the module file, then copying the file to the remote machine,
+and finally executing it there.</p>
+<p>Everything is fine if the module file is executed without using <code class="docutils literal"><span class="pre">become</span></code>,
+when the <code class="docutils literal"><span class="pre">become_user</span></code> is root, or when the connection to the remote machine
+is made as root.  In these cases the module file is created with permissions
+that only allow reading by the user and root.</p>
+<p>The problem occurs when the <code class="docutils literal"><span class="pre">become_user</span></code> is an unprivileged user.  Ansible
+2.0.x and below make the module file world readable in this case, as the module
+file is written as the user that Ansible connects as, but the file needs to
+be readable by the user Ansible is set to <code class="docutils literal"><span class="pre">become</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In Ansible 2.1, this window is further narrowed: If the connection
+is made as a privileged user (root), then Ansible 2.1 and above will use
+chown to set the file&#8217;s owner to the unprivileged user being switched to.
+This means both the user making the connection and the user being switched
+to via <code class="docutils literal"><span class="pre">become</span></code> must be unprivileged in order to trigger this problem.</p>
+</div>
+<p>If any of the parameters passed to the module are sensitive in nature, then
+those pieces of data are located in a world readable module file for the
+duration of the Ansible module execution.  Once the module is done executing,
+Ansible will delete the temporary file.  If you trust the client machines then
+there&#8217;s no problem here.  If you do not trust the client machines then this is
+a potential danger.</p>
+<p>Ways to resolve this include:</p>
+<ul class="simple">
+<li>Use <a class="reference internal" href="intro_configuration.html#pipelining" tppabs="https://docs.ansible.com/ansible/intro_configuration.html#pipelining"><span class="std std-ref">pipelining</span></a>.  When pipelining is enabled, Ansible doesn&#8217;t save the
+module to a temporary file on the client.  Instead it pipes the module to
+the remote python interpreter&#8217;s stdin.  Pipelining does not work for
+non-python modules.</li>
+<li>(Available in Ansible 2.1) Install POSIX.1e filesystem acl support on the
+managed host.  If the temporary directory on the remote host is mounted with
+POSIX acls enabled and the <strong class="command">setfacl</strong> tool is in the remote <code class="docutils literal"><span class="pre">PATH</span></code>
+then Ansible will use POSIX acls to share the module file with the second
+unprivileged user instead of having to make the file readable by everyone.</li>
+<li>Don&#8217;t perform an action on the remote machine by becoming an unprivileged
+user.  Temporary files are protected by UNIX file permissions when you
+<code class="docutils literal"><span class="pre">become</span></code> root or do not use <code class="docutils literal"><span class="pre">become</span></code>.  In Ansible 2.1 and above, UNIX
+file permissions are also secure if you make the connection to the managed
+machine as root and then use <code class="docutils literal"><span class="pre">become</span></code> to an unprivileged account.</li>
+</ul>
+<div class="versionchanged">
+<p><span class="versionmodified">Changed in version 2.1.</span></p>
+</div>
+<p>In addition to the additional means of doing this securely, Ansible 2.1 also
+makes it harder to unknowingly do this insecurely.  Whereas in Ansible 2.0.x
+and below, Ansible will silently allow the insecure behaviour if it was unable
+to find another way to share the files with the unprivileged user, in Ansible
+2.1 and above Ansible defaults to issuing an error if it can&#8217;t do this
+securely.  If you can&#8217;t make any of the changes above to resolve the problem,
+and you decide that the machine you&#8217;re running on is secure enough for the
+modules you want to run there to be world readable, you can turn on
+<code class="docutils literal"><span class="pre">allow_world_readable_tmpfiles</span></code> in the <code class="file docutils literal"><span class="pre">ansible.cfg</span></code> file.  Setting
+<code class="docutils literal"><span class="pre">allow_world_readable_tmpfiles</span></code> will change this from an error into
+a warning and allow the task to run as it did prior to 2.1.</p>
+</div>
+<div class="section" id="connection-plugin-support">
+<h4><a class="toc-backref" href="#id9">Connection Plugin Support</a><a class="headerlink" href="#connection-plugin-support" title="Permalink to this headline">露</a></h4>
+<p>Privilege escalation methods must also be supported by the connection plugin
+used.   Most connection plugins will warn if they do not support become.  Some
+will just ignore it as they always run as root (jail, chroot, etc).</p>
+</div>
+<div class="section" id="only-one-method-may-be-enabled-per-host">
+<h4><a class="toc-backref" href="#id10">Only one method may be enabled per host</a><a class="headerlink" href="#only-one-method-may-be-enabled-per-host" title="Permalink to this headline">露</a></h4>
+<p>Methods cannot be chained.  You cannot use <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">/bin/su</span> <span class="pre">-</span></code> to become a user,
+you need to have privileges to run the command as that user in sudo or be able
+to su directly to it (the same for pbrun, pfexec or other supported methods).</p>
+</div>
+<div class="section" id="can-t-limit-escalation-to-certain-commands">
+<h4><a class="toc-backref" href="#id11">Can&#8217;t limit escalation to certain commands</a><a class="headerlink" href="#can-t-limit-escalation-to-certain-commands" title="Permalink to this headline">露</a></h4>
+<p>Privilege escalation permissions have to be general.  Ansible does not always
+use a specific command to do something but runs modules (code) from
+a temporary file name which changes every time.  If you have &#8216;/sbin/service&#8217;
+or &#8216;/bin/chmod&#8217; as the allowed commands this will fail with ansible as those
+paths won&#8217;t match with the temporary file that ansible creates to run the
+module.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="javascript:if(confirm('http://groups.google.com/group/ansible-project  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://groups.google.com/group/ansible-project'" tppabs="http://groups.google.com/group/ansible-project">Mailing List</a></dt>
+<dd>Questions? Help? Ideas?  Stop by the list on Google Groups</dd>
+<dt><a class="reference external" href="javascript:if(confirm('http://irc.freenode.net/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://irc.freenode.net/'" tppabs="http://irc.freenode.net/">irc.freenode.net</a></dt>
+<dd>#ansible IRC chat channel</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div id="search-results"><gcse:searchresults-only></div>
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+        <a href="playbooks_acceleration.html" tppabs="https://docs.ansible.com/ansible/playbooks_acceleration.html" class="btn btn-neutral float-right" title="Accelerated Mode"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="playbooks_special_topics.html" tppabs="https://docs.ansible.com/ansible/playbooks_special_topics.html" class="btn btn-neutral" title="Playbooks: Special Topics"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','st.js'/*tpa=https://s.swiftypecdn.com/install/v2/st.js*/,'_st');
+
+  _st('install','yABGvz2N8PwcwBxyfzUc','2.0.0');
+</script>
+
+  <p>
+  Copyright 漏 2016 Red Hat, Inc.
+  <br>
+    Last updated on Jun 22, 2016.
+  </p>
+<p>
+Ansible docs are generated from <a href="javascript:if(confirm('https://github.com/ansible/ansible  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible'" tppabs="https://github.com/ansible/ansible">GitHub sources</A> using <A HREF="javascript:if(confirm('http://sphinx-doc.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://sphinx-doc.org/'" tppabs="http://sphinx-doc.org/">Sphinx</A> using a theme provided by <a href="javascript:if(confirm('http://readthedocs.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://readthedocs.org/'" tppabs="http://readthedocs.org/">Read the Docs</a>. 
+</p>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+<!-- begin analytics -->
+<script type="text/javascript">
+var _hsq = _hsq || [];
+_hsq.push(["setContentType", "standard-page"]);
+        (function(d,s,i,r) {
+        if (d.getElementById(i)){return;}
+        var n = d.createElement(s),e = document.getElementsByTagName(s)[0];
+        n.id=i;n.src = '//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/330046.js';
+        e.parentNode.insertBefore(n, e);
+        })(document, "script", "hs-analytics",300000);
+</script>
+<!-- end analytics -->
+
+</body>
+</html>

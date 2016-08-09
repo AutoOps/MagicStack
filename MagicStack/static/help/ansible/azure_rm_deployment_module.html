@@ -1,0 +1,831 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset=UTF-8"utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Tag Manager Data Layer -->
+  <script>
+   dataLayer = [];
+  </script>
+  <!-- End Google Tag Manager Data Layer -->
+
+  
+  <title>azure_rm_deployment - Create or destroy Azure Resource Manager template deployments &mdash; Ansible Documentation</title>
+  
+
+  
+  
+
+  
+  <link href="css-family=Lato-400,700-Roboto+Slab-400,700-Inconsolata-400,700.css" tppabs="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel='stylesheet' type='text/css'>
+  <link href="font-awesome.min.css" tppabs="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'https://docs.ansible.com/ansible/0.01',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+      <script type="text/javascript" src="jquery.js" tppabs="https://docs.ansible.com/ansible/_static/jquery.js"></script>
+      <script type="text/javascript" src="underscore.js" tppabs="https://docs.ansible.com/ansible/_static/underscore.js"></script>
+      <script type="text/javascript" src="doctools.js" tppabs="https://docs.ansible.com/ansible/_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="theme.min.css" tppabs="https://docs.ansible.com/ansible/_static/css/theme.min.css" type="text/css" />
+    <script type="text/javascript" src="theme.js" tppabs="https://docs.ansible.com/ansible/_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="Ansible Documentation" href="index.html"/>
+        <link rel="up" title="All Modules" href="list_of_all_modules.html"/>
+        <link rel="next" title="azure_rm_networkinterface - Manage Azure network interfaces." href="azure_rm_networkinterface_module.html"/>
+        <link rel="prev" title="azure - create or terminate a virtual machine in azure" href="azure_module.html"/> 
+
+  <script src="modernizr.min.js" tppabs="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  <style>
+    .search-reset-start {
+        color: #463E3F;
+        float: right;
+        position: relative;
+        top: -25px;
+        left: -10px;
+        z-index: 10;
+     }
+     .search-reset-start:hover {
+        cursor: pointer;
+        color: #2980B9;
+     }
+     #search-box-id {
+        padding-right: 25px;
+     }
+  </style>
+
+  <link href="css-family=Open+Sans-400,300.css" tppabs="https://fonts.googleapis.com/css?family=Open+Sans:400,300"
+    rel='stylesheet' type='text/css'>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="ns.html-id=GTM-PSB293" tppabs="https://www.googletagmanager.com/ns.html?id=GTM-PSB293" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'/*tpa=https://docs.ansible.com/ansible/gtm.js*/});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-PSB293');</script>
+  <!-- End Google Tag Manager -->
+
+  <a class="DocSite-nav" href="javascript:if(confirm('http://docs.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">
+    <img class="DocSiteNav-logo"
+      src="logo_invert.png" tppabs="https://docs.ansible.com/ansible/_static/images/logo_invert.png"
+      alt="Ansible Logo">
+    <div class="DocSiteNav-title">
+      Documentation
+    </div>
+  </a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+
+      <div style="background-color:#5bbdbf;height=80px;margin:'auto auto auto auto'">
+        <a class="DocSiteProduct-header DocSiteProduct-header--core"
+          href="index.htm" tppabs="http://docs.ansible.com/ansible/">
+          <div class="DocSiteProduct-productName">
+            <div class="DocSiteProduct-logoText">
+              ANSIBLE
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div id="menu-id" class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html" tppabs="https://docs.ansible.com/ansible/intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro_installation.html" tppabs="https://docs.ansible.com/ansible/intro_installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_getting_started.html" tppabs="https://docs.ansible.com/ansible/intro_getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_inventory.html" tppabs="https://docs.ansible.com/ansible/intro_inventory.html">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_dynamic_inventory.html" tppabs="https://docs.ansible.com/ansible/intro_dynamic_inventory.html">Dynamic Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_patterns.html" tppabs="https://docs.ansible.com/ansible/intro_patterns.html">Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_adhoc.html" tppabs="https://docs.ansible.com/ansible/intro_adhoc.html">Introduction To Ad-Hoc Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_configuration.html" tppabs="https://docs.ansible.com/ansible/intro_configuration.html">Configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_bsd.html" tppabs="https://docs.ansible.com/ansible/intro_bsd.html">BSD Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_windows.html" tppabs="https://docs.ansible.com/ansible/intro_windows.html">Windows Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_networking.html" tppabs="https://docs.ansible.com/ansible/intro_networking.html">Networking Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html" tppabs="https://docs.ansible.com/ansible/quickstart.html">Quickstart Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks.html" tppabs="https://docs.ansible.com/ansible/playbooks.html">Playbooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_intro.html" tppabs="https://docs.ansible.com/ansible/playbooks_intro.html">Intro to Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_roles.html" tppabs="https://docs.ansible.com/ansible/playbooks_roles.html">Playbook Roles and Include Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_variables.html" tppabs="https://docs.ansible.com/ansible/playbooks_variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_filters.html" tppabs="https://docs.ansible.com/ansible/playbooks_filters.html">Jinja2 filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_conditionals.html" tppabs="https://docs.ansible.com/ansible/playbooks_conditionals.html">Conditionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_loops.html" tppabs="https://docs.ansible.com/ansible/playbooks_loops.html">Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_blocks.html" tppabs="https://docs.ansible.com/ansible/playbooks_blocks.html">Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_strategies.html" tppabs="https://docs.ansible.com/ansible/playbooks_strategies.html">Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_best_practices.html" tppabs="https://docs.ansible.com/ansible/playbooks_best_practices.html">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks_special_topics.html" tppabs="https://docs.ansible.com/ansible/playbooks_special_topics.html">Playbooks: Special Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="become.html" tppabs="https://docs.ansible.com/ansible/become.html">Become (Privilege Escalation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_acceleration.html" tppabs="https://docs.ansible.com/ansible/playbooks_acceleration.html">Accelerated Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_async.html" tppabs="https://docs.ansible.com/ansible/playbooks_async.html">Asynchronous Actions and Polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_checkmode.html" tppabs="https://docs.ansible.com/ansible/playbooks_checkmode.html">Check Mode (&#8220;Dry Run&#8221;)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_debugger.html" tppabs="https://docs.ansible.com/ansible/playbooks_debugger.html">Playbook Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_delegation.html" tppabs="https://docs.ansible.com/ansible/playbooks_delegation.html">Delegation, Rolling Updates, and Local Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_environment.html" tppabs="https://docs.ansible.com/ansible/playbooks_environment.html">Setting the Environment (and Working With Proxies)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_error_handling.html" tppabs="https://docs.ansible.com/ansible/playbooks_error_handling.html">Error Handling In Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_advanced_syntax.html" tppabs="https://docs.ansible.com/ansible/playbooks_advanced_syntax.html">Advanced Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_lookups.html" tppabs="https://docs.ansible.com/ansible/playbooks_lookups.html">Using Lookups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_prompts.html" tppabs="https://docs.ansible.com/ansible/playbooks_prompts.html">Prompts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_tags.html" tppabs="https://docs.ansible.com/ansible/playbooks_tags.html">Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_vault.html" tppabs="https://docs.ansible.com/ansible/playbooks_vault.html">Vault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_startnstep.html" tppabs="https://docs.ansible.com/ansible/playbooks_startnstep.html">Start and Step</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_directives.html" tppabs="https://docs.ansible.com/ansible/playbooks_directives.html">Directives Glossary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html" tppabs="https://docs.ansible.com/ansible/modules.html">About Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules_intro.html" tppabs="https://docs.ansible.com/ansible/modules_intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_core.html" tppabs="https://docs.ansible.com/ansible/modules_core.html">Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_extra.html" tppabs="https://docs.ansible.com/ansible/modules_extra.html">Extras Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_return_values.html" tppabs="https://docs.ansible.com/ansible/common_return_values.html">Common Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules_by_category.html" tppabs="https://docs.ansible.com/ansible/modules_by_category.html">Module Index</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="list_of_all_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_all_modules.html">All Modules</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="javascript:if(confirm('https://docs.ansible.com/ansible/list_of_cloud_modules.html  \n\n该文件无法用 Teleport Ultra 下载, 因为 不可用, 或放弃了下载, 或项目即将停止。  \n\n你想在服务器上打开它?'))window.location='https://docs.ansible.com/ansible/list_of_cloud_modules.html'" tppabs="https://docs.ansible.com/ansible/list_of_cloud_modules.html">Cloud Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_clustering_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_clustering_modules.html">Clustering Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_commands_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_commands_modules.html">Commands Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_database_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_database_modules.html">Database Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_files_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_files_modules.html">Files Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_inventory_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_inventory_modules.html">Inventory Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_messaging_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_messaging_modules.html">Messaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_monitoring_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_monitoring_modules.html">Monitoring Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_network_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_network_modules.html">Network Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_notification_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_notification_modules.html">Notification Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_packaging_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_packaging_modules.html">Packaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_source_control_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_source_control_modules.html">Source Control Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_system_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_system_modules.html">System Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_utilities_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_utilities_modules.html">Utilities Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_web_infrastructure_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_web_infrastructure_modules.html">Web Infrastructure Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_windows_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_windows_modules.html">Windows Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guides.html" tppabs="https://docs.ansible.com/ansible/guides.html">Detailed Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_aws.html" tppabs="https://docs.ansible.com/ansible/guide_aws.html">Amazon Web Services Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_azure.html" tppabs="https://docs.ansible.com/ansible/guide_azure.html">Getting Started with Azure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rax.html" tppabs="https://docs.ansible.com/ansible/guide_rax.html">Rackspace Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_gce.html" tppabs="https://docs.ansible.com/ansible/guide_gce.html">Google Cloud Platform Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_cloudstack.html" tppabs="https://docs.ansible.com/ansible/guide_cloudstack.html">CloudStack Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_vagrant.html" tppabs="https://docs.ansible.com/ansible/guide_vagrant.html">Using Vagrant and Ansible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rolling_upgrade.html" tppabs="https://docs.ansible.com/ansible/guide_rolling_upgrade.html">Continuous Delivery and Rolling Upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_docker.html" tppabs="https://docs.ansible.com/ansible/guide_docker.html">Getting Started with Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developing.html" tppabs="https://docs.ansible.com/ansible/developing.html">Developer Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developing_api.html" tppabs="https://docs.ansible.com/ansible/developing_api.html">Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_inventory.html" tppabs="https://docs.ansible.com/ansible/developing_inventory.html">Developing Dynamic Inventory Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_modules.html" tppabs="https://docs.ansible.com/ansible/developing_modules.html">Developing Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_plugins.html" tppabs="https://docs.ansible.com/ansible/developing_plugins.html">Developing Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_core.html" tppabs="https://docs.ansible.com/ansible/developing_core.html">Developing the Ansible Core Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_test_pr.html" tppabs="https://docs.ansible.com/ansible/developing_test_pr.html">Helping Testing PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_releases.html" tppabs="https://docs.ansible.com/ansible/developing_releases.html">Releases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tower.html" tppabs="https://docs.ansible.com/ansible/tower.html">Ansible Tower</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html" tppabs="https://docs.ansible.com/ansible/community.html">Community Information &amp; Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community.html#ansible-users" tppabs="https://docs.ansible.com/ansible/community.html#ansible-users">Ansible Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#for-current-and-prospective-developers" tppabs="https://docs.ansible.com/ansible/community.html#for-current-and-prospective-developers">For Current and Prospective Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#other-topics" tppabs="https://docs.ansible.com/ansible/community.html#other-topics">Other Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#community-code-of-conduct" tppabs="https://docs.ansible.com/ansible/community.html#community-code-of-conduct">Community Code of Conduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#contributors-license-agreement" tppabs="https://docs.ansible.com/ansible/community.html#contributors-license-agreement">Contributors License Agreement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="galaxy.html" tppabs="https://docs.ansible.com/ansible/galaxy.html">Ansible Galaxy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="galaxy.html#the-website" tppabs="https://docs.ansible.com/ansible/galaxy.html#the-website">The Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="galaxy.html#the-ansible-galaxy-command-line-tool" tppabs="https://docs.ansible.com/ansible/galaxy.html#the-ansible-galaxy-command-line-tool">The ansible-galaxy command line tool</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test_strategies.html" tppabs="https://docs.ansible.com/ansible/test_strategies.html">Testing Strategies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#integrating-testing-with-ansible-playbooks" tppabs="https://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-ansible-playbooks">Integrating Testing With Ansible Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#the-right-level-of-testing" tppabs="https://docs.ansible.com/ansible/test_strategies.html#the-right-level-of-testing">The Right Level of Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#check-mode-as-a-drift-test" tppabs="https://docs.ansible.com/ansible/test_strategies.html#check-mode-as-a-drift-test">Check Mode As A Drift Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#modules-that-are-useful-for-testing" tppabs="https://docs.ansible.com/ansible/test_strategies.html#modules-that-are-useful-for-testing">Modules That Are Useful for Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#testing-lifecycle" tppabs="https://docs.ansible.com/ansible/test_strategies.html#testing-lifecycle">Testing Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#integrating-testing-with-rolling-updates" tppabs="https://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-rolling-updates">Integrating Testing With Rolling Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#achieving-continuous-deployment" tppabs="https://docs.ansible.com/ansible/test_strategies.html#achieving-continuous-deployment">Achieving Continuous Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#conclusion" tppabs="https://docs.ansible.com/ansible/test_strategies.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html" tppabs="https://docs.ansible.com/ansible/faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook" tppabs="https://docs.ansible.com/ansible/faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook">How can I set the PATH or any other environment variable for a task or entire playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with">How do I handle different machines needing different user accounts or ports to log in with?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file">How do I get ansible to reuse connections, enable Kerberized SSH, or have Ansible pay attention to my local SSH config file?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">How do I configure a jump host to access servers that I have no direct access to?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-speed-up-management-inside-ec2" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-speed-up-management-inside-ec2">How do I speed up management inside EC2?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine">How do I handle python pathing not having a Python 2.X in /usr/bin/python on a remote machine?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#what-is-the-best-way-to-make-content-reusable-redistributable" tppabs="https://docs.ansible.com/ansible/faq.html#what-is-the-best-way-to-make-content-reusable-redistributable">What is the best way to make content reusable/redistributable?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it" tppabs="https://docs.ansible.com/ansible/faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it">Where does the configuration file live and what can I configure in it?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-disable-cowsay" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-disable-cowsay">How do I disable cowsay?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables">How do I see a list of all of the ansible_ variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host">How do I see all the inventory vars defined for my host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template">How do I loop over a list of hosts in a group, inside of a template?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-a-variable-name-programmatically" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-name-programmatically">How do I access a variable name programmatically?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group">How do I access a variable of the first host in a group?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-copy-files-recursively-onto-a-target-host" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-copy-files-recursively-onto-a-target-host">How do I copy files recursively onto a target host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-shell-environment-variables" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-shell-environment-variables">How do I access shell environment variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-generate-crypted-passwords-for-the-user-module" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module">How do I generate crypted passwords for the user module?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#can-i-get-training-on-ansible-or-find-commercial-support" tppabs="https://docs.ansible.com/ansible/faq.html#can-i-get-training-on-ansible-or-find-commercial-support">Can I get training on Ansible or find commercial support?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#is-there-a-web-interface-rest-api-etc" tppabs="https://docs.ansible.com/ansible/faq.html#is-there-a-web-interface-rest-api-etc">Is there a web interface / REST API / etc?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-submit-a-change-to-the-documentation" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-submit-a-change-to-the-documentation">How do I submit a change to the documentation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-keep-secret-data-in-my-playbook" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-keep-secret-data-in-my-playbook">How do I keep secret data in my playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names" tppabs="https://docs.ansible.com/ansible/faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names">When should I use {{ }}? Also, how to interpolate variables or dynamic variable names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#i-don-t-see-my-question-here" tppabs="https://docs.ansible.com/ansible/faq.html#i-don-t-see-my-question-here">I don&#8217;t see my question here</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html" tppabs="https://docs.ansible.com/ansible/glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YAMLSyntax.html" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html">YAML Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax.html#yaml-basics" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html#yaml-basics">YAML Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax.html#gotchas" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html#gotchas">Gotchas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html">Porting Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#playbook" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#playbook">Playbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#deprecated" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#deprecated">Deprecated</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#other-caveats" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#other-caveats">Other caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#porting-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#porting-plugins">Porting plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#lookup-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#lookup-plugins">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#connection-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#connection-plugins">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#action-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#action-plugins">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#callback-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#callback-plugins">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id1" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id1">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#hybrid-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#hybrid-plugins">Hybrid plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id2" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id2">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id3" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id3">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id4" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id4">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id5" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id5">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id6" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id6">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#porting-custom-scripts" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#porting-custom-scripts">Porting custom scripts</a></li>
+</ul>
+
+        
+
+<!-- changeable widget -->
+<center>
+<br/>
+<a href="javascript:if(confirm('http://www.ansible.com/docs-left?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-left?utm_source=docs'" tppabs="http://www.ansible.com/docs-left?utm_source=docs">
+    <img style="border-width:0px;" src="ASB-docs-left-rail.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-left-rail.png" />
+</a>
+</center>
+
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="javascript:if(confirm('https://docs.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://docs.ansible.com/'" tppabs="https://docs.ansible.com/">Ansible Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+
+          <!-- Banner ads -->
+          <div class="DocSiteBanner">
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-left.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-left.png">
+            </a>
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-right.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-right.png">
+            </a>
+        </div>
+
+          <ul class="wy-breadcrumbs">
+  <li><a href="index.html" tppabs="https://docs.ansible.com/ansible/index.html">Docs</a> &raquo;</li>
+  <li><a href="">azure_rm_deployment - Create or destroy Azure Resource Manager template deployments</a></li>
+  
+</ul>
+<hr/>
+
+          <div id="page-content">
+          
+  <div class="section" id="azure-rm-deployment-create-or-destroy-azure-resource-manager-template-deployments">
+<span id="azure-rm-deployment"></span><h1>azure_rm_deployment - Create or destroy Azure Resource Manager template deployments<a class="headerlink" href="#azure-rm-deployment-create-or-destroy-azure-resource-manager-template-deployments" title="Permalink to this headline">露</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.1.</span></p>
+</div>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#synopsis" id="id1">Synopsis</a></li>
+<li><a class="reference internal" href="#requirements-on-host-that-executes-module" id="id2">Requirements (on host that executes module)</a></li>
+<li><a class="reference internal" href="#options" id="id3">Options</a></li>
+<li><a class="reference internal" href="#examples" id="id4">Examples</a></li>
+<li><a class="reference internal" href="#return-values" id="id5">Return Values</a></li>
+<li><a class="reference internal" href="#notes" id="id6">Notes</a></li>
+<li><a class="reference internal" href="#this-is-an-extras-module" id="id7">This is an Extras Module</a></li>
+</ul>
+</div>
+<div class="section" id="synopsis">
+<h2><a class="toc-backref" href="#id1">Synopsis</a><a class="headerlink" href="#synopsis" title="Permalink to this headline">露</a></h2>
+<p>Create or destroy Azure Resource Manager template deployments via the Azure SDK for Python. You can find some quick start templates in GitHub here <a class="reference external" href="javascript:if(confirm('https://github.com/azure/azure-quickstart-templates  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/azure/azure-quickstart-templates'" tppabs="https://github.com/azure/azure-quickstart-templates">https://github.com/azure/azure-quickstart-templates</a>. For more information on Azue resource manager templates see <a class="reference external" href="javascript:if(confirm('https://azure.microsoft.com/en-us/documentation/articles/resource-group-template-deploy/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://azure.microsoft.com/en-us/documentation/articles/resource-group-template-deploy/'" tppabs="https://azure.microsoft.com/en-us/documentation/articles/resource-group-template-deploy/">https://azure.microsoft.com/en-us/documentation/articles/resource-group-template-deploy/</a>.</p>
+</div>
+<div class="section" id="requirements-on-host-that-executes-module">
+<h2><a class="toc-backref" href="#id2">Requirements (on host that executes module)</a><a class="headerlink" href="#requirements-on-host-that-executes-module" title="Permalink to this headline">露</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>python &gt;= 2.7</li>
+<li>azure &gt;= 2.0.0rc4</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="options">
+<h2><a class="toc-backref" href="#id3">Options</a><a class="headerlink" href="#options" title="Permalink to this headline">露</a></h2>
+<table border=1 cellpadding=4>
+<tr>
+<th class="head">parameter</th>
+<th class="head">required</th>
+<th class="head">default</th>
+<th class="head">choices</th>
+<th class="head">comments</th>
+</tr>
+        <tr>
+<td>ad_user<br/><div style="font-size: small;"></div></td>
+<td>no</td>
+<td></td>
+    <td><ul></ul></td>
+    <td><div>Active Directory username. Use when authenticating with an Active Directory user rather than service principal.</div></td></tr>
+        <tr>
+<td>client_id<br/><div style="font-size: small;"></div></td>
+<td>no</td>
+<td></td>
+    <td><ul></ul></td>
+    <td><div>Azure client ID. Use when authenticating with a Service Principal.</div></td></tr>
+        <tr>
+<td>deployment_mode<br/><div style="font-size: small;"></div></td>
+<td>no</td>
+<td>complete</td>
+    <td><ul><li>complete</li><li>incremental</li></ul></td>
+    <td><div>In incremental mode, resources are deployed without deleting existing resources that are not included in the template. In complete mode resources are deployed and existing resources in the resource group not included in the template are deleted.</div></td></tr>
+        <tr>
+<td>deployment_name<br/><div style="font-size: small;"></div></td>
+<td>no</td>
+<td>ansible-arm</td>
+    <td><ul></ul></td>
+    <td><div>The name of the deployment to be tracked in the resource group deployment history. Re-using a deployment name will overwrite the previous value in the resource group's deployment history.</div></td></tr>
+        <tr>
+<td>location<br/><div style="font-size: small;"></div></td>
+<td>no</td>
+<td>westus</td>
+    <td><ul></ul></td>
+    <td><div>The geo-locations in which the resource group will be located.</div></td></tr>
+        <tr>
+<td>parameters<br/><div style="font-size: small;"></div></td>
+<td>no</td>
+<td></td>
+    <td><ul></ul></td>
+    <td><div>A hash of all the required template variables for the deployment template. This parameter is mutually exclusive with 'parameters_link'. Either one of them is required if "state" parameter is "present".</div></td></tr>
+        <tr>
+<td>parameters_link<br/><div style="font-size: small;"></div></td>
+<td>no</td>
+<td></td>
+    <td><ul></ul></td>
+    <td><div>Uri of file containing the parameters body. This parameter is mutually exclusive with 'parameters'. Either one of them is required if "state" parameter is "present".</div></td></tr>
+        <tr>
+<td>password<br/><div style="font-size: small;"></div></td>
+<td>no</td>
+<td></td>
+    <td><ul></ul></td>
+    <td><div>Active Directory user password. Use when authenticating with an Active Directory user rather than service principal.</div></td></tr>
+        <tr>
+<td>profile<br/><div style="font-size: small;"></div></td>
+<td>no</td>
+<td></td>
+    <td><ul></ul></td>
+    <td><div>Security profile found in ~/.azure/credentials file.</div></td></tr>
+        <tr>
+<td>resource_group_name<br/><div style="font-size: small;"></div></td>
+<td>yes</td>
+<td></td>
+    <td><ul></ul></td>
+    <td><div>The resource group name to use or create to host the deployed template</div></td></tr>
+        <tr>
+<td>secret<br/><div style="font-size: small;"></div></td>
+<td>no</td>
+<td></td>
+    <td><ul></ul></td>
+    <td><div>Azure client secret. Use when authenticating with a Service Principal.</div></td></tr>
+        <tr>
+<td>state<br/><div style="font-size: small;"></div></td>
+<td>no</td>
+<td>present</td>
+    <td><ul><li>present</li><li>absent</li></ul></td>
+    <td><div>If state is "present", template will be created. If state is "present" and if deployment exists, it will be updated. If state is "absent", stack will be removed.</div></td></tr>
+        <tr>
+<td>subscription_id<br/><div style="font-size: small;"></div></td>
+<td>no</td>
+<td></td>
+    <td><ul></ul></td>
+    <td><div>Your Azure subscription Id.</div></td></tr>
+        <tr>
+<td>template<br/><div style="font-size: small;"></div></td>
+<td>no</td>
+<td></td>
+    <td><ul></ul></td>
+    <td><div>A hash containing the templates inline. This parameter is mutually exclusive with 'template_link'. Either one of them is required if "state" parameter is "present".</div></td></tr>
+        <tr>
+<td>template_link<br/><div style="font-size: small;"></div></td>
+<td>no</td>
+<td></td>
+    <td><ul></ul></td>
+    <td><div>Uri of file containing the template body. This parameter is mutually exclusive with 'template'. Either one of them is required if "state" parameter is "present".</div></td></tr>
+        <tr>
+<td>tenant<br/><div style="font-size: small;"></div></td>
+<td>no</td>
+<td></td>
+    <td><ul></ul></td>
+    <td><div>Azure tenant ID. Use when authenticating with a Service Principal.</div></td></tr>
+        <tr>
+<td>wait_for_deployment_completion<br/><div style="font-size: small;"></div></td>
+<td>no</td>
+<td>True</td>
+    <td><ul><li>yes</li><li>no</li></ul></td>
+    <td><div>Whether or not to block until the deployment has completed.</div></td></tr>
+        <tr>
+<td>wait_for_deployment_polling_period<br/><div style="font-size: small;"></div></td>
+<td>no</td>
+<td>10</td>
+    <td><ul></ul></td>
+    <td><div>Time (in seconds) to wait between polls when waiting for deployment completion.</div></td></tr>
+    </table>
+</br></div>
+<div class="section" id="examples">
+<h2><a class="toc-backref" href="#id4">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline">露</a></h2>
+<blockquote>
+<div><div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># Destroy a template deployment</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Destroy Azure Deploy</span>
+  <span class="l l-Scalar l-Scalar-Plain">azure_rm_deployment</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">absent</span>
+    <span class="l l-Scalar l-Scalar-Plain">subscription_id</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span>
+    <span class="l l-Scalar l-Scalar-Plain">resource_group_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dev-ops-cle</span>
+
+<span class="c1"># Create or update a template deployment based on uris using parameter and template links</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Create Azure Deploy</span>
+  <span class="l l-Scalar l-Scalar-Plain">azure_rm_deployment</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+    <span class="l l-Scalar l-Scalar-Plain">resource_group_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dev-ops-cle</span>
+    <span class="l l-Scalar l-Scalar-Plain">template_link</span><span class="p p-Indicator">:</span> <span class="s">&#39;https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vm-simple-linux/azuredeploy.json&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">parameters_link</span><span class="p p-Indicator">:</span> <span class="s">&#39;https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vm-simple-linux/azuredeploy.parameters.json&#39;</span>
+
+<span class="c1"># Create or update a template deployment based on a uri to the template and parameters specified inline.</span>
+<span class="c1"># This deploys a VM with SSH support for a given public key, then stores the result in &#39;azure_vms&#39;. The result is then</span>
+<span class="c1"># used to create a new host group. This host group is then used to wait for each instance to respond to the public IP SSH.</span>
+<span class="nn">---</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">localhost</span>
+  <span class="l l-Scalar l-Scalar-Plain">connection</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">no</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Destroy Azure Deploy</span>
+      <span class="l l-Scalar l-Scalar-Plain">azure_rm_deployment</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">absent</span>
+        <span class="l l-Scalar l-Scalar-Plain">subscription_id</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span>
+        <span class="l l-Scalar l-Scalar-Plain">resource_group_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dev-ops-cle</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Create Azure Deploy</span>
+      <span class="l l-Scalar l-Scalar-Plain">azure_rm_deployment</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+        <span class="l l-Scalar l-Scalar-Plain">subscription_id</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span>
+        <span class="l l-Scalar l-Scalar-Plain">resource_group_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dev-ops-cle</span>
+        <span class="l l-Scalar l-Scalar-Plain">parameters</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">newStorageAccountName</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">value</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">devopsclestorage1</span>
+          <span class="l l-Scalar l-Scalar-Plain">adminUsername</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">value</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">devopscle</span>
+          <span class="l l-Scalar l-Scalar-Plain">dnsNameForPublicIP</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">value</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">devopscleazure</span>
+          <span class="l l-Scalar l-Scalar-Plain">location</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">value</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">West US</span>
+          <span class="l l-Scalar l-Scalar-Plain">vmSize</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">value</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Standard_A2</span>
+          <span class="l l-Scalar l-Scalar-Plain">vmName</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">value</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ansibleSshVm</span>
+          <span class="l l-Scalar l-Scalar-Plain">sshKeyData</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">value</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">YOUR_SSH_PUBLIC_KEY</span>
+        <span class="l l-Scalar l-Scalar-Plain">template_link</span><span class="p p-Indicator">:</span> <span class="s">&#39;https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-vm-sshkey/azuredeploy.json&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">azure</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Add new instance to host group</span>
+      <span class="l l-Scalar l-Scalar-Plain">add_host</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">hostname={{ item[&#39;ips&#39;][0].public_ip }} groupname=azure_vms</span>
+      <span class="l l-Scalar l-Scalar-Plain">with_items</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">azure.deployment.instances</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">azure_vms</span>
+      <span class="l l-Scalar l-Scalar-Plain">user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">devopscle</span>
+      <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Wait for SSH to come up</span>
+          <span class="l l-Scalar l-Scalar-Plain">wait_for</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">port=22 timeout=2000 state=started</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">echo the hostname of the vm</span>
+          <span class="l l-Scalar l-Scalar-Plain">shell</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">hostname</span>
+
+<span class="c1"># Deploy an Azure WebApp running a hello world&#39;ish node app</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Create Azure WebApp Deployment at http://devopscleweb.azurewebsites.net/hello.js</span>
+  <span class="l l-Scalar l-Scalar-Plain">azure_rm_deployment</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+    <span class="l l-Scalar l-Scalar-Plain">subscription_id</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">cbbdaed0-fea9-4693-bf0c-d446ac93c030</span>
+    <span class="l l-Scalar l-Scalar-Plain">resource_group_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dev-ops-cle-webapp</span>
+    <span class="l l-Scalar l-Scalar-Plain">parameters</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">repoURL</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">value</span><span class="p p-Indicator">:</span> <span class="s">&#39;https://github.com/devigned/az-roadshow-oss.git&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">siteName</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">value</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">devopscleweb</span>
+      <span class="l l-Scalar l-Scalar-Plain">hostingPlanName</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">value</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">someplan</span>
+      <span class="l l-Scalar l-Scalar-Plain">siteLocation</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">value</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">westus</span>
+      <span class="l l-Scalar l-Scalar-Plain">sku</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">value</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Standard</span>
+    <span class="l l-Scalar l-Scalar-Plain">template_link</span><span class="p p-Indicator">:</span> <span class="s">&#39;https://raw.githubusercontent.com/azure/azure-quickstart-templates/master/201-web-app-github-deploy/azuredeploy.json&#39;</span>
+
+<span class="c1"># Create or update a template deployment based on an inline template and parameters</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Create Azure Deploy</span>
+  <span class="l l-Scalar l-Scalar-Plain">azure_rm_deploy</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+    <span class="l l-Scalar l-Scalar-Plain">subscription_id</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span>
+    <span class="l l-Scalar l-Scalar-Plain">resource_group_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dev-ops-cle</span>
+
+    <span class="l l-Scalar l-Scalar-Plain">template</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">$schema</span><span class="p p-Indicator">:</span> <span class="s">&quot;https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">contentVersion</span><span class="p p-Indicator">:</span> <span class="s">&quot;1.0.0.0&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">parameters</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">newStorageAccountName</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span> <span class="s">&quot;string&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">metadata</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&quot;Unique</span><span class="nv"> </span><span class="s">DNS</span><span class="nv"> </span><span class="s">Name</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Storage</span><span class="nv"> </span><span class="s">Account</span><span class="nv"> </span><span class="s">where</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Virtual</span><span class="nv"> </span><span class="s">Machine&#39;s</span><span class="nv"> </span><span class="s">disks</span><span class="nv"> </span><span class="s">will</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">placed.&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">adminUsername</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span> <span class="s">&quot;string&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">metadata</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&quot;User</span><span class="nv"> </span><span class="s">name</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Virtual</span><span class="nv"> </span><span class="s">Machine.&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">adminPassword</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span> <span class="s">&quot;securestring&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">metadata</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&quot;Password</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Virtual</span><span class="nv"> </span><span class="s">Machine.&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">dnsNameForPublicIP</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span> <span class="s">&quot;string&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">metadata</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&quot;Unique</span><span class="nv"> </span><span class="s">DNS</span><span class="nv"> </span><span class="s">Name</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Public</span><span class="nv"> </span><span class="s">IP</span><span class="nv"> </span><span class="s">used</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">access</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Virtual</span><span class="nv"> </span><span class="s">Machine.&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">ubuntuOSVersion</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span> <span class="s">&quot;string&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">defaultValue</span><span class="p p-Indicator">:</span> <span class="s">&quot;14.04.2-LTS&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">allowedValues</span><span class="p p-Indicator">:</span>
+            <span class="p p-Indicator">-</span> <span class="s">&quot;12.04.5-LTS&quot;</span>
+            <span class="p p-Indicator">-</span> <span class="s">&quot;14.04.2-LTS&quot;</span>
+            <span class="p p-Indicator">-</span> <span class="s">&quot;15.04&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">metadata</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">Ubuntu</span><span class="nv"> </span><span class="s">version</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">VM.</span><span class="nv"> </span><span class="s">This</span><span class="nv"> </span><span class="s">will</span><span class="nv"> </span><span class="s">pick</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">fully</span><span class="nv"> </span><span class="s">patched</span><span class="nv"> </span><span class="s">image</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">given</span><span class="nv"> </span><span class="s">Ubuntu</span><span class="nv"> </span><span class="s">version.</span><span class="nv"> </span><span class="s">Allowed</span><span class="nv"> </span><span class="s">values:</span><span class="nv"> </span><span class="s">12.04.5-LTS,</span><span class="nv"> </span><span class="s">14.04.2-LTS,</span><span class="nv"> </span><span class="s">15.04.&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">variables</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">location</span><span class="p p-Indicator">:</span> <span class="s">&quot;West</span><span class="nv"> </span><span class="s">US&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">imagePublisher</span><span class="p p-Indicator">:</span> <span class="s">&quot;Canonical&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">imageOffer</span><span class="p p-Indicator">:</span> <span class="s">&quot;UbuntuServer&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">OSDiskName</span><span class="p p-Indicator">:</span> <span class="s">&quot;osdiskforlinuxsimple&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">nicName</span><span class="p p-Indicator">:</span> <span class="s">&quot;myVMNic&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">addressPrefix</span><span class="p p-Indicator">:</span> <span class="s">&quot;10.0.0.0/16&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">subnetName</span><span class="p p-Indicator">:</span> <span class="s">&quot;Subnet&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">subnetPrefix</span><span class="p p-Indicator">:</span> <span class="s">&quot;10.0.0.0/24&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">storageAccountType</span><span class="p p-Indicator">:</span> <span class="s">&quot;Standard_LRS&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">publicIPAddressName</span><span class="p p-Indicator">:</span> <span class="s">&quot;myPublicIP&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">publicIPAddressType</span><span class="p p-Indicator">:</span> <span class="s">&quot;Dynamic&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">vmStorageAccountContainerName</span><span class="p p-Indicator">:</span> <span class="s">&quot;vhds&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">vmName</span><span class="p p-Indicator">:</span> <span class="s">&quot;MyUbuntuVM&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">vmSize</span><span class="p p-Indicator">:</span> <span class="s">&quot;Standard_D1&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">virtualNetworkName</span><span class="p p-Indicator">:</span> <span class="s">&quot;MyVNET&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">vnetID</span><span class="p p-Indicator">:</span> <span class="s">&quot;[resourceId(&#39;Microsoft.Network/virtualNetworks&#39;,variables(&#39;virtualNetworkName&#39;))]&quot;</span>
+        <span class="l l-Scalar l-Scalar-Plain">subnetRef</span><span class="p p-Indicator">:</span> <span class="s">&quot;[concat(variables(&#39;vnetID&#39;),&#39;/subnets/&#39;,variables(&#39;subnetName&#39;))]&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">resources</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span>
+          <span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span> <span class="s">&quot;Microsoft.Storage/storageAccounts&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;[parameters(&#39;newStorageAccountName&#39;)]&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span> <span class="s">&quot;2015-05-01-preview&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">location</span><span class="p p-Indicator">:</span> <span class="s">&quot;[variables(&#39;location&#39;)]&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">properties</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">accountType</span><span class="p p-Indicator">:</span> <span class="s">&quot;[variables(&#39;storageAccountType&#39;)]&quot;</span>
+        <span class="p p-Indicator">-</span>
+          <span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span> <span class="s">&quot;2015-05-01-preview&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span> <span class="s">&quot;Microsoft.Network/publicIPAddresses&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;[variables(&#39;publicIPAddressName&#39;)]&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">location</span><span class="p p-Indicator">:</span> <span class="s">&quot;[variables(&#39;location&#39;)]&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">properties</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">publicIPAllocationMethod</span><span class="p p-Indicator">:</span> <span class="s">&quot;[variables(&#39;publicIPAddressType&#39;)]&quot;</span>
+            <span class="l l-Scalar l-Scalar-Plain">dnsSettings</span><span class="p p-Indicator">:</span>
+              <span class="l l-Scalar l-Scalar-Plain">domainNameLabel</span><span class="p p-Indicator">:</span> <span class="s">&quot;[parameters(&#39;dnsNameForPublicIP&#39;)]&quot;</span>
+        <span class="p p-Indicator">-</span>
+          <span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span> <span class="s">&quot;Microsoft.Network/virtualNetworks&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span> <span class="s">&quot;2015-05-01-preview&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;[variables(&#39;virtualNetworkName&#39;)]&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">location</span><span class="p p-Indicator">:</span> <span class="s">&quot;[variables(&#39;location&#39;)]&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">properties</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">addressSpace</span><span class="p p-Indicator">:</span>
+              <span class="l l-Scalar l-Scalar-Plain">addressPrefixes</span><span class="p p-Indicator">:</span>
+                <span class="p p-Indicator">-</span> <span class="s">&quot;[variables(&#39;addressPrefix&#39;)]&quot;</span>
+            <span class="l l-Scalar l-Scalar-Plain">subnets</span><span class="p p-Indicator">:</span>
+              <span class="p p-Indicator">-</span>
+                <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;[variables(&#39;subnetName&#39;)]&quot;</span>
+                <span class="l l-Scalar l-Scalar-Plain">properties</span><span class="p p-Indicator">:</span>
+                  <span class="l l-Scalar l-Scalar-Plain">addressPrefix</span><span class="p p-Indicator">:</span> <span class="s">&quot;[variables(&#39;subnetPrefix&#39;)]&quot;</span>
+        <span class="p p-Indicator">-</span>
+          <span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span> <span class="s">&quot;Microsoft.Network/networkInterfaces&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span> <span class="s">&quot;2015-05-01-preview&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;[variables(&#39;nicName&#39;)]&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">location</span><span class="p p-Indicator">:</span> <span class="s">&quot;[variables(&#39;location&#39;)]&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">dependsOn</span><span class="p p-Indicator">:</span>
+            <span class="p p-Indicator">-</span> <span class="s">&quot;[concat(&#39;Microsoft.Network/publicIPAddresses/&#39;,</span><span class="nv"> </span><span class="s">variables(&#39;publicIPAddressName&#39;))]&quot;</span>
+            <span class="p p-Indicator">-</span> <span class="s">&quot;[concat(&#39;Microsoft.Network/virtualNetworks/&#39;,</span><span class="nv"> </span><span class="s">variables(&#39;virtualNetworkName&#39;))]&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">properties</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">ipConfigurations</span><span class="p p-Indicator">:</span>
+              <span class="p p-Indicator">-</span>
+                <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;ipconfig1&quot;</span>
+                <span class="l l-Scalar l-Scalar-Plain">properties</span><span class="p p-Indicator">:</span>
+                  <span class="l l-Scalar l-Scalar-Plain">privateIPAllocationMethod</span><span class="p p-Indicator">:</span> <span class="s">&quot;Dynamic&quot;</span>
+                  <span class="l l-Scalar l-Scalar-Plain">publicIPAddress</span><span class="p p-Indicator">:</span>
+                    <span class="l l-Scalar l-Scalar-Plain">id</span><span class="p p-Indicator">:</span> <span class="s">&quot;[resourceId(&#39;Microsoft.Network/publicIPAddresses&#39;,variables(&#39;publicIPAddressName&#39;))]&quot;</span>
+                  <span class="l l-Scalar l-Scalar-Plain">subnet</span><span class="p p-Indicator">:</span>
+                    <span class="l l-Scalar l-Scalar-Plain">id</span><span class="p p-Indicator">:</span> <span class="s">&quot;[variables(&#39;subnetRef&#39;)]&quot;</span>
+        <span class="p p-Indicator">-</span>
+          <span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span> <span class="s">&quot;Microsoft.Compute/virtualMachines&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span> <span class="s">&quot;2015-06-15&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;[variables(&#39;vmName&#39;)]&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">location</span><span class="p p-Indicator">:</span> <span class="s">&quot;[variables(&#39;location&#39;)]&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">dependsOn</span><span class="p p-Indicator">:</span>
+            <span class="p p-Indicator">-</span> <span class="s">&quot;[concat(&#39;Microsoft.Storage/storageAccounts/&#39;,</span><span class="nv"> </span><span class="s">parameters(&#39;newStorageAccountName&#39;))]&quot;</span>
+            <span class="p p-Indicator">-</span> <span class="s">&quot;[concat(&#39;Microsoft.Network/networkInterfaces/&#39;,</span><span class="nv"> </span><span class="s">variables(&#39;nicName&#39;))]&quot;</span>
+          <span class="l l-Scalar l-Scalar-Plain">properties</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">hardwareProfile</span><span class="p p-Indicator">:</span>
+              <span class="l l-Scalar l-Scalar-Plain">vmSize</span><span class="p p-Indicator">:</span> <span class="s">&quot;[variables(&#39;vmSize&#39;)]&quot;</span>
+            <span class="l l-Scalar l-Scalar-Plain">osProfile</span><span class="p p-Indicator">:</span>
+              <span class="l l-Scalar l-Scalar-Plain">computername</span><span class="p p-Indicator">:</span> <span class="s">&quot;[variables(&#39;vmName&#39;)]&quot;</span>
+              <span class="l l-Scalar l-Scalar-Plain">adminUsername</span><span class="p p-Indicator">:</span> <span class="s">&quot;[parameters(&#39;adminUsername&#39;)]&quot;</span>
+              <span class="l l-Scalar l-Scalar-Plain">adminPassword</span><span class="p p-Indicator">:</span> <span class="s">&quot;[parameters(&#39;adminPassword&#39;)]&quot;</span>
+            <span class="l l-Scalar l-Scalar-Plain">storageProfile</span><span class="p p-Indicator">:</span>
+              <span class="l l-Scalar l-Scalar-Plain">imageReference</span><span class="p p-Indicator">:</span>
+                <span class="l l-Scalar l-Scalar-Plain">publisher</span><span class="p p-Indicator">:</span> <span class="s">&quot;[variables(&#39;imagePublisher&#39;)]&quot;</span>
+                <span class="l l-Scalar l-Scalar-Plain">offer</span><span class="p p-Indicator">:</span> <span class="s">&quot;[variables(&#39;imageOffer&#39;)]&quot;</span>
+                <span class="l l-Scalar l-Scalar-Plain">sku</span><span class="p p-Indicator">:</span> <span class="s">&quot;[parameters(&#39;ubuntuOSVersion&#39;)]&quot;</span>
+                <span class="l l-Scalar l-Scalar-Plain">version</span><span class="p p-Indicator">:</span> <span class="s">&quot;latest&quot;</span>
+              <span class="l l-Scalar l-Scalar-Plain">osDisk</span><span class="p p-Indicator">:</span>
+                <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;osdisk&quot;</span>
+                <span class="l l-Scalar l-Scalar-Plain">vhd</span><span class="p p-Indicator">:</span>
+                  <span class="l l-Scalar l-Scalar-Plain">uri</span><span class="p p-Indicator">:</span> <span class="s">&quot;[concat(&#39;http://&#39;,parameters(&#39;newStorageAccountName&#39;),&#39;.blob.core.windows.net/&#39;,variables(&#39;vmStorageAccountContainerName&#39;),&#39;/&#39;,variables(&#39;OSDiskName&#39;),&#39;.vhd&#39;)]&quot;</span>
+                <span class="l l-Scalar l-Scalar-Plain">caching</span><span class="p p-Indicator">:</span> <span class="s">&quot;ReadWrite&quot;</span>
+                <span class="l l-Scalar l-Scalar-Plain">createOption</span><span class="p p-Indicator">:</span> <span class="s">&quot;FromImage&quot;</span>
+            <span class="l l-Scalar l-Scalar-Plain">networkProfile</span><span class="p p-Indicator">:</span>
+              <span class="l l-Scalar l-Scalar-Plain">networkInterfaces</span><span class="p p-Indicator">:</span>
+                <span class="p p-Indicator">-</span>
+                  <span class="l l-Scalar l-Scalar-Plain">id</span><span class="p p-Indicator">:</span> <span class="s">&quot;[resourceId(&#39;Microsoft.Network/networkInterfaces&#39;,variables(&#39;nicName&#39;))]&quot;</span>
+            <span class="l l-Scalar l-Scalar-Plain">diagnosticsProfile</span><span class="p p-Indicator">:</span>
+              <span class="l l-Scalar l-Scalar-Plain">bootDiagnostics</span><span class="p p-Indicator">:</span>
+                <span class="l l-Scalar l-Scalar-Plain">enabled</span><span class="p p-Indicator">:</span> <span class="s">&quot;true&quot;</span>
+                <span class="l l-Scalar l-Scalar-Plain">storageUri</span><span class="p p-Indicator">:</span> <span class="s">&quot;[concat(&#39;http://&#39;,parameters(&#39;newStorageAccountName&#39;),&#39;.blob.core.windows.net&#39;)]&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">parameters</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">newStorageAccountName</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">value</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">devopsclestorage</span>
+      <span class="l l-Scalar l-Scalar-Plain">adminUsername</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">value</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">devopscle</span>
+      <span class="l l-Scalar l-Scalar-Plain">adminPassword</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">value</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Password1!</span>
+      <span class="l l-Scalar l-Scalar-Plain">dnsNameForPublicIP</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">value</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">devopscleazure</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="return-values">
+<h2><a class="toc-backref" href="#id5">Return Values</a><a class="headerlink" href="#return-values" title="Permalink to this headline">露</a></h2>
+<p>Common return values are documented here <a class="reference internal" href="common_return_values.html" tppabs="https://docs.ansible.com/ansible/common_return_values.html"><span class="doc">Common Return Values</span></a>, the following are the fields unique to this module:</p>
+<table border=1 cellpadding=4>
+<tr>
+<th class="head">name</th>
+<th class="head">description</th>
+<th class="head">returned</th>
+<th class="head">type</th>
+<th class="head">sample</th>
+</tr>
+
+    <tr>
+    <td> deployment </td>
+    <td> Deployment details </td>
+    <td align=center> always </td>
+    <td align=center> dict </td>
+    <td align=center> {'instances': {'type': 'list', 'description': 'Provides the public IP addresses for each VM instance.', 'returned': 'always'}, 'group_name': {'type': 'string', 'description': 'Name of the resource group', 'returned': 'always'}, 'id': {'type': 'string', 'description': 'The Azure ID of the deployment', 'returned': 'always'}, 'name': {'type': 'string', 'description': 'Name of the deployment', 'returned': 'always'}, 'outputs': {'type': 'dict', 'description': 'Dictionary of outputs received from the deployment', 'returned': 'always'}} </td>
+</tr>
+
+</table>
+</br></br></div>
+<div class="section" id="notes">
+<h2><a class="toc-backref" href="#id6">Notes</a><a class="headerlink" href="#notes" title="Permalink to this headline">露</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For authentication with Azure you can pass parameters, set environment variables or use a profile stored in ~/.azure/credentials. Authentication is possible using a service principal or Active Directory user. To authenticate via service principal pass subscription_id, client_id, secret and tenant or set set environment variables AZURE_SUBSCRIPTION_ID, AZURE_CLIENT_ID, AZURE_SECRET and AZURE_TENANT.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To Authentication via Active Directory user pass ad_user and password, or set AZURE_AD_USER and AZURE_PASSWORD in the environment.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Alternatively, credentials can be stored in ~/.azure/credentials. This is an ini file containing a [default] section and the following keys: subscription_id, client_id, secret and tenant or subscription_id, ad_user and password. It is also possible to add additional profiles. Specify the profile by passing profile or setting AZURE_PROFILE in the environment.</p>
+</div>
+</div>
+<div class="section" id="this-is-an-extras-module">
+<h2><a class="toc-backref" href="#id7">This is an Extras Module</a><a class="headerlink" href="#this-is-an-extras-module" title="Permalink to this headline">露</a></h2>
+<p>For more information on what this means please read <a class="reference internal" href="modules_extra.html" tppabs="https://docs.ansible.com/ansible/modules_extra.html"><span class="doc">Extras Modules</span></a></p>
+<p>For help in developing on modules, should you be so inclined, please read <a class="reference internal" href="community.html" tppabs="https://docs.ansible.com/ansible/community.html"><span class="doc">Community Information &amp; Contributing</span></a>, <a class="reference internal" href="developing_test_pr.html" tppabs="https://docs.ansible.com/ansible/developing_test_pr.html"><span class="doc">Helping Testing PRs</span></a> and <a class="reference internal" href="developing_modules.html" tppabs="https://docs.ansible.com/ansible/developing_modules.html"><span class="doc">Developing Modules</span></a>.</p>
+</div>
+</div>
+
+
+          </div>
+          <div id="search-results"><gcse:searchresults-only></div>
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+        <a href="azure_rm_networkinterface_module.html" tppabs="https://docs.ansible.com/ansible/azure_rm_networkinterface_module.html" class="btn btn-neutral float-right" title="azure_rm_networkinterface - Manage Azure network interfaces."/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="azure_module.html" tppabs="https://docs.ansible.com/ansible/azure_module.html" class="btn btn-neutral" title="azure - create or terminate a virtual machine in azure"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','st.js'/*tpa=https://s.swiftypecdn.com/install/v2/st.js*/,'_st');
+
+  _st('install','yABGvz2N8PwcwBxyfzUc','2.0.0');
+</script>
+
+  <p>
+  Copyright 漏 2016 Red Hat, Inc.
+  <br>
+    Last updated on Jun 22, 2016.
+  </p>
+<p>
+Ansible docs are generated from <a href="javascript:if(confirm('https://github.com/ansible/ansible  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible'" tppabs="https://github.com/ansible/ansible">GitHub sources</A> using <A HREF="javascript:if(confirm('http://sphinx-doc.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://sphinx-doc.org/'" tppabs="http://sphinx-doc.org/">Sphinx</A> using a theme provided by <a href="javascript:if(confirm('http://readthedocs.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://readthedocs.org/'" tppabs="http://readthedocs.org/">Read the Docs</a>. . Module documentation is not edited directly, but is generated from the source code for the modules.  To submit an update to module docs, edit the 'DOCUMENTATION' metadata in the <A HREF="javascript:if(confirm('https://github.com/ansible/ansible-modules-core  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible-modules-core'" tppabs="https://github.com/ansible/ansible-modules-core">core</A> and <A HREF="javascript:if(confirm('https://github.com/ansible/ansible-modules-extras  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible-modules-extras'" tppabs="https://github.com/ansible/ansible-modules-extras">extras</A> modules source repositories. 
+</p>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+<!-- begin analytics -->
+<script type="text/javascript">
+var _hsq = _hsq || [];
+_hsq.push(["setContentType", "standard-page"]);
+        (function(d,s,i,r) {
+        if (d.getElementById(i)){return;}
+        var n = d.createElement(s),e = document.getElementsByTagName(s)[0];
+        n.id=i;n.src = '//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/330046.js';
+        e.parentNode.insertBefore(n, e);
+        })(document, "script", "hs-analytics",300000);
+</script>
+<!-- end analytics -->
+
+</body>
+</html>

@@ -270,14 +270,6 @@ def Logout(request):
 #     return render_to_response('download.html', locals(), context_instance=RequestContext(request))
 
 
-@login_required(login_url='/login')
-def exec_cmd(request):
-    role = request.GET.get('role')
-    check_assets = request.GET.get('check_assets', '')
-    web_terminal_uri = '/ws/exec?role=%s' % (role)
-    return my_render('exec_cmd.html', locals(), request)
-
-
 @require_role('user')
 def web_terminal(request):
     user = request.user

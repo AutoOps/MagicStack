@@ -246,3 +246,23 @@ def log_record_save(request):
     return HttpResponse(json.dumps(response), content_type='application/json')
 
 
+def exec_commands_log(request):
+    log_id = request.POST.get('id', '')
+    proxy_id = request.POST.get('proxy_id', '')
+    try:
+        proxy = Proxy.objects.get(id=int(proxy_id))
+        if log_id and proxy:
+            api = APIRequest('{0}/v1.0/execute/commands/loginfos/{1}'.format(proxy.url, log_id), proxy.username, CRYPTOR.decrypt(proxy.password))
+            result, codes = api.req_get()
+            log_info = result['data']
+            exec_log = ExecLog()
+            exec_log.remote_id = log_id
+            exec_log.user = request.user.username
+            exec_log.host = log_info['host']
+            exec_log.cmd = log_info['cmd']
+            exec_log.remote_ip = log_info['remote_ip']
+            exec_log.proxy_host = log_info['proxy_host']
+            exec_log.result = log_info['result']
+            exec_log.save()
+    except Exception as e:
+        logger.error(e)

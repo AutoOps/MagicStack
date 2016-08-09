@@ -8,5 +8,6 @@ urlpatterns = patterns('',
                        url(r'^history/$', log_history, name='log_history'),
                        url(r'^log_kill/', log_kill, name='log_kill'),
                        url(r'^record/$', log_record, name='log_record'),
-                       url(r'record/save', log_record_save, name='log_record_save')
+                       url(r'record/save', log_record_save, name='log_record_save'),
+                       url(r'^exec/commonds/log/$', exec_commands_log, name='exec_commands_log')
                       )

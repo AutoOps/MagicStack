@@ -5,6 +5,9 @@ import time
 
 
 class Log(models.Model):
+    """
+    资产连接操做日志
+    """
     user = models.CharField(max_length=20, null=True)
     host = models.CharField(max_length=200, null=True)
     remote_ip = models.CharField(max_length=100)
@@ -30,8 +33,13 @@ class TtyLog(models.Model):
 
 
 class ExecLog(models.Model):
+    """
+    批量执行命令日志
+    """
+    remote_id = models.IntegerField(help_text=u'proxy上的log的ID')
     user = models.CharField(max_length=100)
     host = models.TextField()
+    proxy_host = models.CharField(max_length=100, help_text=u'proxy的IP地址')
     cmd = models.TextField()
     remote_ip = models.CharField(max_length=100)
     result = models.TextField(default='')

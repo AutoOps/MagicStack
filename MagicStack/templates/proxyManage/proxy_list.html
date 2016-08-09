@@ -185,6 +185,7 @@
     <script src="/static/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
     <script src="/static/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
     <script src="/static/pages/scripts/ui-toastr.min.js" type="text/javascript"></script>
+    <script src="/static/js/layer/layer.js" type="text/javascript"></script>
 
 <script>
     // 编辑proxy
@@ -223,6 +224,20 @@
         })
     }
 
+    //批量执行命令
+    function execute_commands(id){
+         var new_url = "{% url 'execute_commands' %}?id=" + id;
+         var title = 'MagicStack Exec Terminal';
+         layer.open({
+             type: 2,
+             title: title,
+             maxmin: true,
+             area: ['725px', '600px'],
+             shade: false,
+             content: new_url
+        });
+        return false
+    }
 
      $(document).ready(function(){
         <!-- 初始化table 分页 排序-->
@@ -297,6 +312,7 @@
                     op_edit = '<a href=\"#\" onclick=\"edit_proxy('+aData.id+')\">编辑</a>';
                     op_upload = '<a href=\"#\" onclick=\"upload_file('+aData.id+')\">上传</a>';
                     op_download = '<a href=\"#\" onclick=\"download_file('+aData.id+')\">下载</a>';
+                    op_excute = '<a href=\"#\" onclick=\"execute_commands('+aData.id+')\">批量执行</a>';
                     op_html = '<div class="btn-group"> \
                             <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions\
                                 <i class="fa fa-angle-down"></i> \
@@ -306,6 +322,7 @@
                                 <li>' + op_del + '</li>\
                                 <li>' + op_upload + '</li>\
                                 <li>' + op_download + '</li>\
+                                <li>' + op_excute + '</li>\
                             </ul>\
                         </div>';
                     $('td:eq(6)', nRow).html(op_html);
@@ -477,9 +494,6 @@
                 }
             })
         });
-
-
-
     })
 </script>
 {% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load mytags %}
+{% block content %}
+<div class="row">
+    <form enctype="multipart/form-data" action="{% url 'file_download' %}" id="form1" class="form-horizontal"
+          method="post">
+        <div class="form-body">
+            <div class="alert alert-danger display-hide">
+                <button class="close" data-close="alert"></button>
+                You have some form errors. Please check below.
+            </div>
+            <div class="alert alert-success display-hide">
+                <button class="close" data-close="alert"></button>
+                Your form validation is successful!
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-3">选择主机</label>
+
+                <div class="col-md-3">
+                    <select class="bs-select form-control" name="proxy">
+                        <option></option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <select name="proxy_host" class="form-control">
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-3">下载文件</label>
+
+                <div class="col-md-6">
+                    <input type="text" name="path" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3"></label>
+
+                <div class="col-md-6">
+                    <button type="button" class="btn green" id="submit">下载</button>
+                    <button type="button" class="btn dark btn-outline" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+</div>
+{% endblock %}
+
+{% block self_head_css_js %}
+{% include 'fileManage/css.html' %}
+{% endblock %}
+
+{% block self_footer_js %}
+{% include 'fileManage/js.html' %}
+<script>
+    $(document).ready(function () {
+
+        $.ajax({
+            type: "get",
+            url: "{% url 'file_upload' %}",
+            datatype: "json",
+            data: { "once": "once" },
+            success: function (proxys) {
+                proxys = $.parseJSON(proxys);
+                $("select[name='proxy']").empty();
+                $.each(proxys, function (idx, proxy) {
+                    $("select[name='proxy']").append("<option value=" +
+                            proxy.id + ">" +
+                            proxy.proxy_name + "</option>");
+                });
+
+                $("select[name='proxy']").trigger('change');
+
+            }
+        });
+
+        $("select[name='proxy']").change(function (e, params) {
+            $.ajax({
+                type: "post",
+                url: "{% url 'get_host_for_proxy' %}",
+                dataType: "json",
+                data: {"proxy_id": $("select[name='proxy'] option:selected").val()},
+                success: function (hosts) {
+                    $("select[name='proxy_host']").empty();
+                    $.each(hosts, function (i, host) {
+                        $("select[name='proxy_host']").append("<option value=" + host.id + ">" + host.name + "</option>");
+                    });
+                }
+            });
+
+        });
+
+        $("#submit").click(function () {
+            $.ajax({
+                type: "post",
+                url: "{% url 'file_download' %}",
+                dataType: "json",
+                data: $("#form1").serialize(),
+                success: function (r) {
+                    if (r.result) {
+                        window.open(r.link);
+                    } else {
+                        console.log(r.message);
+                    }
+                }
+
+            });
+        });
+    });
+</script>
+{% endblock %}

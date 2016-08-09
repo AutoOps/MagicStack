@@ -123,6 +123,7 @@ def upload(request):
             proxy_list = [proxy.to_dict() for proxy in Proxy.objects.all().order_by('create_time')]
             return HttpResponse(json.dumps(proxy_list))
         else:
+            header_title, path1, path2 = u'文件上传', u'文件管理', u'文件上传'
             return render_to_response('fileManage/upload/index.html', locals())
 
 
@@ -184,6 +185,53 @@ def file_upload_list(request):
 @require_role('admin')
 def download(request):
     if request.method == 'POST':
-        pass
+        # 上传到本地目录
+        res = {'result': False}
+        try:
+            path = request.POST.get('path')
+            proxy = request.POST.get('proxy')
+            proxy_host = request.POST.get('proxy_host')
+            params = {'action': 'download_ansible'}
+            # 通过proxy处理文件
+            proxy_obj = Proxy.objects.get(id=proxy)
+            hosts = []
+            if not proxy_host:
+                raise RuntimeError("没有可执行主机")
+            else:
+                hosts.append(Asset.objects.get(id=int(proxy_host)))
+            host_list = []
+            resource = []
+            params['path'] = path
+            # 构建inventory 和 构建主机list
+            for host in hosts:
+                host_list.append(host.networking.all()[0].ip_address)
+                tmp_d = dict()
+                tmp_d['hostname'] = host.networking.all()[0].ip_address
+                tmp_d['port'] = host.port
+                tmp_d['username'] = host.username
+                tmp_d['password'] = CRYPTOR.decrypt(host.password)
+                # 用于前端确定选择的asset
+                tmp_d['id'] = host.id
+                resource.append(tmp_d)
+            params['host_list'] = host_list
+            params['resource'] = resource
+
+            api = APIRequest(
+                '{0}/v1.0/download'.format(proxy_obj.url), proxy_obj.username,
+                CRYPTOR.decrypt(proxy_obj.password))
+            result, code = api.req_post(json.dumps(params))
+            if code != 200:
+                res['message'] = result['message']
+            else:
+                res['result'] = True
+                link = "{0}/v1.0/download?link_id={1}".format(proxy_obj.url, result['link'])
+                res['link'] = link
+                logger.info("link => {0}".format(res))
+        except Exception, e:
+            logger.info(traceback.format_exc())
+            res['message'] = '失败'
+        return HttpResponse(json.dumps(res))
+
     else:
-        pass
+        header_title, path1, path2 = u'文件下载', u'文件管理', u'文件下载'
+        return render_to_response('fileManage/download/index.html', locals())

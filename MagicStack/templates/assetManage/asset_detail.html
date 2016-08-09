@@ -77,7 +77,7 @@
                             </tr>
                             <tr>
                                 <td><span class="bold theme-font"> 硬件厂商型号</span> </td>
-                                <td>{{ asset.brand|default_if_none:"" }}</td>
+                                <td>{{ asset.product_name|default_if_none:"" }}</td>
                             </tr>
                             <tr>
                                 <td ><span class="bold theme-font"> CPU</span> </td>
@@ -107,7 +107,7 @@
                             </tr>
                             <tr>
                                 <td ><span class="bold theme-font">SN</span></td>
-                                <td>{{ asset.sn|default_if_none:"" }}</td>
+                                <td>{{ asset.product_serial|default_if_none:"" }}</td>
                             </tr>
                             <tr>
                                 <td ><span class="bold theme-font">主机类型</span></td>

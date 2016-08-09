@@ -1,0 +1,1008 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset=UTF-8"utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Tag Manager Data Layer -->
+  <script>
+   dataLayer = [];
+  </script>
+  <!-- End Google Tag Manager Data Layer -->
+
+  
+  <title>All Modules &mdash; Ansible Documentation</title>
+  
+
+  
+  
+
+  
+  <link href="css-family=Lato-400,700-Roboto+Slab-400,700-Inconsolata-400,700.css" tppabs="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel='stylesheet' type='text/css'>
+  <link href="font-awesome.min.css" tppabs="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'https://docs.ansible.com/ansible/0.01',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+      <script type="text/javascript" src="jquery.js" tppabs="https://docs.ansible.com/ansible/_static/jquery.js"></script>
+      <script type="text/javascript" src="underscore.js" tppabs="https://docs.ansible.com/ansible/_static/underscore.js"></script>
+      <script type="text/javascript" src="doctools.js" tppabs="https://docs.ansible.com/ansible/_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="theme.min.css" tppabs="https://docs.ansible.com/ansible/_static/css/theme.min.css" type="text/css" />
+    <script type="text/javascript" src="theme.js" tppabs="https://docs.ansible.com/ansible/_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="Ansible Documentation" href="index.html"/>
+        <link rel="up" title="Module Index" href="modules_by_category.html"/>
+        <link rel="next" title="a10_server - Manage A10 Networks AX/SoftAX/Thunder/vThunder devices" href="a10_server_module.html"/>
+        <link rel="prev" title="Module Index" href="modules_by_category.html"/> 
+
+  <script src="modernizr.min.js" tppabs="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  <style>
+    .search-reset-start {
+        color: #463E3F;
+        float: right;
+        position: relative;
+        top: -25px;
+        left: -10px;
+        z-index: 10;
+     }
+     .search-reset-start:hover {
+        cursor: pointer;
+        color: #2980B9;
+     }
+     #search-box-id {
+        padding-right: 25px;
+     }
+  </style>
+
+  <link href="css-family=Open+Sans-400,300.css" tppabs="https://fonts.googleapis.com/css?family=Open+Sans:400,300"
+    rel='stylesheet' type='text/css'>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="ns.html-id=GTM-PSB293" tppabs="https://www.googletagmanager.com/ns.html?id=GTM-PSB293" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'/*tpa=https://docs.ansible.com/ansible/gtm.js*/});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-PSB293');</script>
+  <!-- End Google Tag Manager -->
+
+  <a class="DocSite-nav" href="javascript:if(confirm('http://docs.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">
+    <img class="DocSiteNav-logo"
+      src="logo_invert.png" tppabs="https://docs.ansible.com/ansible/_static/images/logo_invert.png"
+      alt="Ansible Logo">
+    <div class="DocSiteNav-title">
+      Documentation
+    </div>
+  </a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+
+      <div style="background-color:#5bbdbf;height=80px;margin:'auto auto auto auto'">
+        <a class="DocSiteProduct-header DocSiteProduct-header--core"
+          href="index.htm" tppabs="http://docs.ansible.com/ansible/">
+          <div class="DocSiteProduct-productName">
+            <div class="DocSiteProduct-logoText">
+              ANSIBLE
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div id="menu-id" class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html" tppabs="https://docs.ansible.com/ansible/intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro_installation.html" tppabs="https://docs.ansible.com/ansible/intro_installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_getting_started.html" tppabs="https://docs.ansible.com/ansible/intro_getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_inventory.html" tppabs="https://docs.ansible.com/ansible/intro_inventory.html">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_dynamic_inventory.html" tppabs="https://docs.ansible.com/ansible/intro_dynamic_inventory.html">Dynamic Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_patterns.html" tppabs="https://docs.ansible.com/ansible/intro_patterns.html">Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_adhoc.html" tppabs="https://docs.ansible.com/ansible/intro_adhoc.html">Introduction To Ad-Hoc Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_configuration.html" tppabs="https://docs.ansible.com/ansible/intro_configuration.html">Configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_bsd.html" tppabs="https://docs.ansible.com/ansible/intro_bsd.html">BSD Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_windows.html" tppabs="https://docs.ansible.com/ansible/intro_windows.html">Windows Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_networking.html" tppabs="https://docs.ansible.com/ansible/intro_networking.html">Networking Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html" tppabs="https://docs.ansible.com/ansible/quickstart.html">Quickstart Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks.html" tppabs="https://docs.ansible.com/ansible/playbooks.html">Playbooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_intro.html" tppabs="https://docs.ansible.com/ansible/playbooks_intro.html">Intro to Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_roles.html" tppabs="https://docs.ansible.com/ansible/playbooks_roles.html">Playbook Roles and Include Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_variables.html" tppabs="https://docs.ansible.com/ansible/playbooks_variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_filters.html" tppabs="https://docs.ansible.com/ansible/playbooks_filters.html">Jinja2 filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_conditionals.html" tppabs="https://docs.ansible.com/ansible/playbooks_conditionals.html">Conditionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_loops.html" tppabs="https://docs.ansible.com/ansible/playbooks_loops.html">Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_blocks.html" tppabs="https://docs.ansible.com/ansible/playbooks_blocks.html">Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_strategies.html" tppabs="https://docs.ansible.com/ansible/playbooks_strategies.html">Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_best_practices.html" tppabs="https://docs.ansible.com/ansible/playbooks_best_practices.html">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks_special_topics.html" tppabs="https://docs.ansible.com/ansible/playbooks_special_topics.html">Playbooks: Special Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="become.html" tppabs="https://docs.ansible.com/ansible/become.html">Become (Privilege Escalation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_acceleration.html" tppabs="https://docs.ansible.com/ansible/playbooks_acceleration.html">Accelerated Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_async.html" tppabs="https://docs.ansible.com/ansible/playbooks_async.html">Asynchronous Actions and Polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_checkmode.html" tppabs="https://docs.ansible.com/ansible/playbooks_checkmode.html">Check Mode (&#8220;Dry Run&#8221;)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_debugger.html" tppabs="https://docs.ansible.com/ansible/playbooks_debugger.html">Playbook Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_delegation.html" tppabs="https://docs.ansible.com/ansible/playbooks_delegation.html">Delegation, Rolling Updates, and Local Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_environment.html" tppabs="https://docs.ansible.com/ansible/playbooks_environment.html">Setting the Environment (and Working With Proxies)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_error_handling.html" tppabs="https://docs.ansible.com/ansible/playbooks_error_handling.html">Error Handling In Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_advanced_syntax.html" tppabs="https://docs.ansible.com/ansible/playbooks_advanced_syntax.html">Advanced Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_lookups.html" tppabs="https://docs.ansible.com/ansible/playbooks_lookups.html">Using Lookups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_prompts.html" tppabs="https://docs.ansible.com/ansible/playbooks_prompts.html">Prompts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_tags.html" tppabs="https://docs.ansible.com/ansible/playbooks_tags.html">Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_vault.html" tppabs="https://docs.ansible.com/ansible/playbooks_vault.html">Vault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_startnstep.html" tppabs="https://docs.ansible.com/ansible/playbooks_startnstep.html">Start and Step</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_directives.html" tppabs="https://docs.ansible.com/ansible/playbooks_directives.html">Directives Glossary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html" tppabs="https://docs.ansible.com/ansible/modules.html">About Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules_intro.html" tppabs="https://docs.ansible.com/ansible/modules_intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_core.html" tppabs="https://docs.ansible.com/ansible/modules_core.html">Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_extra.html" tppabs="https://docs.ansible.com/ansible/modules_extra.html">Extras Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_return_values.html" tppabs="https://docs.ansible.com/ansible/common_return_values.html">Common Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules_by_category.html" tppabs="https://docs.ansible.com/ansible/modules_by_category.html">Module Index</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">All Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascript:if(confirm('https://docs.ansible.com/ansible/list_of_cloud_modules.html  \n\n该文件无法用 Teleport Ultra 下载, 因为 不可用, 或放弃了下载, 或项目即将停止。  \n\n你想在服务器上打开它?'))window.location='https://docs.ansible.com/ansible/list_of_cloud_modules.html'" tppabs="https://docs.ansible.com/ansible/list_of_cloud_modules.html">Cloud Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_clustering_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_clustering_modules.html">Clustering Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_commands_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_commands_modules.html">Commands Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_database_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_database_modules.html">Database Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_files_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_files_modules.html">Files Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_inventory_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_inventory_modules.html">Inventory Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_messaging_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_messaging_modules.html">Messaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_monitoring_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_monitoring_modules.html">Monitoring Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_network_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_network_modules.html">Network Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_notification_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_notification_modules.html">Notification Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_packaging_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_packaging_modules.html">Packaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_source_control_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_source_control_modules.html">Source Control Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_system_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_system_modules.html">System Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_utilities_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_utilities_modules.html">Utilities Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_web_infrastructure_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_web_infrastructure_modules.html">Web Infrastructure Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_windows_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_windows_modules.html">Windows Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guides.html" tppabs="https://docs.ansible.com/ansible/guides.html">Detailed Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_aws.html" tppabs="https://docs.ansible.com/ansible/guide_aws.html">Amazon Web Services Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_azure.html" tppabs="https://docs.ansible.com/ansible/guide_azure.html">Getting Started with Azure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rax.html" tppabs="https://docs.ansible.com/ansible/guide_rax.html">Rackspace Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_gce.html" tppabs="https://docs.ansible.com/ansible/guide_gce.html">Google Cloud Platform Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_cloudstack.html" tppabs="https://docs.ansible.com/ansible/guide_cloudstack.html">CloudStack Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_vagrant.html" tppabs="https://docs.ansible.com/ansible/guide_vagrant.html">Using Vagrant and Ansible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rolling_upgrade.html" tppabs="https://docs.ansible.com/ansible/guide_rolling_upgrade.html">Continuous Delivery and Rolling Upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_docker.html" tppabs="https://docs.ansible.com/ansible/guide_docker.html">Getting Started with Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developing.html" tppabs="https://docs.ansible.com/ansible/developing.html">Developer Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developing_api.html" tppabs="https://docs.ansible.com/ansible/developing_api.html">Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_inventory.html" tppabs="https://docs.ansible.com/ansible/developing_inventory.html">Developing Dynamic Inventory Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_modules.html" tppabs="https://docs.ansible.com/ansible/developing_modules.html">Developing Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_plugins.html" tppabs="https://docs.ansible.com/ansible/developing_plugins.html">Developing Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_core.html" tppabs="https://docs.ansible.com/ansible/developing_core.html">Developing the Ansible Core Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_test_pr.html" tppabs="https://docs.ansible.com/ansible/developing_test_pr.html">Helping Testing PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_releases.html" tppabs="https://docs.ansible.com/ansible/developing_releases.html">Releases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tower.html" tppabs="https://docs.ansible.com/ansible/tower.html">Ansible Tower</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html" tppabs="https://docs.ansible.com/ansible/community.html">Community Information &amp; Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community.html#ansible-users" tppabs="https://docs.ansible.com/ansible/community.html#ansible-users">Ansible Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#for-current-and-prospective-developers" tppabs="https://docs.ansible.com/ansible/community.html#for-current-and-prospective-developers">For Current and Prospective Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#other-topics" tppabs="https://docs.ansible.com/ansible/community.html#other-topics">Other Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#community-code-of-conduct" tppabs="https://docs.ansible.com/ansible/community.html#community-code-of-conduct">Community Code of Conduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#contributors-license-agreement" tppabs="https://docs.ansible.com/ansible/community.html#contributors-license-agreement">Contributors License Agreement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="galaxy.html" tppabs="https://docs.ansible.com/ansible/galaxy.html">Ansible Galaxy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="galaxy.html#the-website" tppabs="https://docs.ansible.com/ansible/galaxy.html#the-website">The Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="galaxy.html#the-ansible-galaxy-command-line-tool" tppabs="https://docs.ansible.com/ansible/galaxy.html#the-ansible-galaxy-command-line-tool">The ansible-galaxy command line tool</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test_strategies.html" tppabs="https://docs.ansible.com/ansible/test_strategies.html">Testing Strategies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#integrating-testing-with-ansible-playbooks" tppabs="https://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-ansible-playbooks">Integrating Testing With Ansible Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#the-right-level-of-testing" tppabs="https://docs.ansible.com/ansible/test_strategies.html#the-right-level-of-testing">The Right Level of Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#check-mode-as-a-drift-test" tppabs="https://docs.ansible.com/ansible/test_strategies.html#check-mode-as-a-drift-test">Check Mode As A Drift Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#modules-that-are-useful-for-testing" tppabs="https://docs.ansible.com/ansible/test_strategies.html#modules-that-are-useful-for-testing">Modules That Are Useful for Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#testing-lifecycle" tppabs="https://docs.ansible.com/ansible/test_strategies.html#testing-lifecycle">Testing Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#integrating-testing-with-rolling-updates" tppabs="https://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-rolling-updates">Integrating Testing With Rolling Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#achieving-continuous-deployment" tppabs="https://docs.ansible.com/ansible/test_strategies.html#achieving-continuous-deployment">Achieving Continuous Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#conclusion" tppabs="https://docs.ansible.com/ansible/test_strategies.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html" tppabs="https://docs.ansible.com/ansible/faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook" tppabs="https://docs.ansible.com/ansible/faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook">How can I set the PATH or any other environment variable for a task or entire playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with">How do I handle different machines needing different user accounts or ports to log in with?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file">How do I get ansible to reuse connections, enable Kerberized SSH, or have Ansible pay attention to my local SSH config file?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">How do I configure a jump host to access servers that I have no direct access to?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-speed-up-management-inside-ec2" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-speed-up-management-inside-ec2">How do I speed up management inside EC2?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine">How do I handle python pathing not having a Python 2.X in /usr/bin/python on a remote machine?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#what-is-the-best-way-to-make-content-reusable-redistributable" tppabs="https://docs.ansible.com/ansible/faq.html#what-is-the-best-way-to-make-content-reusable-redistributable">What is the best way to make content reusable/redistributable?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it" tppabs="https://docs.ansible.com/ansible/faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it">Where does the configuration file live and what can I configure in it?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-disable-cowsay" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-disable-cowsay">How do I disable cowsay?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables">How do I see a list of all of the ansible_ variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host">How do I see all the inventory vars defined for my host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template">How do I loop over a list of hosts in a group, inside of a template?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-a-variable-name-programmatically" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-name-programmatically">How do I access a variable name programmatically?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group">How do I access a variable of the first host in a group?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-copy-files-recursively-onto-a-target-host" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-copy-files-recursively-onto-a-target-host">How do I copy files recursively onto a target host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-shell-environment-variables" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-shell-environment-variables">How do I access shell environment variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-generate-crypted-passwords-for-the-user-module" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module">How do I generate crypted passwords for the user module?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#can-i-get-training-on-ansible-or-find-commercial-support" tppabs="https://docs.ansible.com/ansible/faq.html#can-i-get-training-on-ansible-or-find-commercial-support">Can I get training on Ansible or find commercial support?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#is-there-a-web-interface-rest-api-etc" tppabs="https://docs.ansible.com/ansible/faq.html#is-there-a-web-interface-rest-api-etc">Is there a web interface / REST API / etc?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-submit-a-change-to-the-documentation" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-submit-a-change-to-the-documentation">How do I submit a change to the documentation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-keep-secret-data-in-my-playbook" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-keep-secret-data-in-my-playbook">How do I keep secret data in my playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names" tppabs="https://docs.ansible.com/ansible/faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names">When should I use {{ }}? Also, how to interpolate variables or dynamic variable names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#i-don-t-see-my-question-here" tppabs="https://docs.ansible.com/ansible/faq.html#i-don-t-see-my-question-here">I don&#8217;t see my question here</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html" tppabs="https://docs.ansible.com/ansible/glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YAMLSyntax.html" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html">YAML Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax.html#yaml-basics" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html#yaml-basics">YAML Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax.html#gotchas" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html#gotchas">Gotchas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html">Porting Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#playbook" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#playbook">Playbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#deprecated" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#deprecated">Deprecated</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#other-caveats" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#other-caveats">Other caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#porting-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#porting-plugins">Porting plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#lookup-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#lookup-plugins">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#connection-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#connection-plugins">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#action-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#action-plugins">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#callback-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#callback-plugins">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id1" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id1">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#hybrid-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#hybrid-plugins">Hybrid plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id2" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id2">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id3" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id3">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id4" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id4">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id5" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id5">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id6" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id6">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#porting-custom-scripts" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#porting-custom-scripts">Porting custom scripts</a></li>
+</ul>
+
+        
+
+<!-- changeable widget -->
+<center>
+<br/>
+<a href="javascript:if(confirm('http://www.ansible.com/docs-left?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-left?utm_source=docs'" tppabs="http://www.ansible.com/docs-left?utm_source=docs">
+    <img style="border-width:0px;" src="ASB-docs-left-rail.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-left-rail.png" />
+</a>
+</center>
+
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="javascript:if(confirm('https://docs.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://docs.ansible.com/'" tppabs="https://docs.ansible.com/">Ansible Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+
+          <!-- Banner ads -->
+          <div class="DocSiteBanner">
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-left.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-left.png">
+            </a>
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-right.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-right.png">
+            </a>
+        </div>
+
+          <ul class="wy-breadcrumbs">
+  <li><a href="index.html" tppabs="https://docs.ansible.com/ansible/index.html">Docs</a> &raquo;</li>
+  <li><a href="">All Modules</a></li>
+  
+</ul>
+<hr/>
+
+          <div id="page-content">
+          
+  <div class="section" id="all-modules">
+<h1>All Modules<a class="headerlink" href="#all-modules" title="Permalink to this headline">露</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="a10_server_module.html" tppabs="https://docs.ansible.com/ansible/a10_server_module.html">a10_server (E) - Manage A10 Networks AX/SoftAX/Thunder/vThunder devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="a10_service_group_module.html" tppabs="https://docs.ansible.com/ansible/a10_service_group_module.html">a10_service_group (E) - Manage A10 Networks devices&#8217; service groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="a10_virtual_server_module.html" tppabs="https://docs.ansible.com/ansible/a10_virtual_server_module.html">a10_virtual_server (E) - Manage A10 Networks devices&#8217; virtual servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acl_module.html" tppabs="https://docs.ansible.com/ansible/acl_module.html">acl - Sets and retrieves file ACL information.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="add_host_module.html" tppabs="https://docs.ansible.com/ansible/add_host_module.html">add_host - add a host (and alternatively a group) to the ansible-playbook in-memory inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="airbrake_deployment_module.html" tppabs="https://docs.ansible.com/ansible/airbrake_deployment_module.html">airbrake_deployment (E) - Notify airbrake about app deployments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="alternatives_module.html" tppabs="https://docs.ansible.com/ansible/alternatives_module.html">alternatives (E) - Manages alternative programs for common commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apache2_module_module.html" tppabs="https://docs.ansible.com/ansible/apache2_module_module.html">apache2_module - enables/disables a module of the Apache2 webserver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apk_module.html" tppabs="https://docs.ansible.com/ansible/apk_module.html">apk (E) - Manages apk packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apt_module.html" tppabs="https://docs.ansible.com/ansible/apt_module.html">apt - Manages apt-packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apt_key_module.html" tppabs="https://docs.ansible.com/ansible/apt_key_module.html">apt_key - Add or remove an apt key</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apt_repository_module.html" tppabs="https://docs.ansible.com/ansible/apt_repository_module.html">apt_repository - Add and remove APT repositories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apt_rpm_module.html" tppabs="https://docs.ansible.com/ansible/apt_rpm_module.html">apt_rpm - apt_rpm package manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assemble_module.html" tppabs="https://docs.ansible.com/ansible/assemble_module.html">assemble - Assembles a configuration file from fragments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assert_module.html" tppabs="https://docs.ansible.com/ansible/assert_module.html">assert - Fail with custom message</a></li>
+<li class="toctree-l1"><a class="reference internal" href="async_status_module.html" tppabs="https://docs.ansible.com/ansible/async_status_module.html">async_status - Obtain status of asynchronous task</a></li>
+<li class="toctree-l1"><a class="reference internal" href="at_module.html" tppabs="https://docs.ansible.com/ansible/at_module.html">at (E) - Schedule the execution of a command or script file via the at command.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authorized_key_module.html" tppabs="https://docs.ansible.com/ansible/authorized_key_module.html">authorized_key - Adds or removes an SSH authorized key</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azure_module.html" tppabs="https://docs.ansible.com/ansible/azure_module.html">azure - create or terminate a virtual machine in azure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azure_rm_deployment_module.html" tppabs="https://docs.ansible.com/ansible/azure_rm_deployment_module.html">azure_rm_deployment (E) - Create or destroy Azure Resource Manager template deployments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azure_rm_networkinterface_module.html" tppabs="https://docs.ansible.com/ansible/azure_rm_networkinterface_module.html">azure_rm_networkinterface - Manage Azure network interfaces.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azure_rm_networkinterface_facts_module.html" tppabs="https://docs.ansible.com/ansible/azure_rm_networkinterface_facts_module.html">azure_rm_networkinterface_facts - Get network interface facts.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azure_rm_publicipaddress_module.html" tppabs="https://docs.ansible.com/ansible/azure_rm_publicipaddress_module.html">azure_rm_publicipaddress - Manage Azure Public IP Addresses.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azure_rm_publicipaddress_facts_module.html" tppabs="https://docs.ansible.com/ansible/azure_rm_publicipaddress_facts_module.html">azure_rm_publicipaddress_facts - Get public IP facts.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azure_rm_resourcegroup_module.html" tppabs="https://docs.ansible.com/ansible/azure_rm_resourcegroup_module.html">azure_rm_resourcegroup - Manage Azure resource groups.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azure_rm_resourcegroup_facts_module.html" tppabs="https://docs.ansible.com/ansible/azure_rm_resourcegroup_facts_module.html">azure_rm_resourcegroup_facts - Get resource group facts.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azure_rm_securitygroup_module.html" tppabs="https://docs.ansible.com/ansible/azure_rm_securitygroup_module.html">azure_rm_securitygroup - Manage Azure network security groups.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azure_rm_securitygroup_facts_module.html" tppabs="https://docs.ansible.com/ansible/azure_rm_securitygroup_facts_module.html">azure_rm_securitygroup_facts - Get security group facts.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azure_rm_storageaccount_module.html" tppabs="https://docs.ansible.com/ansible/azure_rm_storageaccount_module.html">azure_rm_storageaccount - Manage Azure storage accounts.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azure_rm_storageaccount_facts_module.html" tppabs="https://docs.ansible.com/ansible/azure_rm_storageaccount_facts_module.html">azure_rm_storageaccount_facts - Get storage account facts.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azure_rm_storageblob_module.html" tppabs="https://docs.ansible.com/ansible/azure_rm_storageblob_module.html">azure_rm_storageblob - Manage blob containers and blob objects.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azure_rm_subnet_module.html" tppabs="https://docs.ansible.com/ansible/azure_rm_subnet_module.html">azure_rm_subnet - Manage Azure subnets.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azure_rm_virtualmachine_module.html" tppabs="https://docs.ansible.com/ansible/azure_rm_virtualmachine_module.html">azure_rm_virtualmachine - Manage Azure virtual machines.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azure_rm_virtualmachineimage_facts_module.html" tppabs="https://docs.ansible.com/ansible/azure_rm_virtualmachineimage_facts_module.html">azure_rm_virtualmachineimage_facts - Get virtual machine image facts.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azure_rm_virtualnetwork_module.html" tppabs="https://docs.ansible.com/ansible/azure_rm_virtualnetwork_module.html">azure_rm_virtualnetwork - Manage Azure virtual networks.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="azure_rm_virtualnetwork_facts_module.html" tppabs="https://docs.ansible.com/ansible/azure_rm_virtualnetwork_facts_module.html">azure_rm_virtualnetwork_facts - Get virtual network facts.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bigip_facts_module.html" tppabs="https://docs.ansible.com/ansible/bigip_facts_module.html">bigip_facts (E) - Collect facts from F5 BIG-IP devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bigip_gtm_virtual_server_module.html" tppabs="https://docs.ansible.com/ansible/bigip_gtm_virtual_server_module.html">bigip_gtm_virtual_server (E) - Manages F5 BIG-IP GTM virtual servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bigip_gtm_wide_ip_module.html" tppabs="https://docs.ansible.com/ansible/bigip_gtm_wide_ip_module.html">bigip_gtm_wide_ip (E) - Manages F5 BIG-IP GTM wide ip</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bigip_monitor_http_module.html" tppabs="https://docs.ansible.com/ansible/bigip_monitor_http_module.html">bigip_monitor_http (E) - Manages F5 BIG-IP LTM http monitors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bigip_monitor_tcp_module.html" tppabs="https://docs.ansible.com/ansible/bigip_monitor_tcp_module.html">bigip_monitor_tcp (E) - Manages F5 BIG-IP LTM tcp monitors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bigip_node_module.html" tppabs="https://docs.ansible.com/ansible/bigip_node_module.html">bigip_node (E) - Manages F5 BIG-IP LTM nodes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bigip_pool_module.html" tppabs="https://docs.ansible.com/ansible/bigip_pool_module.html">bigip_pool (E) - Manages F5 BIG-IP LTM pools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bigip_pool_member_module.html" tppabs="https://docs.ansible.com/ansible/bigip_pool_member_module.html">bigip_pool_member (E) - Manages F5 BIG-IP LTM pool members</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bigip_virtual_server_module.html" tppabs="https://docs.ansible.com/ansible/bigip_virtual_server_module.html">bigip_virtual_server (E) - Manages F5 BIG-IP LTM virtual servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bigpanda_module.html" tppabs="https://docs.ansible.com/ansible/bigpanda_module.html">bigpanda (E) - Notify BigPanda about deployments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="blockinfile_module.html" tppabs="https://docs.ansible.com/ansible/blockinfile_module.html">blockinfile (E) - Insert/update/remove a text block surrounded by marker lines.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boundary_meter_module.html" tppabs="https://docs.ansible.com/ansible/boundary_meter_module.html">boundary_meter (E) - Manage boundary meters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bower_module.html" tppabs="https://docs.ansible.com/ansible/bower_module.html">bower (E) - Manage bower packages with bower</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bundler_module.html" tppabs="https://docs.ansible.com/ansible/bundler_module.html">bundler (E) - Manage Ruby Gem dependencies with Bundler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bzr_module.html" tppabs="https://docs.ansible.com/ansible/bzr_module.html">bzr (E) - Deploy software (or files) from bzr branches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="campfire_module.html" tppabs="https://docs.ansible.com/ansible/campfire_module.html">campfire (E) - Send a message to Campfire</a></li>
+<li class="toctree-l1"><a class="reference internal" href="capabilities_module.html" tppabs="https://docs.ansible.com/ansible/capabilities_module.html">capabilities (E) - Manage Linux capabilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="circonus_annotation_module.html" tppabs="https://docs.ansible.com/ansible/circonus_annotation_module.html">circonus_annotation (E) - create an annotation in circonus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cl_bond_module.html" tppabs="https://docs.ansible.com/ansible/cl_bond_module.html">cl_bond - Configures a bond port on Cumulus Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cl_bridge_module.html" tppabs="https://docs.ansible.com/ansible/cl_bridge_module.html">cl_bridge - Configures a bridge port on Cumulus Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cl_img_install_module.html" tppabs="https://docs.ansible.com/ansible/cl_img_install_module.html">cl_img_install - Install a different Cumulus Linux version.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cl_interface_module.html" tppabs="https://docs.ansible.com/ansible/cl_interface_module.html">cl_interface - Configures a front panel port, loopback or management port on Cumulus Linux.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cl_interface_policy_module.html" tppabs="https://docs.ansible.com/ansible/cl_interface_policy_module.html">cl_interface_policy - Configure interface enforcement policy on Cumulus Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cl_license_module.html" tppabs="https://docs.ansible.com/ansible/cl_license_module.html">cl_license - Install Cumulus Linux license</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cl_ports_module.html" tppabs="https://docs.ansible.com/ansible/cl_ports_module.html">cl_ports - Configure Cumulus Switch port attributes (ports.conf)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clc_aa_policy_module.html" tppabs="https://docs.ansible.com/ansible/clc_aa_policy_module.html">clc_aa_policy (E) - Create or Delete Anti Affinity Policies at CenturyLink Cloud.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clc_alert_policy_module.html" tppabs="https://docs.ansible.com/ansible/clc_alert_policy_module.html">clc_alert_policy (E) - Create or Delete Alert Policies at CenturyLink Cloud.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clc_blueprint_package_module.html" tppabs="https://docs.ansible.com/ansible/clc_blueprint_package_module.html">clc_blueprint_package (E) - deploys a blue print package on a set of servers in CenturyLink Cloud.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clc_firewall_policy_module.html" tppabs="https://docs.ansible.com/ansible/clc_firewall_policy_module.html">clc_firewall_policy (E) - Create/delete/update firewall policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clc_group_module.html" tppabs="https://docs.ansible.com/ansible/clc_group_module.html">clc_group (E) - Create/delete Server Groups at Centurylink Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clc_loadbalancer_module.html" tppabs="https://docs.ansible.com/ansible/clc_loadbalancer_module.html">clc_loadbalancer (E) - Create, Delete shared loadbalancers in CenturyLink Cloud.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clc_modify_server_module.html" tppabs="https://docs.ansible.com/ansible/clc_modify_server_module.html">clc_modify_server (E) - modify servers in CenturyLink Cloud.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clc_publicip_module.html" tppabs="https://docs.ansible.com/ansible/clc_publicip_module.html">clc_publicip (E) - Add and Delete public ips on servers in CenturyLink Cloud.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clc_server_module.html" tppabs="https://docs.ansible.com/ansible/clc_server_module.html">clc_server (E) - Create, Delete, Start and Stop servers in CenturyLink Cloud.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clc_server_snapshot_module.html" tppabs="https://docs.ansible.com/ansible/clc_server_snapshot_module.html">clc_server_snapshot (E) - Create, Delete and Restore server snapshots in CenturyLink Cloud.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloudflare_dns_module.html" tppabs="https://docs.ansible.com/ansible/cloudflare_dns_module.html">cloudflare_dns (E) - manage Cloudflare DNS records</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloudformation_module.html" tppabs="https://docs.ansible.com/ansible/cloudformation_module.html">cloudformation - Create or delete an AWS CloudFormation stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloudtrail_module.html" tppabs="https://docs.ansible.com/ansible/cloudtrail_module.html">cloudtrail (E) - manage CloudTrail creation and deletion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_module.html" tppabs="https://docs.ansible.com/ansible/command_module.html">command - Executes a command on a remote node</a></li>
+<li class="toctree-l1"><a class="reference internal" href="composer_module.html" tppabs="https://docs.ansible.com/ansible/composer_module.html">composer (E) - Dependency Manager for PHP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="consul_module.html" tppabs="https://docs.ansible.com/ansible/consul_module.html">consul (E) - Add, modify &amp; delete services within a consul cluster.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="consul_acl_module.html" tppabs="https://docs.ansible.com/ansible/consul_acl_module.html">consul_acl (E) - manipulate consul acl keys and rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="consul_kv_module.html" tppabs="https://docs.ansible.com/ansible/consul_kv_module.html">consul_kv (E) - Manipulate entries in the key/value store of a consul cluster.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="consul_session_module.html" tppabs="https://docs.ansible.com/ansible/consul_session_module.html">consul_session (E) - manipulate consul sessions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="copy_module.html" tppabs="https://docs.ansible.com/ansible/copy_module.html">copy - Copies files to remote locations.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpanm_module.html" tppabs="https://docs.ansible.com/ansible/cpanm_module.html">cpanm (E) - Manages Perl library dependencies.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cron_module.html" tppabs="https://docs.ansible.com/ansible/cron_module.html">cron - Manage cron.d and crontab entries.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cronvar_module.html" tppabs="https://docs.ansible.com/ansible/cronvar_module.html">cronvar (E) - Manage variables in crontabs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crypttab_module.html" tppabs="https://docs.ansible.com/ansible/crypttab_module.html">crypttab (E) - Encrypted Linux block devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_account_module.html" tppabs="https://docs.ansible.com/ansible/cs_account_module.html">cs_account (E) - Manages accounts on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_affinitygroup_module.html" tppabs="https://docs.ansible.com/ansible/cs_affinitygroup_module.html">cs_affinitygroup (E) - Manages affinity groups on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_cluster_module.html" tppabs="https://docs.ansible.com/ansible/cs_cluster_module.html">cs_cluster (E) - Manages host clusters on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_configuration_module.html" tppabs="https://docs.ansible.com/ansible/cs_configuration_module.html">cs_configuration (E) - Manages configuration on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_domain_module.html" tppabs="https://docs.ansible.com/ansible/cs_domain_module.html">cs_domain (E) - Manages domains on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_facts_module.html" tppabs="https://docs.ansible.com/ansible/cs_facts_module.html">cs_facts (E) - Gather facts on instances of Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_firewall_module.html" tppabs="https://docs.ansible.com/ansible/cs_firewall_module.html">cs_firewall (E) - Manages firewall rules on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_instance_module.html" tppabs="https://docs.ansible.com/ansible/cs_instance_module.html">cs_instance (E) - Manages instances and virtual machines on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_instance_facts_module.html" tppabs="https://docs.ansible.com/ansible/cs_instance_facts_module.html">cs_instance_facts (E) - Gathering facts from the API of instances from Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_instancegroup_module.html" tppabs="https://docs.ansible.com/ansible/cs_instancegroup_module.html">cs_instancegroup (E) - Manages instance groups on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_ip_address_module.html" tppabs="https://docs.ansible.com/ansible/cs_ip_address_module.html">cs_ip_address (E) - Manages public IP address associations on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_iso_module.html" tppabs="https://docs.ansible.com/ansible/cs_iso_module.html">cs_iso (E) - Manages ISO images on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_loadbalancer_rule_module.html" tppabs="https://docs.ansible.com/ansible/cs_loadbalancer_rule_module.html">cs_loadbalancer_rule (E) - Manages load balancer rules on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_loadbalancer_rule_member_module.html" tppabs="https://docs.ansible.com/ansible/cs_loadbalancer_rule_member_module.html">cs_loadbalancer_rule_member (E) - Manages load balancer rule members on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_network_module.html" tppabs="https://docs.ansible.com/ansible/cs_network_module.html">cs_network (E) - Manages networks on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_pod_module.html" tppabs="https://docs.ansible.com/ansible/cs_pod_module.html">cs_pod (E) - Manages pods on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_portforward_module.html" tppabs="https://docs.ansible.com/ansible/cs_portforward_module.html">cs_portforward (E) - Manages port forwarding rules on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_project_module.html" tppabs="https://docs.ansible.com/ansible/cs_project_module.html">cs_project (E) - Manages projects on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_resourcelimit_module.html" tppabs="https://docs.ansible.com/ansible/cs_resourcelimit_module.html">cs_resourcelimit (E) - Manages resource limits on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_router_module.html" tppabs="https://docs.ansible.com/ansible/cs_router_module.html">cs_router (E) - Manages routers on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_securitygroup_module.html" tppabs="https://docs.ansible.com/ansible/cs_securitygroup_module.html">cs_securitygroup (E) - Manages security groups on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_securitygroup_rule_module.html" tppabs="https://docs.ansible.com/ansible/cs_securitygroup_rule_module.html">cs_securitygroup_rule (E) - Manages security group rules on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_snapshot_policy_module.html" tppabs="https://docs.ansible.com/ansible/cs_snapshot_policy_module.html">cs_snapshot_policy (E) - Manages volume snapshot policies on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_sshkeypair_module.html" tppabs="https://docs.ansible.com/ansible/cs_sshkeypair_module.html">cs_sshkeypair (E) - Manages SSH keys on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_staticnat_module.html" tppabs="https://docs.ansible.com/ansible/cs_staticnat_module.html">cs_staticnat (E) - Manages static NATs on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_template_module.html" tppabs="https://docs.ansible.com/ansible/cs_template_module.html">cs_template (E) - Manages templates on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_user_module.html" tppabs="https://docs.ansible.com/ansible/cs_user_module.html">cs_user (E) - Manages users on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_vmsnapshot_module.html" tppabs="https://docs.ansible.com/ansible/cs_vmsnapshot_module.html">cs_vmsnapshot (E) - Manages VM snapshots on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_volume_module.html" tppabs="https://docs.ansible.com/ansible/cs_volume_module.html">cs_volume (E) - Manages volumes on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_zone_module.html" tppabs="https://docs.ansible.com/ansible/cs_zone_module.html">cs_zone (E) - Manages zones on Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cs_zone_facts_module.html" tppabs="https://docs.ansible.com/ansible/cs_zone_facts_module.html">cs_zone_facts (E) - Gathering facts of zones from Apache CloudStack based clouds.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datadog_event_module.html" tppabs="https://docs.ansible.com/ansible/datadog_event_module.html">datadog_event (E) - Posts events to DataDog  service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datadog_monitor_module.html" tppabs="https://docs.ansible.com/ansible/datadog_monitor_module.html">datadog_monitor (E) - Manages Datadog monitors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debconf_module.html" tppabs="https://docs.ansible.com/ansible/debconf_module.html">debconf (E) - Configure a .deb package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug_module.html" tppabs="https://docs.ansible.com/ansible/debug_module.html">debug - Print statements during execution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy_helper_module.html" tppabs="https://docs.ansible.com/ansible/deploy_helper_module.html">deploy_helper (E) - Manages some of the steps common in deploying projects.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="digital_ocean_module.html" tppabs="https://docs.ansible.com/ansible/digital_ocean_module.html">digital_ocean - Create/delete a droplet/SSH_key in DigitalOcean</a></li>
+<li class="toctree-l1"><a class="reference internal" href="digital_ocean_domain_module.html" tppabs="https://docs.ansible.com/ansible/digital_ocean_domain_module.html">digital_ocean_domain - Create/delete a DNS record in DigitalOcean</a></li>
+<li class="toctree-l1"><a class="reference internal" href="digital_ocean_sshkey_module.html" tppabs="https://docs.ansible.com/ansible/digital_ocean_sshkey_module.html">digital_ocean_sshkey - Create/delete an SSH key in DigitalOcean</a></li>
+<li class="toctree-l1"><a class="reference internal" href="django_manage_module.html" tppabs="https://docs.ansible.com/ansible/django_manage_module.html">django_manage - Manages a Django application.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dnf_module.html" tppabs="https://docs.ansible.com/ansible/dnf_module.html">dnf (E) - Manages packages with the *dnf* package manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dnsimple_module.html" tppabs="https://docs.ansible.com/ansible/dnsimple_module.html">dnsimple (E) - Interface with dnsimple.com (a DNS hosting service).</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dnsmadeeasy_module.html" tppabs="https://docs.ansible.com/ansible/dnsmadeeasy_module.html">dnsmadeeasy (E) - Interface with dnsmadeeasy.com (a DNS hosting service).</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker_module.html" tppabs="https://docs.ansible.com/ansible/docker_module.html">docker (D) - manage docker containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker_container_module.html" tppabs="https://docs.ansible.com/ansible/docker_container_module.html">docker_container - manage docker containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker_image_module.html" tppabs="https://docs.ansible.com/ansible/docker_image_module.html">docker_image - Manage docker images.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker_image_facts_module.html" tppabs="https://docs.ansible.com/ansible/docker_image_facts_module.html">docker_image_facts - Inspect docker images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker_login_module.html" tppabs="https://docs.ansible.com/ansible/docker_login_module.html">docker_login - Log into a Docker registry.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker_service_module.html" tppabs="https://docs.ansible.com/ansible/docker_service_module.html">docker_service - Manage docker services and containers.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dpkg_selections_module.html" tppabs="https://docs.ansible.com/ansible/dpkg_selections_module.html">dpkg_selections (E) - Dpkg package selection selections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dynamodb_table_module.html" tppabs="https://docs.ansible.com/ansible/dynamodb_table_module.html">dynamodb_table (E) - Create, update or delete AWS Dynamo DB tables.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="easy_install_module.html" tppabs="https://docs.ansible.com/ansible/easy_install_module.html">easy_install - Installs Python libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_module.html" tppabs="https://docs.ansible.com/ansible/ec2_module.html">ec2 - create, terminate, start or stop an instance in ec2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_ami_module.html" tppabs="https://docs.ansible.com/ansible/ec2_ami_module.html">ec2_ami - create or destroy an image in ec2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_ami_copy_module.html" tppabs="https://docs.ansible.com/ansible/ec2_ami_copy_module.html">ec2_ami_copy (E) - copies AMI between AWS regions, return new image id</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_ami_find_module.html" tppabs="https://docs.ansible.com/ansible/ec2_ami_find_module.html">ec2_ami_find - Searches for AMIs to obtain the AMI ID and other information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_ami_search_module.html" tppabs="https://docs.ansible.com/ansible/ec2_ami_search_module.html">ec2_ami_search (D) - Retrieve AWS AMI information for a given operating system.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_asg_module.html" tppabs="https://docs.ansible.com/ansible/ec2_asg_module.html">ec2_asg - Create or delete AWS Autoscaling Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_customer_gateway_module.html" tppabs="https://docs.ansible.com/ansible/ec2_customer_gateway_module.html">ec2_customer_gateway (E) - Manage an AWS customer gateway</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_eip_module.html" tppabs="https://docs.ansible.com/ansible/ec2_eip_module.html">ec2_eip - associate an EC2 elastic IP with an instance.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_elb_module.html" tppabs="https://docs.ansible.com/ansible/ec2_elb_module.html">ec2_elb - De-registers or registers instances from EC2 ELBs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_elb_facts_module.html" tppabs="https://docs.ansible.com/ansible/ec2_elb_facts_module.html">ec2_elb_facts (E) - Gather facts about EC2 Elastic Load Balancers in AWS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_elb_lb_module.html" tppabs="https://docs.ansible.com/ansible/ec2_elb_lb_module.html">ec2_elb_lb - Creates or destroys Amazon ELB.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_eni_module.html" tppabs="https://docs.ansible.com/ansible/ec2_eni_module.html">ec2_eni (E) - Create and optionally attach an Elastic Network Interface (ENI) to an instance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_eni_facts_module.html" tppabs="https://docs.ansible.com/ansible/ec2_eni_facts_module.html">ec2_eni_facts (E) - Gather facts about ec2 ENI interfaces in AWS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_facts_module.html" tppabs="https://docs.ansible.com/ansible/ec2_facts_module.html">ec2_facts - Gathers facts about remote hosts within ec2 (aws)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_group_module.html" tppabs="https://docs.ansible.com/ansible/ec2_group_module.html">ec2_group - maintain an ec2 VPC security group.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_key_module.html" tppabs="https://docs.ansible.com/ansible/ec2_key_module.html">ec2_key - maintain an ec2 key pair.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_lc_module.html" tppabs="https://docs.ansible.com/ansible/ec2_lc_module.html">ec2_lc - Create or delete AWS Autoscaling Launch Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_metric_alarm_module.html" tppabs="https://docs.ansible.com/ansible/ec2_metric_alarm_module.html">ec2_metric_alarm - Create/update or delete AWS Cloudwatch &#8216;metric alarms&#8217;</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_remote_facts_module.html" tppabs="https://docs.ansible.com/ansible/ec2_remote_facts_module.html">ec2_remote_facts (E) - Gather facts about ec2 instances in AWS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_scaling_policy_module.html" tppabs="https://docs.ansible.com/ansible/ec2_scaling_policy_module.html">ec2_scaling_policy - Create or delete AWS scaling policies for Autoscaling groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_snapshot_module.html" tppabs="https://docs.ansible.com/ansible/ec2_snapshot_module.html">ec2_snapshot - creates a snapshot from an existing volume</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_snapshot_facts_module.html" tppabs="https://docs.ansible.com/ansible/ec2_snapshot_facts_module.html">ec2_snapshot_facts (E) - Gather facts about ec2 volume snapshots in AWS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_tag_module.html" tppabs="https://docs.ansible.com/ansible/ec2_tag_module.html">ec2_tag - create and remove tag(s) to ec2 resources.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_vol_module.html" tppabs="https://docs.ansible.com/ansible/ec2_vol_module.html">ec2_vol - create and attach a volume, return volume id and device map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_vol_facts_module.html" tppabs="https://docs.ansible.com/ansible/ec2_vol_facts_module.html">ec2_vol_facts (E) - Gather facts about ec2 volumes in AWS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_vpc_module.html" tppabs="https://docs.ansible.com/ansible/ec2_vpc_module.html">ec2_vpc - configure AWS virtual private clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_vpc_dhcp_options_module.html" tppabs="https://docs.ansible.com/ansible/ec2_vpc_dhcp_options_module.html">ec2_vpc_dhcp_options (E) - Manages DHCP Options, and can ensure the DHCP options for the given VPC match what&#8217;s requested</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_vpc_igw_module.html" tppabs="https://docs.ansible.com/ansible/ec2_vpc_igw_module.html">ec2_vpc_igw (E) - Manage an AWS VPC Internet gateway</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_vpc_nacl_module.html" tppabs="https://docs.ansible.com/ansible/ec2_vpc_nacl_module.html">ec2_vpc_nacl (E) - create and delete Network ACLs.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_vpc_net_module.html" tppabs="https://docs.ansible.com/ansible/ec2_vpc_net_module.html">ec2_vpc_net - Configure AWS virtual private clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_vpc_net_facts_module.html" tppabs="https://docs.ansible.com/ansible/ec2_vpc_net_facts_module.html">ec2_vpc_net_facts (E) - Gather facts about ec2 VPCs in AWS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_vpc_peer_module.html" tppabs="https://docs.ansible.com/ansible/ec2_vpc_peer_module.html">ec2_vpc_peer (E) - create, delete, accept, and reject VPC peering connections between two VPCs.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_vpc_route_table_module.html" tppabs="https://docs.ansible.com/ansible/ec2_vpc_route_table_module.html">ec2_vpc_route_table (E) - Manage route tables for AWS virtual private clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_vpc_route_table_facts_module.html" tppabs="https://docs.ansible.com/ansible/ec2_vpc_route_table_facts_module.html">ec2_vpc_route_table_facts (E) - Gather facts about ec2 VPC route tables in AWS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_vpc_subnet_module.html" tppabs="https://docs.ansible.com/ansible/ec2_vpc_subnet_module.html">ec2_vpc_subnet (E) - Manage subnets in AWS virtual private clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_vpc_subnet_facts_module.html" tppabs="https://docs.ansible.com/ansible/ec2_vpc_subnet_facts_module.html">ec2_vpc_subnet_facts (E) - Gather facts about ec2 VPC subnets in AWS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ec2_win_password_module.html" tppabs="https://docs.ansible.com/ansible/ec2_win_password_module.html">ec2_win_password (E) - gets the default administrator password for ec2 windows instances</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ecs_cluster_module.html" tppabs="https://docs.ansible.com/ansible/ecs_cluster_module.html">ecs_cluster (E) - create or terminate ecs clusters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ecs_service_module.html" tppabs="https://docs.ansible.com/ansible/ecs_service_module.html">ecs_service (E) - create, terminate, start or stop a service in ecs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ecs_service_facts_module.html" tppabs="https://docs.ansible.com/ansible/ecs_service_facts_module.html">ecs_service_facts (E) - list or describe services in ecs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ecs_task_module.html" tppabs="https://docs.ansible.com/ansible/ecs_task_module.html">ecs_task (E) - run, start or stop a task in ecs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ecs_taskdefinition_module.html" tppabs="https://docs.ansible.com/ansible/ecs_taskdefinition_module.html">ecs_taskdefinition (E) - register a task definition in ecs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejabberd_user_module.html" tppabs="https://docs.ansible.com/ansible/ejabberd_user_module.html">ejabberd_user (E) - Manages users for ejabberd servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="elasticache_module.html" tppabs="https://docs.ansible.com/ansible/elasticache_module.html">elasticache - Manage cache clusters in Amazon Elasticache.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="elasticache_subnet_group_module.html" tppabs="https://docs.ansible.com/ansible/elasticache_subnet_group_module.html">elasticache_subnet_group - manage Elasticache subnet groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="elasticsearch_plugin_module.html" tppabs="https://docs.ansible.com/ansible/elasticsearch_plugin_module.html">elasticsearch_plugin (E) - Manage Elasticsearch plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eos_command_module.html" tppabs="https://docs.ansible.com/ansible/eos_command_module.html">eos_command - Run arbitrary command on EOS device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eos_config_module.html" tppabs="https://docs.ansible.com/ansible/eos_config_module.html">eos_config - Manage Arista EOS configuration sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eos_eapi_module.html" tppabs="https://docs.ansible.com/ansible/eos_eapi_module.html">eos_eapi - Manage and configure EAPI. Requires EOS v4.12 or greater.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eos_template_module.html" tppabs="https://docs.ansible.com/ansible/eos_template_module.html">eos_template - Manage Arista EOS device configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="expect_module.html" tppabs="https://docs.ansible.com/ansible/expect_module.html">expect (E) - Executes a command and responds to prompts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="facter_module.html" tppabs="https://docs.ansible.com/ansible/facter_module.html">facter (E) - Runs the discovery program *facter* on the remote system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fail_module.html" tppabs="https://docs.ansible.com/ansible/fail_module.html">fail - Fail with custom message</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch_module.html" tppabs="https://docs.ansible.com/ansible/fetch_module.html">fetch - Fetches a file from remote nodes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_module.html" tppabs="https://docs.ansible.com/ansible/file_module.html">file - Sets attributes of files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filesystem_module.html" tppabs="https://docs.ansible.com/ansible/filesystem_module.html">filesystem (E) - Makes file system on block device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="find_module.html" tppabs="https://docs.ansible.com/ansible/find_module.html">find - return a list of files based on specific criteria</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fireball_module.html" tppabs="https://docs.ansible.com/ansible/fireball_module.html">fireball (D) - Enable fireball mode on remote node</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firewalld_module.html" tppabs="https://docs.ansible.com/ansible/firewalld_module.html">firewalld (E) - Manage arbitrary ports/services with firewalld</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flowdock_module.html" tppabs="https://docs.ansible.com/ansible/flowdock_module.html">flowdock (E) - Send a message to a flowdock</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gc_storage_module.html" tppabs="https://docs.ansible.com/ansible/gc_storage_module.html">gc_storage - This module manages objects/buckets in Google Cloud Storage.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gce_module.html" tppabs="https://docs.ansible.com/ansible/gce_module.html">gce - create or terminate GCE instances</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gce_img_module.html" tppabs="https://docs.ansible.com/ansible/gce_img_module.html">gce_img (E) - utilize GCE image resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gce_lb_module.html" tppabs="https://docs.ansible.com/ansible/gce_lb_module.html">gce_lb - create/destroy GCE load-balancer resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gce_net_module.html" tppabs="https://docs.ansible.com/ansible/gce_net_module.html">gce_net - create/destroy GCE networks and firewall rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gce_pd_module.html" tppabs="https://docs.ansible.com/ansible/gce_pd_module.html">gce_pd - utilize GCE persistent disk resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gce_tag_module.html" tppabs="https://docs.ansible.com/ansible/gce_tag_module.html">gce_tag (E) - add or remove tag(s) to/from GCE instance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gem_module.html" tppabs="https://docs.ansible.com/ansible/gem_module.html">gem - Manage Ruby gems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_url_module.html" tppabs="https://docs.ansible.com/ansible/get_url_module.html">get_url - Downloads files from HTTP, HTTPS, or FTP to node</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getent_module.html" tppabs="https://docs.ansible.com/ansible/getent_module.html">getent (E) - a wrapper to the unix getent utility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_module.html" tppabs="https://docs.ansible.com/ansible/git_module.html">git - Deploy software (or files) from git checkouts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git_config_module.html" tppabs="https://docs.ansible.com/ansible/git_config_module.html">git_config (E) - Read and write git configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="github_hooks_module.html" tppabs="https://docs.ansible.com/ansible/github_hooks_module.html">github_hooks (E) - Manages github service hooks.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="github_release_module.html" tppabs="https://docs.ansible.com/ansible/github_release_module.html">github_release (E) - Interact with GitHub Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gitlab_group_module.html" tppabs="https://docs.ansible.com/ansible/gitlab_group_module.html">gitlab_group (E) - Creates/updates/deletes Gitlab Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gitlab_project_module.html" tppabs="https://docs.ansible.com/ansible/gitlab_project_module.html">gitlab_project (E) - Creates/updates/deletes Gitlab Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gitlab_user_module.html" tppabs="https://docs.ansible.com/ansible/gitlab_user_module.html">gitlab_user (E) - Creates/updates/deletes Gitlab Users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glance_image_module.html" tppabs="https://docs.ansible.com/ansible/glance_image_module.html">glance_image (D) - Add/Delete images from glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gluster_volume_module.html" tppabs="https://docs.ansible.com/ansible/gluster_volume_module.html">gluster_volume (E) - Manage GlusterFS volumes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_module.html" tppabs="https://docs.ansible.com/ansible/group_module.html">group - Add or remove groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group_by_module.html" tppabs="https://docs.ansible.com/ansible/group_by_module.html">group_by - Create Ansible groups based on facts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grove_module.html" tppabs="https://docs.ansible.com/ansible/grove_module.html">grove (E) - Sends a notification to a grove.io channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hall_module.html" tppabs="https://docs.ansible.com/ansible/hall_module.html">hall (E) - Send notification to Hall</a></li>
+<li class="toctree-l1"><a class="reference internal" href="haproxy_module.html" tppabs="https://docs.ansible.com/ansible/haproxy_module.html">haproxy (E) - Enable, disable, and set weights for HAProxy backend servers using socket commands.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hg_module.html" tppabs="https://docs.ansible.com/ansible/hg_module.html">hg - Manages Mercurial (hg) repositories.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hipchat_module.html" tppabs="https://docs.ansible.com/ansible/hipchat_module.html">hipchat (E) - Send a message to hipchat.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="homebrew_module.html" tppabs="https://docs.ansible.com/ansible/homebrew_module.html">homebrew (E) - Package manager for Homebrew</a></li>
+<li class="toctree-l1"><a class="reference internal" href="homebrew_cask_module.html" tppabs="https://docs.ansible.com/ansible/homebrew_cask_module.html">homebrew_cask (E) - Install/uninstall homebrew casks.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="homebrew_tap_module.html" tppabs="https://docs.ansible.com/ansible/homebrew_tap_module.html">homebrew_tap (E) - Tap a Homebrew repository.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="honeybadger_deployment_module.html" tppabs="https://docs.ansible.com/ansible/honeybadger_deployment_module.html">honeybadger_deployment (E) - Notify Honeybadger.io about app deployments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hostname_module.html" tppabs="https://docs.ansible.com/ansible/hostname_module.html">hostname - Manage hostname</a></li>
+<li class="toctree-l1"><a class="reference internal" href="htpasswd_module.html" tppabs="https://docs.ansible.com/ansible/htpasswd_module.html">htpasswd - manage user files for basic authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iam_module.html" tppabs="https://docs.ansible.com/ansible/iam_module.html">iam - Manage IAM users, groups, roles and keys</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iam_cert_module.html" tppabs="https://docs.ansible.com/ansible/iam_cert_module.html">iam_cert - Manage server certificates for use on ELBs and CloudFront</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iam_mfa_device_facts_module.html" tppabs="https://docs.ansible.com/ansible/iam_mfa_device_facts_module.html">iam_mfa_device_facts (E) - List the MFA (Multi-Factor Authentication) devices registered for a user</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iam_policy_module.html" tppabs="https://docs.ansible.com/ansible/iam_policy_module.html">iam_policy - Manage IAM policies for users, groups, and roles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="include_vars_module.html" tppabs="https://docs.ansible.com/ansible/include_vars_module.html">include_vars - Load variables from files, dynamically within a task.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="influxdb_database_module.html" tppabs="https://docs.ansible.com/ansible/influxdb_database_module.html">influxdb_database (E) - Manage InfluxDB databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="influxdb_retention_policy_module.html" tppabs="https://docs.ansible.com/ansible/influxdb_retention_policy_module.html">influxdb_retention_policy (E) - Manage InfluxDB retention policies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ini_file_module.html" tppabs="https://docs.ansible.com/ansible/ini_file_module.html">ini_file - Tweak settings in INI files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios_command_module.html" tppabs="https://docs.ansible.com/ansible/ios_command_module.html">ios_command - Run arbitrary commands on ios devices.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios_config_module.html" tppabs="https://docs.ansible.com/ansible/ios_config_module.html">ios_config - Manage Cisco IOS configuration sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios_template_module.html" tppabs="https://docs.ansible.com/ansible/ios_template_module.html">ios_template - Manage Cisco IOS device configurations over SSH</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iosxr_command_module.html" tppabs="https://docs.ansible.com/ansible/iosxr_command_module.html">iosxr_command - Run arbitrary commands on ios devices.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iosxr_config_module.html" tppabs="https://docs.ansible.com/ansible/iosxr_config_module.html">iosxr_config - Manage Cisco IOS XR configuration sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iosxr_template_module.html" tppabs="https://docs.ansible.com/ansible/iosxr_template_module.html">iosxr_template - Manage Cisco IOSXR device configurations over SSH</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ipify_facts_module.html" tppabs="https://docs.ansible.com/ansible/ipify_facts_module.html">ipify_facts (E) - Retrieve the public IP of your internet gateway.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iptables_module.html" tppabs="https://docs.ansible.com/ansible/iptables_module.html">iptables (E) - Modify the systems iptables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="irc_module.html" tppabs="https://docs.ansible.com/ansible/irc_module.html">irc (E) - Send a message to an IRC channel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jabber_module.html" tppabs="https://docs.ansible.com/ansible/jabber_module.html">jabber (E) - Send a message to jabber user or chat room</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jboss_module.html" tppabs="https://docs.ansible.com/ansible/jboss_module.html">jboss (E) - deploy applications to JBoss</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jira_module.html" tppabs="https://docs.ansible.com/ansible/jira_module.html">jira (E) - create and modify issues in a JIRA instance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="junos_command_module.html" tppabs="https://docs.ansible.com/ansible/junos_command_module.html">junos_command - Execute arbitrary commands on a remote device running Junos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="junos_config_module.html" tppabs="https://docs.ansible.com/ansible/junos_config_module.html">junos_config - Manage configuration on remote devices running Junos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="junos_facts_module.html" tppabs="https://docs.ansible.com/ansible/junos_facts_module.html">junos_facts - Collect facts from remote device running Junos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="junos_netconf_module.html" tppabs="https://docs.ansible.com/ansible/junos_netconf_module.html">junos_netconf - Configures the Junos Netconf system service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="junos_package_module.html" tppabs="https://docs.ansible.com/ansible/junos_package_module.html">junos_package - Installs packages on remote devices running Junos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="junos_template_module.html" tppabs="https://docs.ansible.com/ansible/junos_template_module.html">junos_template - Manage configuration on remote devices running Junos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kernel_blacklist_module.html" tppabs="https://docs.ansible.com/ansible/kernel_blacklist_module.html">kernel_blacklist (E) - Blacklist kernel modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keystone_user_module.html" tppabs="https://docs.ansible.com/ansible/keystone_user_module.html">keystone_user (D) - Manage OpenStack Identity (keystone) users, tenants and roles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="known_hosts_module.html" tppabs="https://docs.ansible.com/ansible/known_hosts_module.html">known_hosts (E) - Add or remove a host from the ``known_hosts`` file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kubernetes_module.html" tppabs="https://docs.ansible.com/ansible/kubernetes_module.html">kubernetes (E) - Manage Kubernetes resources.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layman_module.html" tppabs="https://docs.ansible.com/ansible/layman_module.html">layman (E) - Manage Gentoo overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="letsencrypt_module.html" tppabs="https://docs.ansible.com/ansible/letsencrypt_module.html">letsencrypt (E) - Create SSL certificates with Let&#8217;s Encrypt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="librato_annotation_module.html" tppabs="https://docs.ansible.com/ansible/librato_annotation_module.html">librato_annotation (E) - create an annotation in librato</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lineinfile_module.html" tppabs="https://docs.ansible.com/ansible/lineinfile_module.html">lineinfile - Ensure a particular line is in a file, or replace an existing line using a back-referenced regular expression.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linode_module.html" tppabs="https://docs.ansible.com/ansible/linode_module.html">linode - create / delete / stop / restart an instance in Linode Public Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lldp_module.html" tppabs="https://docs.ansible.com/ansible/lldp_module.html">lldp (E) - get details reported by lldp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="locale_gen_module.html" tppabs="https://docs.ansible.com/ansible/locale_gen_module.html">locale_gen (E) - Creates or removes locales.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logentries_module.html" tppabs="https://docs.ansible.com/ansible/logentries_module.html">logentries (E) - Module for tracking logs via logentries.com</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lvg_module.html" tppabs="https://docs.ansible.com/ansible/lvg_module.html">lvg (E) - Configure LVM volume groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lvol_module.html" tppabs="https://docs.ansible.com/ansible/lvol_module.html">lvol (E) - Configure LVM logical volumes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lxc_container_module.html" tppabs="https://docs.ansible.com/ansible/lxc_container_module.html">lxc_container (E) - Manage LXC Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="macports_module.html" tppabs="https://docs.ansible.com/ansible/macports_module.html">macports (E) - Package manager for MacPorts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mail_module.html" tppabs="https://docs.ansible.com/ansible/mail_module.html">mail (E) - Send an email</a></li>
+<li class="toctree-l1"><a class="reference internal" href="make_module.html" tppabs="https://docs.ansible.com/ansible/make_module.html">make (E) - Run targets in a Makefile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maven_artifact_module.html" tppabs="https://docs.ansible.com/ansible/maven_artifact_module.html">maven_artifact (E) - Downloads an Artifact from a Maven Repository</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modprobe_module.html" tppabs="https://docs.ansible.com/ansible/modprobe_module.html">modprobe (E) - Add or remove kernel modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mongodb_parameter_module.html" tppabs="https://docs.ansible.com/ansible/mongodb_parameter_module.html">mongodb_parameter (E) - Change an administrative parameter on a MongoDB server.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mongodb_user_module.html" tppabs="https://docs.ansible.com/ansible/mongodb_user_module.html">mongodb_user (E) - Adds or removes a user from a MongoDB database.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="monit_module.html" tppabs="https://docs.ansible.com/ansible/monit_module.html">monit (E) - Manage the state of a program monitored via Monit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mount_module.html" tppabs="https://docs.ansible.com/ansible/mount_module.html">mount - Control active and configured mount points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mqtt_module.html" tppabs="https://docs.ansible.com/ansible/mqtt_module.html">mqtt (E) - Publish a message on an MQTT topic for the IoT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mssql_db_module.html" tppabs="https://docs.ansible.com/ansible/mssql_db_module.html">mssql_db (E) - Add or remove MSSQL databases from a remote host.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mysql_db_module.html" tppabs="https://docs.ansible.com/ansible/mysql_db_module.html">mysql_db - Add or remove MySQL databases from a remote host.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mysql_replication_module.html" tppabs="https://docs.ansible.com/ansible/mysql_replication_module.html">mysql_replication (E) - Manage MySQL replication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mysql_user_module.html" tppabs="https://docs.ansible.com/ansible/mysql_user_module.html">mysql_user - Adds or removes a user from a MySQL database.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mysql_variables_module.html" tppabs="https://docs.ansible.com/ansible/mysql_variables_module.html">mysql_variables - Manage MySQL global variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nagios_module.html" tppabs="https://docs.ansible.com/ansible/nagios_module.html">nagios (E) - Perform common tasks in Nagios related to downtime and notifications.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="netconf_config_module.html" tppabs="https://docs.ansible.com/ansible/netconf_config_module.html">netconf_config (E) - netconf device configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="netscaler_module.html" tppabs="https://docs.ansible.com/ansible/netscaler_module.html">netscaler (E) - Manages Citrix NetScaler entities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="newrelic_deployment_module.html" tppabs="https://docs.ansible.com/ansible/newrelic_deployment_module.html">newrelic_deployment (E) - Notify newrelic about app deployments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nexmo_module.html" tppabs="https://docs.ansible.com/ansible/nexmo_module.html">nexmo (E) - Send a SMS via nexmo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nmcli_module.html" tppabs="https://docs.ansible.com/ansible/nmcli_module.html">nmcli (E) - Manage Networking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nova_compute_module.html" tppabs="https://docs.ansible.com/ansible/nova_compute_module.html">nova_compute (D) - Create/Delete VMs from OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nova_keypair_module.html" tppabs="https://docs.ansible.com/ansible/nova_keypair_module.html">nova_keypair (D) - Add/Delete key pair from nova</a></li>
+<li class="toctree-l1"><a class="reference internal" href="npm_module.html" tppabs="https://docs.ansible.com/ansible/npm_module.html">npm (E) - Manage node.js packages with npm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nxos_command_module.html" tppabs="https://docs.ansible.com/ansible/nxos_command_module.html">nxos_command - Run arbitrary command on Cisco NXOS devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nxos_config_module.html" tppabs="https://docs.ansible.com/ansible/nxos_config_module.html">nxos_config - Manage Cisco NXOS configuration sections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nxos_facts_module.html" tppabs="https://docs.ansible.com/ansible/nxos_facts_module.html">nxos_facts - Gets facts about NX-OS switches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nxos_feature_module.html" tppabs="https://docs.ansible.com/ansible/nxos_feature_module.html">nxos_feature - Manage features in NX-OS switches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nxos_interface_module.html" tppabs="https://docs.ansible.com/ansible/nxos_interface_module.html">nxos_interface - Manages physical attributes of interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nxos_ip_interface_module.html" tppabs="https://docs.ansible.com/ansible/nxos_ip_interface_module.html">nxos_ip_interface - Manages L3 attributes for IPv4 and IPv6 interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nxos_nxapi_module.html" tppabs="https://docs.ansible.com/ansible/nxos_nxapi_module.html">nxos_nxapi - Manage NXAPI configuration on an NXOS device.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nxos_ping_module.html" tppabs="https://docs.ansible.com/ansible/nxos_ping_module.html">nxos_ping - Tests reachability using ping from Nexus switch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nxos_switchport_module.html" tppabs="https://docs.ansible.com/ansible/nxos_switchport_module.html">nxos_switchport - Manages Layer 2 switchport interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nxos_template_module.html" tppabs="https://docs.ansible.com/ansible/nxos_template_module.html">nxos_template - Manage Cisco NXOS device configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nxos_vlan_module.html" tppabs="https://docs.ansible.com/ansible/nxos_vlan_module.html">nxos_vlan - Manages VLAN resources and attributes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nxos_vrf_module.html" tppabs="https://docs.ansible.com/ansible/nxos_vrf_module.html">nxos_vrf - Manages global VRF configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nxos_vrf_interface_module.html" tppabs="https://docs.ansible.com/ansible/nxos_vrf_interface_module.html">nxos_vrf_interface - Manages interface specific VRF configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nxos_vrrp_module.html" tppabs="https://docs.ansible.com/ansible/nxos_vrrp_module.html">nxos_vrrp - Manages VRRP configuration on NX-OS switches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ohai_module.html" tppabs="https://docs.ansible.com/ansible/ohai_module.html">ohai (E) - Returns inventory data from *Ohai*</a></li>
+<li class="toctree-l1"><a class="reference internal" href="open_iscsi_module.html" tppabs="https://docs.ansible.com/ansible/open_iscsi_module.html">open_iscsi (E) - Manage iscsi targets with open-iscsi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="openbsd_pkg_module.html" tppabs="https://docs.ansible.com/ansible/openbsd_pkg_module.html">openbsd_pkg (E) - Manage packages on OpenBSD.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="openvswitch_bridge_module.html" tppabs="https://docs.ansible.com/ansible/openvswitch_bridge_module.html">openvswitch_bridge (E) - Manage Open vSwitch bridges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="openvswitch_db_module.html" tppabs="https://docs.ansible.com/ansible/openvswitch_db_module.html">openvswitch_db (E) - Configure open vswitch database.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="openvswitch_port_module.html" tppabs="https://docs.ansible.com/ansible/openvswitch_port_module.html">openvswitch_port (E) - Manage Open vSwitch ports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="opkg_module.html" tppabs="https://docs.ansible.com/ansible/opkg_module.html">opkg (E) - Package manager for OpenWrt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ops_command_module.html" tppabs="https://docs.ansible.com/ansible/ops_command_module.html">ops_command - Run arbitrary commands on OpenSwitch devices.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ops_config_module.html" tppabs="https://docs.ansible.com/ansible/ops_config_module.html">ops_config - Manage OpenSwitch configuration using CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ops_facts_module.html" tppabs="https://docs.ansible.com/ansible/ops_facts_module.html">ops_facts - Collect device specific facts from OpenSwitch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ops_template_module.html" tppabs="https://docs.ansible.com/ansible/ops_template_module.html">ops_template - Push configuration to OpenSwitch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_auth_module.html" tppabs="https://docs.ansible.com/ansible/os_auth_module.html">os_auth - Retrieve an auth token</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_client_config_module.html" tppabs="https://docs.ansible.com/ansible/os_client_config_module.html">os_client_config - Get OpenStack Client config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_flavor_facts_module.html" tppabs="https://docs.ansible.com/ansible/os_flavor_facts_module.html">os_flavor_facts (E) - Retrieve facts about one or more flavors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_floating_ip_module.html" tppabs="https://docs.ansible.com/ansible/os_floating_ip_module.html">os_floating_ip - Add/Remove floating IP from an instance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_group_module.html" tppabs="https://docs.ansible.com/ansible/os_group_module.html">os_group (E) - Manage OpenStack Identity Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_image_module.html" tppabs="https://docs.ansible.com/ansible/os_image_module.html">os_image - Add/Delete images from OpenStack Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_image_facts_module.html" tppabs="https://docs.ansible.com/ansible/os_image_facts_module.html">os_image_facts - Retrieve facts about an image within OpenStack.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_ironic_module.html" tppabs="https://docs.ansible.com/ansible/os_ironic_module.html">os_ironic - Create/Delete Bare Metal Resources from OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_ironic_inspect_module.html" tppabs="https://docs.ansible.com/ansible/os_ironic_inspect_module.html">os_ironic_inspect (E) - Explicitly triggers baremetal node introspection in ironic.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_ironic_node_module.html" tppabs="https://docs.ansible.com/ansible/os_ironic_node_module.html">os_ironic_node - Activate/Deactivate Bare Metal Resources from OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_keypair_module.html" tppabs="https://docs.ansible.com/ansible/os_keypair_module.html">os_keypair - Add/Delete a keypair from OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_keystone_domain_module.html" tppabs="https://docs.ansible.com/ansible/os_keystone_domain_module.html">os_keystone_domain (E) - Manage OpenStack Identity Domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_keystone_domain_facts_module.html" tppabs="https://docs.ansible.com/ansible/os_keystone_domain_facts_module.html">os_keystone_domain_facts (E) - Retrieve facts about one or more OpenStack domains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_keystone_role_module.html" tppabs="https://docs.ansible.com/ansible/os_keystone_role_module.html">os_keystone_role (E) - Manage OpenStack Identity Roles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_keystone_service_module.html" tppabs="https://docs.ansible.com/ansible/os_keystone_service_module.html">os_keystone_service (E) - Manage OpenStack Identity services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_network_module.html" tppabs="https://docs.ansible.com/ansible/os_network_module.html">os_network - Creates/removes networks from OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_networks_facts_module.html" tppabs="https://docs.ansible.com/ansible/os_networks_facts_module.html">os_networks_facts - Retrieve facts about one or more OpenStack networks.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_nova_flavor_module.html" tppabs="https://docs.ansible.com/ansible/os_nova_flavor_module.html">os_nova_flavor - Manage OpenStack compute flavors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_object_module.html" tppabs="https://docs.ansible.com/ansible/os_object_module.html">os_object - Create or Delete objects and containers from OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_port_module.html" tppabs="https://docs.ansible.com/ansible/os_port_module.html">os_port - Add/Update/Delete ports from an OpenStack cloud.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_port_facts_module.html" tppabs="https://docs.ansible.com/ansible/os_port_facts_module.html">os_port_facts (E) - Retrieve facts about ports within OpenStack.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_project_module.html" tppabs="https://docs.ansible.com/ansible/os_project_module.html">os_project (E) - Manage OpenStack Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_project_facts_module.html" tppabs="https://docs.ansible.com/ansible/os_project_facts_module.html">os_project_facts (E) - Retrieve facts about one or more OpenStack projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_router_module.html" tppabs="https://docs.ansible.com/ansible/os_router_module.html">os_router - Create or delete routers from OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_security_group_module.html" tppabs="https://docs.ansible.com/ansible/os_security_group_module.html">os_security_group - Add/Delete security groups from an OpenStack cloud.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_security_group_rule_module.html" tppabs="https://docs.ansible.com/ansible/os_security_group_rule_module.html">os_security_group_rule - Add/Delete rule from an existing security group</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_server_module.html" tppabs="https://docs.ansible.com/ansible/os_server_module.html">os_server - Create/Delete Compute Instances from OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_server_actions_module.html" tppabs="https://docs.ansible.com/ansible/os_server_actions_module.html">os_server_actions - Perform actions on Compute Instances from OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_server_facts_module.html" tppabs="https://docs.ansible.com/ansible/os_server_facts_module.html">os_server_facts - Retrieve facts about one or more compute instances</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_server_volume_module.html" tppabs="https://docs.ansible.com/ansible/os_server_volume_module.html">os_server_volume - Attach/Detach Volumes from OpenStack VM&#8217;s</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_subnet_module.html" tppabs="https://docs.ansible.com/ansible/os_subnet_module.html">os_subnet - Add/Remove subnet to an OpenStack network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_subnets_facts_module.html" tppabs="https://docs.ansible.com/ansible/os_subnets_facts_module.html">os_subnets_facts - Retrieve facts about one or more OpenStack subnets.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_user_module.html" tppabs="https://docs.ansible.com/ansible/os_user_module.html">os_user - Manage OpenStack Identity Users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_user_facts_module.html" tppabs="https://docs.ansible.com/ansible/os_user_facts_module.html">os_user_facts (E) - Retrieve facts about one or more OpenStack users</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_user_group_module.html" tppabs="https://docs.ansible.com/ansible/os_user_group_module.html">os_user_group - Associate OpenStack Identity users and groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_user_role_module.html" tppabs="https://docs.ansible.com/ansible/os_user_role_module.html">os_user_role (E) - Associate OpenStack Identity users and roles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os_volume_module.html" tppabs="https://docs.ansible.com/ansible/os_volume_module.html">os_volume - Create/Delete Cinder Volumes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="osx_defaults_module.html" tppabs="https://docs.ansible.com/ansible/osx_defaults_module.html">osx_defaults (E) - osx_defaults allows users to read, write, and delete Mac OS X user defaults from Ansible</a></li>
+<li class="toctree-l1"><a class="reference internal" href="osx_say_module.html" tppabs="https://docs.ansible.com/ansible/osx_say_module.html">osx_say (E) - Makes an OSX computer to speak.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ovirt_module.html" tppabs="https://docs.ansible.com/ansible/ovirt_module.html">ovirt (E) - oVirt/RHEV platform management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="package_module.html" tppabs="https://docs.ansible.com/ansible/package_module.html">package - Generic OS package manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pacman_module.html" tppabs="https://docs.ansible.com/ansible/pacman_module.html">pacman (E) - Manage packages with *pacman*</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pagerduty_module.html" tppabs="https://docs.ansible.com/ansible/pagerduty_module.html">pagerduty (E) - Create PagerDuty maintenance windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pagerduty_alert_module.html" tppabs="https://docs.ansible.com/ansible/pagerduty_alert_module.html">pagerduty_alert (E) - Trigger, acknowledge or resolve PagerDuty incidents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pam_limits_module.html" tppabs="https://docs.ansible.com/ansible/pam_limits_module.html">pam_limits (E) - Modify Linux PAM limits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="patch_module.html" tppabs="https://docs.ansible.com/ansible/patch_module.html">patch (E) - Apply patch files using the GNU patch tool.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pause_module.html" tppabs="https://docs.ansible.com/ansible/pause_module.html">pause - Pause playbook execution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pear_module.html" tppabs="https://docs.ansible.com/ansible/pear_module.html">pear (E) - Manage pear/pecl packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ping_module.html" tppabs="https://docs.ansible.com/ansible/ping_module.html">ping - Try to connect to host, verify a usable python and return ``pong`` on success.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pingdom_module.html" tppabs="https://docs.ansible.com/ansible/pingdom_module.html">pingdom (E) - Pause/unpause Pingdom alerts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pip_module.html" tppabs="https://docs.ansible.com/ansible/pip_module.html">pip - Manages Python library dependencies.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pkg5_module.html" tppabs="https://docs.ansible.com/ansible/pkg5_module.html">pkg5 (E) - Manages packages with the Solaris 11 Image Packaging System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pkg5_publisher_module.html" tppabs="https://docs.ansible.com/ansible/pkg5_publisher_module.html">pkg5_publisher (E) - Manages Solaris 11 Image Packaging System publishers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pkgin_module.html" tppabs="https://docs.ansible.com/ansible/pkgin_module.html">pkgin (E) - Package manager for SmartOS, NetBSD, et al.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pkgng_module.html" tppabs="https://docs.ansible.com/ansible/pkgng_module.html">pkgng (E) - Package manager for FreeBSD &gt;= 9.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pkgutil_module.html" tppabs="https://docs.ansible.com/ansible/pkgutil_module.html">pkgutil (E) - Manage CSW-Packages on Solaris</a></li>
+<li class="toctree-l1"><a class="reference internal" href="portage_module.html" tppabs="https://docs.ansible.com/ansible/portage_module.html">portage (E) - Package manager for Gentoo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="portinstall_module.html" tppabs="https://docs.ansible.com/ansible/portinstall_module.html">portinstall (E) - Installing packages from FreeBSD&#8217;s ports system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="postgresql_db_module.html" tppabs="https://docs.ansible.com/ansible/postgresql_db_module.html">postgresql_db - Add or remove PostgreSQL databases from a remote host.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="postgresql_ext_module.html" tppabs="https://docs.ansible.com/ansible/postgresql_ext_module.html">postgresql_ext (E) - Add or remove PostgreSQL extensions from a database.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="postgresql_lang_module.html" tppabs="https://docs.ansible.com/ansible/postgresql_lang_module.html">postgresql_lang (E) - Adds, removes or changes procedural languages with a PostgreSQL database.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="postgresql_privs_module.html" tppabs="https://docs.ansible.com/ansible/postgresql_privs_module.html">postgresql_privs - Grant or revoke privileges on PostgreSQL database objects.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="postgresql_user_module.html" tppabs="https://docs.ansible.com/ansible/postgresql_user_module.html">postgresql_user - Adds or removes a users (roles) from a PostgreSQL database.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="profitbricks_module.html" tppabs="https://docs.ansible.com/ansible/profitbricks_module.html">profitbricks (E) - Create, destroy, start, stop, and reboot a ProfitBricks virtual machine.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="profitbricks_datacenter_module.html" tppabs="https://docs.ansible.com/ansible/profitbricks_datacenter_module.html">profitbricks_datacenter (E) - Create or destroy a ProfitBricks Virtual Datacenter.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="profitbricks_nic_module.html" tppabs="https://docs.ansible.com/ansible/profitbricks_nic_module.html">profitbricks_nic (E) - Create or Remove a NIC.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="profitbricks_volume_module.html" tppabs="https://docs.ansible.com/ansible/profitbricks_volume_module.html">profitbricks_volume (E) - Create or destroy a volume.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="profitbricks_volume_attachments_module.html" tppabs="https://docs.ansible.com/ansible/profitbricks_volume_attachments_module.html">profitbricks_volume_attachments (E) - Attach or detach a volume.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proxmox_module.html" tppabs="https://docs.ansible.com/ansible/proxmox_module.html">proxmox (E) - management of instances in Proxmox VE cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proxmox_template_module.html" tppabs="https://docs.ansible.com/ansible/proxmox_template_module.html">proxmox_template (E) - management of OS templates in Proxmox VE cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="puppet_module.html" tppabs="https://docs.ansible.com/ansible/puppet_module.html">puppet (E) - Runs puppet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pushbullet_module.html" tppabs="https://docs.ansible.com/ansible/pushbullet_module.html">pushbullet (E) - Sends notifications to Pushbullet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pushover_module.html" tppabs="https://docs.ansible.com/ansible/pushover_module.html">pushover (E) - Send notifications via https://pushover.net</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_floating_ip_module.html" tppabs="https://docs.ansible.com/ansible/quantum_floating_ip_module.html">quantum_floating_ip (D) - Add/Remove floating IP from an instance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_floating_ip_associate_module.html" tppabs="https://docs.ansible.com/ansible/quantum_floating_ip_associate_module.html">quantum_floating_ip_associate (D) - Associate or disassociate a particular floating IP with an instance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_network_module.html" tppabs="https://docs.ansible.com/ansible/quantum_network_module.html">quantum_network (D) - Creates/Removes networks from OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_router_module.html" tppabs="https://docs.ansible.com/ansible/quantum_router_module.html">quantum_router (D) - Create or Remove router from openstack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_router_gateway_module.html" tppabs="https://docs.ansible.com/ansible/quantum_router_gateway_module.html">quantum_router_gateway (D) - set/unset a gateway interface for the router with the specified external network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_router_interface_module.html" tppabs="https://docs.ansible.com/ansible/quantum_router_interface_module.html">quantum_router_interface (D) - Attach/Dettach a subnet&#8217;s interface to a router</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum_subnet_module.html" tppabs="https://docs.ansible.com/ansible/quantum_subnet_module.html">quantum_subnet (D) - Add/remove subnet from a network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rabbitmq_binding_module.html" tppabs="https://docs.ansible.com/ansible/rabbitmq_binding_module.html">rabbitmq_binding (E) - This module manages rabbitMQ bindings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rabbitmq_exchange_module.html" tppabs="https://docs.ansible.com/ansible/rabbitmq_exchange_module.html">rabbitmq_exchange (E) - This module manages rabbitMQ exchanges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rabbitmq_parameter_module.html" tppabs="https://docs.ansible.com/ansible/rabbitmq_parameter_module.html">rabbitmq_parameter (E) - Adds or removes parameters to RabbitMQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rabbitmq_plugin_module.html" tppabs="https://docs.ansible.com/ansible/rabbitmq_plugin_module.html">rabbitmq_plugin (E) - Adds or removes plugins to RabbitMQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rabbitmq_policy_module.html" tppabs="https://docs.ansible.com/ansible/rabbitmq_policy_module.html">rabbitmq_policy (E) - Manage the state of policies in RabbitMQ.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rabbitmq_queue_module.html" tppabs="https://docs.ansible.com/ansible/rabbitmq_queue_module.html">rabbitmq_queue (E) - This module manages rabbitMQ queues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rabbitmq_user_module.html" tppabs="https://docs.ansible.com/ansible/rabbitmq_user_module.html">rabbitmq_user (E) - Adds or removes users to RabbitMQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rabbitmq_vhost_module.html" tppabs="https://docs.ansible.com/ansible/rabbitmq_vhost_module.html">rabbitmq_vhost (E) - Manage the state of a virtual host in RabbitMQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raw_module.html" tppabs="https://docs.ansible.com/ansible/raw_module.html">raw - Executes a low-down and dirty SSH command</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_module.html" tppabs="https://docs.ansible.com/ansible/rax_module.html">rax - create / delete an instance in Rackspace Public Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_cbs_module.html" tppabs="https://docs.ansible.com/ansible/rax_cbs_module.html">rax_cbs - Manipulate Rackspace Cloud Block Storage Volumes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_cbs_attachments_module.html" tppabs="https://docs.ansible.com/ansible/rax_cbs_attachments_module.html">rax_cbs_attachments - Manipulate Rackspace Cloud Block Storage Volume Attachments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_cdb_module.html" tppabs="https://docs.ansible.com/ansible/rax_cdb_module.html">rax_cdb - create/delete or resize a Rackspace Cloud Databases instance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_cdb_database_module.html" tppabs="https://docs.ansible.com/ansible/rax_cdb_database_module.html">rax_cdb_database - create / delete a database in the Cloud Databases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_cdb_user_module.html" tppabs="https://docs.ansible.com/ansible/rax_cdb_user_module.html">rax_cdb_user - create / delete a Rackspace Cloud Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_clb_module.html" tppabs="https://docs.ansible.com/ansible/rax_clb_module.html">rax_clb - create / delete a load balancer in Rackspace Public Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_clb_nodes_module.html" tppabs="https://docs.ansible.com/ansible/rax_clb_nodes_module.html">rax_clb_nodes - add, modify and remove nodes from a Rackspace Cloud Load Balancer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_clb_ssl_module.html" tppabs="https://docs.ansible.com/ansible/rax_clb_ssl_module.html">rax_clb_ssl (E) - Manage SSL termination for a Rackspace Cloud Load Balancer.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_dns_module.html" tppabs="https://docs.ansible.com/ansible/rax_dns_module.html">rax_dns - Manage domains on Rackspace Cloud DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_dns_record_module.html" tppabs="https://docs.ansible.com/ansible/rax_dns_record_module.html">rax_dns_record - Manage DNS records on Rackspace Cloud DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_facts_module.html" tppabs="https://docs.ansible.com/ansible/rax_facts_module.html">rax_facts - Gather facts for Rackspace Cloud Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_files_module.html" tppabs="https://docs.ansible.com/ansible/rax_files_module.html">rax_files - Manipulate Rackspace Cloud Files Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_files_objects_module.html" tppabs="https://docs.ansible.com/ansible/rax_files_objects_module.html">rax_files_objects - Upload, download, and delete objects in Rackspace Cloud Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_identity_module.html" tppabs="https://docs.ansible.com/ansible/rax_identity_module.html">rax_identity - Load Rackspace Cloud Identity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_keypair_module.html" tppabs="https://docs.ansible.com/ansible/rax_keypair_module.html">rax_keypair - Create a keypair for use with Rackspace Cloud Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_meta_module.html" tppabs="https://docs.ansible.com/ansible/rax_meta_module.html">rax_meta - Manipulate metadata for Rackspace Cloud Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_mon_alarm_module.html" tppabs="https://docs.ansible.com/ansible/rax_mon_alarm_module.html">rax_mon_alarm (E) - Create or delete a Rackspace Cloud Monitoring alarm.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_mon_check_module.html" tppabs="https://docs.ansible.com/ansible/rax_mon_check_module.html">rax_mon_check (E) - Create or delete a Rackspace Cloud Monitoring check for an existing entity.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_mon_entity_module.html" tppabs="https://docs.ansible.com/ansible/rax_mon_entity_module.html">rax_mon_entity (E) - Create or delete a Rackspace Cloud Monitoring entity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_mon_notification_module.html" tppabs="https://docs.ansible.com/ansible/rax_mon_notification_module.html">rax_mon_notification (E) - Create or delete a Rackspace Cloud Monitoring notification.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_mon_notification_plan_module.html" tppabs="https://docs.ansible.com/ansible/rax_mon_notification_plan_module.html">rax_mon_notification_plan (E) - Create or delete a Rackspace Cloud Monitoring notification plan.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_network_module.html" tppabs="https://docs.ansible.com/ansible/rax_network_module.html">rax_network - create / delete an isolated network in Rackspace Public Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_queue_module.html" tppabs="https://docs.ansible.com/ansible/rax_queue_module.html">rax_queue - create / delete a queue in Rackspace Public Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_scaling_group_module.html" tppabs="https://docs.ansible.com/ansible/rax_scaling_group_module.html">rax_scaling_group - Manipulate Rackspace Cloud Autoscale Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rax_scaling_policy_module.html" tppabs="https://docs.ansible.com/ansible/rax_scaling_policy_module.html">rax_scaling_policy - Manipulate Rackspace Cloud Autoscale Scaling Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rds_module.html" tppabs="https://docs.ansible.com/ansible/rds_module.html">rds - create, delete, or modify an Amazon rds instance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rds_param_group_module.html" tppabs="https://docs.ansible.com/ansible/rds_param_group_module.html">rds_param_group - manage RDS parameter groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rds_subnet_group_module.html" tppabs="https://docs.ansible.com/ansible/rds_subnet_group_module.html">rds_subnet_group - manage RDS database subnet groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="redhat_subscription_module.html" tppabs="https://docs.ansible.com/ansible/redhat_subscription_module.html">redhat_subscription - Manage Red Hat Network registration and subscriptions using the ``subscription-manager`` command</a></li>
+<li class="toctree-l1"><a class="reference internal" href="redis_module.html" tppabs="https://docs.ansible.com/ansible/redis_module.html">redis (E) - Various redis commands, slave and flush</a></li>
+<li class="toctree-l1"><a class="reference internal" href="replace_module.html" tppabs="https://docs.ansible.com/ansible/replace_module.html">replace - Replace all instances of a particular string in a file using a back-referenced regular expression.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rhn_channel_module.html" tppabs="https://docs.ansible.com/ansible/rhn_channel_module.html">rhn_channel - Adds or removes Red Hat software channels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rhn_register_module.html" tppabs="https://docs.ansible.com/ansible/rhn_register_module.html">rhn_register - Manage Red Hat Network registration using the ``rhnreg_ks`` command</a></li>
+<li class="toctree-l1"><a class="reference internal" href="riak_module.html" tppabs="https://docs.ansible.com/ansible/riak_module.html">riak (E) - This module handles some common Riak operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rocketchat_module.html" tppabs="https://docs.ansible.com/ansible/rocketchat_module.html">rocketchat (E) - Send notifications to Rocket Chat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rollbar_deployment_module.html" tppabs="https://docs.ansible.com/ansible/rollbar_deployment_module.html">rollbar_deployment (E) - Notify Rollbar about app deployments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="route53_module.html" tppabs="https://docs.ansible.com/ansible/route53_module.html">route53 - add or delete entries in Amazons Route53 DNS service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="route53_facts_module.html" tppabs="https://docs.ansible.com/ansible/route53_facts_module.html">route53_facts (E) - Retrieves route53 details using AWS methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="route53_health_check_module.html" tppabs="https://docs.ansible.com/ansible/route53_health_check_module.html">route53_health_check (E) - add or delete health-checks in Amazons Route53 DNS service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="route53_zone_module.html" tppabs="https://docs.ansible.com/ansible/route53_zone_module.html">route53_zone (E) - add or delete Route53 zones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rpm_key_module.html" tppabs="https://docs.ansible.com/ansible/rpm_key_module.html">rpm_key - Adds or removes a gpg key from the rpm db</a></li>
+<li class="toctree-l1"><a class="reference internal" href="s3_module.html" tppabs="https://docs.ansible.com/ansible/s3_module.html">s3 - manage objects in S3.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="s3_bucket_module.html" tppabs="https://docs.ansible.com/ansible/s3_bucket_module.html">s3_bucket (E) - Manage s3 buckets in AWS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="s3_lifecycle_module.html" tppabs="https://docs.ansible.com/ansible/s3_lifecycle_module.html">s3_lifecycle (E) - Manage s3 bucket lifecycle rules in AWS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="s3_logging_module.html" tppabs="https://docs.ansible.com/ansible/s3_logging_module.html">s3_logging (E) - Manage logging facility of an s3 bucket in AWS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="script_module.html" tppabs="https://docs.ansible.com/ansible/script_module.html">script - Runs a local script on a remote node after transferring it</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seboolean_module.html" tppabs="https://docs.ansible.com/ansible/seboolean_module.html">seboolean - Toggles SELinux booleans.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sefcontext_module.html" tppabs="https://docs.ansible.com/ansible/sefcontext_module.html">sefcontext (E) - Manages SELinux file context mapping definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selinux_module.html" tppabs="https://docs.ansible.com/ansible/selinux_module.html">selinux - Change policy and state of SELinux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selinux_permissive_module.html" tppabs="https://docs.ansible.com/ansible/selinux_permissive_module.html">selinux_permissive (E) - Change permissive domain in SELinux policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sendgrid_module.html" tppabs="https://docs.ansible.com/ansible/sendgrid_module.html">sendgrid (E) - Sends an email with the SendGrid API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sensu_check_module.html" tppabs="https://docs.ansible.com/ansible/sensu_check_module.html">sensu_check (E) - Manage Sensu checks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sensu_subscription_module.html" tppabs="https://docs.ansible.com/ansible/sensu_subscription_module.html">sensu_subscription (E) - Manage Sensu subscriptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seport_module.html" tppabs="https://docs.ansible.com/ansible/seport_module.html">seport (E) - Manages SELinux network port type definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service_module.html" tppabs="https://docs.ansible.com/ansible/service_module.html">service - Manage services.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="set_fact_module.html" tppabs="https://docs.ansible.com/ansible/set_fact_module.html">set_fact - Set host facts from a task</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup_module.html" tppabs="https://docs.ansible.com/ansible/setup_module.html">setup - Gathers facts about remote hosts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell_module.html" tppabs="https://docs.ansible.com/ansible/shell_module.html">shell - Execute commands in nodes.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sl_vm_module.html" tppabs="https://docs.ansible.com/ansible/sl_vm_module.html">sl_vm (E) - create or cancel a virtual instance in SoftLayer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slack_module.html" tppabs="https://docs.ansible.com/ansible/slack_module.html">slack (E) - Send Slack notifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slackpkg_module.html" tppabs="https://docs.ansible.com/ansible/slackpkg_module.html">slackpkg (E) - Package manager for Slackware &gt;= 12.2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slurp_module.html" tppabs="https://docs.ansible.com/ansible/slurp_module.html">slurp - Slurps a file from remote nodes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smartos_image_facts_module.html" tppabs="https://docs.ansible.com/ansible/smartos_image_facts_module.html">smartos_image_facts (E) - Get SmartOS image details.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="snmp_facts_module.html" tppabs="https://docs.ansible.com/ansible/snmp_facts_module.html">snmp_facts (E) - Retrieve facts for a device using SNMP.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sns_module.html" tppabs="https://docs.ansible.com/ansible/sns_module.html">sns (E) - Send Amazon Simple Notification Service (SNS) messages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sns_topic_module.html" tppabs="https://docs.ansible.com/ansible/sns_topic_module.html">sns_topic (E) - Manages AWS SNS topics and subscriptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solaris_zone_module.html" tppabs="https://docs.ansible.com/ansible/solaris_zone_module.html">solaris_zone (E) - Manage Solaris zones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sqs_queue_module.html" tppabs="https://docs.ansible.com/ansible/sqs_queue_module.html">sqs_queue (E) - Creates or deletes AWS SQS queues.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stackdriver_module.html" tppabs="https://docs.ansible.com/ansible/stackdriver_module.html">stackdriver (E) - Send code deploy and annotation events to stackdriver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stat_module.html" tppabs="https://docs.ansible.com/ansible/stat_module.html">stat - retrieve file or file system status</a></li>
+<li class="toctree-l1"><a class="reference internal" href="statusio_maintenance_module.html" tppabs="https://docs.ansible.com/ansible/statusio_maintenance_module.html">statusio_maintenance (E) - Create maintenance windows for your status.io dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sts_assume_role_module.html" tppabs="https://docs.ansible.com/ansible/sts_assume_role_module.html">sts_assume_role (E) - Assume a role using AWS Security Token Service and obtain temporary credentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sts_session_token_module.html" tppabs="https://docs.ansible.com/ansible/sts_session_token_module.html">sts_session_token (E) - Obtain a session token from the AWS Security Token Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="subversion_module.html" tppabs="https://docs.ansible.com/ansible/subversion_module.html">subversion - Deploys a subversion repository.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supervisorctl_module.html" tppabs="https://docs.ansible.com/ansible/supervisorctl_module.html">supervisorctl - Manage the state of a program or group of programs running via supervisord</a></li>
+<li class="toctree-l1"><a class="reference internal" href="svc_module.html" tppabs="https://docs.ansible.com/ansible/svc_module.html">svc (E) - Manage daemontools services.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="svr4pkg_module.html" tppabs="https://docs.ansible.com/ansible/svr4pkg_module.html">svr4pkg (E) - Manage Solaris SVR4 packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="swdepot_module.html" tppabs="https://docs.ansible.com/ansible/swdepot_module.html">swdepot (E) - Manage packages with swdepot package manager (HP-UX)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synchronize_module.html" tppabs="https://docs.ansible.com/ansible/synchronize_module.html">synchronize - Uses rsync to make synchronizing file paths in your playbooks quick and easy.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sysctl_module.html" tppabs="https://docs.ansible.com/ansible/sysctl_module.html">sysctl - Manage entries in sysctl.conf.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="systemd_module.html" tppabs="https://docs.ansible.com/ansible/systemd_module.html">systemd - Manage services.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="taiga_issue_module.html" tppabs="https://docs.ansible.com/ansible/taiga_issue_module.html">taiga_issue (E) - Creates/deletes an issue in a Taiga Project Management Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telegram_module.html" tppabs="https://docs.ansible.com/ansible/telegram_module.html">telegram (E) - module for sending notifications via telegram</a></li>
+<li class="toctree-l1"><a class="reference internal" href="template_module.html" tppabs="https://docs.ansible.com/ansible/template_module.html">template - Templates a file out to a remote server.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timezone_module.html" tppabs="https://docs.ansible.com/ansible/timezone_module.html">timezone (E) - Configure timezone setting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="twilio_module.html" tppabs="https://docs.ansible.com/ansible/twilio_module.html">twilio (E) - Sends a text message to a mobile phone through Twilio.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="typetalk_module.html" tppabs="https://docs.ansible.com/ansible/typetalk_module.html">typetalk (E) - Send a message to typetalk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ufw_module.html" tppabs="https://docs.ansible.com/ansible/ufw_module.html">ufw (E) - Manage firewall with UFW</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unarchive_module.html" tppabs="https://docs.ansible.com/ansible/unarchive_module.html">unarchive - Unpacks an archive after (optionally) copying it from the local machine.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uptimerobot_module.html" tppabs="https://docs.ansible.com/ansible/uptimerobot_module.html">uptimerobot (E) - Pause and start Uptime Robot monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uri_module.html" tppabs="https://docs.ansible.com/ansible/uri_module.html">uri - Interacts with webservices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="urpmi_module.html" tppabs="https://docs.ansible.com/ansible/urpmi_module.html">urpmi (E) - Urpmi manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_module.html" tppabs="https://docs.ansible.com/ansible/user_module.html">user - Manage user accounts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vca_fw_module.html" tppabs="https://docs.ansible.com/ansible/vca_fw_module.html">vca_fw (E) - add remove firewall rules in a gateway  in a vca</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vca_nat_module.html" tppabs="https://docs.ansible.com/ansible/vca_nat_module.html">vca_nat (E) - add remove nat rules in a gateway  in a vca</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vca_vapp_module.html" tppabs="https://docs.ansible.com/ansible/vca_vapp_module.html">vca_vapp (E) - Manages vCloud Air vApp instances.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vertica_configuration_module.html" tppabs="https://docs.ansible.com/ansible/vertica_configuration_module.html">vertica_configuration (E) - Updates Vertica configuration parameters.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vertica_facts_module.html" tppabs="https://docs.ansible.com/ansible/vertica_facts_module.html">vertica_facts (E) - Gathers Vertica database facts.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vertica_role_module.html" tppabs="https://docs.ansible.com/ansible/vertica_role_module.html">vertica_role (E) - Adds or removes Vertica database roles and assigns roles to them.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vertica_schema_module.html" tppabs="https://docs.ansible.com/ansible/vertica_schema_module.html">vertica_schema (E) - Adds or removes Vertica database schema and roles.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vertica_user_module.html" tppabs="https://docs.ansible.com/ansible/vertica_user_module.html">vertica_user (E) - Adds or removes Vertica database users and assigns roles.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="virt_module.html" tppabs="https://docs.ansible.com/ansible/virt_module.html">virt (E) - Manages virtual machines supported by libvirt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="virt_net_module.html" tppabs="https://docs.ansible.com/ansible/virt_net_module.html">virt_net (E) - Manage libvirt network configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="virt_pool_module.html" tppabs="https://docs.ansible.com/ansible/virt_pool_module.html">virt_pool (E) - Manage libvirt storage pools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_cluster_module.html" tppabs="https://docs.ansible.com/ansible/vmware_cluster_module.html">vmware_cluster (E) - Create VMware vSphere Cluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_datacenter_module.html" tppabs="https://docs.ansible.com/ansible/vmware_datacenter_module.html">vmware_datacenter (E) - Manage VMware vSphere Datacenters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_dns_config_module.html" tppabs="https://docs.ansible.com/ansible/vmware_dns_config_module.html">vmware_dns_config (E) - Manage VMware ESXi DNS Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_dvs_host_module.html" tppabs="https://docs.ansible.com/ansible/vmware_dvs_host_module.html">vmware_dvs_host (E) - Add or remove a host from distributed virtual switch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_dvs_portgroup_module.html" tppabs="https://docs.ansible.com/ansible/vmware_dvs_portgroup_module.html">vmware_dvs_portgroup (E) - Create or remove a Distributed vSwitch portgroup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_dvswitch_module.html" tppabs="https://docs.ansible.com/ansible/vmware_dvswitch_module.html">vmware_dvswitch (E) - Create or remove a distributed vSwitch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_host_module.html" tppabs="https://docs.ansible.com/ansible/vmware_host_module.html">vmware_host (E) - Add/remove ESXi host to/from vCenter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_maintenancemode_module.html" tppabs="https://docs.ansible.com/ansible/vmware_maintenancemode_module.html">vmware_maintenancemode (E) - Place a host into maintenance mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_migrate_vmk_module.html" tppabs="https://docs.ansible.com/ansible/vmware_migrate_vmk_module.html">vmware_migrate_vmk (E) - Migrate a VMK interface from VSS to VDS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_portgroup_module.html" tppabs="https://docs.ansible.com/ansible/vmware_portgroup_module.html">vmware_portgroup (E) - Create a VMware portgroup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_target_canonical_facts_module.html" tppabs="https://docs.ansible.com/ansible/vmware_target_canonical_facts_module.html">vmware_target_canonical_facts (E) - Return canonical (NAA) from an ESXi host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_vm_facts_module.html" tppabs="https://docs.ansible.com/ansible/vmware_vm_facts_module.html">vmware_vm_facts (E) - Return basic facts pertaining to a vSphere virtual machine guest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_vm_shell_module.html" tppabs="https://docs.ansible.com/ansible/vmware_vm_shell_module.html">vmware_vm_shell (E) - Execute a process in VM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_vm_vss_dvs_migrate_module.html" tppabs="https://docs.ansible.com/ansible/vmware_vm_vss_dvs_migrate_module.html">vmware_vm_vss_dvs_migrate (E) - Migrates a virtual machine from a standard vswitch to distributed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_vmkernel_module.html" tppabs="https://docs.ansible.com/ansible/vmware_vmkernel_module.html">vmware_vmkernel (E) - Create a VMware VMkernel Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_vmkernel_ip_config_module.html" tppabs="https://docs.ansible.com/ansible/vmware_vmkernel_ip_config_module.html">vmware_vmkernel_ip_config (E) - Configure the VMkernel IP Address</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_vmotion_module.html" tppabs="https://docs.ansible.com/ansible/vmware_vmotion_module.html">vmware_vmotion (E) - Move a virtual machine using vMotion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_vsan_cluster_module.html" tppabs="https://docs.ansible.com/ansible/vmware_vsan_cluster_module.html">vmware_vsan_cluster (E) - Configure VSAN clustering on an ESXi host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vmware_vswitch_module.html" tppabs="https://docs.ansible.com/ansible/vmware_vswitch_module.html">vmware_vswitch (E) - Add a VMware Standard Switch to an ESXi host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vsphere_copy_module.html" tppabs="https://docs.ansible.com/ansible/vsphere_copy_module.html">vsphere_copy (E) - Copy a file to a vCenter datastore</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vsphere_guest_module.html" tppabs="https://docs.ansible.com/ansible/vsphere_guest_module.html">vsphere_guest - Create/delete/manage a guest VM through VMware vSphere.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wait_for_module.html" tppabs="https://docs.ansible.com/ansible/wait_for_module.html">wait_for - Waits for a condition before continuing.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webfaction_app_module.html" tppabs="https://docs.ansible.com/ansible/webfaction_app_module.html">webfaction_app (E) - Add or remove applications on a Webfaction host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webfaction_db_module.html" tppabs="https://docs.ansible.com/ansible/webfaction_db_module.html">webfaction_db (E) - Add or remove a database on Webfaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webfaction_domain_module.html" tppabs="https://docs.ansible.com/ansible/webfaction_domain_module.html">webfaction_domain (E) - Add or remove domains and subdomains on Webfaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webfaction_mailbox_module.html" tppabs="https://docs.ansible.com/ansible/webfaction_mailbox_module.html">webfaction_mailbox (E) - Add or remove mailboxes on Webfaction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webfaction_site_module.html" tppabs="https://docs.ansible.com/ansible/webfaction_site_module.html">webfaction_site (E) - Add or remove a website on a Webfaction host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_acl_module.html" tppabs="https://docs.ansible.com/ansible/win_acl_module.html">win_acl (E) - Set file/directory permissions for a system user or group.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_acl_inheritance_module.html" tppabs="https://docs.ansible.com/ansible/win_acl_inheritance_module.html">win_acl_inheritance (E) - Change ACL inheritance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_chocolatey_module.html" tppabs="https://docs.ansible.com/ansible/win_chocolatey_module.html">win_chocolatey (E) - Installs packages using chocolatey</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_copy_module.html" tppabs="https://docs.ansible.com/ansible/win_copy_module.html">win_copy - Copies files to remote locations on windows hosts.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_dotnet_ngen_module.html" tppabs="https://docs.ansible.com/ansible/win_dotnet_ngen_module.html">win_dotnet_ngen (E) - Runs ngen to recompile DLLs after .NET  updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_environment_module.html" tppabs="https://docs.ansible.com/ansible/win_environment_module.html">win_environment (E) - Modifies environment variables on windows hosts.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_feature_module.html" tppabs="https://docs.ansible.com/ansible/win_feature_module.html">win_feature - Installs and uninstalls Windows Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_file_module.html" tppabs="https://docs.ansible.com/ansible/win_file_module.html">win_file - Creates, touches or removes files or directories.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_file_version_module.html" tppabs="https://docs.ansible.com/ansible/win_file_version_module.html">win_file_version (E) - Get DLL or EXE file build version</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_firewall_rule_module.html" tppabs="https://docs.ansible.com/ansible/win_firewall_rule_module.html">win_firewall_rule (E) - Windows firewall automation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_get_url_module.html" tppabs="https://docs.ansible.com/ansible/win_get_url_module.html">win_get_url - Fetches a file from a given URL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_group_module.html" tppabs="https://docs.ansible.com/ansible/win_group_module.html">win_group - Add and remove local groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_iis_virtualdirectory_module.html" tppabs="https://docs.ansible.com/ansible/win_iis_virtualdirectory_module.html">win_iis_virtualdirectory (E) - Configures a virtual directory in IIS.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_iis_webapplication_module.html" tppabs="https://docs.ansible.com/ansible/win_iis_webapplication_module.html">win_iis_webapplication (E) - Configures a IIS Web application.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_iis_webapppool_module.html" tppabs="https://docs.ansible.com/ansible/win_iis_webapppool_module.html">win_iis_webapppool (E) - Configures a IIS Web Application Pool.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_iis_webbinding_module.html" tppabs="https://docs.ansible.com/ansible/win_iis_webbinding_module.html">win_iis_webbinding (E) - Configures a IIS Web site.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_iis_website_module.html" tppabs="https://docs.ansible.com/ansible/win_iis_website_module.html">win_iis_website (E) - Configures a IIS Web site.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_lineinfile_module.html" tppabs="https://docs.ansible.com/ansible/win_lineinfile_module.html">win_lineinfile - Ensure a particular line is in a file, or replace an existing line using a back-referenced regular expression.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_msi_module.html" tppabs="https://docs.ansible.com/ansible/win_msi_module.html">win_msi - Installs and uninstalls Windows MSI files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_nssm_module.html" tppabs="https://docs.ansible.com/ansible/win_nssm_module.html">win_nssm (E) - NSSM - the Non-Sucking Service Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_owner_module.html" tppabs="https://docs.ansible.com/ansible/win_owner_module.html">win_owner (E) - Set owner</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_package_module.html" tppabs="https://docs.ansible.com/ansible/win_package_module.html">win_package (E) - Installs/Uninstalls an installable package, either from local file system or url</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_ping_module.html" tppabs="https://docs.ansible.com/ansible/win_ping_module.html">win_ping - A windows version of the classic ping module.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_reboot_module.html" tppabs="https://docs.ansible.com/ansible/win_reboot_module.html">win_reboot - Reboot a windows machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_regedit_module.html" tppabs="https://docs.ansible.com/ansible/win_regedit_module.html">win_regedit (E) - Add, Edit, or Remove Registry Keys and Values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_regmerge_module.html" tppabs="https://docs.ansible.com/ansible/win_regmerge_module.html">win_regmerge (E) - Merges the contents of a registry file into the windows registry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_robocopy_module.html" tppabs="https://docs.ansible.com/ansible/win_robocopy_module.html">win_robocopy (E) - Synchronizes the contents of two directories using Robocopy.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_scheduled_task_module.html" tppabs="https://docs.ansible.com/ansible/win_scheduled_task_module.html">win_scheduled_task (E) - Manage scheduled tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_service_module.html" tppabs="https://docs.ansible.com/ansible/win_service_module.html">win_service - Manages Windows services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_share_module.html" tppabs="https://docs.ansible.com/ansible/win_share_module.html">win_share (E) - Manage Windows shares</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_stat_module.html" tppabs="https://docs.ansible.com/ansible/win_stat_module.html">win_stat - returns information about a Windows file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_template_module.html" tppabs="https://docs.ansible.com/ansible/win_template_module.html">win_template - Templates a file out to a remote server.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_timezone_module.html" tppabs="https://docs.ansible.com/ansible/win_timezone_module.html">win_timezone (E) - Sets Windows machine timezone</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_unzip_module.html" tppabs="https://docs.ansible.com/ansible/win_unzip_module.html">win_unzip (E) - Unzips compressed files and archives on the Windows node</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_updates_module.html" tppabs="https://docs.ansible.com/ansible/win_updates_module.html">win_updates (E) - Download and install Windows updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_uri_module.html" tppabs="https://docs.ansible.com/ansible/win_uri_module.html">win_uri (E) - Interacts with webservices.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_user_module.html" tppabs="https://docs.ansible.com/ansible/win_user_module.html">win_user - Manages local Windows user accounts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="win_webpicmd_module.html" tppabs="https://docs.ansible.com/ansible/win_webpicmd_module.html">win_webpicmd (E) - Installs packages using Web Platform Installer command-line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xattr_module.html" tppabs="https://docs.ansible.com/ansible/xattr_module.html">xattr - set/retrieve extended attributes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xenserver_facts_module.html" tppabs="https://docs.ansible.com/ansible/xenserver_facts_module.html">xenserver_facts (E) - get facts reported on xenserver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yum_module.html" tppabs="https://docs.ansible.com/ansible/yum_module.html">yum - Manages packages with the *yum* package manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="yum_repository_module.html" tppabs="https://docs.ansible.com/ansible/yum_repository_module.html">yum_repository (E) - Add and remove YUM repositories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zabbix_group_module.html" tppabs="https://docs.ansible.com/ansible/zabbix_group_module.html">zabbix_group (E) - Zabbix host groups creates/deletes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zabbix_host_module.html" tppabs="https://docs.ansible.com/ansible/zabbix_host_module.html">zabbix_host (E) - Zabbix host creates/updates/deletes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zabbix_hostmacro_module.html" tppabs="https://docs.ansible.com/ansible/zabbix_hostmacro_module.html">zabbix_hostmacro (E) - Zabbix host macro creates/updates/deletes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zabbix_maintenance_module.html" tppabs="https://docs.ansible.com/ansible/zabbix_maintenance_module.html">zabbix_maintenance (E) - Create Zabbix maintenance windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zabbix_screen_module.html" tppabs="https://docs.ansible.com/ansible/zabbix_screen_module.html">zabbix_screen (E) - Zabbix screen creates/updates/deletes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zfs_module.html" tppabs="https://docs.ansible.com/ansible/zfs_module.html">zfs (E) - Manage zfs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="znode_module.html" tppabs="https://docs.ansible.com/ansible/znode_module.html">znode (E) - Create, delete, retrieve, and update znodes using ZooKeeper.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zypper_module.html" tppabs="https://docs.ansible.com/ansible/zypper_module.html">zypper (E) - Manage packages on SUSE and openSUSE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zypper_repository_module.html" tppabs="https://docs.ansible.com/ansible/zypper_repository_module.html">zypper_repository (E) - Add and remove Zypper repositories</a></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>(D): This marks a module as deprecated, which means a module is kept for backwards compatibility but usage is discouraged.  The module documentation details page may explain more about this rationale.</li>
+<li>(E): This marks a module as &#8216;extras&#8217;, which means it ships with ansible but may be a newer module and possibly (but not necessarily) less actively maintained than &#8216;core&#8217; modules.</li>
+<li>Tickets filed on modules are filed to different repos than those on the main open source project. Core module tickets should be filed at <a class="reference external" href="javascript:if(confirm('http://github.com/ansible/ansible-modules-core  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://github.com/ansible/ansible-modules-core'" tppabs="http://github.com/ansible/ansible-modules-core">ansible/ansible-modules-core on GitHub</a>, extras tickets to <a class="reference external" href="javascript:if(confirm('http://github.com/ansible/ansible-modules-extras  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://github.com/ansible/ansible-modules-extras'" tppabs="http://github.com/ansible/ansible-modules-extras">ansible/ansible-modules-extras on GitHub</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          <div id="search-results"><gcse:searchresults-only></div>
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+        <a href="a10_server_module.html" tppabs="https://docs.ansible.com/ansible/a10_server_module.html" class="btn btn-neutral float-right" title="a10_server - Manage A10 Networks AX/SoftAX/Thunder/vThunder devices"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="modules_by_category.html" tppabs="https://docs.ansible.com/ansible/modules_by_category.html" class="btn btn-neutral" title="Module Index"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','st.js'/*tpa=https://s.swiftypecdn.com/install/v2/st.js*/,'_st');
+
+  _st('install','yABGvz2N8PwcwBxyfzUc','2.0.0');
+</script>
+
+  <p>
+  Copyright 漏 2016 Red Hat, Inc.
+  <br>
+    Last updated on Jun 22, 2016.
+  </p>
+<p>
+Ansible docs are generated from <a href="javascript:if(confirm('https://github.com/ansible/ansible  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible'" tppabs="https://github.com/ansible/ansible">GitHub sources</A> using <A HREF="javascript:if(confirm('http://sphinx-doc.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://sphinx-doc.org/'" tppabs="http://sphinx-doc.org/">Sphinx</A> using a theme provided by <a href="javascript:if(confirm('http://readthedocs.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://readthedocs.org/'" tppabs="http://readthedocs.org/">Read the Docs</a>. 
+</p>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+<!-- begin analytics -->
+<script type="text/javascript">
+var _hsq = _hsq || [];
+_hsq.push(["setContentType", "standard-page"]);
+        (function(d,s,i,r) {
+        if (d.getElementById(i)){return;}
+        var n = d.createElement(s),e = document.getElementsByTagName(s)[0];
+        n.id=i;n.src = '//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/330046.js';
+        e.parentNode.insertBefore(n, e);
+        })(document, "script", "hs-analytics",300000);
+</script>
+<!-- end analytics -->
+
+</body>
+</html>

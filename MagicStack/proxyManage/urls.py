@@ -10,4 +10,5 @@ urlpatterns = patterns('',
     url(r'^del/$', proxy_del, name='proxy_del'),
     url(r"^get/hosts/$", get_host_for_proxy, name="get_host_for_proxy"),
     url(r'^upload/file/$', upload_file, name="upload_file"),
+    url(r"^execute/commands/$", execute_commands, name="execute_commands")
 )

@@ -4,9 +4,14 @@ import xlrd
 from MagicStack.api import *
 from assetManage.models import ASSET_STATUS, ASSET_TYPE, ASSET_ENV, IDC, AssetRecord, Asset, AssetGroup
 from common.interface import APIRequest
+from common.models import Task
 from django.db.models.query import QuerySet
 import traceback
 import ast
+from permManage.perm_api import gen_resource
+import threading
+
+task_queue = ASSET_TASK_QUEUE
 
 
 def group_add_asset(group, asset_id=None, asset_ip=None):
@@ -157,6 +162,7 @@ def db_asset_alert(asset, username, alert_dic):
 def ansible_record(asset, ansible_dic, username):
     alert_dic = {}
     asset_dic = asset.__dict__
+    eth_info = ansible_dic.pop('eth_info')
     for field, value in ansible_dic.items():
         old = asset_dic.get(field)
         new = ansible_dic.get(field)
@@ -165,6 +171,30 @@ def ansible_record(asset, ansible_dic, username):
             asset.save()
             alert_dic[field] = [old, new]
 
+    # 更新网卡信息
+    asset_net = asset.networking.all()[0]
+    if asset_net.net_name in eth_info.keys():
+        asset_net.active = eth_info[asset_net.net_name]['active']
+        asset_net.device = eth_info[asset_net.net_name]['device']
+        asset_net.macaddress = eth_info[asset_net.net_name]['macaddress']
+        asset_net.mtu = eth_info[asset_net.net_name]['mtu']
+        asset_net.module = eth_info[asset_net.net_name]['module']
+        asset_net.pciid = eth_info[asset_net.net_name]['pciid']
+        asset_net.promisc = eth_info[asset_net.net_name]['promisc']
+        asset_net.type = eth_info[asset_net.net_name]['type']
+        asset_net.save()
+    elif asset_net.net_name not in eth_info.keys() and len(eth_info.keys()) == 1:
+        new_eth_info = eth_info.values()[0]
+        asset_net.net_name = new_eth_info['device']
+        asset_net.active = new_eth_info['active']
+        asset_net.device = new_eth_info['device']
+        asset_net.macaddress = new_eth_info['macaddress']
+        asset_net.module = new_eth_info['module']
+        asset_net.mtu = new_eth_info['mtu']
+        asset_net.pciid = new_eth_info['pciid']
+        asset_net.promisc = new_eth_info['promisc']
+        asset_net.type = new_eth_info['type']
+        asset_net.save()
     db_asset_alert(asset, username, alert_dic)
 
 
@@ -229,8 +259,11 @@ def get_ansible_asset_info(asset_ip, setup_info):
     all_ip = setup_info.get("ansible_all_ipv4_addresses")
     other_ip_list = all_ip.remove(asset_ip) if asset_ip in all_ip else []
     other_ip = ','.join(other_ip_list) if other_ip_list else ''
-    mac = setup_info.get("ansible_default_ipv4").get("macaddress")
-    brand = setup_info.get("ansible_product_name")
+    product_name = setup_info.get("ansible_product_name")
+    product_uuid = setup_info.get("ansible_product_uuid")
+    product_version = setup_info.get("ansible_product_version")
+    system_vendor = setup_info.get("ansible_system_vendor")
+    devices = setup_info.get("ansible_devices")
     try:
         cpu_type = setup_info.get("ansible_processor")[1]
     except IndexError:
@@ -251,8 +284,17 @@ def get_ansible_asset_info(asset_ip, setup_info):
         cpu_cores = setup_info.get("ansible_processor_vcpus")
     cpu = cpu_type + ' * ' + unicode(cpu_cores)
     system_arch = setup_info.get("ansible_architecture")
-    sn = setup_info.get("ansible_product_serial")
-    asset_info = [other_ip, mac, cpu, memory_format, disk, sn, system_type, system_version, brand, system_arch]
+    product_serial = setup_info.get("ansible_product_serial")
+    bios_date = setup_info.get("ansible_bios_date")
+    bios_version = setup_info.get("ansible_bios_version")
+    interfaces = setup_info.get("ansible_interfaces")
+    eth_info = {}
+    for item in interfaces:
+        if item.startswith('eth'):
+                eth_info[item] = setup_info.get("ansible_%s"%item)
+    asset_info = [other_ip, cpu, memory_format, disk, product_serial, system_type, devices,
+                  system_version, product_name, system_arch, bios_date, bios_version,
+                  product_uuid, product_version, system_vendor, eth_info]
     return asset_info
 
 
@@ -267,18 +309,26 @@ def asset_ansible_update(obj_list, ansible_asset_info, name):
         else:
             try:
                 asset_info = get_ansible_asset_info(asset.ip, setup_info)
-                other_ip, mac, cpu, memory, disk, sn, system_type, system_version, brand, system_arch = asset_info
+                other_ip, cpu, memory, disk, product_serial, system_type, devices,\
+                system_version, product_name, system_arch, bios_date, bios_version,\
+                product_uuid, product_version, system_vendor, eth_info = asset_info
                 asset_dic = {"other_ip": other_ip,
                              "cpu": cpu,
                              "memory": memory,
                              "disk": disk,
-                             "sn": sn,
+                             "product_serial": product_serial,
+                             "product_name": product_name,
+                             "product_uuid": product_uuid,
+                             "product_version": product_version,
                              "system_type": system_type,
+                             "devices": devices,
                              "system_version": system_version,
                              "system_arch": system_arch,
-                             "brand": brand
+                             "bios_date": bios_date,
+                             "bios_version": bios_version,
+                             "system_vendor": system_vendor,
+                             "eth_info": eth_info
                              }
-
                 ansible_record(asset, asset_dic, name)
             except Exception as e:
                 logger.error("save setup info failed! %s" % e)
@@ -352,3 +402,95 @@ def get_disk_info(disk_info):
     except Exception:
         disk_size = disk_info
     return disk_size
+
+
+def update_asset_info(need_update_asset, name, proxy=None):
+    """
+    更新资产信息
+    """
+    g_lock = threading.Lock()
+    try:
+        g_lock.acquire()
+        proxy_asset = Asset.objects.filter(proxy__proxy_name=proxy.proxy_name)
+        update_proxy_asset = list(set(proxy_asset) & set(need_update_asset))
+        host_list = [asset.networking.all()[0].ip_address for asset in update_proxy_asset]
+        resource = gen_resource(update_proxy_asset)
+        data = {'mod_name': 'setup',
+                'resource': resource,
+                'hosts': host_list,
+                'mod_args': '',
+                'run_action': 'sync',
+                'run_type': 'ad-hoc'
+                }
+        data = json.dumps(data)
+        api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
+        result, code = api.req_post(data)
+        logger.debug(u'更新操作结果result:%s       code:%s' % (result,code))
+        if code == 200:
+            asset_ansible_update(update_proxy_asset, result, name)
+    except Exception as e:
+        raise ServerError(e)
+    finally:
+        g_lock.release()
+
+
+def delete_asset_batch(asset_list, proxy=None):
+    g_lock = threading.Lock()
+    try:
+        g_lock.acquire()
+        proxy_asset = Asset.objects.filter(proxy__proxy_name=proxy.proxy_name)
+        need_delete_asset = set(asset_list) & set(proxy_asset)
+        asset_names = [asset.name for asset in need_delete_asset]
+        id_uniques = [asset.id_unique for asset in need_delete_asset]
+        param = {'names': asset_names, 'id_unique': id_uniques}
+        data = json.dumps(param)
+        api = APIRequest('{0}/v1.0/system'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
+        result, code = api.req_del(data)
+        logger.info(u'删除多个资产result:%s'% result)
+        if code == 200:
+            for item in need_delete_asset:
+                item.delete()
+    except Exception as e:
+        raise ServerError(e)
+    finally:
+        g_lock.release()
+
+
+def asset_operator(asset_list, status, username, proxy=None):
+    """
+    重启，关机，重装系统
+    """
+    g_lock = threading.Lock()
+    try:
+        g_lock.acquire()
+        proxy_asset = Asset.objects.filter(proxy__proxy_name=proxy.proxy_name)
+        need_delete_asset = set(asset_list) & set(proxy_asset)
+        systems = [item.name for item in need_delete_asset]
+        profile = asset_list[0].profile
+        if status == 'rebuild':
+            data = {
+                'rebuild': 'true',
+                'profile': profile,
+                'systems': systems
+            }
+        else:
+            data = {
+                'power': status,
+                'systems': systems
+            }
+        data = json.dumps(data)
+        api = APIRequest('{0}/v1.0/system/action'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
+        result, codes = api.req_post(data)
+        logger.debug(u"操作结果result:%s   codes:%s"%(result, codes))
+        task = Task()
+        task.task_name = result['task_name']
+        task.username = username
+        task.status = result['messege']
+        task.start_time = datetime.datetime.now()
+        task.url = '{0}/v1.0/system/action'.format(proxy.url)
+        task.save()
+        task_queue.put(dict(task_name=result['task_name'], task_user=username, task_proxy=proxy.proxy_name))
+    except Exception as e:
+        raise ServerError(e)
+    finally:
+        g_lock.release()

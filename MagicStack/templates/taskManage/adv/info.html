@@ -1,27 +1,26 @@
 <div class="form-group">
-    <label class="control-label col-md-2">高级任务类型</label>
+    <label class="control-label col-md-1">类型</label>
 
-    <div class="col-md-4">
+    <div class="col-md-5">
         <select class="bs-select form-control" name="adv_task_type">
         </select>
     </div>
 </div>
 <div class="form-group">
-    <label class="control-label col-md-2">备注</label>
+    <label class="control-label col-md-1">备注</label>
 
-    <div class="col-md-9">
+    <div class="col-md-10">
         <input name="comment" type="text" class="form-control"/>
     </div>
 </div>
 <div class="form-group">
-    <label class="control-label col-md-2">脚本</label>
-
-    <div class="col-md-4">
-        <textarea class="form-control" rows="30" data-required="1" name="task_content" id="file_info"
-                  style="resize:none"></textarea>
-    </div>
+    <label class="control-label col-md-1">脚本</label>
 
     <div class="col-md-5">
-        <div></div>
+        <textarea class="form-control" wrap="off" rows="30" data-required="1" name="task_content" id="file_info"
+                  style="resize:none;overflow:scroll"></textarea>
+    </div>
+
+    <div class="col-md-5" id="r_display">
     </div>
 </div>

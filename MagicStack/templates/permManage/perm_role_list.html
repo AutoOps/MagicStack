@@ -379,8 +379,8 @@
 
         //modal 关闭事件
         $("#myModal").on('hidden.bs.modal', function(){
-         $("#error_info").hide();
-         $("#push_error_info").hide();
+             $("#error_info").hide();
+             $("#push_error_info").hide();
         });
 
         //modal save
@@ -397,16 +397,30 @@
                 pData = $("#form_role_push").serialize();
             }
 
+            $("#myModal").modal('hide');
             $.ajax({
                 method: 'POST',
                 url: save_url,
                 data: pData,
                 success:function(res){
                     if(res.success){
-                        $("#myModal").modal('hide');
                         window.location.reload()
                     }else{
-                        $("#error_info").text(res.error).show()
+                        toastr['error'](res.error);
+                        toastr.options = {
+                          "closeButton": true,
+                          "debug": false,
+                          "positionClass": "toast-top-right",
+                          "onclick": null,
+                          "showDuration": "1000",
+                          "hideDuration": "1000",
+                          "timeOut": "5000",
+                          "extendedTimeOut": "1000",
+                          "showEasing": "swing",
+                          "hideEasing": "linear",
+                          "showMethod": "fadeIn",
+                          "hideMethod": "fadeOut"
+                        }
                     }
                 }
             })
@@ -434,11 +448,42 @@
                                url: "{% url 'role_del' %}",
                                data: "id=" + role_id,
                                success: function(msg){
-                                   bootbox.alert( "成功: " + msg );
+                                   toastr['success']("成功: " + msg);
+                                   toastr.options = {
+                                      "closeButton": true,
+                                      "debug": false,
+                                      "positionClass": "toast-top-right",
+                                      "onclick": null,
+                                      "showDuration": "1000",
+                                      "hideDuration": "1000",
+                                      "timeOut": "5000",
+                                      "extendedTimeOut": "1000",
+                                      "showEasing": "swing",
+                                      "hideEasing": "linear",
+                                      "showMethod": "fadeIn",
+                                      "hideMethod": "fadeOut"
+                                   };
                                    row.remove()
                                },
                                error: function (msg) {
-                                   bootbox.alert("失败: " + msg.responseText)
+                                   toastr["error"]("失败: " + msg.responseText);
+                                   toastr.options = {
+                                      "closeButton": false,
+                                      "debug": false,
+                                      "newestOnTop": false,
+                                      "progressBar": false,
+                                      "positionClass": "toast-top-right",
+                                      "preventDuplicates": false,
+                                      "onclick": null,
+                                      "showDuration": "300",
+                                      "hideDuration": "1000",
+                                      "timeOut": "5000",
+                                      "extendedTimeOut": "1000",
+                                      "showEasing": "swing",
+                                      "hideEasing": "linear",
+                                      "showMethod": "fadeIn",
+                                      "hideMethod": "fadeOut"
+                                   }
                                }
                            });
                         }
@@ -449,7 +494,6 @@
                 }
           })
         });
-
 
         //下载用户秘钥
         table.on('click', 'a.download_key', function(){
@@ -486,10 +530,10 @@
                   }
                });
            }
-            //定时执行，10秒后执行showalert()
+            //定时执行，每隔2秒执行一次showalert()
             window.setInterval(function(){
             showalert();
-            },10000);
+            },2000);
         })
 </script>
 {% endblock %}

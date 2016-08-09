@@ -11,6 +11,7 @@ import subprocess
 import uuid
 import json
 import logging
+import Queue
 
 from settings import *
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
@@ -483,3 +484,10 @@ def get_mac_address():
 
 CRYPTOR = PyCrypt(KEY)
 logger = set_log(LOG_LEVEL)
+
+# 系统用户操作事件队列 添加,删除,编辑,推送
+ROLE_TASK_QUEUE = Queue.Queue()
+
+# 资产操作事件队列
+ASSET_TASK_QUEUE = Queue.Queue()
+

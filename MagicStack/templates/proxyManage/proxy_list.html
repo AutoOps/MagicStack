@@ -169,10 +169,10 @@
 
 {% block self_head_css_js %}
 <link href="/static/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css"/>
-<link href="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet"
-      type="text/css"/>
+<link href="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css"/>
 <link href="/static/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 <link href="/static/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/static/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css" />
 <link href="/static/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css"/>
 <link href="/static/global/css/plugins.min.css" rel="stylesheet" type="text/css"/>
 <!-- END THEME GLOBAL STYLES -->
@@ -183,6 +183,9 @@
     <script src="/static/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
     <script src="/static/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
     <script src="/static/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+    <script src="/static/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+    <script src="/static/pages/scripts/ui-toastr.min.js" type="text/javascript"></script>
+    <script src="/static/js/layer/layer.js" type="text/javascript"></script>
 
 <script>
     // 编辑proxy
@@ -221,6 +224,20 @@
         })
     }
 
+    //批量执行命令
+    function execute_commands(id){
+         var new_url = "{% url 'execute_commands' %}?id=" + id;
+         var title = 'MagicStack Exec Terminal';
+         layer.open({
+             type: 2,
+             title: title,
+             maxmin: true,
+             area: ['725px', '600px'],
+             shade: false,
+             content: new_url
+        });
+        return false
+    }
 
      $(document).ready(function(){
         <!-- 初始化table 分页 排序-->
@@ -295,6 +312,7 @@
                     op_edit = '<a href=\"#\" onclick=\"edit_proxy('+aData.id+')\">编辑</a>';
                     op_upload = '<a href=\"#\" onclick=\"upload_file('+aData.id+')\">上传</a>';
                     op_download = '<a href=\"#\" onclick=\"download_file('+aData.id+')\">下载</a>';
+                    op_excute = '<a href=\"#\" onclick=\"execute_commands('+aData.id+')\">批量执行</a>';
                     op_html = '<div class="btn-group"> \
                             <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions\
                                 <i class="fa fa-angle-down"></i> \
@@ -304,6 +322,7 @@
                                 <li>' + op_del + '</li>\
                                 <li>' + op_upload + '</li>\
                                 <li>' + op_download + '</li>\
+                                <li>' + op_excute + '</li>\
                             </ul>\
                         </div>';
                     $('td:eq(6)', nRow).html(op_html);
@@ -363,6 +382,7 @@
             if ($("#submit_type").val() == 'edit') {
                 url = "{% url 'proxy_edit' %}";
             }
+            $("#proxy").modal('hide');
             $.ajax({
                 type: 'POST',
                 url: url,
@@ -373,7 +393,24 @@
                         //添加/编辑成功
                         window.location.reload();
                     } else {
-                        $("#err_info").html(result.content).show();
+                        toastr["error"](result.content);
+                        toastr.options = {
+                          "closeButton": false,
+                          "debug": false,
+                          "newestOnTop": false,
+                          "progressBar": false,
+                          "positionClass": "toast-top-right",
+                          "preventDuplicates": false,
+                          "onclick": null,
+                          "showDuration": "300",
+                          "hideDuration": "1000",
+                          "timeOut": "5000",
+                          "extendedTimeOut": "1000",
+                          "showEasing": "swing",
+                          "hideEasing": "linear",
+                          "showMethod": "fadeIn",
+                          "hideMethod": "fadeOut"
+                        }
                     }
                 }
             });
@@ -401,7 +438,21 @@
                             {'id': del_id },
                             function(data){
                                 row.remove();
-                                bootbox.alert(data);
+                                toastr['success'](data);
+                                toastr.options = {
+                                      "closeButton": true,
+                                      "debug": false,
+                                      "positionClass": "toast-top-right",
+                                      "onclick": null,
+                                      "showDuration": "1000",
+                                      "hideDuration": "1000",
+                                      "timeOut": "5000",
+                                      "extendedTimeOut": "1000",
+                                      "showEasing": "swing",
+                                      "hideEasing": "linear",
+                                      "showMethod": "fadeIn",
+                                      "hideMethod": "fadeOut"
+                                }
                             }
                       )
                   }
@@ -422,16 +473,27 @@
                     data: {id: id},
                     url: '{% url "proxy_del" %}',
                     success: function (res) {
-                        bootbox.alert(res);
+                        toastr['success'](res);
+                        toastr.options = {
+                              "closeButton": true,
+                              "debug": false,
+                              "positionClass": "toast-top-right",
+                              "onclick": null,
+                              "showDuration": "1000",
+                              "hideDuration": "1000",
+                              "timeOut": "5000",
+                              "extendedTimeOut": "1000",
+                              "showEasing": "swing",
+                              "hideEasing": "linear",
+                              "showMethod": "fadeIn",
+                              "hideMethod": "fadeOut"
+                        };
                         $("#sample_1 input:checked").closest("tr").remove();
                     }
                     });
                 }
             })
         });
-
-
-
     })
 </script>
 {% endblock %}

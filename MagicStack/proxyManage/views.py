@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
-from django.db.models import Q
 from MagicStack.api import *
 from models import *
 from userManage.user_api import user_operator_record
 from assetManage.models import Asset
+from permManage.perm_api import gen_resource
 from datetime import datetime
 import json
 
@@ -193,3 +193,15 @@ def upload_file(request, res):
             logger.error(e)
     else:
         pass
+
+
+def execute_commands(request):
+    proxy_id = request.GET.get('id')
+    try:
+        proxy = Proxy.objects.get(id=int(proxy_id))
+        proxy_assets = Asset.objects.filter(proxy__proxy_name=proxy.proxy_name)
+        resource = gen_resource(proxy_assets)
+        return my_render('proxyManage/exec_commands.html', locals(), request)
+    except Exception as e:
+        logger.error(e)
+        return HttpResponse(e)

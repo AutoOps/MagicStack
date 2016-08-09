@@ -23,6 +23,10 @@ import traceback
 from django.db.models import Q
 from django.shortcuts import render
 
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import get_formatter_by_name
+from pygments import highlight
+
 from MagicStack.api import *
 from models import *
 from common.interface import APIRequest
@@ -167,9 +171,16 @@ def task_edit(request, res, *args, **kwargs):
                 trigger_kwargs['second'] = start_date_2_date.second
             trigger_kwargs['start_date'] = start_date
             if end_date:
-                trigger_kwargs['start_date'] = end_date
+                trigger_kwargs['end_date'] = end_date
             param['trigger_kwargs'] = trigger_kwargs
-            if task.is_get_last != '00':
+
+            # 先从Proxy获取是否存在，若不存在则新建
+            api = APIRequest('{0}/v1.0/job/{1}'.format(task.task_proxy.url, task.task_uuid),
+                             task.task_proxy.username,
+                             CRYPTOR.decrypt(task.task_proxy.password))
+            result, code = api.req_get()
+
+            if code == 404:
                 param['job_id'] = task.task_uuid
                 param['task_name'] = task.task_type
                 param['task_kwargs'] = json.loads(task.task_kwargs)
@@ -183,8 +194,9 @@ def task_edit(request, res, *args, **kwargs):
                     task.trigger_kwargs = json.dumps(trigger_kwargs)
                     task.comment = comment
                     task.is_get_last = '00'
+                    task.task_statu = '00'
                     task.save()
-            else:
+            elif code == 200:
                 api = APIRequest('{0}/v1.0/job/{1}'.format(task.task_proxy.url, task.task_uuid),
                                  task.task_proxy.username,
                                  CRYPTOR.decrypt(task.task_proxy.password))
@@ -223,29 +235,46 @@ def task_action(request, res, *args, **kwargs):
         action = request.POST.get('action')
         task = Task.objects.get(id=task_id)
         try:
-            # TODO 先获取记录是否存在，存在的话就是新建
+            # 先从Proxy获取是否存在，若不存在则新建
+            api = APIRequest('{0}/v1.0/job/{1}'.format(task.task_proxy.url, task.task_uuid),
+                             task.task_proxy.username,
+                             CRYPTOR.decrypt(task.task_proxy.password))
+            result, code = api.req_get()
 
             # 构建参数
             param = {'action': action}
-
-            # 调用proxy接口，
-            api = APIRequest('{0}/v1.0/job/{1}/action/'.format(task.task_proxy.url, task.task_uuid),
-                             task.task_proxy.username,
-                             CRYPTOR.decrypt(task.task_proxy.password))
-            result, code = api.req_post(json.dumps(param))
-            if code != 200:
-                raise ServerError(result['messege'])
-            else:
-                if action == 'pause':
-                    task.task_statu = '01'
+            if code == 200:
+                # 调用proxy接口，
+                api = APIRequest('{0}/v1.0/job/{1}/action/'.format(task.task_proxy.url, task.task_uuid),
+                                 task.task_proxy.username,
+                                 CRYPTOR.decrypt(task.task_proxy.password))
+                result, code = api.req_post(json.dumps(param))
+                if code != 200:
+                    raise ServerError(result['messege'])
                 else:
-                    task.task_statu = '00'
-                task.save()
+                    if action == 'pause':
+                        task.task_statu = '01'
+                    else:
+                        task.task_statu = '00'
+                    task.save()
+            elif code == 404:
+                logger.info("task [%s] have been deleted" % task.task_uuid)
+                # 不存在时，若启用则创建，若禁用则直接修改为禁用
+                if action == 'pause':
+                    # 停用，直接修改为禁用
+                    task.task_statu = '01'
+                    task.save()
+                elif action == 'resume':
+                    res['flag'] = False
+                    res['content'] = '触发器已过期，请使用编辑功能编辑触发器'
+                    return HttpResponse(json.dumps(res))
         except ServerError, e:
+            logger.error("action error %s" % str(e))
             error = e.message
             res['flag'] = False
             res['content'] = error
         except Exception, e:
+            logger.error("error %s" % str(e))
             res['flag'] = False
             res['content'] = e[1]
         else:
@@ -505,7 +534,7 @@ def get_task_list(request, task_type=[]):
     }
     try:
         # 初始化数据
-        objs = Task.objects.filter(task_type__in=task_type)
+        objs = Task.objects.filter(task_type__in=task_type).exclude(task_statu='02')
         return_obj['iTotalRecords'] = return_obj['iTotalDisplayRecords'] = objs.count()
         # 获取前端上传数据，分页类，查询排序类
         # 1. 过滤类
@@ -528,7 +557,7 @@ def get_task_list(request, task_type=[]):
                 'proxy_name': obj.task_proxy.proxy_name,
                 'b_trigger': obj.trigger_kwargs,
                 'status': obj.task_statu,
-                'task_type': obj.task_type,
+                'task_type': dict(Task.TYPES).get(obj.task_type),
                 'last_exec_time': obj.last_exec_time,
                 'comment': obj.comment,
                 'id': obj.id
@@ -612,20 +641,19 @@ def adv_task_add(request, res, *args):
                 resource.append(tmp_d)
             task_kwargs['host_list'] = host_list
             task_kwargs['resource'] = resource
+            task_kwargs['content'] = task_content
             param['task_kwargs'] = task_kwargs
             # 调用proxy接口，创建任务
-            # api = APIRequest('{0}/v1.0/job'.format(proxy_obj.url), proxy_obj.username,
-            #                  CRYPTOR.decrypt(proxy_obj.password))
-            # result, code = api.req_post(json.dumps(param))
-            # if code != 200:
-            #     raise ServerError(result['messege'])
-            # else:
-            # TODO 测试存入
-            logger.info(">>>>>{0}".format(task_name))
-            task = Task(task_type=task_name, task_proxy=proxy_obj, ext1=json.dumps(task_kwargs),
-                        trigger_kwargs=json.dumps(trigger_kwargs), channal='00', comment=comment,
-                        task_uuid='1111', create_time=datetime.now())
-            task.save()
+            api = APIRequest('{0}/v1.0/job'.format(proxy_obj.url), proxy_obj.username,
+                             CRYPTOR.decrypt(proxy_obj.password))
+            result, code = api.req_post(json.dumps(param))
+            if code != 200:
+                raise ServerError(result['messege'])
+            else:
+                task = Task(task_type=task_name, task_proxy=proxy_obj, task_kwargs=json.dumps(task_kwargs),
+                            trigger_kwargs=json.dumps(trigger_kwargs), channal='00', comment=comment,
+                            task_uuid=result['job']['job_id'], create_time=datetime.now())
+                task.save()
         except ServerError, e:
             error = e.message
             res['flag'] = False
@@ -672,9 +700,16 @@ def adv_task_edit(request, res, *args, **kwargs):
                 trigger_kwargs['second'] = start_date_2_date.second
             trigger_kwargs['start_date'] = start_date
             if end_date:
-                trigger_kwargs['start_date'] = end_date
+                trigger_kwargs['end_date'] = end_date
             param['trigger_kwargs'] = trigger_kwargs
-            if task.is_get_last != '00':
+
+            # 先从Proxy获取是否存在，若不存在则新建
+            api = APIRequest('{0}/v1.0/job/{1}'.format(task.task_proxy.url, task.task_uuid),
+                             task.task_proxy.username,
+                             CRYPTOR.decrypt(task.task_proxy.password))
+            result, code = api.req_get()
+
+            if code == 404:
                 param['job_id'] = task.task_uuid
                 param['task_name'] = task.task_type
                 param['task_kwargs'] = json.loads(task.task_kwargs)
@@ -688,8 +723,9 @@ def adv_task_edit(request, res, *args, **kwargs):
                     task.trigger_kwargs = json.dumps(trigger_kwargs)
                     task.comment = comment
                     task.is_get_last = '00'
+                    task.task_statu = '00'
                     task.save()
-            else:
+            elif code == 200:
                 api = APIRequest('{0}/v1.0/job/{1}'.format(task.task_proxy.url, task.task_uuid),
                                  task.task_proxy.username,
                                  CRYPTOR.decrypt(task.task_proxy.password))
@@ -711,11 +747,10 @@ def adv_task_edit(request, res, *args, **kwargs):
         task_id = request.GET.get('task_id')
         task = Task.objects.get(id=task_id).to_dict()
         proxy_list = [proxy.to_dict() for proxy in Proxy.objects.all().order_by('create_time')]
-        task['module'] = task['module'].to_dict()
         task['task_proxy'] = task['task_proxy'].to_dict()
         res['task'] = task
         res['proxys'] = proxy_list
-        res['task_types'] = Task.TYPES
+        res['task_types'] = Task.TYPES[1:]
         return HttpResponse(json.dumps(res))
 
 
@@ -800,3 +835,23 @@ def adv_task_del(request, res, *args, **kwargs):
             res['content'] = 'success [%d] fail [%d]' % (len(success), len(fail))
 
         return HttpResponse(json.dumps(res))
+
+
+@require_role('admin')
+def get_html_code(request):
+    """
+        根据给定代码，返回HTML代码
+    """
+    code = request.POST.get('code', '')
+    _lexer = request.POST.get('lexer', 'yaml')
+    _formatter = request.POST.get('formatter', 'html')
+    res = {}
+    res['r'] = code
+    try:
+        lexer = get_lexer_by_name(_lexer, stripall=True)
+        formatter = get_formatter_by_name(_formatter)
+        r = highlight(code, lexer, formatter)
+        res['r'] = r
+    except:
+        logger.error(traceback.format_exc())
+    return HttpResponse(json.dumps(res))

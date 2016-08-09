@@ -1,0 +1,745 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset=UTF-8"utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Tag Manager Data Layer -->
+  <script>
+   dataLayer = [];
+  </script>
+  <!-- End Google Tag Manager Data Layer -->
+
+  
+  <title>Windows Support &mdash; Ansible Documentation</title>
+  
+
+  
+  
+
+  
+  <link href="css-family=Lato-400,700-Roboto+Slab-400,700-Inconsolata-400,700.css" tppabs="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel='stylesheet' type='text/css'>
+  <link href="font-awesome.min.css" tppabs="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'http://docs.ansible.com/ansible/0.01',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+      <script type="text/javascript" src="jquery-1.js" tppabs="http://docs.ansible.com/ansible/_static/jquery.js"></script>
+      <script type="text/javascript" src="underscore-1.js" tppabs="http://docs.ansible.com/ansible/_static/underscore.js"></script>
+      <script type="text/javascript" src="doctools-1.js" tppabs="http://docs.ansible.com/ansible/_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="theme.min-1.css" tppabs="http://docs.ansible.com/ansible/_static/css/theme.min.css" type="text/css" />
+    <script type="text/javascript" src="theme-1.js" tppabs="http://docs.ansible.com/ansible/_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="Ansible Documentation" href="index.html"/>
+        <link rel="up" title="Introduction" href="intro.html"/>
+        <link rel="next" title="Networking Support" href="intro_networking.html"/>
+        <link rel="prev" title="BSD Support" href="intro_bsd.html"/> 
+
+  <script src="modernizr.min-1.js" tppabs="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  <style>
+    .search-reset-start {
+        color: #463E3F;
+        float: right;
+        position: relative;
+        top: -25px;
+        left: -10px;
+        z-index: 10;
+     }
+     .search-reset-start:hover {
+        cursor: pointer;
+        color: #2980B9;
+     }
+     #search-box-id {
+        padding-right: 25px;
+     }
+  </style>
+
+  <link href="css-family=Open+Sans-400,300.css" tppabs="https://fonts.googleapis.com/css?family=Open+Sans:400,300"
+    rel='stylesheet' type='text/css'>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="ns-1.html-id=gtm-psb293" tppabs="http://www.googletagmanager.com/ns.html?id=GTM-PSB293" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm-1.js'/*tpa=http://docs.ansible.com/ansible/gtm.js*/});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-PSB293');</script>
+  <!-- End Google Tag Manager -->
+
+  <a class="DocSite-nav" href="javascript:if(confirm('http://docs.ansible.com/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">
+    <img class="DocSiteNav-logo"
+      src="logo_invert-1.png" tppabs="http://docs.ansible.com/ansible/_static/images/logo_invert.png"
+      alt="Ansible Logo">
+    <div class="DocSiteNav-title">
+      Documentation
+    </div>
+  </a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+
+      <div style="background-color:#5bbdbf;height=80px;margin:'auto auto auto auto'">
+        <a class="DocSiteProduct-header DocSiteProduct-header--core"
+          href="index.htm" tppabs="http://docs.ansible.com/ansible/">
+          <div class="DocSiteProduct-productName">
+            <div class="DocSiteProduct-logoText">
+              ANSIBLE
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div id="menu-id" class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="intro-1.html" tppabs="http://docs.ansible.com/ansible/intro.html">Introduction</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro_installation-1.html" tppabs="http://docs.ansible.com/ansible/intro_installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_getting_started-1.html" tppabs="http://docs.ansible.com/ansible/intro_getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_inventory.html">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_dynamic_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_dynamic_inventory.html">Dynamic Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_patterns-1.html" tppabs="http://docs.ansible.com/ansible/intro_patterns.html">Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_adhoc-1.html" tppabs="http://docs.ansible.com/ansible/intro_adhoc.html">Introduction To Ad-Hoc Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_configuration-1.html" tppabs="http://docs.ansible.com/ansible/intro_configuration.html">Configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_bsd-1.html" tppabs="http://docs.ansible.com/ansible/intro_bsd.html">BSD Support</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Windows Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_networking-1.html" tppabs="http://docs.ansible.com/ansible/intro_networking.html">Networking Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart-1.html" tppabs="http://docs.ansible.com/ansible/quickstart.html">Quickstart Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks-1.html" tppabs="http://docs.ansible.com/ansible/playbooks.html">Playbooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_intro-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_intro.html">Intro to Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_roles-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_roles.html">Playbook Roles and Include Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_variables-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_filters-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_filters.html">Jinja2 filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_conditionals-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_conditionals.html">Conditionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_loops-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_loops.html">Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_blocks-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_blocks.html">Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_strategies-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_strategies.html">Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_best_practices-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_best_practices.html">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks_special_topics-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_special_topics.html">Playbooks: Special Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="become-1.html" tppabs="http://docs.ansible.com/ansible/become.html">Become (Privilege Escalation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_acceleration-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_acceleration.html">Accelerated Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_async-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_async.html">Asynchronous Actions and Polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_checkmode-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_checkmode.html">Check Mode (&#8220;Dry Run&#8221;)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_debugger-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_debugger.html">Playbook Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_delegation-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_delegation.html">Delegation, Rolling Updates, and Local Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_environment-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_environment.html">Setting the Environment (and Working With Proxies)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_error_handling-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_error_handling.html">Error Handling In Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_advanced_syntax-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_advanced_syntax.html">Advanced Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_lookups-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_lookups.html">Using Lookups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_prompts-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_prompts.html">Prompts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_tags-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_tags.html">Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_vault-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_vault.html">Vault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_startnstep-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_startnstep.html">Start and Step</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_directives-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_directives.html">Directives Glossary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules-1.html" tppabs="http://docs.ansible.com/ansible/modules.html">About Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules_intro-1.html" tppabs="http://docs.ansible.com/ansible/modules_intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_core-1.html" tppabs="http://docs.ansible.com/ansible/modules_core.html">Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_extra-1.html" tppabs="http://docs.ansible.com/ansible/modules_extra.html">Extras Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_return_values-1.html" tppabs="http://docs.ansible.com/ansible/common_return_values.html">Common Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules_by_category-1.html" tppabs="http://docs.ansible.com/ansible/modules_by_category.html">Module Index</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="list_of_all_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_all_modules.html">All Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_cloud_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_cloud_modules.html">Cloud Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_clustering_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_clustering_modules.html">Clustering Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_commands_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_commands_modules.html">Commands Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_database_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_database_modules.html">Database Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_files_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_files_modules.html">Files Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_inventory_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_inventory_modules.html">Inventory Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_messaging_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_messaging_modules.html">Messaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_monitoring_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_monitoring_modules.html">Monitoring Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_network_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_network_modules.html">Network Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_notification_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_notification_modules.html">Notification Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_packaging_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_packaging_modules.html">Packaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_source_control_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_source_control_modules.html">Source Control Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_system_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_system_modules.html">System Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_utilities_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_utilities_modules.html">Utilities Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_web_infrastructure_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_web_infrastructure_modules.html">Web Infrastructure Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_windows_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_windows_modules.html">Windows Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guides-1.html" tppabs="http://docs.ansible.com/ansible/guides.html">Detailed Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_aws-1.html" tppabs="http://docs.ansible.com/ansible/guide_aws.html">Amazon Web Services Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_azure-1.html" tppabs="http://docs.ansible.com/ansible/guide_azure.html">Getting Started with Azure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rax-1.html" tppabs="http://docs.ansible.com/ansible/guide_rax.html">Rackspace Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_gce-1.html" tppabs="http://docs.ansible.com/ansible/guide_gce.html">Google Cloud Platform Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_cloudstack-1.html" tppabs="http://docs.ansible.com/ansible/guide_cloudstack.html">CloudStack Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_vagrant-1.html" tppabs="http://docs.ansible.com/ansible/guide_vagrant.html">Using Vagrant and Ansible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rolling_upgrade-1.html" tppabs="http://docs.ansible.com/ansible/guide_rolling_upgrade.html">Continuous Delivery and Rolling Upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_docker-1.html" tppabs="http://docs.ansible.com/ansible/guide_docker.html">Getting Started with Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developing-1.html" tppabs="http://docs.ansible.com/ansible/developing.html">Developer Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developing_api-1.html" tppabs="http://docs.ansible.com/ansible/developing_api.html">Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_inventory-1.html" tppabs="http://docs.ansible.com/ansible/developing_inventory.html">Developing Dynamic Inventory Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_modules-1.html" tppabs="http://docs.ansible.com/ansible/developing_modules.html">Developing Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_plugins-1.html" tppabs="http://docs.ansible.com/ansible/developing_plugins.html">Developing Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_core-1.html" tppabs="http://docs.ansible.com/ansible/developing_core.html">Developing the Ansible Core Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_test_pr-1.html" tppabs="http://docs.ansible.com/ansible/developing_test_pr.html">Helping Testing PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_releases-1.html" tppabs="http://docs.ansible.com/ansible/developing_releases.html">Releases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tower-1.html" tppabs="http://docs.ansible.com/ansible/tower.html">Ansible Tower</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community-1.html" tppabs="http://docs.ansible.com/ansible/community.html">Community Information &amp; Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#ansible-users" tppabs="http://docs.ansible.com/ansible/community.html#ansible-users">Ansible Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#for-current-and-prospective-developers" tppabs="http://docs.ansible.com/ansible/community.html#for-current-and-prospective-developers">For Current and Prospective Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#other-topics" tppabs="http://docs.ansible.com/ansible/community.html#other-topics">Other Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#community-code-of-conduct" tppabs="http://docs.ansible.com/ansible/community.html#community-code-of-conduct">Community Code of Conduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#contributors-license-agreement" tppabs="http://docs.ansible.com/ansible/community.html#contributors-license-agreement">Contributors License Agreement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="galaxy-1.html" tppabs="http://docs.ansible.com/ansible/galaxy.html">Ansible Galaxy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="galaxy-1.html#the-website" tppabs="http://docs.ansible.com/ansible/galaxy.html#the-website">The Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="galaxy-1.html#the-ansible-galaxy-command-line-tool" tppabs="http://docs.ansible.com/ansible/galaxy.html#the-ansible-galaxy-command-line-tool">The ansible-galaxy command line tool</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test_strategies-1.html" tppabs="http://docs.ansible.com/ansible/test_strategies.html">Testing Strategies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#integrating-testing-with-ansible-playbooks" tppabs="http://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-ansible-playbooks">Integrating Testing With Ansible Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#the-right-level-of-testing" tppabs="http://docs.ansible.com/ansible/test_strategies.html#the-right-level-of-testing">The Right Level of Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#check-mode-as-a-drift-test" tppabs="http://docs.ansible.com/ansible/test_strategies.html#check-mode-as-a-drift-test">Check Mode As A Drift Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#modules-that-are-useful-for-testing" tppabs="http://docs.ansible.com/ansible/test_strategies.html#modules-that-are-useful-for-testing">Modules That Are Useful for Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#testing-lifecycle" tppabs="http://docs.ansible.com/ansible/test_strategies.html#testing-lifecycle">Testing Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#integrating-testing-with-rolling-updates" tppabs="http://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-rolling-updates">Integrating Testing With Rolling Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#achieving-continuous-deployment" tppabs="http://docs.ansible.com/ansible/test_strategies.html#achieving-continuous-deployment">Achieving Continuous Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#conclusion" tppabs="http://docs.ansible.com/ansible/test_strategies.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq-1.html" tppabs="http://docs.ansible.com/ansible/faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook" tppabs="http://docs.ansible.com/ansible/faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook">How can I set the PATH or any other environment variable for a task or entire playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with">How do I handle different machines needing different user accounts or ports to log in with?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file">How do I get ansible to reuse connections, enable Kerberized SSH, or have Ansible pay attention to my local SSH config file?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">How do I configure a jump host to access servers that I have no direct access to?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-speed-up-management-inside-ec2" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-speed-up-management-inside-ec2">How do I speed up management inside EC2?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine">How do I handle python pathing not having a Python 2.X in /usr/bin/python on a remote machine?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#what-is-the-best-way-to-make-content-reusable-redistributable" tppabs="http://docs.ansible.com/ansible/faq.html#what-is-the-best-way-to-make-content-reusable-redistributable">What is the best way to make content reusable/redistributable?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it" tppabs="http://docs.ansible.com/ansible/faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it">Where does the configuration file live and what can I configure in it?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-disable-cowsay" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-disable-cowsay">How do I disable cowsay?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-see-a-list-of-all-of-the-ansible-variables" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables">How do I see a list of all of the ansible_ variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host">How do I see all the inventory vars defined for my host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template">How do I loop over a list of hosts in a group, inside of a template?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-a-variable-name-programmatically" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-name-programmatically">How do I access a variable name programmatically?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-a-variable-of-the-first-host-in-a-group" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group">How do I access a variable of the first host in a group?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-copy-files-recursively-onto-a-target-host" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-copy-files-recursively-onto-a-target-host">How do I copy files recursively onto a target host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-shell-environment-variables" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-shell-environment-variables">How do I access shell environment variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-generate-crypted-passwords-for-the-user-module" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module">How do I generate crypted passwords for the user module?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#can-i-get-training-on-ansible-or-find-commercial-support" tppabs="http://docs.ansible.com/ansible/faq.html#can-i-get-training-on-ansible-or-find-commercial-support">Can I get training on Ansible or find commercial support?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#is-there-a-web-interface-rest-api-etc" tppabs="http://docs.ansible.com/ansible/faq.html#is-there-a-web-interface-rest-api-etc">Is there a web interface / REST API / etc?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-submit-a-change-to-the-documentation" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-submit-a-change-to-the-documentation">How do I submit a change to the documentation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-keep-secret-data-in-my-playbook" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-keep-secret-data-in-my-playbook">How do I keep secret data in my playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names" tppabs="http://docs.ansible.com/ansible/faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names">When should I use {{ }}? Also, how to interpolate variables or dynamic variable names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#i-don-t-see-my-question-here" tppabs="http://docs.ansible.com/ansible/faq.html#i-don-t-see-my-question-here">I don&#8217;t see my question here</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary-1.html" tppabs="http://docs.ansible.com/ansible/glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YAMLSyntax-1.html" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html">YAML Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax-1.html#yaml-basics" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html#yaml-basics">YAML Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax-1.html#gotchas" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html#gotchas">Gotchas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html">Porting Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#playbook" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#playbook">Playbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#deprecated" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#deprecated">Deprecated</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#other-caveats" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#other-caveats">Other caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#porting-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#porting-plugins">Porting plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#lookup-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#lookup-plugins">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#connection-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#connection-plugins">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#action-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#action-plugins">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#callback-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#callback-plugins">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id1" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id1">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#hybrid-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#hybrid-plugins">Hybrid plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id2" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id2">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id3" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id3">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id4" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id4">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id5" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id5">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id6" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id6">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#porting-custom-scripts" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#porting-custom-scripts">Porting custom scripts</a></li>
+</ul>
+
+        
+
+<!-- changeable widget -->
+<center>
+<br/>
+<a href="javascript:if(confirm('http://www.ansible.com/docs-left?utm_source=docs  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ansible.com/docs-left?utm_source=docs'" tppabs="http://www.ansible.com/docs-left?utm_source=docs">
+    <img style="border-width:0px;" src="ASB-docs-left-rail.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-left-rail.png" />
+</a>
+</center>
+
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="javascript:if(confirm('http://docs.ansible.com/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">Ansible Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+
+          <!-- Banner ads -->
+          <div class="DocSiteBanner">
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-left.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-left.png">
+            </a>
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-right.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-right.png">
+            </a>
+        </div>
+
+          <ul class="wy-breadcrumbs">
+  <li><a href="index-1.html" tppabs="http://docs.ansible.com/ansible/index.html">Docs</a> &raquo;</li>
+  <li><a href="">Windows Support</a></li>
+  
+    <li class="wy-breadcrumbs-aside">
+      <a href="javascript:if(confirm('https://github.com/ansible/ansible/blob/devel/docsite/rst/intro_windows.rst  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible/blob/devel/docsite/rst/intro_windows.rst'" tppabs="https://github.com/ansible/ansible/blob/devel/docsite/rst/intro_windows.rst" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  
+</ul>
+<hr/>
+
+          <div id="page-content">
+          
+  <div class="section" id="windows-support">
+<h1><a class="toc-backref" href="#id5">Windows Support</a><a class="headerlink" href="#windows-support" title="Permalink to this headline">¬∂</a></h1>
+<div class="contents topic" id="topics">
+<p class="topic-title first">Topics</p>
+<ul class="simple">
+<li><a class="reference internal" href="#windows-support" id="id5">Windows Support</a><ul>
+<li><a class="reference internal" href="#windows-how-does-it-work" id="id6">Windows: How Does It Work</a></li>
+<li><a class="reference internal" href="#installing-on-the-control-machine" id="id7">Installing on the Control Machine</a><ul>
+<li><a class="reference internal" href="#active-directory-support" id="id8">Active Directory Support</a><ul>
+<li><a class="reference internal" href="#installing-python-kerberos-dependencies" id="id9">Installing python-kerberos dependencies</a></li>
+<li><a class="reference internal" href="#installing-python-kerberos" id="id10">Installing python-kerberos</a></li>
+<li><a class="reference internal" href="#configuring-kerberos" id="id11">Configuring Kerberos</a></li>
+<li><a class="reference internal" href="#testing-a-kerberos-connection" id="id12">Testing a kerberos connection</a></li>
+<li><a class="reference internal" href="#troubleshooting-kerberos-connections" id="id13">Troubleshooting kerberos connections</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#inventory" id="id14">Inventory</a></li>
+<li><a class="reference internal" href="#windows-system-prep" id="id15">Windows System Prep</a></li>
+<li><a class="reference internal" href="#getting-to-powershell-3-0-or-higher" id="id16">Getting to PowerShell 3.0 or higher</a></li>
+<li><a class="reference internal" href="#what-modules-are-available" id="id17">What modules are available</a></li>
+<li><a class="reference internal" href="#developers-supported-modules-and-how-it-works" id="id18">Developers: Supported modules and how it works</a></li>
+<li><a class="reference internal" href="#reminder-you-must-have-a-linux-control-machine" id="id19">Reminder: You Must Have a Linux Control Machine</a></li>
+<li><a class="reference internal" href="#windows-facts" id="id20">Windows Facts</a></li>
+<li><a class="reference internal" href="#windows-playbook-examples" id="id21">Windows Playbook Examples</a></li>
+<li><a class="reference internal" href="#windows-contributions" id="id22">Windows Contributions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="windows-how-does-it-work">
+<span id="id1"></span><h2><a class="toc-backref" href="#id6">Windows: How Does It Work</a><a class="headerlink" href="#windows-how-does-it-work" title="Permalink to this headline">¬∂</a></h2>
+<p>As you may have already read, Ansible manages Linux/Unix machines using SSH by default.</p>
+<p>Starting in version 1.7, Ansible also contains support for managing Windows machines.  This uses
+native PowerShell remoting, rather than SSH.</p>
+<p>Ansible will still be run from a Linux control machine, and uses the &#8220;winrm&#8221; Python module to talk to remote hosts.</p>
+<p>No additional software needs to be installed on the remote machines for Ansible to manage them, it still maintains the agentless properties that make it popular on Linux/Unix.</p>
+<p>Note that it is expected you have a basic understanding of Ansible prior to jumping into this section, so if you haven&#8217;t written a Linux playbook first, it might be worthwhile to dig in there first.</p>
+</div>
+<div class="section" id="installing-on-the-control-machine">
+<span id="windows-installing"></span><h2><a class="toc-backref" href="#id7">Installing on the Control Machine</a><a class="headerlink" href="#installing-on-the-control-machine" title="Permalink to this headline">¬∂</a></h2>
+<p>On a Linux control machine:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">pip install &quot;pywinrm&gt;=0.1.1&quot;</span>
+</pre></div>
+</div>
+<p>Note:: on distributions with multiple python versions, use pip2 or pip2.x, where x matches the python minor version Ansible is running under.</p>
+<div class="section" id="active-directory-support">
+<h3><a class="toc-backref" href="#id8">Active Directory Support</a><a class="headerlink" href="#active-directory-support" title="Permalink to this headline">¬∂</a></h3>
+<p>If you wish to connect to domain accounts published through Active Directory (as opposed to local accounts created on the remote host), you will need to install the &#8220;python-kerberos&#8221; module on the Ansible control host (and the MIT krb5 libraries it depends on). The Ansible control host also requires a properly configured computer account in Active Directory.</p>
+<div class="section" id="installing-python-kerberos-dependencies">
+<h4><a class="toc-backref" href="#id9">Installing python-kerberos dependencies</a><a class="headerlink" href="#installing-python-kerberos-dependencies" title="Permalink to this headline">¬∂</a></h4>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># Via Yum</span>
+yum -y install python-devel krb5-devel krb5-libs krb5-workstation
+
+<span class="c1"># Via Apt (Ubuntu)</span>
+sudo apt-get install python-dev libkrb5-dev krb5-user
+
+<span class="c1"># Via Portage (Gentoo)</span>
+emerge -av app-crypt/mit-krb5
+emerge -av dev-python/setuptools
+
+<span class="c1"># Via pkg (FreeBSD)</span>
+sudo pkg install security/krb5
+
+<span class="c1"># Via OpenCSW (Solaris)</span>
+pkgadd -d http://get.opencsw.org/now
+/opt/csw/bin/pkgutil -U
+/opt/csw/bin/pkgutil -y -i libkrb5_3
+
+<span class="c1"># Via Pacman (Arch Linux)</span>
+pacman -S krb5
+</pre></div>
+</div>
+</div>
+<div class="section" id="installing-python-kerberos">
+<h4><a class="toc-backref" href="#id10">Installing python-kerberos</a><a class="headerlink" href="#installing-python-kerberos" title="Permalink to this headline">¬∂</a></h4>
+<p>Once you&#8217;ve installed the necessary dependencies, the python-kerberos wrapper can be installed via pip:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install kerberos
+</pre></div>
+</div>
+<p>Kerberos is installed and configured by default on OS X and many Linux distributions. If your control machine has not already done this for you, you will need to.</p>
+</div>
+<div class="section" id="configuring-kerberos">
+<h4><a class="toc-backref" href="#id11">Configuring Kerberos</a><a class="headerlink" href="#configuring-kerberos" title="Permalink to this headline">¬∂</a></h4>
+<p>Edit your /etc/krb5.conf (which should be installed as a result of installing packages above) and add the following information for each domain you need to connect to:</p>
+<p>In the section that starts with</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">[</span>realms<span class="o">]</span>
+</pre></div>
+</div>
+<p>add the full domain name and the fully qualified domain names of your primary and secondary Active Directory domain controllers.  It should look something like this:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">[</span>realms<span class="o">]</span>
+
+ MY.DOMAIN.COM <span class="o">=</span> <span class="o">{</span>
+  <span class="nv">kdc</span> <span class="o">=</span> domain-controller1.my.domain.com
+  <span class="nv">kdc</span> <span class="o">=</span> domain-controller2.my.domain.com
+ <span class="o">}</span>
+</pre></div>
+</div>
+<p>and in the [domain_realm] section add a line like the following for each domain you want to access:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">[</span>domain_realm<span class="o">]</span>
+    .my.domain.com <span class="o">=</span> MY.DOMAIN.COM
+</pre></div>
+</div>
+<p>You may wish to configure other settings here, such as the default domain.</p>
+</div>
+<div class="section" id="testing-a-kerberos-connection">
+<h4><a class="toc-backref" href="#id12">Testing a kerberos connection</a><a class="headerlink" href="#testing-a-kerberos-connection" title="Permalink to this headline">¬∂</a></h4>
+<p>If you have installed krb5-workstation (yum) or krb5-user (apt-get) you can use the following command to test that you can be authorised by your domain controller.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>kinit <a class="__cf_email__" href="javascript:if(confirm('http://docs.ansible.com/cdn-cgi/l/email-protection  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/cdn-cgi/l/email-protection'" tppabs="http://docs.ansible.com/cdn-cgi/l/email-protection" data-cfemail="8efbfdebfccec3d7a0cac1c3cfc7c0a0cdc1c3">[email&#160;protected]</a><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script>
+</pre></div>
+</div>
+<p>Note that the domain part has to be fully qualified and must be in upper case.</p>
+<p>To see what tickets if any you have acquired, use the command klist</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>klist
+</pre></div>
+</div>
+</div>
+<div class="section" id="troubleshooting-kerberos-connections">
+<h4><a class="toc-backref" href="#id13">Troubleshooting kerberos connections</a><a class="headerlink" href="#troubleshooting-kerberos-connections" title="Permalink to this headline">¬∂</a></h4>
+<p>If you unable to connect using kerberos, check the following:</p>
+<p>Ensure that forward and reverse DNS lookups are working properly on your domain.</p>
+<p>To test this, ping the windows host you want to control by name then use the ip address returned with nslookup.  You should get the same name back from DNS when you use nslookup on the ip address.</p>
+<p>If you get different hostnames back than the name you originally pinged, speak to your active directory administrator and get them to check that DNS Scavenging is enabled and that DNS and DHCP are updating each other.</p>
+<p>Ensure that the Ansible controller has a properly configured computer account in the domain.</p>
+<p>Check your Ansible controller&#8217;s clock is synchronised with your domain controller.  Kerberos is time sensitive and a little clock drift can cause tickets not be granted.</p>
+<p>Check you are using the real fully qualified domain name for the domain.  Sometimes domains are commonly known to users by aliases.  To check this run:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>kinit -C <a class="__cf_email__" href="javascript:if(confirm('http://docs.ansible.com/cdn-cgi/l/email-protection  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/cdn-cgi/l/email-protection'" tppabs="http://docs.ansible.com/cdn-cgi/l/email-protection" data-cfemail="bbcec8dec9fbf6e295fff4f6faf2f595f8f4f6">[email&#160;protected]</a><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script>
+klist
+</pre></div>
+</div>
+<p>If the domain name returned by klist is different from the domain name you requested, you are requesting using an alias, and you need to update your krb5.conf so you are using the fully qualified domain name, not its alias.</p>
+</div>
+</div>
+</div>
+<div class="section" id="inventory">
+<span id="windows-inventory"></span><h2><a class="toc-backref" href="#id14">Inventory</a><a class="headerlink" href="#inventory" title="Permalink to this headline">¬∂</a></h2>
+<p>Ansible&#8217;s windows support relies on a few standard variables to indicate the username, password, and connection type (windows) of the remote hosts.  These variables are most easily set up in inventory.  This is used instead of SSH-keys or passwords as normally fed into Ansible:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">[</span><span class="nv">windows</span><span class="p p-Indicator">]</span>
+<span class="l l-Scalar l-Scalar-Plain">winserver1.example.com</span>
+<span class="l l-Scalar l-Scalar-Plain">winserver2.example.com</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Ansible 2.0 has deprecated the ‚Äússh‚Äù from <code class="docutils literal"><span class="pre">ansible_ssh_user</span></code>, <code class="docutils literal"><span class="pre">ansible_ssh_host</span></code>, and <code class="docutils literal"><span class="pre">ansible_ssh_port</span></code> to become <code class="docutils literal"><span class="pre">ansible_user</span></code>, <code class="docutils literal"><span class="pre">ansible_host</span></code>, and <code class="docutils literal"><span class="pre">ansible_port</span></code>. If you are using a version of Ansible prior to 2.0,  you should continue using the older style variables (<code class="docutils literal"><span class="pre">ansible_ssh_*</span></code>). These shorter variables are ignored, without warning, in older versions of Ansible.</p>
+</div>
+<p>In group_vars/windows.yml, define the following inventory variables:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># it is suggested that these be encrypted with ansible-vault:</span>
+<span class="c1"># ansible-vault edit group_vars/windows.yml</span>
+
+<span class="l l-Scalar l-Scalar-Plain">ansible_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Administrator</span>
+<span class="l l-Scalar l-Scalar-Plain">ansible_password</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">SecretPasswordGoesHere</span>
+<span class="l l-Scalar l-Scalar-Plain">ansible_port</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5986</span>
+<span class="l l-Scalar l-Scalar-Plain">ansible_connection</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">winrm</span>
+<span class="c1"># The following is necessary for Python 2.7.9+ when using default WinRM self-signed certificates:</span>
+<span class="l l-Scalar l-Scalar-Plain">ansible_winrm_server_cert_validation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ignore</span>
+</pre></div>
+</div>
+<p>Attention for the older style variables (<code class="docutils literal"><span class="pre">ansible_ssh_*</span></code>): ansible_ssh_password doesn&#8217;t exist, should be ansible_ssh_pass.</p>
+<p>Although Ansible is mostly an SSH-oriented system, Windows management will not happen over SSH (<cite>yet &lt;http://blogs.msdn.com/b/powershell/archive/2015/06/03/looking-forward-microsoft-support-for-secure-shell-ssh.aspx&gt;</cite>).</p>
+<p>If you have installed the <code class="docutils literal"><span class="pre">kerberos</span></code> module and <code class="docutils literal"><span class="pre">ansible_user</span></code> contains <code class="docutils literal"><span class="pre">&#64;</span></code> (e.g. <code class="docutils literal"><span class="pre">username&#64;realm</span></code>), Ansible will first attempt Kerberos authentication. <em>This method uses the principal you are authenticated to Kerberos with on the control machine and not ``ansible_user``</em>. If that fails, either because you are not signed into Kerberos on the control machine or because the corresponding domain account on the remote host is not available, then Ansible will fall back to &#8220;plain&#8221; username/password authentication.</p>
+<p>When using your playbook, don&#8217;t forget to specify &#8211;ask-vault-pass to provide the password to unlock the file.</p>
+<p>Test your configuration like so, by trying to contact your Windows nodes.  Note this is not an ICMP ping, but tests the Ansible
+communication channel that leverages Windows remoting:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible windows [-i inventory] -m win_ping --ask-vault-pass</span>
+</pre></div>
+</div>
+<p>If you haven&#8217;t done anything to prep your systems yet, this won&#8217;t work yet.  This is covered in a later
+section about how to enable PowerShell remoting - and if necessary - how to upgrade PowerShell to
+a version that is 3 or higher.</p>
+<p>You&#8217;ll run this command again later though, to make sure everything is working.</p>
+<p>Since 2.0, the following custom inventory variables are also supported for additional configuration of WinRM connections:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span>* ``ansible_winrm_scheme``: Specify the connection scheme (``http`` or ``https``) to use for the WinRM connection.  Ansible uses ``https`` by default unless the port is 5985.
+* ``ansible_winrm_path``: Specify an alternate path to the WinRM endpoint.  Ansible uses ``/wsman`` by default.
+* ``ansible_winrm_realm``: Specify the realm to use for Kerberos authentication.  If the username contains ``@``, Ansible will use the part of the username after ``@`` by default.
+* ``ansible_winrm_transport``: Specify one or more transports as a comma-separated list.  By default, Ansible will use ``kerberos,plaintext`` if the ``kerberos`` module is installed and a realm is defined, otherwise ``plaintext``.
+* ``ansible_winrm_server_cert_validation``: Specify the server certificate validation mode (``ignore`` or ``validate``). Ansible defaults to ``validate`` on Python 2.7.9 and higher, which will result in certificate validation errors against the Windows self-signed certificates. Unless verifiable certificates have been configured on the WinRM listeners, this should be set to ``ignore``
+* ``ansible_winrm_*``: Any additional keyword arguments supported by ``winrm.Protocol`` may be provided.
+</pre></div>
+</div>
+</div>
+<div class="section" id="windows-system-prep">
+<span id="id2"></span><h2><a class="toc-backref" href="#id15">Windows System Prep</a><a class="headerlink" href="#windows-system-prep" title="Permalink to this headline">¬∂</a></h2>
+<p>In order for Ansible to manage your windows machines, you will have to enable and configure PowerShell remoting.</p>
+<p>To automate the setup of WinRM, you can run <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible/blob/devel/examples/scripts/ConfigureRemotingForAnsible.ps1  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible/blob/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'" tppabs="https://github.com/ansible/ansible/blob/devel/examples/scripts/ConfigureRemotingForAnsible.ps1">this PowerShell script</a> on the remote machine.</p>
+<p>The example script accepts a few arguments which Admins may choose to use to modify the default setup slightly, which might be appropriate in some cases.</p>
+<dl class="docutils">
+<dt>Pass the -CertValidityDays option to customize the expiration date of the generated certificate.</dt>
+<dd>powershell.exe -File ConfigureRemotingForAnsible.ps1 -CertValidityDays 100</dd>
+<dt>Pass the -SkipNetworkProfileCheck switch to configure winrm to listen on PUBLIC zone interfaces.  (Without this option, the script will fail if any network interface on device is in PUBLIC zone)</dt>
+<dd>powershell.exe -File ConfigureRemotingForAnsible.ps1 -SkipNetworkProfileCheck</dd>
+<dt>Pass the -ForceNewSSLCert switch to force a new SSL certificate to be attached to an already existing winrm listener. (Avoids SSL winrm errors on syspreped Windows images after the CN changes)</dt>
+<dd>powershell.exe -File ConfigureRemotingForAnsible.ps1 -ForceNewSSLCert</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>On Windows 7 and Server 2008 R2 machines, due to a bug in Windows
+Management Framework 3.0, it may be necessary to install this
+hotfix <a class="reference external" href="javascript:if(confirm('http://support.microsoft.com/kb/2842230  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://support.microsoft.com/kb/2842230'" tppabs="http://support.microsoft.com/kb/2842230">http://support.microsoft.com/kb/2842230</a> to avoid receiving
+out of memory and stack overflow exceptions.  Newly-installed Server 2008
+R2 systems which are not fully up to date with windows updates are known
+to have this issue.</p>
+<p class="last">Windows 8.1 and Server 2012 R2 are not affected by this issue as they
+come with Windows Management Framework 4.0.</p>
+</div>
+</div>
+<div class="section" id="getting-to-powershell-3-0-or-higher">
+<span id="getting-to-powershell-three-or-higher"></span><h2><a class="toc-backref" href="#id16">Getting to PowerShell 3.0 or higher</a><a class="headerlink" href="#getting-to-powershell-3-0-or-higher" title="Permalink to this headline">¬∂</a></h2>
+<p>PowerShell 3.0 or higher is needed for most provided Ansible modules for Windows, and is also required to run the above setup script. Note that PowerShell 3.0 is only supported on Windows 7 SP1, Windows Server 2008 SP1, and later releases of Windows.</p>
+<p>Looking at an Ansible checkout, copy the <a class="reference external" href="javascript:if(confirm('https://github.com/cchurch/ansible/blob/devel/examples/scripts/upgrade_to_ps3.ps1  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/cchurch/ansible/blob/devel/examples/scripts/upgrade_to_ps3.ps1'" tppabs="https://github.com/cchurch/ansible/blob/devel/examples/scripts/upgrade_to_ps3.ps1">examples/scripts/upgrade_to_ps3.ps1</a> script onto the remote host and run a PowerShell console as an administrator.  You will now be running PowerShell 3 and can try connectivity again using the win_ping technique referenced above.</p>
+</div>
+<div class="section" id="what-modules-are-available">
+<span id="what-windows-modules-are-available"></span><h2><a class="toc-backref" href="#id17">What modules are available</a><a class="headerlink" href="#what-modules-are-available" title="Permalink to this headline">¬∂</a></h2>
+<p>Most of the Ansible modules in core Ansible are written for a combination of Linux/Unix machines and arbitrary web services, though there are various
+Windows modules as listed in the <a class="reference external" href="javascript:if(confirm('http://docs.ansible.com/list_of_windows_modules.html  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/list_of_windows_modules.html'" tppabs="http://docs.ansible.com/list_of_windows_modules.html">&#8220;windows&#8221; subcategory of the Ansible module index</a>.</p>
+<p>Browse this index to see what is available.</p>
+<p>In many cases, it may not be necessary to even write or use an Ansible module.</p>
+<p>In particular, the &#8220;script&#8221; module can be used to run arbitrary PowerShell scripts, allowing Windows administrators familiar with PowerShell a very native way to do things, as in the following playbook:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">windows</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">script</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">foo.ps1 --argument --other-argument</span>
+</pre></div>
+</div>
+<p>Note:: There are a few other Ansible modules that don&#8217;t start with &#8220;win&#8221; that also function with Windows, including &#8220;fetch&#8221;, &#8220;slurp&#8221;, &#8220;raw&#8221;, and &#8220;setup&#8221; (which is how fact gathering works).</p>
+</div>
+<div class="section" id="developers-supported-modules-and-how-it-works">
+<span id="developers-developers-developers"></span><h2><a class="toc-backref" href="#id18">Developers: Supported modules and how it works</a><a class="headerlink" href="#developers-supported-modules-and-how-it-works" title="Permalink to this headline">¬∂</a></h2>
+<p>Developing Ansible modules are covered in a <a class="reference external" href="javascript:if(confirm('http://docs.ansible.com/developing_modules.html  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/developing_modules.html'" tppabs="http://docs.ansible.com/developing_modules.html">later section of the documentation</a>, with a focus on Linux/Unix.
+What if you want to write Windows modules for Ansible though?</p>
+<p>For Windows, Ansible modules are implemented in PowerShell.  Skim those Linux/Unix module development chapters before proceeding. Windows modules in the core and extras repo live in a &#8220;windows/&#8221; subdir. Custom modules can go directly into the Ansible &#8220;library/&#8221; directories or those added in ansible.cfg. Documentation lives in a <cite>.py</cite> file with the same name. For example, if a module is named &#8220;win_ping&#8221;, there will be embedded documentation in the &#8220;win_ping.py&#8221; file, and the actual PowerShell code will live in a &#8220;win_ping.ps1&#8221; file. Take a look at the sources and this will make more sense.</p>
+<p>Modules (ps1 files) should start as follows:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1">#!powershell</span>
+<span class="c1"># &lt;license&gt;</span>
+
+<span class="c1"># WANT_JSON</span>
+<span class="c1"># POWERSHELL_COMMON</span>
+
+<span class="c1"># code goes here, reading in stdin as JSON and outputting JSON</span>
+</pre></div>
+</div>
+<p>The above magic is necessary to tell Ansible to mix in some common code and also know how to push modules out.  The common code contains some nice wrappers around working with hash data structures and emitting JSON results, and possibly a few more useful things.  Regular Ansible has this same concept for reusing Python code - this is just the windows equivalent.</p>
+<p>What modules you see in windows/ are just a start.  Additional modules may be submitted as pull requests to github.</p>
+</div>
+<div class="section" id="reminder-you-must-have-a-linux-control-machine">
+<span id="windows-and-linux-control-machine"></span><h2><a class="toc-backref" href="#id19">Reminder: You Must Have a Linux Control Machine</a><a class="headerlink" href="#reminder-you-must-have-a-linux-control-machine" title="Permalink to this headline">¬∂</a></h2>
+<p>Note running Ansible from a Windows control machine is NOT a goal of the project.  Refrain from asking for this feature,
+as it limits what technologies, features, and code we can use in the main project in the future.  A Linux control machine
+will be required to manage Windows hosts.</p>
+<p>Cygwin is not supported, so please do not ask questions about Ansible running from Cygwin.</p>
+</div>
+<div class="section" id="windows-facts">
+<span id="id3"></span><h2><a class="toc-backref" href="#id20">Windows Facts</a><a class="headerlink" href="#windows-facts" title="Permalink to this headline">¬∂</a></h2>
+<p>Just as with Linux/Unix, facts can be gathered for windows hosts, which will return things such as the operating system version.  To see what variables are available about a windows host, run the following:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible winhost.example.com -m setup</span>
+</pre></div>
+</div>
+<p>Note that this command invocation is exactly the same as the Linux/Unix equivalent.</p>
+</div>
+<div class="section" id="windows-playbook-examples">
+<span id="windows-playbook-example"></span><h2><a class="toc-backref" href="#id21">Windows Playbook Examples</a><a class="headerlink" href="#windows-playbook-examples" title="Permalink to this headline">¬∂</a></h2>
+<p>Look to the list of windows modules for most of what is possible, though also some modules like &#8220;raw&#8221; and &#8220;script&#8221; also work on Windows, as do &#8220;fetch&#8221; and &#8220;slurp&#8221;.</p>
+<p>Here is an example of pushing and running a PowerShell script:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">test script module</span>
+  <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">windows</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">run test script</span>
+      <span class="l l-Scalar l-Scalar-Plain">script</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">files/test_script.ps1</span>
+</pre></div>
+</div>
+<p>Running individual commands uses the &#8216;raw&#8217; module, as opposed to the shell or command module as is common on Linux/Unix operating systems:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">test raw module</span>
+  <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">windows</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">run ipconfig</span>
+      <span class="l l-Scalar l-Scalar-Plain">raw</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ipconfig</span>
+      <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ipconfig</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">debug</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">var=ipconfig</span>
+</pre></div>
+</div>
+<p>Running common DOS commands like &#8216;del&#8221;, &#8216;move&#8217;, or &#8216;copy&#8221; is unlikely to work on a remote Windows Server using Powershell, but they can work by prefacing the commands with &#8220;CMD /C&#8221; and enclosing the command in double quotes as in this example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">another raw module example</span>
+  <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">windows</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Move file on remote Windows Server from one location to another</span>
+       <span class="l l-Scalar l-Scalar-Plain">raw</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">CMD /C &quot;MOVE /Y C:\teststuff\myfile.conf C:\builds\smtp.conf&quot;</span>
+</pre></div>
+</div>
+<p>You may wind up with a more readable playbook by using the PowerShell equivalents of DOS commands.  For example, to achieve the same effect as the example above, you could use:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">another raw module example demonstrating powershell one liner</span>
+  <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">windows</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Move file on remote Windows Server from one location to another</span>
+       <span class="l l-Scalar l-Scalar-Plain">raw</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Move-Item C:\teststuff\myfile.conf C:\builds\smtp.conf</span>
+</pre></div>
+</div>
+<p>Bear in mind that using C(raw) will allways report &#8220;changed&#8221;, and it is your responsiblity to ensure PowerShell will need to handle idempotency as appropriate (the move examples above are inherently not idempotent), so where possible use (or write) a module.</p>
+<p>Here&#8217;s an example of how to use the win_stat module to test for file existence.  Note that the data returned by the win_stat module is slightly different than what is provided by the Linux equivalent:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">test stat module</span>
+  <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">windows</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">test stat module on file</span>
+      <span class="l l-Scalar l-Scalar-Plain">win_stat</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">path=&quot;C:/Windows/win.ini&quot;</span>
+      <span class="l l-Scalar l-Scalar-Plain">register</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">stat_file</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">debug</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">var=stat_file</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">check stat_file result</span>
+      <span class="l l-Scalar l-Scalar-Plain">assert</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">that</span><span class="p p-Indicator">:</span>
+             <span class="p p-Indicator">-</span> <span class="s">&quot;stat_file.stat.exists&quot;</span>
+             <span class="p p-Indicator">-</span> <span class="s">&quot;not</span><span class="nv"> </span><span class="s">stat_file.stat.isdir&quot;</span>
+             <span class="p p-Indicator">-</span> <span class="s">&quot;stat_file.stat.size</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">0&quot;</span>
+             <span class="p p-Indicator">-</span> <span class="s">&quot;stat_file.stat.md5&quot;</span>
+</pre></div>
+</div>
+<p>Again, recall that the Windows modules are all listed in the Windows category of modules, with the exception that the &#8220;raw&#8221;, &#8220;script&#8221;, &#8220;slurp&#8221; and &#8220;fetch&#8221; modules are also available.  These modules do not start with a &#8220;win&#8221; prefix.</p>
+</div>
+<div class="section" id="windows-contributions">
+<span id="id4"></span><h2><a class="toc-backref" href="#id22">Windows Contributions</a><a class="headerlink" href="#windows-contributions" title="Permalink to this headline">¬∂</a></h2>
+<p>Windows support in Ansible is still relatively new, and contributions are quite welcome, whether this is in the
+form of new modules, tweaks to existing modules, documentation, or something else.  Please stop by the ansible-devel mailing list if you would like to get involved and say hi.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="developing_modules-1.html" tppabs="http://docs.ansible.com/ansible/developing_modules.html"><span class="doc">Developing Modules</span></a></dt>
+<dd>How to write modules</dd>
+<dt><a class="reference internal" href="playbooks-1.html" tppabs="http://docs.ansible.com/ansible/playbooks.html"><span class="doc">Playbooks</span></a></dt>
+<dd>Learning Ansible&#8217;s configuration management language</dd>
+<dt><a class="reference external" href="javascript:if(confirm('http://docs.ansible.com/list_of_windows_modules.html  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/list_of_windows_modules.html'" tppabs="http://docs.ansible.com/list_of_windows_modules.html">List of Windows Modules</a></dt>
+<dd>Windows specific module list, all implemented in PowerShell</dd>
+<dt><a class="reference external" href="javascript:if(confirm('http://groups.google.com/group/ansible-project  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://groups.google.com/group/ansible-project'" tppabs="http://groups.google.com/group/ansible-project">Mailing List</a></dt>
+<dd>Questions? Help? Ideas?  Stop by the list on Google Groups</dd>
+<dt><a class="reference external" href="javascript:if(confirm('http://irc.freenode.net/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://irc.freenode.net/'" tppabs="http://irc.freenode.net/">irc.freenode.net</a></dt>
+<dd>#ansible IRC chat channel</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div id="search-results"><gcse:searchresults-only></div>
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+        <a href="intro_networking-1.html" tppabs="http://docs.ansible.com/ansible/intro_networking.html" class="btn btn-neutral float-right" title="Networking Support"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="intro_bsd-1.html" tppabs="http://docs.ansible.com/ansible/intro_bsd.html" class="btn btn-neutral" title="BSD Support"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','st-1.js'/*tpa=http://s.swiftypecdn.com/install/v2/st.js*/,'_st');
+
+  _st('install','yABGvz2N8PwcwBxyfzUc','2.0.0');
+</script>
+
+  <p>
+  Copyright ¬© 2016 Red Hat, Inc.
+  <br>
+    Last updated on Jun 22, 2016.
+  </p>
+<p>
+Ansible docs are generated from <a href="javascript:if(confirm('https://github.com/ansible/ansible  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible'" tppabs="https://github.com/ansible/ansible">GitHub sources</A> using <A HREF="javascript:if(confirm('http://sphinx-doc.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://sphinx-doc.org/'" tppabs="http://sphinx-doc.org/">Sphinx</A> using a theme provided by <a href="javascript:if(confirm('http://readthedocs.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://readthedocs.org/'" tppabs="http://readthedocs.org/">Read the Docs</a>. 
+</p>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+<!-- begin analytics -->
+<script type="text/javascript">
+var _hsq = _hsq || [];
+_hsq.push(["setContentType", "standard-page"]);
+        (function(d,s,i,r) {
+        if (d.getElementById(i)){return;}
+        var n = d.createElement(s),e = document.getElementsByTagName(s)[0];
+        n.id=i;n.src = '//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/330046.js';
+        e.parentNode.insertBefore(n, e);
+        })(document, "script", "hs-analytics",300000);
+</script>
+<!-- end analytics -->
+
+</body>
+</html>

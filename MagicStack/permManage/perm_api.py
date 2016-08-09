@@ -1,10 +1,23 @@
 # -*- coding:utf-8 -*-
 
 from django.db.models.query import QuerySet
-from MagicStack.api import *
+from userManage.models import User, UserGroup
+from MagicStack.api import get_role_key, CRYPTOR, ROLE_TASK_QUEUE, logger, get_asset_info, ServerError
 from permManage.models import PermRole, PermPush, PermRule
 from common.interface import APIRequest
 from assetManage.models import Asset, AssetGroup
+from thread_api import WorkManager
+from common.models import Task
+from permManage.ansible_api import MyTask
+import threading
+import os
+import json
+import uuid
+import datetime
+import time
+
+task_queue = ROLE_TASK_QUEUE
+
 
 def get_group_user_perm(ob):
     """
@@ -181,7 +194,6 @@ def gen_resource(ob, perm=None):
                         'port': asset_info.get('port', 22),
                         'ansible_ssh_private_key_file': role_key,
                         'username': role.name,
-                        # 'password': CRYPTOR.decrypt(role.password)
                        }
 
                 if os.path.isfile(role_key):
@@ -309,25 +321,27 @@ def get_role_push_host(role):
     return asset_pushed, asset_no_push
 
 
-def save_or_delete(obj_name, data, proxy_list, obj_uuid='all', action='save'):
+def save_or_delete(obj_name, data, proxy, obj_uuid=None, action='add'):
     """
     保存，更新, 删除数据
+    obj_name: 'PermRole'
+    obj_uuid: role.uuid_id
     """
-    res = []
-    for proxy in proxy_list:
-        try:
-            api = APIRequest('{0}/v1.0/permission/{1}/{2}'.format(proxy.url, obj_name, obj_uuid), proxy.username, CRYPTOR.decrypt(proxy.password))
-            if action == 'save':
-                result, codes = api.req_post(data)
-            elif action == 'update':
-                result, codes = api.req_put(data)
-            elif action == 'delete':
-                result, codes = api.req_del(data)
-            logger.debug('save_object:%s'%result)
-            res.append(result['messege'])
-        except Exception as e:
-            logger.error(e)
-    return res
+    info = ''
+    try:
+        api = APIRequest('{0}/v1.0/permission/{1}/{2}'.format(proxy.url, obj_name, obj_uuid), proxy.username, CRYPTOR.decrypt(proxy.password))
+        if action == 'add':
+            result, codes = api.req_post(data)
+        elif action == 'update':
+            result, codes = api.req_put(data)
+        elif action == 'delete':
+            result, codes = api.req_del(data)
+        if result is not None:
+            info = result['messege']
+    except Exception as e:
+        info = 'error'
+        logger.error("[save_or_delete]    %s"%e)
+    return info
 
 
 def get_one_or_all(obj_name, proxy, obj_uuid='all'):
@@ -344,14 +358,146 @@ def get_one_or_all(obj_name, proxy, obj_uuid='all'):
     return obj_list
 
 
-def query_event(task_name, proxy):
-    data = {'task_name': task_name}
+def query_event(task_name, username, proxy):
+    data = {'task_name': task_name, 'username': username}
     data = json.dumps(data)
     api = APIRequest('{0}/v1.0/permission/event'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
     result, codes = api.req_post(data)
     logger.info('推送用户事件查询结果result:%s'%result)
     return result
 
-if __name__ == "__main__":
-    print get_role_info(1)
+
+def role_proxy_operator(user_name, obj_name, data, proxy=None, obj_uuid='all', action='add'):
+    """
+    保存，更新, 删除数据，并把操作结果保存到Task表中
+    obj_name: PermRole, PermSudo
+    """
+    result = res_info = msg_name = ''
+    g_lock = threading.Lock()  # 线程锁
+    if obj_name == 'PermRole':
+        msg_name = u'系统用户'
+    elif obj_name == 'PermSudo':
+        msg_name = u'SUDO别名'
+    g_url = '{0}/v1.0/permission/{1}/{2}'.format(proxy.url, obj_name, obj_uuid)
+    try:
+        g_lock.acquire()
+        # 在每个proxy上(add/update/delete) role/sudo,并返回结果
+        api = APIRequest(g_url, proxy.username, CRYPTOR.decrypt(proxy.password))
+        if action == 'add':
+            result, codes = api.req_post(data)
+            pdata = json.loads(data)
+            res_info = u'添加{0}{1} {2}'.format(msg_name, pdata['name'], result['messege'])
+        elif action == 'update':
+            result, codes = api.req_put(data)
+            pdata = json.loads(data)
+            res_info = u'编辑{0}{1} {2}'.format(msg_name, pdata['name'], result['messege'])
+        elif action == 'delete':
+            result, codes = api.req_del(data)
+            pdata = json.loads(data)
+            res_info = u'删除{0}{1} {2}'.format(msg_name, pdata['name'], result['messege'])
+        logger.info('role_proxy_%s:%s'%(action, result['messege']))
+
+        # 生成唯一的事件名称，用于从数据库中查询执行结果
+        if 'name' not in json.dumps(data):
+            raise ValueError('role_proxy_operator: data["name"]不存在')
+        task_name = json.loads(data)['name'] + '_' + uuid.uuid4().hex
+        # 将事件添加到消息队列中
+        task_queue.put({'server': task_name, 'username': user_name})
+
+        # 将执行结果保存到数据库中
+        role_task = Task()
+        role_task.task_name = task_name
+        role_task.proxy_name = proxy.proxy_name
+        role_task.role_name = json.loads(data)['name']
+        role_task.username = user_name
+        role_task.status = 'complete'
+        role_task.content = res_info
+        role_task.url = g_url
+        role_task.start_time = datetime.datetime.now()
+        role_task.action = action
+        role_task.role_uuid = obj_uuid
+        role_task.role_data = data
+        role_task.result = result['messege']
+        role_task.save()
+    except Exception as e:
+        logger.error("[role_proxy_operator] %s"%e)
+    finally:
+        g_lock.release()
+    return result
+
+
+def push_role_to_asset(asset_list, role, username, proxy=None):
+    """from permManage.ansible_api import MyTask
+    推送系统用户到远程主机上
+    """
+    try:
+        proxy_assets = Asset.objects.filter(proxy__proxy_name=proxy.proxy_name)
+        need_push_assets = list(set(asset_list) & set(proxy_assets))
+        push_resource = gen_resource(need_push_assets)
+
+        # TODO 调用Ansible API 进行推送
+        host_list = [asset.networking.all()[0].ip_address for asset in need_push_assets]
+        host_names = [asset.name for asset in need_push_assets]
+        task = MyTask(push_resource, host_list)
+        ret = {}
+
+        # 因为要先建立用户，而push key是在 password也完成的情况下的可选项
+        # 1. 以秘钥 方式推送角色
+        role_proxy = get_one_or_all('PermRole', proxy, role.uuid_id)
+        ret["pass_push"] = task.add_user(role.name, proxy, role.system_groups, username)
+        time.sleep(1)   # 暂停1秒,保证用户创建完成之后再推送key
+        ret["key_push"] = task.push_key(role.name, os.path.join(role_proxy['key_path'], 'id_rsa.pub'),
+                                        proxy, username)
+
+        # 2. 推送账号密码 <为了安全 系统用户统一使用秘钥进行通信，不再提供密码方式的推送>
+        # 3. 推送sudo配置文件
+        sudo_list = [sudo for sudo in role.sudo.all()]
+        if sudo_list:
+            sudo_uuids = [sudo.uuid_id for sudo in role.sudo.all()]
+            ret['sudo'] = task.push_sudo(role, sudo_uuids, proxy, username)
+        logger.info('推送用户结果ret:%s'%ret)
+
+        # TODO 将事件放进queue中
+        event_task_names = []
+        if ret.has_key('pass_push'):
+            tk_pass_push = ret['pass_push']['task_name']
+            event_task_names.append(tk_pass_push)
+        if ret.has_key('key_push'):
+            tk_key_push = ret['key_push']['task_name']
+            event_task_names.append(tk_key_push)
+        if ret.has_key('sudo'):
+            if 'task_name' in ret['sudo']:
+                tk_sudo_push = ret['sudo']['task_name']
+                event_task_names.append(tk_sudo_push)
+        event = dict(push_assets=host_names, role_name=role.name, password_push=False,
+                     key_push=True, task_proxy=proxy.proxy_name)
+        event['tasks'] = event_task_names
+        event['username'] = username
+        task_queue.put(event)
+
+        # TODO 记录task事件
+        for item in event['tasks']:
+            tk = Task()
+            tk.task_name = item
+            tk.status = 'running'
+            tk.start_time = datetime.datetime.now()
+            tk.username = username
+            tk.save()
+    except Exception as e:
+        raise ServerError(e)
+
+
+def execute_thread_tasks(proxy_list, thread_num, func, *args, **kwargs):
+    """
+    多个任务并发执行
+    """
+    try:
+        work_manager = WorkManager(proxy_list, thread_num)
+        work_manager.init_work_queue(func, *args, **kwargs)
+        work_manager.init_thread_pool()
+    except Exception as e:
+        logger.error("[execute_thread_tasks]  %s"%e)
+
+
+
 

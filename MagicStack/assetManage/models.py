@@ -68,9 +68,16 @@ class NetWorking(models.Model):
     per_gateway = models.CharField(max_length=90, blank=True, null=True, verbose_name=u'默认网关')
     dns_name = models.CharField(max_length=90, blank=True, null=True, verbose_name=u'DNS名称')
     static_routes = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'静态路由')
+    active = models.BooleanField(help_text=u'网卡状态')
+    device = models.CharField(max_length=100, help_text=u'网卡名字')
+    macaddress = models.CharField(max_length=100, help_text=u'从ansible中获取的MAC地址')
+    module = models.CharField(max_length=100, help_text=u'网卡驱动')
+    pciid = models.CharField(max_length=100)
+    promisc = models.BooleanField()
+    type = models.CharField(max_length=60, help_text=u'网卡类型')
 
     def __unicode__(self):
-        return self.name
+        return self.net_name
 
 
 class NetWorkingGlobal(models.Model):
@@ -125,7 +132,7 @@ class Asset(models.Model):
     username = models.CharField(max_length=16, blank=True, null=True, verbose_name=u"管理用户名")
     password = models.CharField(max_length=64, blank=True, null=True, verbose_name=u"密码")
     idc = models.ForeignKey(IDC, blank=True, null=True,  on_delete=models.SET_NULL, verbose_name=u'机房')
-    brand = models.CharField(max_length=64, blank=True, null=True, verbose_name=u'硬件厂商型号')
+    product_name = models.CharField(max_length=64, blank=True, null=True, verbose_name=u'硬件厂商型号')
     cpu = models.CharField(max_length=64, blank=True, null=True, verbose_name=u'CPU')
     memory = models.CharField(max_length=128, blank=True, null=True, verbose_name=u'内存')
     disk = models.CharField(max_length=1024, blank=True, null=True, verbose_name=u'硬盘')
@@ -137,7 +144,7 @@ class Asset(models.Model):
     number = models.CharField(max_length=32, blank=True, null=True, verbose_name=u'资产编号')
     machine_status = models.IntegerField(choices=ASSET_STATUS, blank=True, null=True, default=1, verbose_name=u"机器状态")
     asset_type = models.IntegerField(choices=ASSET_TYPE, blank=True, null=True, default=1, verbose_name=u"主机类型")
-    sn = models.CharField(max_length=128, blank=True, null=True, verbose_name=u"SN编号")
+    product_serial = models.CharField(max_length=128, blank=True, null=True, verbose_name=u"SN编号")
     proxy = models.ForeignKey(Proxy, verbose_name=u'所属代理')
     networking_g = models.ForeignKey(NetWorkingGlobal,  verbose_name=u'全局网络设置')
     networking = models.ManyToManyField(NetWorking,  verbose_name=u'网络')
@@ -145,6 +152,12 @@ class Asset(models.Model):
     date_added = models.DateTimeField(auto_now=True, null=True)
     is_active = models.BooleanField(default=True, verbose_name=u"是否激活")
     comment = models.CharField(max_length=128, blank=True, null=True, verbose_name=u"备注")
+    devices = models.TextField(null=True, help_text=u'设备信息')
+    bios_date = models.CharField(max_length=100)
+    bios_version = models.CharField(max_length=100)
+    product_uuid = models.CharField(max_length=100)
+    product_version = models.CharField(max_length=100)
+    system_vendor = models.CharField(max_length=100)
 
     def __unicode__(self):
         return self.name

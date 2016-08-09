@@ -1,0 +1,754 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset=UTF-8"utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Tag Manager Data Layer -->
+  <script>
+   dataLayer = [];
+  </script>
+  <!-- End Google Tag Manager Data Layer -->
+
+  
+  <title>Getting Started with Azure &mdash; Ansible Documentation</title>
+  
+
+  
+  
+
+  
+  <link href="css-family=Lato-400,700-Roboto+Slab-400,700-Inconsolata-400,700.css" tppabs="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel='stylesheet' type='text/css'>
+  <link href="font-awesome.min.css" tppabs="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'http://docs.ansible.com/ansible/0.01',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+      <script type="text/javascript" src="jquery-1.js" tppabs="http://docs.ansible.com/ansible/_static/jquery.js"></script>
+      <script type="text/javascript" src="underscore-1.js" tppabs="http://docs.ansible.com/ansible/_static/underscore.js"></script>
+      <script type="text/javascript" src="doctools-1.js" tppabs="http://docs.ansible.com/ansible/_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="theme.min-1.css" tppabs="http://docs.ansible.com/ansible/_static/css/theme.min.css" type="text/css" />
+    <script type="text/javascript" src="theme-1.js" tppabs="http://docs.ansible.com/ansible/_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="Ansible Documentation" href="index.html"/>
+        <link rel="up" title="Detailed Guides" href="guides.html"/>
+        <link rel="next" title="Rackspace Cloud Guide" href="guide_rax.html"/>
+        <link rel="prev" title="Amazon Web Services Guide" href="guide_aws.html"/> 
+
+  <script src="modernizr.min-1.js" tppabs="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  <style>
+    .search-reset-start {
+        color: #463E3F;
+        float: right;
+        position: relative;
+        top: -25px;
+        left: -10px;
+        z-index: 10;
+     }
+     .search-reset-start:hover {
+        cursor: pointer;
+        color: #2980B9;
+     }
+     #search-box-id {
+        padding-right: 25px;
+     }
+  </style>
+
+  <link href="css-family=Open+Sans-400,300.css" tppabs="https://fonts.googleapis.com/css?family=Open+Sans:400,300"
+    rel='stylesheet' type='text/css'>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="ns-1.html-id=gtm-psb293" tppabs="http://www.googletagmanager.com/ns.html?id=GTM-PSB293" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm-1.js'/*tpa=http://docs.ansible.com/ansible/gtm.js*/});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-PSB293');</script>
+  <!-- End Google Tag Manager -->
+
+  <a class="DocSite-nav" href="javascript:if(confirm('http://docs.ansible.com/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">
+    <img class="DocSiteNav-logo"
+      src="logo_invert-1.png" tppabs="http://docs.ansible.com/ansible/_static/images/logo_invert.png"
+      alt="Ansible Logo">
+    <div class="DocSiteNav-title">
+      Documentation
+    </div>
+  </a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+
+      <div style="background-color:#5bbdbf;height=80px;margin:'auto auto auto auto'">
+        <a class="DocSiteProduct-header DocSiteProduct-header--core"
+          href="index.htm" tppabs="http://docs.ansible.com/ansible/">
+          <div class="DocSiteProduct-productName">
+            <div class="DocSiteProduct-logoText">
+              ANSIBLE
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div id="menu-id" class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro-1.html" tppabs="http://docs.ansible.com/ansible/intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro_installation-1.html" tppabs="http://docs.ansible.com/ansible/intro_installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_getting_started-1.html" tppabs="http://docs.ansible.com/ansible/intro_getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_inventory.html">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_dynamic_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_dynamic_inventory.html">Dynamic Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_patterns-1.html" tppabs="http://docs.ansible.com/ansible/intro_patterns.html">Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_adhoc-1.html" tppabs="http://docs.ansible.com/ansible/intro_adhoc.html">Introduction To Ad-Hoc Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_configuration-1.html" tppabs="http://docs.ansible.com/ansible/intro_configuration.html">Configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_bsd-1.html" tppabs="http://docs.ansible.com/ansible/intro_bsd.html">BSD Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_windows-1.html" tppabs="http://docs.ansible.com/ansible/intro_windows.html">Windows Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_networking-1.html" tppabs="http://docs.ansible.com/ansible/intro_networking.html">Networking Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart-1.html" tppabs="http://docs.ansible.com/ansible/quickstart.html">Quickstart Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks-1.html" tppabs="http://docs.ansible.com/ansible/playbooks.html">Playbooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_intro-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_intro.html">Intro to Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_roles-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_roles.html">Playbook Roles and Include Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_variables-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_filters-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_filters.html">Jinja2 filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_conditionals-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_conditionals.html">Conditionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_loops-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_loops.html">Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_blocks-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_blocks.html">Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_strategies-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_strategies.html">Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_best_practices-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_best_practices.html">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks_special_topics-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_special_topics.html">Playbooks: Special Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="become-1.html" tppabs="http://docs.ansible.com/ansible/become.html">Become (Privilege Escalation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_acceleration-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_acceleration.html">Accelerated Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_async-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_async.html">Asynchronous Actions and Polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_checkmode-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_checkmode.html">Check Mode (&#8220;Dry Run&#8221;)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_debugger-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_debugger.html">Playbook Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_delegation-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_delegation.html">Delegation, Rolling Updates, and Local Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_environment-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_environment.html">Setting the Environment (and Working With Proxies)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_error_handling-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_error_handling.html">Error Handling In Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_advanced_syntax-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_advanced_syntax.html">Advanced Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_lookups-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_lookups.html">Using Lookups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_prompts-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_prompts.html">Prompts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_tags-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_tags.html">Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_vault-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_vault.html">Vault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_startnstep-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_startnstep.html">Start and Step</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_directives-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_directives.html">Directives Glossary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules-1.html" tppabs="http://docs.ansible.com/ansible/modules.html">About Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules_intro-1.html" tppabs="http://docs.ansible.com/ansible/modules_intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_core-1.html" tppabs="http://docs.ansible.com/ansible/modules_core.html">Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_extra-1.html" tppabs="http://docs.ansible.com/ansible/modules_extra.html">Extras Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_return_values-1.html" tppabs="http://docs.ansible.com/ansible/common_return_values.html">Common Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules_by_category-1.html" tppabs="http://docs.ansible.com/ansible/modules_by_category.html">Module Index</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="list_of_all_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_all_modules.html">All Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_cloud_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_cloud_modules.html">Cloud Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_clustering_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_clustering_modules.html">Clustering Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_commands_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_commands_modules.html">Commands Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_database_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_database_modules.html">Database Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_files_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_files_modules.html">Files Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_inventory_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_inventory_modules.html">Inventory Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_messaging_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_messaging_modules.html">Messaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_monitoring_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_monitoring_modules.html">Monitoring Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_network_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_network_modules.html">Network Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_notification_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_notification_modules.html">Notification Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_packaging_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_packaging_modules.html">Packaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_source_control_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_source_control_modules.html">Source Control Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_system_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_system_modules.html">System Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_utilities_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_utilities_modules.html">Utilities Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_web_infrastructure_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_web_infrastructure_modules.html">Web Infrastructure Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_windows_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_windows_modules.html">Windows Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="guides-1.html" tppabs="http://docs.ansible.com/ansible/guides.html">Detailed Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="guide_aws-1.html" tppabs="http://docs.ansible.com/ansible/guide_aws.html">Amazon Web Services Guide</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Getting Started with Azure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rax-1.html" tppabs="http://docs.ansible.com/ansible/guide_rax.html">Rackspace Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_gce-1.html" tppabs="http://docs.ansible.com/ansible/guide_gce.html">Google Cloud Platform Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_cloudstack-1.html" tppabs="http://docs.ansible.com/ansible/guide_cloudstack.html">CloudStack Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_vagrant-1.html" tppabs="http://docs.ansible.com/ansible/guide_vagrant.html">Using Vagrant and Ansible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rolling_upgrade-1.html" tppabs="http://docs.ansible.com/ansible/guide_rolling_upgrade.html">Continuous Delivery and Rolling Upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_docker-1.html" tppabs="http://docs.ansible.com/ansible/guide_docker.html">Getting Started with Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developing-1.html" tppabs="http://docs.ansible.com/ansible/developing.html">Developer Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developing_api-1.html" tppabs="http://docs.ansible.com/ansible/developing_api.html">Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_inventory-1.html" tppabs="http://docs.ansible.com/ansible/developing_inventory.html">Developing Dynamic Inventory Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_modules-1.html" tppabs="http://docs.ansible.com/ansible/developing_modules.html">Developing Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_plugins-1.html" tppabs="http://docs.ansible.com/ansible/developing_plugins.html">Developing Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_core-1.html" tppabs="http://docs.ansible.com/ansible/developing_core.html">Developing the Ansible Core Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_test_pr-1.html" tppabs="http://docs.ansible.com/ansible/developing_test_pr.html">Helping Testing PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_releases-1.html" tppabs="http://docs.ansible.com/ansible/developing_releases.html">Releases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tower-1.html" tppabs="http://docs.ansible.com/ansible/tower.html">Ansible Tower</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community-1.html" tppabs="http://docs.ansible.com/ansible/community.html">Community Information &amp; Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#ansible-users" tppabs="http://docs.ansible.com/ansible/community.html#ansible-users">Ansible Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#for-current-and-prospective-developers" tppabs="http://docs.ansible.com/ansible/community.html#for-current-and-prospective-developers">For Current and Prospective Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#other-topics" tppabs="http://docs.ansible.com/ansible/community.html#other-topics">Other Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#community-code-of-conduct" tppabs="http://docs.ansible.com/ansible/community.html#community-code-of-conduct">Community Code of Conduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#contributors-license-agreement" tppabs="http://docs.ansible.com/ansible/community.html#contributors-license-agreement">Contributors License Agreement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="galaxy-1.html" tppabs="http://docs.ansible.com/ansible/galaxy.html">Ansible Galaxy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="galaxy-1.html#the-website" tppabs="http://docs.ansible.com/ansible/galaxy.html#the-website">The Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="galaxy-1.html#the-ansible-galaxy-command-line-tool" tppabs="http://docs.ansible.com/ansible/galaxy.html#the-ansible-galaxy-command-line-tool">The ansible-galaxy command line tool</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test_strategies-1.html" tppabs="http://docs.ansible.com/ansible/test_strategies.html">Testing Strategies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#integrating-testing-with-ansible-playbooks" tppabs="http://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-ansible-playbooks">Integrating Testing With Ansible Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#the-right-level-of-testing" tppabs="http://docs.ansible.com/ansible/test_strategies.html#the-right-level-of-testing">The Right Level of Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#check-mode-as-a-drift-test" tppabs="http://docs.ansible.com/ansible/test_strategies.html#check-mode-as-a-drift-test">Check Mode As A Drift Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#modules-that-are-useful-for-testing" tppabs="http://docs.ansible.com/ansible/test_strategies.html#modules-that-are-useful-for-testing">Modules That Are Useful for Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#testing-lifecycle" tppabs="http://docs.ansible.com/ansible/test_strategies.html#testing-lifecycle">Testing Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#integrating-testing-with-rolling-updates" tppabs="http://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-rolling-updates">Integrating Testing With Rolling Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#achieving-continuous-deployment" tppabs="http://docs.ansible.com/ansible/test_strategies.html#achieving-continuous-deployment">Achieving Continuous Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#conclusion" tppabs="http://docs.ansible.com/ansible/test_strategies.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq-1.html" tppabs="http://docs.ansible.com/ansible/faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook" tppabs="http://docs.ansible.com/ansible/faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook">How can I set the PATH or any other environment variable for a task or entire playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with">How do I handle different machines needing different user accounts or ports to log in with?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file">How do I get ansible to reuse connections, enable Kerberized SSH, or have Ansible pay attention to my local SSH config file?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">How do I configure a jump host to access servers that I have no direct access to?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-speed-up-management-inside-ec2" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-speed-up-management-inside-ec2">How do I speed up management inside EC2?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine">How do I handle python pathing not having a Python 2.X in /usr/bin/python on a remote machine?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#what-is-the-best-way-to-make-content-reusable-redistributable" tppabs="http://docs.ansible.com/ansible/faq.html#what-is-the-best-way-to-make-content-reusable-redistributable">What is the best way to make content reusable/redistributable?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it" tppabs="http://docs.ansible.com/ansible/faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it">Where does the configuration file live and what can I configure in it?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-disable-cowsay" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-disable-cowsay">How do I disable cowsay?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-see-a-list-of-all-of-the-ansible-variables" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables">How do I see a list of all of the ansible_ variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host">How do I see all the inventory vars defined for my host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template">How do I loop over a list of hosts in a group, inside of a template?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-a-variable-name-programmatically" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-name-programmatically">How do I access a variable name programmatically?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-a-variable-of-the-first-host-in-a-group" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group">How do I access a variable of the first host in a group?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-copy-files-recursively-onto-a-target-host" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-copy-files-recursively-onto-a-target-host">How do I copy files recursively onto a target host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-shell-environment-variables" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-shell-environment-variables">How do I access shell environment variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-generate-crypted-passwords-for-the-user-module" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module">How do I generate crypted passwords for the user module?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#can-i-get-training-on-ansible-or-find-commercial-support" tppabs="http://docs.ansible.com/ansible/faq.html#can-i-get-training-on-ansible-or-find-commercial-support">Can I get training on Ansible or find commercial support?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#is-there-a-web-interface-rest-api-etc" tppabs="http://docs.ansible.com/ansible/faq.html#is-there-a-web-interface-rest-api-etc">Is there a web interface / REST API / etc?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-submit-a-change-to-the-documentation" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-submit-a-change-to-the-documentation">How do I submit a change to the documentation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-keep-secret-data-in-my-playbook" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-keep-secret-data-in-my-playbook">How do I keep secret data in my playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names" tppabs="http://docs.ansible.com/ansible/faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names">When should I use {{ }}? Also, how to interpolate variables or dynamic variable names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#i-don-t-see-my-question-here" tppabs="http://docs.ansible.com/ansible/faq.html#i-don-t-see-my-question-here">I don&#8217;t see my question here</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary-1.html" tppabs="http://docs.ansible.com/ansible/glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YAMLSyntax-1.html" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html">YAML Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax-1.html#yaml-basics" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html#yaml-basics">YAML Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax-1.html#gotchas" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html#gotchas">Gotchas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html">Porting Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#playbook" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#playbook">Playbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#deprecated" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#deprecated">Deprecated</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#other-caveats" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#other-caveats">Other caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#porting-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#porting-plugins">Porting plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#lookup-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#lookup-plugins">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#connection-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#connection-plugins">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#action-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#action-plugins">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#callback-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#callback-plugins">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id1" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id1">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#hybrid-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#hybrid-plugins">Hybrid plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id2" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id2">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id3" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id3">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id4" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id4">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id5" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id5">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id6" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id6">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#porting-custom-scripts" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#porting-custom-scripts">Porting custom scripts</a></li>
+</ul>
+
+        
+
+<!-- changeable widget -->
+<center>
+<br/>
+<a href="javascript:if(confirm('http://www.ansible.com/docs-left?utm_source=docs  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ansible.com/docs-left?utm_source=docs'" tppabs="http://www.ansible.com/docs-left?utm_source=docs">
+    <img style="border-width:0px;" src="ASB-docs-left-rail.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-left-rail.png" />
+</a>
+</center>
+
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="javascript:if(confirm('http://docs.ansible.com/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">Ansible Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+
+          <!-- Banner ads -->
+          <div class="DocSiteBanner">
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-left.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-left.png">
+            </a>
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-right.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-right.png">
+            </a>
+        </div>
+
+          <ul class="wy-breadcrumbs">
+  <li><a href="index-1.html" tppabs="http://docs.ansible.com/ansible/index.html">Docs</a> &raquo;</li>
+  <li><a href="">Getting Started with Azure</a></li>
+  
+    <li class="wy-breadcrumbs-aside">
+      <a href="javascript:if(confirm('https://github.com/ansible/ansible/blob/devel/docsite/rst/guide_azure.rst  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible/blob/devel/docsite/rst/guide_azure.rst'" tppabs="https://github.com/ansible/ansible/blob/devel/docsite/rst/guide_azure.rst" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  
+</ul>
+<hr/>
+
+          <div id="page-content">
+          
+  <div class="section" id="getting-started-with-azure">
+<h1>Getting Started with Azure<a class="headerlink" href="#getting-started-with-azure" title="Permalink to this headline">¬∂</a></h1>
+<p>Ansible includes a suite of modules for interacting with Azure Resource Manager, giving you the tools to easily create
+and orchestrate infrastructure on the Microsoft Azure Cloud.</p>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¬∂</a></h2>
+<p>Using the Azure Resource Manager modules requires having <a class="reference external" href="javascript:if(confirm('https://github.com/Azure/azure-sdk-for-python  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/Azure/azure-sdk-for-python'" tppabs="https://github.com/Azure/azure-sdk-for-python">Azure Python SDK</a>
+installed on the host running Ansible. You will need to have &gt;= v2.0.0RC4 installed. The simplest way to install the
+SDK is via pip:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install azure&gt;<span class="o">=</span>2.0.0rc4
+</pre></div>
+</div>
+</div>
+<div class="section" id="authenticating-with-azure">
+<h2>Authenticating with Azure<a class="headerlink" href="#authenticating-with-azure" title="Permalink to this headline">¬∂</a></h2>
+<p>Using the Azure Resource Manager modules requires authenticating with the Azure API. You can choose from two authentication strategies:</p>
+<ul class="simple">
+<li>Active Directory Username/Password</li>
+<li>Service Principal Credentials</li>
+</ul>
+<p>Follow the directions for the strategy you wish to use, then proceed to <a class="reference internal" href="#providing-credentials-to-azure-modules">Providing Credentials to Azure Modules</a> for
+instructions on how to actually use the modules and authenticate with the Azure API.</p>
+<div class="section" id="using-service-principal">
+<h3>Using Service Principal<a class="headerlink" href="#using-service-principal" title="Permalink to this headline">¬∂</a></h3>
+<p>There is now a detailed official tutorial describing <a class="reference external" href="javascript:if(confirm('https://azure.microsoft.com/en-us/documentation/articles/resource-group-create-service-principal-portal/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://azure.microsoft.com/en-us/documentation/articles/resource-group-create-service-principal-portal/'" tppabs="https://azure.microsoft.com/en-us/documentation/articles/resource-group-create-service-principal-portal/">how to create a service principal</a>.</p>
+<p>After stepping through the tutorial you will have:</p>
+<ul class="simple">
+<li>Your Client ID, which is found in the ‚Äúclient id‚Äù box in the ‚ÄúConfigure‚Äù page of your application in the Azure portal</li>
+<li>Your Secret key, generated when you created the application. You cannot show the key after creation.
+If you lost the key, you must create a new one in the ‚ÄúConfigure‚Äù page of your application.</li>
+<li>And finally, a tenant ID. It‚Äôs a UUID (e.g. ABCDEFGH-1234-ABCD-1234-ABCDEFGHIJKL) pointing to the AD containing your
+application. You will find it in the URL from within the Azure portal, or in the ‚Äúview endpoints‚Äù of any given URL.</li>
+</ul>
+</div>
+<div class="section" id="using-active-directory-username-password">
+<h3>Using Active Directory Username/Password<a class="headerlink" href="#using-active-directory-username-password" title="Permalink to this headline">¬∂</a></h3>
+<p>To create an Active Directory username/password:</p>
+<ul class="simple">
+<li>Connect to the Azure Classic Portal with your admin account</li>
+<li>Create a user in your default AAD. You must NOT activate Multi-Factor Authentication</li>
+<li>Go to Settings - Administrators</li>
+<li>Click on Add and enter the email of the new user.</li>
+<li>Check the checkbox of the subscription you want to test with this user.</li>
+<li>Login to Azure Portal with this new user to change the temporary password to a new one. You will not be able to use the
+temporary password for OAuth login.</li>
+</ul>
+</div>
+<div class="section" id="providing-credentials-to-azure-modules">
+<h3>Providing Credentials to Azure Modules<a class="headerlink" href="#providing-credentials-to-azure-modules" title="Permalink to this headline">¬∂</a></h3>
+<p>The modules offer several ways to provide your credentials. For a CI/CD tool such as Ansible Tower or Jenkins, you will
+most likely want to use environment variables. For local development you may wish to store your credentials in a file
+within your home directory. And of course, you can always pass credentials as parameters to a task within a playbook. The
+order of precedence is parameters, then environment variables, and finally a file found in your home directory.</p>
+<div class="section" id="using-environment-variables">
+<h4>Using Environment Variables<a class="headerlink" href="#using-environment-variables" title="Permalink to this headline">¬∂</a></h4>
+<p>To pass service principal credentials via the environment, define the following variables:</p>
+<ul class="simple">
+<li>AZURE_CLIENT_ID</li>
+<li>AZURE_SECRET</li>
+<li>AZURE_SUBSCRIPTION_ID</li>
+<li>AZURE_TENANT</li>
+</ul>
+<p>To pass Active Directory username/password via the environment, define the following variables:</p>
+<ul class="simple">
+<li>AZURE_AD_USER</li>
+<li>AZURE_PASSWORD</li>
+<li>AZURE_SUBSCRIPTION_ID</li>
+</ul>
+</div>
+<div class="section" id="storing-in-a-file">
+<h4>Storing in a File<a class="headerlink" href="#storing-in-a-file" title="Permalink to this headline">¬∂</a></h4>
+<p>When working in a development environment, it may be desirable to store credentials in a file. The modules will look
+for credentials in $HOME/.azure/credentials. This file is an ini style file. It will look as follows:</p>
+<div class="highlight-ini"><div class="highlight"><pre><span></span><span class="k">[default]</span>
+<span class="na">subscription_id</span><span class="o">=</span><span class="s">xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span>
+<span class="na">client_id</span><span class="o">=</span><span class="s">xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span>
+<span class="na">secret</span><span class="o">=</span><span class="s">xxxxxxxxxxxxxxxxx</span>
+<span class="na">tenant</span><span class="o">=</span><span class="s">xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span>
+</pre></div>
+</div>
+<p>It is possible to store multiple sets of credentials within the credentials file by creating multiple sections. Each
+section is considered a profile. The modules look for the [default] profile automatically. Define AZURE_PROFILE in the
+environment or pass a profile parameter to specify a specific profile.</p>
+</div>
+<div class="section" id="passing-as-parameters">
+<h4>Passing as Parameters<a class="headerlink" href="#passing-as-parameters" title="Permalink to this headline">¬∂</a></h4>
+<p>If you wish to pass credentials as parameters to a task, use the following parameters for service principal:</p>
+<ul class="simple">
+<li>client_id</li>
+<li>secret</li>
+<li>subscription_id</li>
+<li>tenant</li>
+</ul>
+<p>Or, pass the following parameters for Active Directory username/password:</p>
+<ul class="simple">
+<li>ad_user</li>
+<li>password</li>
+<li>subscription_id</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="creating-virtual-machines">
+<h2>Creating Virtual Machines<a class="headerlink" href="#creating-virtual-machines" title="Permalink to this headline">¬∂</a></h2>
+<p>There are two ways to create a virtual machine, both involving the azure_rm_virtualmachine module. We can either create
+a storage account, network interface, security group and public IP address and pass the names of these objects to the
+module as parameters, or we can let the module do the work for us and accept the defaults it chooses.</p>
+<div class="section" id="creating-individual-components">
+<h3>Creating Individual Components<a class="headerlink" href="#creating-individual-components" title="Permalink to this headline">¬∂</a></h3>
+<p>An Azure module is available to help you create a storage account, virtual network, subnet, network interface,
+security group and public IP. Here is a full example of creating each of these and passing the names to the
+azure_rm_virtualmachine module at the end:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Create storage account</span>
+  <span class="l l-Scalar l-Scalar-Plain">azure_rm_storageaccount</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">resource_group</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Testing</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">testaccount001</span>
+    <span class="l l-Scalar l-Scalar-Plain">account_type</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Standard_LRS</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Create virtual network</span>
+  <span class="l l-Scalar l-Scalar-Plain">azure_rm_virtualnetwork</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">resource_group</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Testing</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">testvn001</span>
+    <span class="l l-Scalar l-Scalar-Plain">address_prefixes</span><span class="p p-Indicator">:</span> <span class="s">&quot;10.10.0.0/16&quot;</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Add subnet</span>
+  <span class="l l-Scalar l-Scalar-Plain">azure_rm_subnet</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">resource_group</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Testing</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">subnet001</span>
+    <span class="l l-Scalar l-Scalar-Plain">address_prefix</span><span class="p p-Indicator">:</span> <span class="s">&quot;10.10.0.0/24&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">virtual_network</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">testvn001</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Create public ip</span>
+  <span class="l l-Scalar l-Scalar-Plain">azure_rm_publicipaddress</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">resource_group</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Testing</span>
+    <span class="l l-Scalar l-Scalar-Plain">allocation_method</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Static</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">publicip001</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Create security group that allows SSH</span>
+    <span class="l l-Scalar l-Scalar-Plain">azure_rm_securitygroup</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">resource_group</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Testing</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">secgroup001</span>
+    <span class="l l-Scalar l-Scalar-Plain">rules</span><span class="p p-Indicator">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">SSH</span>
+        <span class="l l-Scalar l-Scalar-Plain">protocol</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Tcp</span>
+        <span class="l l-Scalar l-Scalar-Plain">destination_port_range</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">22</span>
+        <span class="l l-Scalar l-Scalar-Plain">access</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Allow</span>
+        <span class="l l-Scalar l-Scalar-Plain">priority</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">101</span>
+        <span class="l l-Scalar l-Scalar-Plain">direction</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Inbound</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Create NIC</span>
+  <span class="l l-Scalar l-Scalar-Plain">azure_rm_networkinterface</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">resource_group</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Testing</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">testnic001</span>
+    <span class="l l-Scalar l-Scalar-Plain">virtual_network</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">testvn001</span>
+    <span class="l l-Scalar l-Scalar-Plain">subnet</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">subnet001</span>
+    <span class="l l-Scalar l-Scalar-Plain">public_ip_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">publicip001</span>
+    <span class="l l-Scalar l-Scalar-Plain">security_group</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">secgroup001</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Create virtual machine</span>
+  <span class="l l-Scalar l-Scalar-Plain">azure_rm_virtualmachine</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">resource_group</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Testing</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">testvm001</span>
+    <span class="l l-Scalar l-Scalar-Plain">vm_size</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Standard_D1</span>
+    <span class="l l-Scalar l-Scalar-Plain">storage_account</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">testaccount001</span>
+    <span class="l l-Scalar l-Scalar-Plain">storage_container</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">testvm001</span>
+    <span class="l l-Scalar l-Scalar-Plain">storage_blob</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">testvm001.vhd</span>
+    <span class="l l-Scalar l-Scalar-Plain">admin_username</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">admin</span>
+    <span class="l l-Scalar l-Scalar-Plain">admin_password</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Password!</span>
+    <span class="l l-Scalar l-Scalar-Plain">network_interfaces</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">testnic001</span>
+    <span class="l l-Scalar l-Scalar-Plain">image</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">offer</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">CentOS</span>
+      <span class="l l-Scalar l-Scalar-Plain">publisher</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">OpenLogic</span>
+      <span class="l l-Scalar l-Scalar-Plain">sku</span><span class="p p-Indicator">:</span> <span class="s">&#39;7.1&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">version</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">latest</span>
+</pre></div>
+</div>
+<p>Each of the Azure modules offers a variety of parameter options. Not all options are demonstrated in the above example.
+See each individual module for further details and examples.</p>
+</div>
+<div class="section" id="creating-a-virtual-machine-with-default-options">
+<h3>Creating a Virtual Machine with Default Options<a class="headerlink" href="#creating-a-virtual-machine-with-default-options" title="Permalink to this headline">¬∂</a></h3>
+<p>If you simply want to create a virtual machine without specifying all the details, you can do that as well. The only
+caveat is that you will need a virtual network with one subnet already in your resource group. Assuming you have a
+virtual network already with an existing subnet, you can run the following to create a VM:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">azure_rm_virtualmachine</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">resource_group</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Testing</span>
+  <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">testvm10</span>
+  <span class="l l-Scalar l-Scalar-Plain">vm_size</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Standard_D1</span>
+  <span class="l l-Scalar l-Scalar-Plain">admin_username</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">chouseknecht</span>
+  <span class="l l-Scalar l-Scalar-Plain">ssh_password</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+  <span class="l l-Scalar l-Scalar-Plain">ssh_public_keys</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{</span><span class="nv"> </span><span class="s">ssh_keys</span><span class="nv"> </span><span class="s">}}&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">image</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">offer</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">CentOS</span>
+    <span class="l l-Scalar l-Scalar-Plain">publisher</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">OpenLogic</span>
+    <span class="l l-Scalar l-Scalar-Plain">sku</span><span class="p p-Indicator">:</span> <span class="s">&#39;7.1&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">version</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">latest</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="dynamic-inventory-script">
+<h2>Dynamic Inventory Script<a class="headerlink" href="#dynamic-inventory-script" title="Permalink to this headline">¬∂</a></h2>
+<p>If you are not familiar with Ansible&#8217;s dynamic inventory scripts, check out <a class="reference external" href="intro_dynamic_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_dynamic_inventory.html">Intro to Dynamic Inventory</a>.</p>
+<p>The Azure Resource Manager inventory script is called azure_rm.py. It authenticates with the Azure API exactly the same as the
+Azure modules, which means you will either define the same environment variables described above in <a class="reference internal" href="#using-environment-variables">Using Environment Variables</a>,
+create a $HOME/.azure/credentials file (also described above in <a class="reference internal" href="#storing-in-a-file">Storing in a File</a>), or pass command line parameters. To see available command
+line options execute the following:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ ./ansible/contrib/inventory/azure_rm.py --help
+</pre></div>
+</div>
+<p>As with all dynamic inventory scripts, the script can be executed directly, passed as a parameter to the ansible command,
+or passed directly to ansible-playbook using the -i option. No matter how it is executed the script produces JSON representing
+all of the hosts found in your Azure subscription. You can narrow this down to just hosts found in a specific set of
+Azure resource groups, or even down to a specific host.</p>
+<p>For a given host, the inventory script provides the following host variables:</p>
+<div class="highlight-JSON"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;ansible_host&quot;</span><span class="p">:</span> <span class="s2">&quot;XXX.XXX.XXX.XXX&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;computer_name&quot;</span><span class="p">:</span> <span class="s2">&quot;computer_name2&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;fqdn&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;/subscriptions/subscription-id/resourceGroups/galaxy-production/providers/Microsoft.Compute/virtualMachines/object-name&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;image&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;offer&quot;</span><span class="p">:</span> <span class="s2">&quot;CentOS&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;publisher&quot;</span><span class="p">:</span> <span class="s2">&quot;OpenLogic&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;sku&quot;</span><span class="p">:</span> <span class="s2">&quot;7.1&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;latest&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;location&quot;</span><span class="p">:</span> <span class="s2">&quot;westus&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;mac_address&quot;</span><span class="p">:</span> <span class="s2">&quot;00-0D-3A-31-2C-EC&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;object-name&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;network_interface&quot;</span><span class="p">:</span> <span class="s2">&quot;interface-name&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;network_interface_id&quot;</span><span class="p">:</span> <span class="s2">&quot;/subscriptions/subscription-id/resourceGroups/galaxy-production/providers/Microsoft.Network/networkInterfaces/object-name1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;network_security_group&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nt">&quot;network_security_group_id&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nt">&quot;os_disk&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;object-name&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;operating_system_type&quot;</span><span class="p">:</span> <span class="s2">&quot;Linux&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;plan&quot;</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nt">&quot;powerstate&quot;</span><span class="p">:</span> <span class="s2">&quot;running&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;private_ip&quot;</span><span class="p">:</span> <span class="s2">&quot;172.26.3.6&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;private_ip_alloc_method&quot;</span><span class="p">:</span> <span class="s2">&quot;Static&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;provisioning_state&quot;</span><span class="p">:</span> <span class="s2">&quot;Succeeded&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;public_ip&quot;</span><span class="p">:</span> <span class="s2">&quot;XXX.XXX.XXX.XXX&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;public_ip_alloc_method&quot;</span><span class="p">:</span> <span class="s2">&quot;Static&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;public_ip_id&quot;</span><span class="p">:</span> <span class="s2">&quot;/subscriptions/subscription-id/resourceGroups/galaxy-production/providers/Microsoft.Network/publicIPAddresses/object-name&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;public_ip_name&quot;</span><span class="p">:</span> <span class="s2">&quot;object-name&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;resource_group&quot;</span><span class="p">:</span> <span class="s2">&quot;galaxy-production&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;security_group&quot;</span><span class="p">:</span> <span class="s2">&quot;object-name&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;security_group_id&quot;</span><span class="p">:</span> <span class="s2">&quot;/subscriptions/subscription-id/resourceGroups/galaxy-production/providers/Microsoft.Network/networkSecurityGroups/object-name&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;tags&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;db&quot;</span><span class="p">:</span> <span class="s2">&quot;mysql&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Microsoft.Compute/virtualMachines&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;virtual_machine_size&quot;</span><span class="p">:</span> <span class="s2">&quot;Standard_DS4&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="host-groups">
+<h3>Host Groups<a class="headerlink" href="#host-groups" title="Permalink to this headline">¬∂</a></h3>
+<p>By default hosts are grouped by:</p>
+<ul class="simple">
+<li>azure (all hosts)</li>
+<li>location name</li>
+<li>resource group name</li>
+<li>security group name</li>
+<li>tag key</li>
+<li>tag key_value</li>
+</ul>
+<p>You can control host groupings and host selection by either defining environment variables or creating an
+azure_rm.ini file in your current working directory.</p>
+<p>NOTE: An .ini file will take precedence over environment variables.</p>
+<p>NOTE: The name of the .ini file is the basename of the inventory script (i.e. &#8216;azure_rm&#8217;) with a &#8216;.ini&#8217;
+extension. This allows you to copy, rename and customize the inventory script and have matching .ini files all in
+the same directory.</p>
+<p>Control grouping using the following variables defined in the environment:</p>
+<ul class="simple">
+<li>AZURE_GROUP_BY_RESOURCE_GROUP=yes</li>
+<li>AZURE_GROUP_BY_LOCATION=yes</li>
+<li>AZURE_GROUP_BY_SECURITY_GROUP=yes</li>
+<li>AZURE_GROUP_BY_TAG=yes</li>
+</ul>
+<p>Select hosts within specific resource groups by assigning a comma separated list to:</p>
+<ul class="simple">
+<li>AZURE_RESOURCE_GROUPS=resource_group_a,resource_group_b</li>
+</ul>
+<p>Select hosts for specific tag key by assigning a comma separated list of tag keys to:</p>
+<ul class="simple">
+<li>AZURE_TAGS=key1,key2,key3</li>
+</ul>
+<p>Or, select hosts for specific tag key:value pairs by assigning a comma separated list key:value pairs to:</p>
+<ul class="simple">
+<li>AZURE_TAGS=key1:value1,key2:value2</li>
+</ul>
+<p>If you don&#8217;t need the powerstate, you can improve performance by turning off powerstate fetching:</p>
+<ul class="simple">
+<li>AZURE_INCLUDE_POWERSTATE=no</li>
+</ul>
+<p>A sample azure_rm.ini file is included along with the inventory script in contrib/inventory. An .ini
+file will contain the following:</p>
+<div class="highlight-ini"><div class="highlight"><pre><span></span><span class="k">[azure]</span>
+<span class="c1"># Control which resource groups are included. By default all resources groups are included.</span>
+<span class="c1"># Set resource_groups to a comma separated list of resource groups names.</span>
+<span class="c1">#resource_groups=</span>
+
+<span class="c1"># Control which tags are included. Set tags to a comma separated list of keys or key:value pairs</span>
+<span class="c1">#tags=</span>
+
+<span class="c1"># Include powerstate. If you don&#39;t need powerstate information, turning it off improves runtime performance.</span>
+<span class="c1"># Valid values: yes, no, true, false, True, False, 0, 1.</span>
+<span class="na">include_powerstate</span><span class="o">=</span><span class="s">yes</span>
+
+<span class="c1"># Control grouping with the following boolean flags. Valid values: yes, no, true, false, True, False, 0, 1.</span>
+<span class="na">group_by_resource_group</span><span class="o">=</span><span class="s">yes</span>
+<span class="na">group_by_location</span><span class="o">=</span><span class="s">yes</span>
+<span class="na">group_by_security_group</span><span class="o">=</span><span class="s">yes</span>
+<span class="na">group_by_tag</span><span class="o">=</span><span class="s">yes</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¬∂</a></h3>
+<p>Here are some examples using the inventory script:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># Execute /bin/uname on all instances in the Testing resource group</span>
+$ ansible -i azure_rm.py Testing -m shell -a <span class="s2">&quot;/bin/uname -a&quot;</span>
+
+<span class="c1"># Use the inventory script to print instance specific information</span>
+$ ./ansible/contrib/inventory/azure_rm.py --host my_instance_host_name --resource-groups<span class="o">=</span>Testing --pretty
+
+<span class="c1"># Use the inventory script with ansible-playbook</span>
+$ ansible-playbook -i ./ansible/contrib/inventory/azure_rm.py test_playbook.yml
+</pre></div>
+</div>
+<p>Here is a simple playbook to exercise the Azure inventory script:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Test the inventory script</span>
+  <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">azure</span>
+  <span class="l l-Scalar l-Scalar-Plain">connection</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">local</span>
+  <span class="l l-Scalar l-Scalar-Plain">gather_facts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">no</span>
+  <span class="l l-Scalar l-Scalar-Plain">tasks</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">debug</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">msg=&quot;{{ inventory_hostname }} has powerstate {{ powerstate }}&quot;</span>
+</pre></div>
+</div>
+<p>You can execute the playbook with something like:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ ansible-playbook -i ./ansible/contrib/inventory/azure_rm.py test_azure_inventory.yml
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div id="search-results"><gcse:searchresults-only></div>
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+        <a href="guide_rax-1.html" tppabs="http://docs.ansible.com/ansible/guide_rax.html" class="btn btn-neutral float-right" title="Rackspace Cloud Guide"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="guide_aws-1.html" tppabs="http://docs.ansible.com/ansible/guide_aws.html" class="btn btn-neutral" title="Amazon Web Services Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','st-1.js'/*tpa=http://s.swiftypecdn.com/install/v2/st.js*/,'_st');
+
+  _st('install','yABGvz2N8PwcwBxyfzUc','2.0.0');
+</script>
+
+  <p>
+  Copyright ¬© 2016 Red Hat, Inc.
+  <br>
+    Last updated on Jun 22, 2016.
+  </p>
+<p>
+Ansible docs are generated from <a href="javascript:if(confirm('https://github.com/ansible/ansible  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='https://github.com/ansible/ansible'" tppabs="https://github.com/ansible/ansible">GitHub sources</A> using <A HREF="javascript:if(confirm('http://sphinx-doc.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://sphinx-doc.org/'" tppabs="http://sphinx-doc.org/">Sphinx</A> using a theme provided by <a href="javascript:if(confirm('http://readthedocs.org/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://readthedocs.org/'" tppabs="http://readthedocs.org/">Read the Docs</a>. 
+</p>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+<!-- begin analytics -->
+<script type="text/javascript">
+var _hsq = _hsq || [];
+_hsq.push(["setContentType", "standard-page"]);
+        (function(d,s,i,r) {
+        if (d.getElementById(i)){return;}
+        var n = d.createElement(s),e = document.getElementsByTagName(s)[0];
+        n.id=i;n.src = '//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/330046.js';
+        e.parentNode.insertBefore(n, e);
+        })(document, "script", "hs-analytics",300000);
+</script>
+<!-- end analytics -->
+
+</body>
+</html>

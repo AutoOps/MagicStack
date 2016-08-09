@@ -1,0 +1,869 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset=UTF-8"utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Tag Manager Data Layer -->
+  <script>
+   dataLayer = [];
+  </script>
+  <!-- End Google Tag Manager Data Layer -->
+
+  
+  <title>Modules &mdash; Ansible Documentation</title>
+  
+
+  
+  
+
+  
+  <link href="css-family=Lato-400,700-Roboto+Slab-400,700-Inconsolata-400,700.css" tppabs="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel='stylesheet' type='text/css'>
+  <link href="font-awesome.min.css" tppabs="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'https://docs.ansible.com/ansible/0.01',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+      <script type="text/javascript" src="jquery.js" tppabs="https://docs.ansible.com/ansible/_static/jquery.js"></script>
+      <script type="text/javascript" src="underscore.js" tppabs="https://docs.ansible.com/ansible/_static/underscore.js"></script>
+      <script type="text/javascript" src="doctools.js" tppabs="https://docs.ansible.com/ansible/_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="theme.min.css" tppabs="https://docs.ansible.com/ansible/_static/css/theme.min.css" type="text/css" />
+    <script type="text/javascript" src="theme.js" tppabs="https://docs.ansible.com/ansible/_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="Ansible Documentation" href="index.html"/>
+        <link rel="up" title="Developing the Ansible Core Engine" href="developing_core.html"/>
+        <link rel="next" title="Helping Testing PRs" href="developing_test_pr.html"/>
+        <link rel="prev" title="Developing the Ansible Core Engine" href="developing_core.html"/> 
+
+  <script src="modernizr.min.js" tppabs="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  <style>
+    .search-reset-start {
+        color: #463E3F;
+        float: right;
+        position: relative;
+        top: -25px;
+        left: -10px;
+        z-index: 10;
+     }
+     .search-reset-start:hover {
+        cursor: pointer;
+        color: #2980B9;
+     }
+     #search-box-id {
+        padding-right: 25px;
+     }
+  </style>
+
+  <link href="css-family=Open+Sans-400,300.css" tppabs="https://fonts.googleapis.com/css?family=Open+Sans:400,300"
+    rel='stylesheet' type='text/css'>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="ns.html-id=GTM-PSB293" tppabs="https://www.googletagmanager.com/ns.html?id=GTM-PSB293" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'/*tpa=https://docs.ansible.com/ansible/gtm.js*/});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-PSB293');</script>
+  <!-- End Google Tag Manager -->
+
+  <a class="DocSite-nav" href="javascript:if(confirm('http://docs.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">
+    <img class="DocSiteNav-logo"
+      src="logo_invert.png" tppabs="https://docs.ansible.com/ansible/_static/images/logo_invert.png"
+      alt="Ansible Logo">
+    <div class="DocSiteNav-title">
+      Documentation
+    </div>
+  </a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+
+      <div style="background-color:#5bbdbf;height=80px;margin:'auto auto auto auto'">
+        <a class="DocSiteProduct-header DocSiteProduct-header--core"
+          href="index.htm" tppabs="http://docs.ansible.com/ansible/">
+          <div class="DocSiteProduct-productName">
+            <div class="DocSiteProduct-logoText">
+              ANSIBLE
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div id="menu-id" class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html" tppabs="https://docs.ansible.com/ansible/intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro_installation.html" tppabs="https://docs.ansible.com/ansible/intro_installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_getting_started.html" tppabs="https://docs.ansible.com/ansible/intro_getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_inventory.html" tppabs="https://docs.ansible.com/ansible/intro_inventory.html">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_dynamic_inventory.html" tppabs="https://docs.ansible.com/ansible/intro_dynamic_inventory.html">Dynamic Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_patterns.html" tppabs="https://docs.ansible.com/ansible/intro_patterns.html">Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_adhoc.html" tppabs="https://docs.ansible.com/ansible/intro_adhoc.html">Introduction To Ad-Hoc Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_configuration.html" tppabs="https://docs.ansible.com/ansible/intro_configuration.html">Configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_bsd.html" tppabs="https://docs.ansible.com/ansible/intro_bsd.html">BSD Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_windows.html" tppabs="https://docs.ansible.com/ansible/intro_windows.html">Windows Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_networking.html" tppabs="https://docs.ansible.com/ansible/intro_networking.html">Networking Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html" tppabs="https://docs.ansible.com/ansible/quickstart.html">Quickstart Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks.html" tppabs="https://docs.ansible.com/ansible/playbooks.html">Playbooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_intro.html" tppabs="https://docs.ansible.com/ansible/playbooks_intro.html">Intro to Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_roles.html" tppabs="https://docs.ansible.com/ansible/playbooks_roles.html">Playbook Roles and Include Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_variables.html" tppabs="https://docs.ansible.com/ansible/playbooks_variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_filters.html" tppabs="https://docs.ansible.com/ansible/playbooks_filters.html">Jinja2 filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_conditionals.html" tppabs="https://docs.ansible.com/ansible/playbooks_conditionals.html">Conditionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_loops.html" tppabs="https://docs.ansible.com/ansible/playbooks_loops.html">Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_blocks.html" tppabs="https://docs.ansible.com/ansible/playbooks_blocks.html">Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_strategies.html" tppabs="https://docs.ansible.com/ansible/playbooks_strategies.html">Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_best_practices.html" tppabs="https://docs.ansible.com/ansible/playbooks_best_practices.html">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks_special_topics.html" tppabs="https://docs.ansible.com/ansible/playbooks_special_topics.html">Playbooks: Special Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="become.html" tppabs="https://docs.ansible.com/ansible/become.html">Become (Privilege Escalation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_acceleration.html" tppabs="https://docs.ansible.com/ansible/playbooks_acceleration.html">Accelerated Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_async.html" tppabs="https://docs.ansible.com/ansible/playbooks_async.html">Asynchronous Actions and Polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_checkmode.html" tppabs="https://docs.ansible.com/ansible/playbooks_checkmode.html">Check Mode (&#8220;Dry Run&#8221;)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_debugger.html" tppabs="https://docs.ansible.com/ansible/playbooks_debugger.html">Playbook Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_delegation.html" tppabs="https://docs.ansible.com/ansible/playbooks_delegation.html">Delegation, Rolling Updates, and Local Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_environment.html" tppabs="https://docs.ansible.com/ansible/playbooks_environment.html">Setting the Environment (and Working With Proxies)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_error_handling.html" tppabs="https://docs.ansible.com/ansible/playbooks_error_handling.html">Error Handling In Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_advanced_syntax.html" tppabs="https://docs.ansible.com/ansible/playbooks_advanced_syntax.html">Advanced Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_lookups.html" tppabs="https://docs.ansible.com/ansible/playbooks_lookups.html">Using Lookups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_prompts.html" tppabs="https://docs.ansible.com/ansible/playbooks_prompts.html">Prompts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_tags.html" tppabs="https://docs.ansible.com/ansible/playbooks_tags.html">Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_vault.html" tppabs="https://docs.ansible.com/ansible/playbooks_vault.html">Vault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_startnstep.html" tppabs="https://docs.ansible.com/ansible/playbooks_startnstep.html">Start and Step</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_directives.html" tppabs="https://docs.ansible.com/ansible/playbooks_directives.html">Directives Glossary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html" tppabs="https://docs.ansible.com/ansible/modules.html">About Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules_intro.html" tppabs="https://docs.ansible.com/ansible/modules_intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_core.html" tppabs="https://docs.ansible.com/ansible/modules_core.html">Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_extra.html" tppabs="https://docs.ansible.com/ansible/modules_extra.html">Extras Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_return_values.html" tppabs="https://docs.ansible.com/ansible/common_return_values.html">Common Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules_by_category.html" tppabs="https://docs.ansible.com/ansible/modules_by_category.html">Module Index</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="list_of_all_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_all_modules.html">All Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascript:if(confirm('https://docs.ansible.com/ansible/list_of_cloud_modules.html  \n\n该文件无法用 Teleport Ultra 下载, 因为 不可用, 或放弃了下载, 或项目即将停止。  \n\n你想在服务器上打开它?'))window.location='https://docs.ansible.com/ansible/list_of_cloud_modules.html'" tppabs="https://docs.ansible.com/ansible/list_of_cloud_modules.html">Cloud Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_clustering_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_clustering_modules.html">Clustering Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_commands_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_commands_modules.html">Commands Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_database_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_database_modules.html">Database Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_files_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_files_modules.html">Files Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_inventory_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_inventory_modules.html">Inventory Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_messaging_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_messaging_modules.html">Messaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_monitoring_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_monitoring_modules.html">Monitoring Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_network_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_network_modules.html">Network Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_notification_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_notification_modules.html">Notification Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_packaging_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_packaging_modules.html">Packaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_source_control_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_source_control_modules.html">Source Control Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_system_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_system_modules.html">System Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_utilities_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_utilities_modules.html">Utilities Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_web_infrastructure_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_web_infrastructure_modules.html">Web Infrastructure Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_windows_modules.html" tppabs="https://docs.ansible.com/ansible/list_of_windows_modules.html">Windows Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guides.html" tppabs="https://docs.ansible.com/ansible/guides.html">Detailed Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_aws.html" tppabs="https://docs.ansible.com/ansible/guide_aws.html">Amazon Web Services Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_azure.html" tppabs="https://docs.ansible.com/ansible/guide_azure.html">Getting Started with Azure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rax.html" tppabs="https://docs.ansible.com/ansible/guide_rax.html">Rackspace Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_gce.html" tppabs="https://docs.ansible.com/ansible/guide_gce.html">Google Cloud Platform Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_cloudstack.html" tppabs="https://docs.ansible.com/ansible/guide_cloudstack.html">CloudStack Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_vagrant.html" tppabs="https://docs.ansible.com/ansible/guide_vagrant.html">Using Vagrant and Ansible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rolling_upgrade.html" tppabs="https://docs.ansible.com/ansible/guide_rolling_upgrade.html">Continuous Delivery and Rolling Upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_docker.html" tppabs="https://docs.ansible.com/ansible/guide_docker.html">Getting Started with Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="developing.html" tppabs="https://docs.ansible.com/ansible/developing.html">Developer Information</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="developing_api.html" tppabs="https://docs.ansible.com/ansible/developing_api.html">Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_inventory.html" tppabs="https://docs.ansible.com/ansible/developing_inventory.html">Developing Dynamic Inventory Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_modules.html" tppabs="https://docs.ansible.com/ansible/developing_modules.html">Developing Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_plugins.html" tppabs="https://docs.ansible.com/ansible/developing_plugins.html">Developing Plugins</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="developing_core.html" tppabs="https://docs.ansible.com/ansible/developing_core.html">Developing the Ansible Core Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_test_pr.html" tppabs="https://docs.ansible.com/ansible/developing_test_pr.html">Helping Testing PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_releases.html" tppabs="https://docs.ansible.com/ansible/developing_releases.html">Releases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tower.html" tppabs="https://docs.ansible.com/ansible/tower.html">Ansible Tower</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html" tppabs="https://docs.ansible.com/ansible/community.html">Community Information &amp; Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community.html#ansible-users" tppabs="https://docs.ansible.com/ansible/community.html#ansible-users">Ansible Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#for-current-and-prospective-developers" tppabs="https://docs.ansible.com/ansible/community.html#for-current-and-prospective-developers">For Current and Prospective Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#other-topics" tppabs="https://docs.ansible.com/ansible/community.html#other-topics">Other Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#community-code-of-conduct" tppabs="https://docs.ansible.com/ansible/community.html#community-code-of-conduct">Community Code of Conduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community.html#contributors-license-agreement" tppabs="https://docs.ansible.com/ansible/community.html#contributors-license-agreement">Contributors License Agreement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="galaxy.html" tppabs="https://docs.ansible.com/ansible/galaxy.html">Ansible Galaxy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="galaxy.html#the-website" tppabs="https://docs.ansible.com/ansible/galaxy.html#the-website">The Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="galaxy.html#the-ansible-galaxy-command-line-tool" tppabs="https://docs.ansible.com/ansible/galaxy.html#the-ansible-galaxy-command-line-tool">The ansible-galaxy command line tool</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test_strategies.html" tppabs="https://docs.ansible.com/ansible/test_strategies.html">Testing Strategies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#integrating-testing-with-ansible-playbooks" tppabs="https://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-ansible-playbooks">Integrating Testing With Ansible Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#the-right-level-of-testing" tppabs="https://docs.ansible.com/ansible/test_strategies.html#the-right-level-of-testing">The Right Level of Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#check-mode-as-a-drift-test" tppabs="https://docs.ansible.com/ansible/test_strategies.html#check-mode-as-a-drift-test">Check Mode As A Drift Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#modules-that-are-useful-for-testing" tppabs="https://docs.ansible.com/ansible/test_strategies.html#modules-that-are-useful-for-testing">Modules That Are Useful for Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#testing-lifecycle" tppabs="https://docs.ansible.com/ansible/test_strategies.html#testing-lifecycle">Testing Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#integrating-testing-with-rolling-updates" tppabs="https://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-rolling-updates">Integrating Testing With Rolling Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#achieving-continuous-deployment" tppabs="https://docs.ansible.com/ansible/test_strategies.html#achieving-continuous-deployment">Achieving Continuous Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies.html#conclusion" tppabs="https://docs.ansible.com/ansible/test_strategies.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html" tppabs="https://docs.ansible.com/ansible/faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook" tppabs="https://docs.ansible.com/ansible/faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook">How can I set the PATH or any other environment variable for a task or entire playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with">How do I handle different machines needing different user accounts or ports to log in with?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file">How do I get ansible to reuse connections, enable Kerberized SSH, or have Ansible pay attention to my local SSH config file?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">How do I configure a jump host to access servers that I have no direct access to?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-speed-up-management-inside-ec2" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-speed-up-management-inside-ec2">How do I speed up management inside EC2?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine">How do I handle python pathing not having a Python 2.X in /usr/bin/python on a remote machine?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#what-is-the-best-way-to-make-content-reusable-redistributable" tppabs="https://docs.ansible.com/ansible/faq.html#what-is-the-best-way-to-make-content-reusable-redistributable">What is the best way to make content reusable/redistributable?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it" tppabs="https://docs.ansible.com/ansible/faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it">Where does the configuration file live and what can I configure in it?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-disable-cowsay" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-disable-cowsay">How do I disable cowsay?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables">How do I see a list of all of the ansible_ variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host">How do I see all the inventory vars defined for my host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template">How do I loop over a list of hosts in a group, inside of a template?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-a-variable-name-programmatically" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-name-programmatically">How do I access a variable name programmatically?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group">How do I access a variable of the first host in a group?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-copy-files-recursively-onto-a-target-host" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-copy-files-recursively-onto-a-target-host">How do I copy files recursively onto a target host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-access-shell-environment-variables" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-access-shell-environment-variables">How do I access shell environment variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-generate-crypted-passwords-for-the-user-module" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module">How do I generate crypted passwords for the user module?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#can-i-get-training-on-ansible-or-find-commercial-support" tppabs="https://docs.ansible.com/ansible/faq.html#can-i-get-training-on-ansible-or-find-commercial-support">Can I get training on Ansible or find commercial support?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#is-there-a-web-interface-rest-api-etc" tppabs="https://docs.ansible.com/ansible/faq.html#is-there-a-web-interface-rest-api-etc">Is there a web interface / REST API / etc?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-submit-a-change-to-the-documentation" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-submit-a-change-to-the-documentation">How do I submit a change to the documentation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-keep-secret-data-in-my-playbook" tppabs="https://docs.ansible.com/ansible/faq.html#how-do-i-keep-secret-data-in-my-playbook">How do I keep secret data in my playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names" tppabs="https://docs.ansible.com/ansible/faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names">When should I use {{ }}? Also, how to interpolate variables or dynamic variable names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#i-don-t-see-my-question-here" tppabs="https://docs.ansible.com/ansible/faq.html#i-don-t-see-my-question-here">I don&#8217;t see my question here</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html" tppabs="https://docs.ansible.com/ansible/glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YAMLSyntax.html" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html">YAML Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax.html#yaml-basics" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html#yaml-basics">YAML Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax.html#gotchas" tppabs="https://docs.ansible.com/ansible/YAMLSyntax.html#gotchas">Gotchas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html">Porting Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#playbook" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#playbook">Playbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#deprecated" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#deprecated">Deprecated</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#other-caveats" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#other-caveats">Other caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#porting-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#porting-plugins">Porting plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#lookup-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#lookup-plugins">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#connection-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#connection-plugins">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#action-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#action-plugins">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#callback-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#callback-plugins">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id1" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id1">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#hybrid-plugins" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#hybrid-plugins">Hybrid plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id2" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id2">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id3" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id3">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id4" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id4">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id5" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id5">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0.html#id6" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#id6">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0.html#porting-custom-scripts" tppabs="https://docs.ansible.com/ansible/porting_guide_2.0.html#porting-custom-scripts">Porting custom scripts</a></li>
+</ul>
+
+        
+
+<!-- changeable widget -->
+<center>
+<br/>
+<a href="javascript:if(confirm('http://www.ansible.com/docs-left?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-left?utm_source=docs'" tppabs="http://www.ansible.com/docs-left?utm_source=docs">
+    <img style="border-width:0px;" src="ASB-docs-left-rail.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-left-rail.png" />
+</a>
+</center>
+
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="javascript:if(confirm('https://docs.ansible.com/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://docs.ansible.com/'" tppabs="https://docs.ansible.com/">Ansible Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+
+          <!-- Banner ads -->
+          <div class="DocSiteBanner">
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-left.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-left.png">
+            </a>
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-right.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-right.png">
+            </a>
+        </div>
+
+          <ul class="wy-breadcrumbs">
+  <li><a href="index.html" tppabs="https://docs.ansible.com/ansible/index.html">Docs</a> &raquo;</li>
+  <li><a href="">Modules</a></li>
+  
+    <li class="wy-breadcrumbs-aside">
+      <a href="javascript:if(confirm('https://github.com/ansible/ansible/blob/devel/docsite/rst/developing_program_flow_modules.rst  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible/blob/devel/docsite/rst/developing_program_flow_modules.rst'" tppabs="https://github.com/ansible/ansible/blob/devel/docsite/rst/developing_program_flow_modules.rst" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  
+</ul>
+<hr/>
+
+          <div id="page-content">
+          
+  <div class="section" id="modules">
+<span id="flow-modules"></span><h1>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">露</a></h1>
+<p>This in-depth dive helps you understand Ansible&#8217;s program flow to execute
+modules. It is written for people working on the portions of the Core Ansible
+Engine that execute a module. Those writing Ansible Modules may also find this
+in-depth dive to be of interest, but individuals simply using Ansible Modules
+will not likely find this to be helpful.</p>
+<div class="section" id="types-of-modules">
+<span id="flow-types-of-modules"></span><h2>Types of Modules<a class="headerlink" href="#types-of-modules" title="Permalink to this headline">露</a></h2>
+<p>Ansible supports several different types of modules in its code base.  Some of
+these are for backwards compatibility and others are to enable flexibility.</p>
+<div class="section" id="action-plugins">
+<span id="flow-action-plugins"></span><h3>Action Plugins<a class="headerlink" href="#action-plugins" title="Permalink to this headline">露</a></h3>
+<p>Action Plugins look like modules to end users who are writing <a class="reference internal" href="glossary.html#term-playbooks" tppabs="https://docs.ansible.com/ansible/glossary.html#term-playbooks"><span class="xref std std-term">playbooks</span></a> but
+they&#8217;re distinct entities for the purposes of this document.  Action Plugins
+always execute on the controller and are sometimes able to do all work there
+(for instance, the <code class="docutils literal"><span class="pre">debug</span></code> Action Plugin which prints some text for the user to
+see or the <code class="docutils literal"><span class="pre">assert</span></code> Action Plugin which can test whether several values in
+a playbook satisfy certain criteria.)</p>
+<p>More often, Action Plugins set up some values on the controller, then invoke an
+actual module on the managed node that does something with these values.  An
+easy to understand version of this is the <a class="reference internal" href="template_module.html#template" tppabs="https://docs.ansible.com/ansible/template_module.html#template"><span class="std std-ref">template Action Plugin</span></a>.  The <a class="reference internal" href="template_module.html#template" tppabs="https://docs.ansible.com/ansible/template_module.html#template"><span class="std std-ref">template Action Plugin</span></a> takes values from
+the user to construct a file in a temporary location on the controller using
+variables from the playbook environment.  It then transfers the temporary file
+to a temporary file on the remote system.  After that, it invokes the
+<a class="reference internal" href="copy_module.html#copy" tppabs="https://docs.ansible.com/ansible/copy_module.html#copy"><span class="std std-ref">copy module</span></a> which operates on the remote system to move the file
+into its final location, sets file permissions, and so on.</p>
+</div>
+<div class="section" id="new-style-modules">
+<span id="flow-new-style-modules"></span><h3>New-style Modules<a class="headerlink" href="#new-style-modules" title="Permalink to this headline">露</a></h3>
+<p>All of the modules that ship with Ansible fall into this category.</p>
+<p>New-style modules have the arguments to the module embedded inside of them in
+some manner.  Non-new-style modules must copy a separate file over to the
+managed node, which is less efficient as it requires two over-the-wire
+connections instead of only one.</p>
+<div class="section" id="python">
+<span id="flow-python-modules"></span><h4>Python<a class="headerlink" href="#python" title="Permalink to this headline">露</a></h4>
+<p>New-style Python modules use the <a class="reference internal" href="#ansiballz"><span class="std std-ref">Ansiballz</span></a> framework for constructing
+modules.  All official modules (shipped with Ansible) use either this or the
+<a class="reference internal" href="#flow-powershell-modules"><span class="std std-ref">powershell module framework</span></a>.</p>
+<p>These modules use imports from <code class="code docutils literal"><span class="pre">ansible.module_utils</span></code> in order to pull in
+boilerplate module code, such as argument parsing, formatting of return
+values as <a class="reference internal" href="glossary.html#term-json" tppabs="https://docs.ansible.com/ansible/glossary.html#term-json"><span class="xref std std-term">JSON</span></a>, and various file operations.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In Ansible, up to version 2.0.x, the official Python modules used the
+<a class="reference internal" href="#module-replacer"><span class="std std-ref">Module Replacer</span></a> framework.  For module authors, <a class="reference internal" href="#ansiballz"><span class="std std-ref">Ansiballz</span></a> is
+largely a superset of <a class="reference internal" href="#module-replacer"><span class="std std-ref">Module Replacer</span></a> functionality, so you usually
+do not need to know about one versus the other.</p>
+</div>
+</div>
+<div class="section" id="powershell">
+<span id="flow-powershell-modules"></span><h4>Powershell<a class="headerlink" href="#powershell" title="Permalink to this headline">露</a></h4>
+<p>New-style powershell modules use the <a class="reference internal" href="#module-replacer"><span class="std std-ref">Module Replacer</span></a> framework for
+constructing modules.  These modules get a library of powershell code embedded
+in them before being sent to the managed node.</p>
+</div>
+<div class="section" id="jsonargs">
+<span id="flow-jsonargs-modules"></span><h4>JSONARGS<a class="headerlink" href="#jsonargs" title="Permalink to this headline">露</a></h4>
+<p>Scripts can arrange for an argument string to be placed within them by placing
+the string <code class="docutils literal"><span class="pre">&lt;&lt;INCLUDE_ANSIBLE_MODULE_JSON_ARGS&gt;&gt;</span></code> somewhere inside of the
+file.  The module typically sets a variable to that value like this:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">json_arguments = &quot;&quot;&quot;&lt;&lt;INCLUDE_ANSIBLE_MODULE_JSON_ARGS&gt;&gt;&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Which is expanded as:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span>json_arguments = &quot;&quot;&quot;{&quot;param1&quot;: &quot;test&#39;s quotes&quot;, &quot;param2&quot;: &quot;\&quot;To be or not to be\&quot; - Hamlet&quot;}&quot;&quot;&quot;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Ansible outputs a <a class="reference internal" href="glossary.html#term-json" tppabs="https://docs.ansible.com/ansible/glossary.html#term-json"><span class="xref std std-term">JSON</span></a> string with bare quotes.  Double quotes are
+used to quote string values, double quotes inside of string values are
+backslash escaped, and single quotes may appear unescaped inside of
+a string value.  To use JSONARGS, your scripting language must have a way
+to handle this type of string.  The example uses Python&#8217;s triple quoted
+strings to do this.  Other scripting languages may have a similar quote
+character that won&#8217;t be confused by any quotes in the JSON or it may
+allow you to define your own start-of-quote and end-of-quote characters.
+If the language doesn&#8217;t give you any of these then you&#8217;ll need to write
+a <a class="reference internal" href="#flow-want-json-modules"><span class="std std-ref">non-native JSON module</span></a> or
+<a class="reference internal" href="#flow-old-style-modules"><span class="std std-ref">Old-style module</span></a> instead.</p>
+</div>
+<p>The module typically parses the contents of <code class="docutils literal"><span class="pre">json_arguments</span></code> using a JSON
+library and then use them as native variables throughout the rest of its code.</p>
+</div>
+</div>
+<div class="section" id="non-native-want-json-modules">
+<span id="flow-want-json-modules"></span><h3>Non-native want JSON modules<a class="headerlink" href="#non-native-want-json-modules" title="Permalink to this headline">露</a></h3>
+<p>If a module has the string <code class="docutils literal"><span class="pre">WANT_JSON</span></code> in it anywhere, Ansible treats
+it as a non-native module that accepts a filename as its only command line
+parameter.  The filename is for a temporary file containing a <a class="reference internal" href="glossary.html#term-json" tppabs="https://docs.ansible.com/ansible/glossary.html#term-json"><span class="xref std std-term">JSON</span></a>
+string containing the module&#8217;s parameters.  The module needs to open the file,
+read and parse the parameters, operate on the data, and print its return data
+as a JSON encoded dictionary to stdout before exiting.</p>
+<p>These types of modules are self-contained entities.  As of Ansible 2.1, Ansible
+only modifies them to change a shebang line if present.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">Examples of Non-native modules written in ruby are in the <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible-for-rubyists  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible-for-rubyists'" tppabs="https://github.com/ansible/ansible-for-rubyists">Ansible
+for Rubyists</a> repository.</p>
+</div>
+</div>
+<div class="section" id="binary-modules">
+<span id="flow-binary-modules"></span><h3>Binary Modules<a class="headerlink" href="#binary-modules" title="Permalink to this headline">露</a></h3>
+<p>From Ansible 2.2 onwards, modules may also be small binary programs.  Ansible
+doesn&#8217;t perform any magic to make these portable to different systems so they
+may be specific to the system on which they were compiled or require other
+binary runtime dependencies.  Despite these drawbacks, a site may sometimes
+have no choice but to compile a custom module against a specific binary
+library if that&#8217;s the only way they have to get access to certain resources.</p>
+<p>Binary modules take their arguments and will return data to Ansible in the same
+way as <a class="reference internal" href="#flow-want-json-modules"><span class="std std-ref">want JSON modules</span></a>.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">One example of a <a class="reference external" href="javascript:if(confirm('https://github.com/ansible/ansible/blob/devel/test/integration/library/helloworld.go  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible/blob/devel/test/integration/library/helloworld.go'" tppabs="https://github.com/ansible/ansible/blob/devel/test/integration/library/helloworld.go">binary module</a>
+written in go.</p>
+</div>
+</div>
+<div class="section" id="old-style-modules">
+<span id="flow-old-style-modules"></span><h3>Old-style Modules<a class="headerlink" href="#old-style-modules" title="Permalink to this headline">露</a></h3>
+<p>Old-style modules are similar to
+<a class="reference internal" href="#flow-want-json-modules"><span class="std std-ref">want JSON modules</span></a>, except that the file that
+they take contains <code class="docutils literal"><span class="pre">key=value</span></code> pairs for their parameters instead of
+<a class="reference internal" href="glossary.html#term-json" tppabs="https://docs.ansible.com/ansible/glossary.html#term-json"><span class="xref std std-term">JSON</span></a>.</p>
+<p>Ansible decides that a module is old-style when it doesn&#8217;t have any of the
+markers that would show that it is one of the other types.</p>
+</div>
+</div>
+<div class="section" id="how-modules-are-executed">
+<span id="flow-how-modules-are-executed"></span><h2>How modules are executed<a class="headerlink" href="#how-modules-are-executed" title="Permalink to this headline">露</a></h2>
+<p>When a user uses <strong class="program">ansible</strong> or <strong class="program">ansible-playbook</strong>, they
+specify a task to execute.  The task is usually the name of a module along
+with several parameters to be passed to the module.  Ansible takes these
+values and processes them in various ways before they are finally executed on
+the remote machine.</p>
+<div class="section" id="executor-task-executor">
+<span id="flow-executor-task-executor"></span><h3>executor/task_executor<a class="headerlink" href="#executor-task-executor" title="Permalink to this headline">露</a></h3>
+<p>The TaskExecutor receives the module name and parameters that were parsed from
+the <a class="reference internal" href="glossary.html#term-playbooks" tppabs="https://docs.ansible.com/ansible/glossary.html#term-playbooks"><span class="xref std std-term">playbook</span></a> (or from the command line in the case of
+<strong class="command">/usr/bin/ansible</strong>).  It uses the name to decide whether it&#8217;s looking
+at a module or an <a class="reference internal" href="#flow-action-plugins"><span class="std std-ref">Action Plugin</span></a>.  If it&#8217;s
+a module, it loads the <a class="reference internal" href="#flow-normal-action-plugin"><span class="std std-ref">Normal Action Plugin</span></a>
+and passes the name, variables, and other information about the task and play
+to that Action Plugin for further processing.</p>
+</div>
+<div class="section" id="normal-action-plugin">
+<span id="flow-normal-action-plugin"></span><h3>Normal Action Plugin<a class="headerlink" href="#normal-action-plugin" title="Permalink to this headline">露</a></h3>
+<p>The <code class="docutils literal"><span class="pre">normal</span></code> Action Plugin executes the module on the remote host.  It is
+the primary coordinator of much of the work to actually execute the module on
+the managed machine.</p>
+<ul class="simple">
+<li>It takes care of creating a connection to the managed machine by
+instantiating a <code class="docutils literal"><span class="pre">Connection</span></code> class according to the inventory
+configuration for that host.</li>
+<li>It adds any internal Ansible variables to the module&#8217;s parameters (for
+instance, the ones that pass along <code class="docutils literal"><span class="pre">no_log</span></code> to the module).</li>
+<li>It takes care of creating any temporary files on the remote machine and
+cleans up afterwards.</li>
+<li>It does the actual work of pushing the module and module parameters to the
+remote host, although the <a class="reference internal" href="#flow-executor-module-common"><span class="std std-ref">module_common</span></a>
+code described in the next section does the work of deciding which format
+those will take.</li>
+<li>It handles any special cases regarding modules (for instance, various
+complications around Windows modules that must have the same names as Python
+modules, so that internal calling of modules from other Action Plugins work.)</li>
+</ul>
+<p>Much of this functionality comes from the <code class="xref py py-class docutils literal"><span class="pre">BaseAction</span></code> class,
+which lives in <code class="file docutils literal"><span class="pre">plugins/action/__init__.py</span></code>.  It makes use of
+<code class="docutils literal"><span class="pre">Connection</span></code> and <code class="docutils literal"><span class="pre">Shell</span></code> objects to do its work.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When <a class="reference internal" href="glossary.html#term-tasks" tppabs="https://docs.ansible.com/ansible/glossary.html#term-tasks"><span class="xref std std-term">tasks</span></a> are run with the <code class="docutils literal"><span class="pre">async:</span></code> parameter, Ansible
+uses the <code class="docutils literal"><span class="pre">async</span></code> Action Plugin instead of the <code class="docutils literal"><span class="pre">normal</span></code> Action Plugin
+to invoke it.  That program flow is currently not documented.  Read the
+source for information on how that works.</p>
+</div>
+</div>
+<div class="section" id="executor-module-common-py">
+<span id="flow-executor-module-common"></span><h3>executor/module_common.py<a class="headerlink" href="#executor-module-common-py" title="Permalink to this headline">露</a></h3>
+<p>Code in <code class="file docutils literal"><span class="pre">executor/module_common.py</span></code> takes care of assembling the module
+to be shipped to the managed node.  The module is first read in, then examined
+to determine its type.  <a class="reference internal" href="#flow-powershell-modules"><span class="std std-ref">PowerShell</span></a> and
+<a class="reference internal" href="#flow-jsonargs-modules"><span class="std std-ref">JSON-args modules</span></a> are passed through
+<a class="reference internal" href="#module-replacer"><span class="std std-ref">Module Replacer</span></a>.  New-style
+<a class="reference internal" href="#flow-python-modules"><span class="std std-ref">Python modules</span></a> are assembled by <a class="reference internal" href="#ansiballz"><span class="std std-ref">Ansiballz</span></a>.
+<a class="reference internal" href="#flow-want-json-modules"><span class="std std-ref">Non-native-want-JSON</span></a>,
+<a class="reference internal" href="#flow-binary-modules"><span class="std std-ref">Binary modules</span></a>, and
+<a class="reference internal" href="#flow-old-style-modules"><span class="std std-ref">Old-Style modules</span></a> aren&#8217;t touched by either of
+these and pass through unchanged.  After the assembling step, one final
+modification is made to all modules that have a shebang line.  Ansible checks
+whether the interpreter in the shebang line has a specific path configured via
+an <code class="docutils literal"><span class="pre">ansible_$X_interpreter</span></code> inventory variable.  If it does, Ansible
+substitutes that path for the interpreter path given in the module.  After
+this, Ansible returns the complete module data and the module type to the
+<a class="reference internal" href="#flow-normal-action-plugin"><span class="std std-ref">Normal Action</span></a> which continues execution of
+the module.</p>
+<p>Next we&#8217;ll go into some details of the two assembler frameworks.</p>
+<div class="section" id="module-replacer">
+<span id="id1"></span><h4>Module Replacer<a class="headerlink" href="#module-replacer" title="Permalink to this headline">露</a></h4>
+<p>The Module Replacer framework is the original framework implementing new-style
+modules.  It is essentially a preprocessor (like the C Preprocessor for those
+familiar with that programming language).  It does straight substitutions of
+specific substring patterns in the module file.  There are two types of
+substitutions:</p>
+<ul class="simple">
+<li>Replacements that only happen in the module file.  These are public
+replacement strings that modules can utilize to get helpful boilerplate or
+access to arguments.<ul>
+<li><code class="code docutils literal"><span class="pre">from</span> <span class="pre">ansible.module_utils.MOD_LIB_NAME</span> <span class="pre">import</span> <span class="pre">*</span></code> is replaced with the
+contents of the <code class="file docutils literal"><span class="pre">ansible/module_utils/MOD_LIB_NAME.py</span></code>  These should
+only be used with <a class="reference internal" href="#flow-python-modules"><span class="std std-ref">new-style Python modules</span></a>.</li>
+<li><code class="code docutils literal"><span class="pre">#&lt;&lt;INCLUDE_ANSIBLE_MODULE_COMMON&gt;&gt;</span></code> is equivalent to
+<code class="code docutils literal"><span class="pre">from</span> <span class="pre">ansible.module_utils.basic</span> <span class="pre">import</span> <span class="pre">*</span></code> and should also only apply
+to new-style Python modules.</li>
+<li><code class="code docutils literal"><span class="pre">#</span> <span class="pre">POWERSHELL_COMMON</span></code> substitutes the contents of
+<code class="file docutils literal"><span class="pre">ansible/module_utils/powershell.ps1</span></code>.  It should only be used with
+<a class="reference internal" href="#flow-powershell-modules"><span class="std std-ref">new-style Powershell modules</span></a>.</li>
+</ul>
+</li>
+<li>Replacements that are used by <code class="docutils literal"><span class="pre">ansible.module_utils</span></code> code.  These are internal
+replacement patterns.  They may be used internally, in the above public
+replacements, but shouldn&#8217;t be used directly by modules.<ul>
+<li><code class="code docutils literal"><span class="pre">&quot;&lt;&lt;ANSIBLE_VERSION&gt;&gt;&quot;</span></code> is substituted with the Ansible version.  In
+<a class="reference internal" href="#flow-python-modules"><span class="std std-ref">new-style Python modules</span></a> under the
+<a class="reference internal" href="#ansiballz"><span class="std std-ref">Ansiballz</span></a> frameworkthe proper way is to instead instantiate an
+<code class="xref py py-class docutils literal"><span class="pre">AnsibleModule</span></code> and then access the version from
+:attr:<code class="docutils literal"><span class="pre">AnsibleModule.ansible_version</span></code>.</li>
+<li><code class="code docutils literal"><span class="pre">&quot;&lt;&lt;INCLUDE_ANSIBLE_MODULE_COMPLEX_ARGS&gt;&gt;&quot;</span></code> is substituted with
+a string which is the Python <code class="docutils literal"><span class="pre">repr</span></code> of the <a class="reference internal" href="glossary.html#term-json" tppabs="https://docs.ansible.com/ansible/glossary.html#term-json"><span class="xref std std-term">JSON</span></a> encoded module
+parameters.  Using <code class="docutils literal"><span class="pre">repr</span></code> on the JSON string makes it safe to embed in
+a Python file.  In new-style Python modules under the Ansiballz framework
+this is better accessed by instantiating an <code class="xref py py-class docutils literal"><span class="pre">AnsibleModule</span></code> and
+then using <code class="xref py py-attr docutils literal"><span class="pre">AnsibleModule.params</span></code>.</li>
+<li><code class="code docutils literal"><span class="pre">&lt;&lt;SELINUX_SPECIAL_FILESYSTEMS&gt;&gt;</span></code> substitutes a string which is
+a comma separated list of file systems which have a file system dependent
+security context in SELinux.  In new-style Python modules, if you really
+need this you should instantiate an <code class="xref py py-class docutils literal"><span class="pre">AnsibleModule</span></code> and then use
+<code class="xref py py-attr docutils literal"><span class="pre">AnsibleModule._selinux_special_fs</span></code>.  The variable has also changed
+from a comma separated string of file system names to an actual python
+list of filesystem names.</li>
+<li><code class="code docutils literal"><span class="pre">&lt;&lt;INCLUDE_ANSIBLE_MODULE_JSON_ARGS&gt;&gt;</span></code> substitutes the module
+parameters as a JSON string.  Care must be taken to properly quote the
+string as JSON data may contain quotes.  This pattern is not substituted
+in new-style Python modules as they can get the module parameters another
+way.</li>
+<li>The string <code class="code docutils literal"><span class="pre">syslog.LOG_USER</span></code> is replaced wherever it occurs with the
+<code class="docutils literal"><span class="pre">syslog_facility</span></code> which was named in <code class="file docutils literal"><span class="pre">ansible.cfg</span></code> or any
+<code class="docutils literal"><span class="pre">ansible_syslog_facility</span></code> inventory variable that applies to this host.  In
+new-style Python modules this has changed slightly.  If you really need to
+access it, you should instantiate an <code class="xref py py-class docutils literal"><span class="pre">AnsibleModule</span></code> and then use
+<code class="xref py py-attr docutils literal"><span class="pre">AnsibleModule._syslog_facility</span></code> to access it.  It is no longer the
+actual syslog facility and is now the name of the syslog facility.  See
+the <a class="reference internal" href="#flow-internal-arguments"><span class="std std-ref">documentation on internal arguments</span></a>
+for details.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="ansiballz">
+<span id="id2"></span><h4>Ansiballz<a class="headerlink" href="#ansiballz" title="Permalink to this headline">露</a></h4>
+<p>Ansible 2.1 switched from the <a class="reference internal" href="#module-replacer"><span class="std std-ref">Module Replacer</span></a> framework to the
+Ansiballz framework for assembling modules.  The Ansiballz framework differs
+from module replacer in that it uses real Python imports of things in
+<code class="file docutils literal"><span class="pre">ansible/module_utils</span></code> instead of merely preprocessing the module.  It
+does this by constructing a zipfile &#8211; which includes the module file, files
+in <code class="file docutils literal"><span class="pre">ansible/module_utils</span></code> that are imported by the module, and some
+boilerplate to pass in the module&#8217;s parameters.  The zipfile is then Base64
+encoded and wrapped in a small Python script which decodes the Base64 encoding
+and places the zipfile into a temp directory on the managed node.  It then
+extracts just the ansible module script from the zip file and places that in
+the temporary directory as well.  Then it sets the PYTHONPATH to find python
+modules inside of the zip file and invokes <strong class="command">python</strong> on the extracted
+ansible module.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Ansible wraps the zipfile in the Python script for two reasons:</p>
+<ul class="last simple">
+<li>for compatibility with Python-2.4 and Python-2.6 which have less
+featureful versions of Python&#8217;s <code class="docutils literal"><span class="pre">-m</span></code> command line switch.</li>
+<li>so that pipelining will function properly.  Pipelining needs to pipe the
+Python module into the Python interpreter on the remote node.  Python
+understands scripts on stdin but does not understand zip files.</li>
+</ul>
+</div>
+<p>In Ansiballz, any imports of Python modules from the
+<code class="xref py py-mod docutils literal"><span class="pre">ansible.module_utils</span></code> package trigger inclusion of that Python file
+into the zipfile.  Instances of <code class="code docutils literal"><span class="pre">#&lt;&lt;INCLUDE_ANSIBLE_MODULE_COMMON&gt;&gt;</span></code> in
+the module are turned into <code class="code docutils literal"><span class="pre">from</span> <span class="pre">ansible.module_utils.basic</span> <span class="pre">import</span> <span class="pre">*</span></code>
+and <code class="file docutils literal"><span class="pre">ansible/module-utils/basic.py</span></code> is then included in the zipfile.
+Files that are included from <code class="file docutils literal"><span class="pre">module_utils</span></code> are themselves scanned for
+imports of other Python modules from <code class="file docutils literal"><span class="pre">module_utils</span></code> to be included in
+the zipfile as well.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">At present, the Ansiballz Framework cannot determine whether an import
+should be included if it is a relative import.  Always use an absolute
+import that has <code class="xref py py-mod docutils literal"><span class="pre">ansible.module_utils</span></code> in it to allow Ansiballz to
+determine that the file should be included.</p>
+</div>
+<div class="section" id="passing-args">
+<span id="flow-passing-module-args"></span><h5>Passing args<a class="headerlink" href="#passing-args" title="Permalink to this headline">露</a></h5>
+<p>In <a class="reference internal" href="#module-replacer"><span class="std std-ref">Module Replacer</span></a>, module arguments are turned into a JSON-ified
+string and substituted into the combined module file.  In <a class="reference internal" href="#ansiballz"><span class="std std-ref">Ansiballz</span></a>,
+the JSON-ified string is passed into the module via stdin.  When
+a  <code class="xref py py-class docutils literal"><span class="pre">ansible.module_utils.basic.AnsibleModule</span></code> is instantiated,
+it parses this string and places the args into
+<code class="xref py py-attr docutils literal"><span class="pre">AnsibleModule.params</span></code> where it can be accessed by the module&#8217;s
+other code.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Internally, the <code class="xref py py-class docutils literal"><span class="pre">AnsibleModule</span></code> uses the helper function,
+<code class="xref py py-func docutils literal"><span class="pre">ansible.module_utils.basic._load_params()</span></code>, to load the parameters
+from stdin and save them into an internal global variable.  Very dynamic
+custom modules which need to parse the parameters prior to instantiating
+an <code class="docutils literal"><span class="pre">AnsibleModule</span></code> may use <code class="docutils literal"><span class="pre">_load_params</span></code> to retrieve the
+parameters.  Be aware that <code class="docutils literal"><span class="pre">_load_params</span></code> is an internal function and
+may change in breaking ways if necessary to support changes in the code.
+However, we&#8217;ll do our best not to break it gratuitously, which is not
+something that can be said for either the way parameters are passed or
+the internal global variable.</p>
+</div>
+</div>
+</div>
+<div class="section" id="internal-arguments">
+<span id="flow-internal-arguments"></span><h4>Internal arguments<a class="headerlink" href="#internal-arguments" title="Permalink to this headline">露</a></h4>
+<p>Both <a class="reference internal" href="#module-replacer"><span class="std std-ref">Module Replacer</span></a> and <a class="reference internal" href="#ansiballz"><span class="std std-ref">Ansiballz</span></a> send additional arguments to
+the module beyond those which the user specified in the playbook.  These
+additional arguments are internal parameters that help implement global
+Ansible features.  Modules often do not need to know about these explicitly as
+the features are implemented in <code class="xref py py-mod docutils literal"><span class="pre">ansible.module_utils.basic</span></code> but certain
+features need support from the module so it&#8217;s good to know about them.</p>
+<div class="section" id="ansible-no-log">
+<h5>_ansible_no_log<a class="headerlink" href="#ansible-no-log" title="Permalink to this headline">露</a></h5>
+<p>This is a boolean.  If it&#8217;s True then the playbook specified <code class="docutils literal"><span class="pre">no_log</span></code> (in
+a task&#8217;s parameters or as a play parameter).  This automatically affects calls
+to <code class="xref py py-meth docutils literal"><span class="pre">AnsibleModule.log()</span></code>.  If a module implements its own logging then
+it needs to check this value.  The best way to look at this is for the module
+to instantiate an <code class="xref py py-class docutils literal"><span class="pre">AnsibleModule</span></code> and then check the value of
+<code class="xref py py-attr docutils literal"><span class="pre">AnsibleModule.no_log</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal"><span class="pre">no_log</span></code> specified in a module&#8217;s argument_spec are handled by a different mechanism.</p>
+</div>
+</div>
+<div class="section" id="ansible-debug">
+<h5>_ansible_debug<a class="headerlink" href="#ansible-debug" title="Permalink to this headline">露</a></h5>
+<p>This is a boolean that turns on more verbose logging.  If a module uses
+<code class="xref py py-meth docutils literal"><span class="pre">AnsibleModule.debug()</span></code> rather than <code class="xref py py-meth docutils literal"><span class="pre">AnsibleModule.log()</span></code> then
+the messages are only logged if this is True.  This also turns on logging of
+external commands that the module executes.  This can be changed via
+the``debug`` setting in <code class="file docutils literal"><span class="pre">ansible.cfg</span></code> or the environment variable
+<span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal"><span class="pre">ANSIBLE_DEBUG</span></code>.  If, for some reason, a module must access this, it
+should do so by instantiating an <code class="xref py py-class docutils literal"><span class="pre">AnsibleModule</span></code> and accessing
+<code class="xref py py-attr docutils literal"><span class="pre">AnsibleModule._debug</span></code>.</p>
+</div>
+<div class="section" id="ansible-diff">
+<h5>_ansible_diff<a class="headerlink" href="#ansible-diff" title="Permalink to this headline">露</a></h5>
+<p>This boolean is turned on via the <code class="docutils literal"><span class="pre">--diff</span></code> command line option.  If a module
+supports it, it will tell the module to show a unified diff of changes to be
+made to templated files.  The proper way for a module to access this is by
+instantiating an <code class="xref py py-class docutils literal"><span class="pre">AnsibleModule</span></code> and accessing
+<code class="xref py py-attr docutils literal"><span class="pre">AnsibleModule._diff</span></code>.</p>
+</div>
+<div class="section" id="ansible-verbosity">
+<h5>_ansible_verbosity<a class="headerlink" href="#ansible-verbosity" title="Permalink to this headline">露</a></h5>
+<p>This value could be used for finer grained control over logging. However, it
+is currently unused.</p>
+</div>
+<div class="section" id="ansible-selinux-special-fs">
+<h5>_ansible_selinux_special_fs<a class="headerlink" href="#ansible-selinux-special-fs" title="Permalink to this headline">露</a></h5>
+<p>This is a list of names of filesystems which should have a special selinux
+context.  They are used by the <code class="xref py py-class docutils literal"><span class="pre">AnsibleModule</span></code> methods which operate on
+files (changing attributes, moving, and copying).  The list of names is set
+via a comma separated string of filesystem names from <code class="file docutils literal"><span class="pre">ansible.cfg</span></code>:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># ansible.cfg</span>
+<span class="p p-Indicator">[</span><span class="nv">selinux</span><span class="p p-Indicator">]</span>
+<span class="l l-Scalar l-Scalar-Plain">special_context_filesystems=nfs,vboxsf,fuse,ramfs</span>
+</pre></div>
+</div>
+<p>If a module cannot use the builtin <code class="docutils literal"><span class="pre">AnsibleModule</span></code> methods to manipulate
+files and needs to know about these special context filesystems, it should
+instantiate an <code class="docutils literal"><span class="pre">AnsibleModule</span></code> and then examine the list in
+<code class="xref py py-attr docutils literal"><span class="pre">AnsibleModule._selinux_special_fs</span></code>.</p>
+<p>This replaces <code class="xref py py-attr docutils literal"><span class="pre">ansible.module_utils.basic.SELINUX_SPECIAL_FS</span></code> from
+<a class="reference internal" href="#module-replacer"><span class="std std-ref">Module Replacer</span></a>.  In module replacer it was a comma separated string of
+filesystem names.  Under Ansiballz it&#8217;s an actual list.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.1.</span></p>
+</div>
+</div>
+<div class="section" id="ansible-syslog-facility">
+<h5>_ansible_syslog_facility<a class="headerlink" href="#ansible-syslog-facility" title="Permalink to this headline">露</a></h5>
+<p>This parameter controls which syslog facility ansible module logs to.  It may
+be set by changing the <code class="docutils literal"><span class="pre">syslog_facility</span></code> value in <code class="file docutils literal"><span class="pre">ansible.cfg</span></code>.  Most
+modules should just use <code class="xref py py-meth docutils literal"><span class="pre">AnsibleModule.log()</span></code> which will then make use of
+this.  If a module has to use this on its own, it should instantiate an
+<code class="xref py py-class docutils literal"><span class="pre">AnsibleModule</span></code> and then retrieve the name of the syslog facility from
+<code class="xref py py-attr docutils literal"><span class="pre">AnsibleModule._syslog_facility</span></code>.  The code will look slightly different
+than it did under <a class="reference internal" href="#module-replacer"><span class="std std-ref">Module Replacer</span></a> due to how hacky the old way was:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># Old way</span>
+<span class="l l-Scalar l-Scalar-Plain">import syslog</span>
+<span class="l l-Scalar l-Scalar-Plain">syslog.openlog(NAME, 0, syslog.LOG_USER)</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># New way</span>
+<span class="l l-Scalar l-Scalar-Plain">import syslog</span>
+<span class="l l-Scalar l-Scalar-Plain">facility_name = module._syslog_facility</span>
+<span class="l l-Scalar l-Scalar-Plain">facility = getattr(syslog, facility_name, syslog.LOG_USER)</span>
+<span class="l l-Scalar l-Scalar-Plain">syslog.openlog(NAME, 0, facility)</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.1.</span></p>
+</div>
+</div>
+<div class="section" id="ansible-version">
+<h5>_ansible_version<a class="headerlink" href="#ansible-version" title="Permalink to this headline">露</a></h5>
+<p>This parameter passes the version of ansible that runs the module.  To access
+it, a module should instantiate an <code class="xref py py-class docutils literal"><span class="pre">AnsibleModule</span></code> and then retrieve it
+from <code class="xref py py-attr docutils literal"><span class="pre">AnsibleModule.ansible_version</span></code>.  This replaces
+<code class="xref py py-attr docutils literal"><span class="pre">ansible.module_utils.basic.ANSIBLE_VERSION</span></code> from
+<a class="reference internal" href="#module-replacer"><span class="std std-ref">Module Replacer</span></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.1.</span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="special-considerations">
+<span id="flow-special-considerations"></span><h3>Special Considerations<a class="headerlink" href="#special-considerations" title="Permalink to this headline">露</a></h3>
+<div class="section" id="pipelining">
+<span id="flow-pipelining"></span><h4>Pipelining<a class="headerlink" href="#pipelining" title="Permalink to this headline">露</a></h4>
+<p>Ansible can transfer a module to a remote machine in one of two ways:</p>
+<ul class="simple">
+<li>it can write out the module to a temporary file on the remote host and then
+use a second connection to the remote host to execute it with the
+interpreter that the module needs</li>
+<li>or it can use what&#8217;s known as pipelining to execute the module by piping it
+into the remote interpreter&#8217;s stdin.</li>
+</ul>
+<p>Pipelining only works with modules written in Python at this time because
+Ansible only knows that Python supports this mode of operation.  Supporting
+pipelining means that whatever format the module payload takes before being
+sent over the wire must be executable by Python via stdin.</p>
+</div>
+<div class="section" id="why-pass-args-over-stdin">
+<span id="flow-args-over-stdin"></span><h4>Why pass args over stdin?<a class="headerlink" href="#why-pass-args-over-stdin" title="Permalink to this headline">露</a></h4>
+<p>Passing arguments via stdin was chosen for the following reasons:</p>
+<ul class="simple">
+<li>When combined with <a class="reference internal" href="intro_configuration.html#pipelining" tppabs="https://docs.ansible.com/ansible/intro_configuration.html#pipelining"><span class="std std-ref">pipelining</span></a>, this keeps the module&#8217;s arguments from
+temporarily being saved onto disk on the remote machine.  This makes it
+harder (but not impossible) for a malicious user on the remote machine to
+steal any sensitive information that may be present in the arguments.</li>
+<li>Command line arguments would be insecure as most systems allow unprivileged
+users to read the full commandline of a process.</li>
+<li>Environment variables are usually more secure than the commandline but some
+systems limit the total size of the environment.  This could lead to
+truncation of the parameters if we hit that limit.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div id="search-results"><gcse:searchresults-only></div>
+          <footer>
+  
+    <div class="rst-footer-buttons">
+      
+        <a href="developing_test_pr.html" tppabs="https://docs.ansible.com/ansible/developing_test_pr.html" class="btn btn-neutral float-right" title="Helping Testing PRs"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="developing_core.html" tppabs="https://docs.ansible.com/ansible/developing_core.html" class="btn btn-neutral" title="Developing the Ansible Core Engine"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','st.js'/*tpa=https://s.swiftypecdn.com/install/v2/st.js*/,'_st');
+
+  _st('install','yABGvz2N8PwcwBxyfzUc','2.0.0');
+</script>
+
+  <p>
+  Copyright 漏 2016 Red Hat, Inc.
+  <br>
+    Last updated on Jun 22, 2016.
+  </p>
+<p>
+Ansible docs are generated from <a href="javascript:if(confirm('https://github.com/ansible/ansible  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='https://github.com/ansible/ansible'" tppabs="https://github.com/ansible/ansible">GitHub sources</A> using <A HREF="javascript:if(confirm('http://sphinx-doc.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://sphinx-doc.org/'" tppabs="http://sphinx-doc.org/">Sphinx</A> using a theme provided by <a href="javascript:if(confirm('http://readthedocs.org/  \n\n该文件无法用 Teleport Ultra 下载, 因为 它是一个域或路径外部被设置为它的启始地址的地址。  \n\n你想在服务器上打开它?'))window.location='http://readthedocs.org/'" tppabs="http://readthedocs.org/">Read the Docs</a>. 
+</p>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+<!-- begin analytics -->
+<script type="text/javascript">
+var _hsq = _hsq || [];
+_hsq.push(["setContentType", "standard-page"]);
+        (function(d,s,i,r) {
+        if (d.getElementById(i)){return;}
+        var n = d.createElement(s),e = document.getElementsByTagName(s)[0];
+        n.id=i;n.src = '//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/330046.js';
+        e.parentNode.insertBefore(n, e);
+        })(document, "script", "hs-analytics",300000);
+</script>
+<!-- end analytics -->
+
+</body>
+</html>

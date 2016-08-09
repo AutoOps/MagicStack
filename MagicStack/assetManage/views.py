@@ -1,16 +1,16 @@
 # -*- coding:utf-8 -*-
-
-from assetManage.asset_api import *
+from assetManage.asset_api import db_update_group, gen_asset_proxy, gen_proxy_profiles,get_group_names,\
+                                   get_disk_info, update_asset_info, delete_asset_batch, asset_operator, db_add_group
 from MagicStack.api import *
 from assetManage.models import *
-from permManage.perm_api import get_group_asset_perm, get_group_user_perm, gen_resource
+from permManage.perm_api import get_group_asset_perm, get_group_user_perm, execute_thread_tasks
 from userManage.user_api import user_operator_record
 from common.interface import APIRequest
 from common.models import Task
-import Queue
+from MagicStack.settings import THREAD_NUMBERS
 import time
 
-task_queue = Queue.Queue()
+asset_task_queue = ASSET_TASK_QUEUE
 ASSET_STATUS = {'1': u"已使用", '2': u"未使用" , '3': u"报废"}
 ASSET_TYPE = {
     '1': u"物理机",
@@ -234,7 +234,7 @@ def asset_add(request,res, *args):
                 "power_user": request.POST.get('power_username'),
                 "power_pass": request.POST.get('power_password'),
                 "interfaces": {
-                    "eth0":{
+                    "{0}".format(request.POST.get('net_name', 'eth0')): {
                         "mac_address": request.POST.get('mac_address'),
                         "ip_address": request.POST.get('ip_address'),
                         "if_gateway": request.POST.get('per_gateway'),
@@ -273,7 +273,7 @@ def asset_add(request,res, *args):
                     asset_info.number = request.POST.get('number', '')
                     asset_info.machine_status = int(request.POST.get('machine_status', 1))
                     asset_info.asset_type = int(request.POST.get('asset_type', 1))
-                    asset_info.sn = request.POST.get('sn', '')
+                    asset_info.product_serial = request.POST.get('sn', '')
                     asset_info.comment = request.POST.get('comment', '')
                     asset_info.proxy_id = int(request.POST.get('proxy', '1'))
 
@@ -301,7 +301,7 @@ def asset_add(request,res, *args):
                     asset_info.save()
 
                     net = NetWorking()
-                    net.net_name = request.POST.get('net_name', '')
+                    net.net_name = request.POST.get('net_name', 'eth0')
                     net.mac_address = request.POST.get('mac_address', '')
                     net.ip_address = request.POST.get('ip_address','')
                     net.dns_name = request.POST.get('dns_name', '')
@@ -364,34 +364,22 @@ def asset_del(request,res, *args):
                 response['msg'] = e
 
     if request.method == 'POST':
-        asset_id_all = request.POST.get('asset_id_all', '')
-        asset_list = []
-        for asset_id in asset_id_all.split(','):
-            asset = get_object(Asset, id=int(asset_id))
-            res['content'] += '%s   ' % asset.name
-            if asset:
-                asset_list.append(asset)
-        asset_proxys = gen_asset_proxy(asset_list)
-        for key, value in asset_proxys.items():
-            asset_names = [asset.name for asset in value]
-            id_uniques = [asset.id_unique for asset in value]
-            param = {'names': asset_names, 'id_unique': id_uniques}
-            data = json.dumps(param)
-            proxy_obj = Proxy.objects.get(proxy_name=key)
-            try:
-                api = APIRequest('{0}/v1.0/system'.format(proxy_obj.url), proxy_obj.username, CRYPTOR.decrypt(proxy_obj.password))
-                result, code = api.req_del(data)
-                logger.debug(u'删除多个资产result:%s'% result)
-                if code == 200:
-                    for item in value:
-                        item.delete()
-                else:
-                    response['msg'] = result['messege']
-            except Exception as e:
-                logger.error(e)
-                res['flag'] = 'false'
-                res['content'] = e
-                response['msg'] = e
+        try:
+            asset_id_all = request.POST.get('asset_id_all', '')
+            asset_list = []
+            for asset_id in asset_id_all.split(','):
+                asset = get_object(Asset, id=int(asset_id))
+                res['content'] += '%s   ' % asset.name
+                if asset:
+                    asset_list.append(asset)
+            proxy_list = Proxy.objects.all()
+            execute_thread_tasks(proxy_list, THREAD_NUMBERS, delete_asset_batch, asset_list)
+            response['msg'] = u'批量删除主机成功'
+        except Exception as e:
+            logger.error(e)
+            res['flag'] = 'false'
+            res['content'] = e
+            response['msg'] = e
         return HttpResponse(json.dumps(response), content_type='application/json')
 
 
@@ -414,13 +402,13 @@ def asset_edit(request, res, *args):
         rest['name'] = asset_obj.name
         rest['port'] = asset_obj.port
         rest['username'] = asset_obj.username
-        rest['password'] = asset_obj.password
+        rest['password'] = CRYPTOR.decrypt(asset_obj.password)
         rest['proxy_id'] = str(asset_obj.proxy.id)
         rest['profile'] = asset_obj.profile
         rest['kickstart'] = asset_obj.kickstart
         rest['netboot_enabled'] = asset_obj.netboot_enabled
         rest['group'] = ','.join([str(item.id) for item in asset_obj.group.all()])
-        rest['idc'] = str(asset_obj.idc.id)
+        rest['idc'] = str(asset_obj.idc.id) if asset_obj.idc else ''
         rest['cabinet'] = asset_obj.cabinet
         rest['number'] = asset_obj.number
         rest['machine_status'] = str(asset_obj.machine_status)
@@ -485,7 +473,7 @@ def asset_edit(request, res, *args):
             asset_info.is_active = is_active
 
             net = asset_info.networking.all()[0]
-            net.net_name = request.POST.get('net_name', '')
+            net.net_name = request.POST.get('net_name', 'eth0')
             net.mac_address = request.POST.get('mac_address', '')
             net.ip_address = request.POST.get('ip_address','')
             net.dns_name = request.POST.get('dns_name', '')
@@ -517,7 +505,7 @@ def asset_edit(request, res, *args):
                 "power_user": request.POST.get('power_username'),
                 "power_pass": request.POST.get('power_password'),
                 "interfaces": {
-                    "eth0":{
+                    "{0}".format(request.POST.get('net_name', 'eth0')): {
                         "mac_address": request.POST.get('mac_address'),
                         "ip_address": request.POST.get('ip_address'),
                         "if_gateway": request.POST.get('per_gateway'),
@@ -624,70 +612,49 @@ def asset_list(request):
 
 @require_role('admin')
 def asset_action(request, status):
-    result = ''
     if request.method == 'POST':
-        select_ids = request.POST.getlist('asset_id_all')
-        select_ids = select_ids[0].split(',')
-        asset_list = []
-        for item in select_ids:
-            asset = get_object(Asset, id=int(item))
-            asset_list.append(asset)
-        asset_proxys = gen_asset_proxy(asset_list)
-        for key, value in asset_proxys.items():
-            proxy = Proxy.objects.get(proxy_name=key)
-            systems = [item.name for item in value]
-            profile = asset_list[0].profile
-            if status == 'rebuild':
-                data = {
-                    'rebuild': 'true',
-                    'profile': profile,
-                    'systems': systems
-                }
-            else:
-                data = {
-                    'power': status,
-                    'systems': systems
-                }
-            data = json.dumps(data)
-            try:
-                api = APIRequest('{0}/v1.0/system/action'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
-                result, codes = api.req_post(data)
-                logger.debug(u"操作结果result:%s   codes:%s"%(result, codes))
-                task = Task()
-                task.task_name = result['task_name']
-                task.username = request.user.username
-                task.status = result['messege']
-                task.start_time = datetime.datetime.now()
-                task.url = '{0}/v1.0/system/action'.format(proxy.url)
-                task.save()
-                task_queue.put(dict(task_name=result['task_name'], task_user=request.user.username, task_proxy=proxy.proxy_name))
-            except Exception as e:
-                logger.debug(e)
+        try:
+            select_ids = request.POST.getlist('asset_id_all')
+            select_ids = select_ids[0].split(',')
+            asset_list = []
+            for item in select_ids:
+                asset = get_object(Asset, id=int(item))
+                asset_list.append(asset)
+            proxy_list = Proxy.objects.all()
+            execute_thread_tasks(proxy_list, THREAD_NUMBERS, asset_operator, asset_list, status, request.user.username)
+            result = 'running'
+        except Exception as e:
+            logger.debug(e)
+            result = e
         return HttpResponse(json.dumps(result), content_type='application/json')
 
 
 @require_role('user')
 def asset_event(request):
-    response = {'error': '', 'message':''}
+    response = {'success': True, 'message':''}
     if request.method == 'GET':
         user_name = request.user.username
         try:
-            if task_queue.qsize() > 0:
-                tk_event = task_queue.get()
-                while tk_event['task_user'] != user_name:
-                    tk_event = task_queue.get()
-                tk_proxy = Proxy.objects.get(proxy_name=tk_event['task_proxy'])
-                api = APIRequest('{0}/v1.0/event/{1}'.format(tk_proxy.url, tk_event['task_name']), tk_proxy.username, CRYPTOR.decrypt(tk_proxy.password))
-                result, codes = api.req_get()
-                logger.debug(u'事件查询结果result:%s'%result)
-                tk = get_object(Task, task_name=tk_event['task_name'])
-                tk.status = result['status']
-                tk.content = result['event_log']
-                tk.save()
-                response['message'] = result['event_log']
+            if asset_task_queue.qsize() > 0:
+                tk_event = asset_task_queue.get()
+                if tk_event['task_user'] != user_name:
+                    asset_task_queue.put(tk_event)
+                    response['success'] = False
+                else:
+                    tk_proxy = Proxy.objects.get(proxy_name=tk_event['task_proxy'])
+                    api = APIRequest('{0}/v1.0/event/{1}'.format(tk_proxy.url, tk_event['task_name']), tk_proxy.username, CRYPTOR.decrypt(tk_proxy.password))
+                    result, codes = api.req_get()
+                    logger.debug(u'事件查询结果result:%s'%result)
+                    tk = get_object(Task, task_name=tk_event['task_name'])
+                    tk.status = result['status']
+                    tk.content = result['event_log']
+                    tk.save()
+                    response['message'] = result['event_log']
             return HttpResponse(json.dumps(response), content_type='application/json')
         except Exception as e:
-            response['error'] = e
+            logger.error(e)
+            response['success'] = False
+            response['message'] = e
             return HttpResponse(json.dumps(response), content_type='application/json')
 
 
@@ -717,26 +684,6 @@ def asset_detail(request):
 
 @require_role('admin')
 @user_operator_record
-def asset_update(request,res, *args):
-    """
-    Asset update host info via ansible view
-    """
-    res['operator'] = u'更新主机'
-    asset_id = request.GET.get('id', '')
-    asset = get_object(Asset, id=int(asset_id))
-    name = request.user.username
-    if not asset:
-        res['flag'] = 'false'
-        res['content'] = u'主机[%s]不存在' % asset.name
-        return HttpResponseRedirect(reverse('asset_detail')+'?id=%s' % asset_id)
-    else:
-        asset_ansible_update([asset], name)
-        res['content'] = u'更新主机[%s]' % asset.name
-    return HttpResponseRedirect(reverse('asset_detail')+'?id=%s' % asset_id)
-
-
-@require_role('admin')
-@user_operator_record
 def asset_update_batch(request,res,*args):
     response = {'success':'', 'error':''}
     res['operator'] = res['content'] = u'批量更新主机'
@@ -754,27 +701,10 @@ def asset_update_batch(request,res,*args):
                     asset = Asset.objects.get(id=int(asset_id))
                     if asset:
                         asset_list.append(asset)
-            asset_proxys = gen_asset_proxy(asset_list)
-            for key, value in asset_proxys.items():
-                host_list = [asset.networking.all()[0].ip_address for asset in value]
-                proxy = Proxy.objects.get(proxy_name=key)
-                resource = gen_resource(value)
-                data = {'mod_name': 'setup',
-                        'resource': resource,
-                        'hosts': host_list,
-                        'mod_args': '',
-                        'run_action': 'sync',
-                        'run_type': 'ad-hoc'
-                        }
-                data = json.dumps(data)
-                api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
-                result, code = api.req_post(data)
-                logger.debug(u'更新操作结果result:%s       code:%s' % (result,code))
-                if code == 200:
-                    asset_ansible_update(value, result, name)
-                    for asset in value:
-                        res['content'] += ' [%s] '% asset.name
-                    response['success'] = u'批量更新成功!'
+            proxy_list = Proxy.objects.all()
+            execute_thread_tasks(proxy_list, THREAD_NUMBERS, update_asset_info, asset_list, name)
+            res['content'] = u'更新资产成功'
+            response['success'] = u'批量更新成功!'
         except Exception as e:
             logger.error(e)
             res['flag'] = 'false'
@@ -870,10 +800,6 @@ def idc_list(request):
             logger.error(e.message)
 
 
-
-
-
-
 @require_role('admin')
 @user_operator_record
 def idc_edit(request, res, *args):
@@ -881,8 +807,6 @@ def idc_edit(request, res, *args):
     IDC edit view
     """
     res['operator'] = u'编辑IDC'
-    idc_id = request.GET.get('id', '')
-    idc = get_object(IDC, id=idc_id)
     if request.method == 'GET':
         idc_id = request.GET.get('id', '')
         idc = get_object(IDC, id=int(idc_id))
@@ -935,13 +859,11 @@ def idc_edit(request, res, *args):
             response['success'] = True
 
         except Exception as e:
-            # logger.error(e.message)
+            logger.error(e.message)
             res['flag'] = 'false'
             res['content'] = e.message
-            response['error'] =  u'编辑IDC失败:%s'%e.message
-    return HttpResponse(json.dumps(response), content_type='application/json')
-
-
+            response['error'] = u'编辑IDC失败:%s'%e.message
+        return HttpResponse(json.dumps(response), content_type='application/json')
 
 
 @require_role('admin')

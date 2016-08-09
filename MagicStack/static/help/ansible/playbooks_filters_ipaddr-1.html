@@ -1,0 +1,888 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset=UTF-8"utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Tag Manager Data Layer -->
+  <script>
+   dataLayer = [];
+  </script>
+  <!-- End Google Tag Manager Data Layer -->
+
+  
+  <title>Jinja2 â€˜ipaddr()â€™ filter &mdash; Ansible Documentation</title>
+  
+
+  
+  
+
+  
+  <link href="css-family=Lato-400,700-Roboto+Slab-400,700-Inconsolata-400,700.css" tppabs="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel='stylesheet' type='text/css'>
+  <link href="font-awesome.min.css" tppabs="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'./',
+        VERSION:'http://docs.ansible.com/ansible/0.01',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+      <script type="text/javascript" src="jquery-1.js" tppabs="http://docs.ansible.com/ansible/_static/jquery.js"></script>
+      <script type="text/javascript" src="underscore-1.js" tppabs="http://docs.ansible.com/ansible/_static/underscore.js"></script>
+      <script type="text/javascript" src="doctools-1.js" tppabs="http://docs.ansible.com/ansible/_static/doctools.js"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="theme.min-1.css" tppabs="http://docs.ansible.com/ansible/_static/css/theme.min.css" type="text/css" />
+    <script type="text/javascript" src="theme-1.js" tppabs="http://docs.ansible.com/ansible/_static/js/theme.js"></script>
+  
+
+  
+    <link rel="top" title="Ansible Documentation" href="index.html"/> 
+
+  <script src="modernizr.min-1.js" tppabs="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  <style>
+    .search-reset-start {
+        color: #463E3F;
+        float: right;
+        position: relative;
+        top: -25px;
+        left: -10px;
+        z-index: 10;
+     }
+     .search-reset-start:hover {
+        cursor: pointer;
+        color: #2980B9;
+     }
+     #search-box-id {
+        padding-right: 25px;
+     }
+  </style>
+
+  <link href="css-family=Open+Sans-400,300.css" tppabs="https://fonts.googleapis.com/css?family=Open+Sans:400,300"
+    rel='stylesheet' type='text/css'>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="ns-1.html-id=gtm-psb293" tppabs="http://www.googletagmanager.com/ns.html?id=GTM-PSB293" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm-1.js'/*tpa=http://docs.ansible.com/ansible/gtm.js*/});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-PSB293');</script>
+  <!-- End Google Tag Manager -->
+
+  <a class="DocSite-nav" href="javascript:if(confirm('http://docs.ansible.com/  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">
+    <img class="DocSiteNav-logo"
+      src="logo_invert-1.png" tppabs="http://docs.ansible.com/ansible/_static/images/logo_invert.png"
+      alt="Ansible Logo">
+    <div class="DocSiteNav-title">
+      Documentation
+    </div>
+  </a>
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+
+      <div style="background-color:#5bbdbf;height=80px;margin:'auto auto auto auto'">
+        <a class="DocSiteProduct-header DocSiteProduct-header--core"
+          href="index.htm" tppabs="http://docs.ansible.com/ansible/">
+          <div class="DocSiteProduct-productName">
+            <div class="DocSiteProduct-logoText">
+              ANSIBLE
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div id="menu-id" class="wy-menu wy-menu-vertical" data-spy="affix">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="intro-1.html" tppabs="http://docs.ansible.com/ansible/intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro_installation-1.html" tppabs="http://docs.ansible.com/ansible/intro_installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_getting_started-1.html" tppabs="http://docs.ansible.com/ansible/intro_getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_inventory.html">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_dynamic_inventory-1.html" tppabs="http://docs.ansible.com/ansible/intro_dynamic_inventory.html">Dynamic Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_patterns-1.html" tppabs="http://docs.ansible.com/ansible/intro_patterns.html">Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_adhoc-1.html" tppabs="http://docs.ansible.com/ansible/intro_adhoc.html">Introduction To Ad-Hoc Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_configuration-1.html" tppabs="http://docs.ansible.com/ansible/intro_configuration.html">Configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_bsd-1.html" tppabs="http://docs.ansible.com/ansible/intro_bsd.html">BSD Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_windows-1.html" tppabs="http://docs.ansible.com/ansible/intro_windows.html">Windows Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_networking-1.html" tppabs="http://docs.ansible.com/ansible/intro_networking.html">Networking Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart-1.html" tppabs="http://docs.ansible.com/ansible/quickstart.html">Quickstart Video</a></li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks-1.html" tppabs="http://docs.ansible.com/ansible/playbooks.html">Playbooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_intro-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_intro.html">Intro to Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_roles-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_roles.html">Playbook Roles and Include Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_variables-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_variables.html">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_filters-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_filters.html">Jinja2 filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_conditionals-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_conditionals.html">Conditionals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_loops-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_loops.html">Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_blocks-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_blocks.html">Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_strategies-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_strategies.html">Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_best_practices-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_best_practices.html">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="playbooks_special_topics-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_special_topics.html">Playbooks: Special Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="become-1.html" tppabs="http://docs.ansible.com/ansible/become.html">Become (Privilege Escalation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_acceleration-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_acceleration.html">Accelerated Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_async-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_async.html">Asynchronous Actions and Polling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_checkmode-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_checkmode.html">Check Mode (&#8220;Dry Run&#8221;)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_debugger-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_debugger.html">Playbook Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_delegation-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_delegation.html">Delegation, Rolling Updates, and Local Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_environment-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_environment.html">Setting the Environment (and Working With Proxies)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_error_handling-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_error_handling.html">Error Handling In Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_advanced_syntax-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_advanced_syntax.html">Advanced Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_lookups-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_lookups.html">Using Lookups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_prompts-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_prompts.html">Prompts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_tags-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_tags.html">Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_vault-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_vault.html">Vault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_startnstep-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_startnstep.html">Start and Step</a></li>
+<li class="toctree-l2"><a class="reference internal" href="playbooks_directives-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_directives.html">Directives Glossary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules-1.html" tppabs="http://docs.ansible.com/ansible/modules.html">About Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules_intro-1.html" tppabs="http://docs.ansible.com/ansible/modules_intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_core-1.html" tppabs="http://docs.ansible.com/ansible/modules_core.html">Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules_extra-1.html" tppabs="http://docs.ansible.com/ansible/modules_extra.html">Extras Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_return_values-1.html" tppabs="http://docs.ansible.com/ansible/common_return_values.html">Common Return Values</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules_by_category-1.html" tppabs="http://docs.ansible.com/ansible/modules_by_category.html">Module Index</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="list_of_all_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_all_modules.html">All Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_cloud_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_cloud_modules.html">Cloud Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_clustering_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_clustering_modules.html">Clustering Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_commands_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_commands_modules.html">Commands Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_database_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_database_modules.html">Database Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_files_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_files_modules.html">Files Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_inventory_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_inventory_modules.html">Inventory Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_messaging_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_messaging_modules.html">Messaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_monitoring_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_monitoring_modules.html">Monitoring Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_network_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_network_modules.html">Network Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_notification_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_notification_modules.html">Notification Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_packaging_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_packaging_modules.html">Packaging Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_source_control_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_source_control_modules.html">Source Control Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_system_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_system_modules.html">System Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_utilities_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_utilities_modules.html">Utilities Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_web_infrastructure_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_web_infrastructure_modules.html">Web Infrastructure Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_of_windows_modules-1.html" tppabs="http://docs.ansible.com/ansible/list_of_windows_modules.html">Windows Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guides-1.html" tppabs="http://docs.ansible.com/ansible/guides.html">Detailed Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide_aws-1.html" tppabs="http://docs.ansible.com/ansible/guide_aws.html">Amazon Web Services Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_azure-1.html" tppabs="http://docs.ansible.com/ansible/guide_azure.html">Getting Started with Azure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rax-1.html" tppabs="http://docs.ansible.com/ansible/guide_rax.html">Rackspace Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_gce-1.html" tppabs="http://docs.ansible.com/ansible/guide_gce.html">Google Cloud Platform Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_cloudstack-1.html" tppabs="http://docs.ansible.com/ansible/guide_cloudstack.html">CloudStack Cloud Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_vagrant-1.html" tppabs="http://docs.ansible.com/ansible/guide_vagrant.html">Using Vagrant and Ansible</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_rolling_upgrade-1.html" tppabs="http://docs.ansible.com/ansible/guide_rolling_upgrade.html">Continuous Delivery and Rolling Upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide_docker-1.html" tppabs="http://docs.ansible.com/ansible/guide_docker.html">Getting Started with Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developing-1.html" tppabs="http://docs.ansible.com/ansible/developing.html">Developer Information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developing_api-1.html" tppabs="http://docs.ansible.com/ansible/developing_api.html">Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_inventory-1.html" tppabs="http://docs.ansible.com/ansible/developing_inventory.html">Developing Dynamic Inventory Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_modules-1.html" tppabs="http://docs.ansible.com/ansible/developing_modules.html">Developing Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_plugins-1.html" tppabs="http://docs.ansible.com/ansible/developing_plugins.html">Developing Plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_core-1.html" tppabs="http://docs.ansible.com/ansible/developing_core.html">Developing the Ansible Core Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_test_pr-1.html" tppabs="http://docs.ansible.com/ansible/developing_test_pr.html">Helping Testing PRs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developing_releases-1.html" tppabs="http://docs.ansible.com/ansible/developing_releases.html">Releases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tower-1.html" tppabs="http://docs.ansible.com/ansible/tower.html">Ansible Tower</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community-1.html" tppabs="http://docs.ansible.com/ansible/community.html">Community Information &amp; Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#ansible-users" tppabs="http://docs.ansible.com/ansible/community.html#ansible-users">Ansible Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#for-current-and-prospective-developers" tppabs="http://docs.ansible.com/ansible/community.html#for-current-and-prospective-developers">For Current and Prospective Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#other-topics" tppabs="http://docs.ansible.com/ansible/community.html#other-topics">Other Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#community-code-of-conduct" tppabs="http://docs.ansible.com/ansible/community.html#community-code-of-conduct">Community Code of Conduct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community-1.html#contributors-license-agreement" tppabs="http://docs.ansible.com/ansible/community.html#contributors-license-agreement">Contributors License Agreement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="galaxy-1.html" tppabs="http://docs.ansible.com/ansible/galaxy.html">Ansible Galaxy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="galaxy-1.html#the-website" tppabs="http://docs.ansible.com/ansible/galaxy.html#the-website">The Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="galaxy-1.html#the-ansible-galaxy-command-line-tool" tppabs="http://docs.ansible.com/ansible/galaxy.html#the-ansible-galaxy-command-line-tool">The ansible-galaxy command line tool</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test_strategies-1.html" tppabs="http://docs.ansible.com/ansible/test_strategies.html">Testing Strategies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#integrating-testing-with-ansible-playbooks" tppabs="http://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-ansible-playbooks">Integrating Testing With Ansible Playbooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#the-right-level-of-testing" tppabs="http://docs.ansible.com/ansible/test_strategies.html#the-right-level-of-testing">The Right Level of Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#check-mode-as-a-drift-test" tppabs="http://docs.ansible.com/ansible/test_strategies.html#check-mode-as-a-drift-test">Check Mode As A Drift Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#modules-that-are-useful-for-testing" tppabs="http://docs.ansible.com/ansible/test_strategies.html#modules-that-are-useful-for-testing">Modules That Are Useful for Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#testing-lifecycle" tppabs="http://docs.ansible.com/ansible/test_strategies.html#testing-lifecycle">Testing Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#integrating-testing-with-rolling-updates" tppabs="http://docs.ansible.com/ansible/test_strategies.html#integrating-testing-with-rolling-updates">Integrating Testing With Rolling Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#achieving-continuous-deployment" tppabs="http://docs.ansible.com/ansible/test_strategies.html#achieving-continuous-deployment">Achieving Continuous Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_strategies-1.html#conclusion" tppabs="http://docs.ansible.com/ansible/test_strategies.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq-1.html" tppabs="http://docs.ansible.com/ansible/faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook" tppabs="http://docs.ansible.com/ansible/faq.html#how-can-i-set-the-path-or-any-other-environment-variable-for-a-task-or-entire-playbook">How can I set the PATH or any other environment variable for a task or entire playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-handle-different-machines-needing-different-user-accounts-or-ports-to-log-in-with">How do I handle different machines needing different user accounts or ports to log in with?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-get-ansible-to-reuse-connections-enable-kerberized-ssh-or-have-ansible-pay-attention-to-my-local-ssh-config-file">How do I get ansible to reuse connections, enable Kerberized SSH, or have Ansible pay attention to my local SSH config file?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-configure-a-jump-host-to-access-servers-that-i-have-no-direct-access-to">How do I configure a jump host to access servers that I have no direct access to?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-speed-up-management-inside-ec2" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-speed-up-management-inside-ec2">How do I speed up management inside EC2?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-handle-python-pathing-not-having-a-python-2-x-in-usr-bin-python-on-a-remote-machine">How do I handle python pathing not having a Python 2.X in /usr/bin/python on a remote machine?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#what-is-the-best-way-to-make-content-reusable-redistributable" tppabs="http://docs.ansible.com/ansible/faq.html#what-is-the-best-way-to-make-content-reusable-redistributable">What is the best way to make content reusable/redistributable?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it" tppabs="http://docs.ansible.com/ansible/faq.html#where-does-the-configuration-file-live-and-what-can-i-configure-in-it">Where does the configuration file live and what can I configure in it?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-disable-cowsay" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-disable-cowsay">How do I disable cowsay?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-see-a-list-of-all-of-the-ansible-variables" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-see-a-list-of-all-of-the-ansible-variables">How do I see a list of all of the ansible_ variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-see-all-the-inventory-vars-defined-for-my-host">How do I see all the inventory vars defined for my host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-loop-over-a-list-of-hosts-in-a-group-inside-of-a-template">How do I loop over a list of hosts in a group, inside of a template?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-a-variable-name-programmatically" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-name-programmatically">How do I access a variable name programmatically?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-a-variable-of-the-first-host-in-a-group" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-a-variable-of-the-first-host-in-a-group">How do I access a variable of the first host in a group?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-copy-files-recursively-onto-a-target-host" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-copy-files-recursively-onto-a-target-host">How do I copy files recursively onto a target host?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-access-shell-environment-variables" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-access-shell-environment-variables">How do I access shell environment variables?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-generate-crypted-passwords-for-the-user-module" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module">How do I generate crypted passwords for the user module?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#can-i-get-training-on-ansible-or-find-commercial-support" tppabs="http://docs.ansible.com/ansible/faq.html#can-i-get-training-on-ansible-or-find-commercial-support">Can I get training on Ansible or find commercial support?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#is-there-a-web-interface-rest-api-etc" tppabs="http://docs.ansible.com/ansible/faq.html#is-there-a-web-interface-rest-api-etc">Is there a web interface / REST API / etc?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-submit-a-change-to-the-documentation" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-submit-a-change-to-the-documentation">How do I submit a change to the documentation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#how-do-i-keep-secret-data-in-my-playbook" tppabs="http://docs.ansible.com/ansible/faq.html#how-do-i-keep-secret-data-in-my-playbook">How do I keep secret data in my playbook?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names" tppabs="http://docs.ansible.com/ansible/faq.html#when-should-i-use-also-how-to-interpolate-variables-or-dynamic-variable-names">When should I use {{ }}? Also, how to interpolate variables or dynamic variable names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq-1.html#i-don-t-see-my-question-here" tppabs="http://docs.ansible.com/ansible/faq.html#i-don-t-see-my-question-here">I don&#8217;t see my question here</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary-1.html" tppabs="http://docs.ansible.com/ansible/glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YAMLSyntax-1.html" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html">YAML Syntax</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax-1.html#yaml-basics" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html#yaml-basics">YAML Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="YAMLSyntax-1.html#gotchas" tppabs="http://docs.ansible.com/ansible/YAMLSyntax.html#gotchas">Gotchas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html">Porting Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#playbook" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#playbook">Playbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#deprecated" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#deprecated">Deprecated</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#other-caveats" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#other-caveats">Other caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#porting-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#porting-plugins">Porting plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#lookup-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#lookup-plugins">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#connection-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#connection-plugins">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#action-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#action-plugins">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#callback-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#callback-plugins">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id1" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id1">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#hybrid-plugins" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#hybrid-plugins">Hybrid plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id2" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id2">Lookup plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id3" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id3">Connection plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id4" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id4">Action plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id5" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id5">Callback plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="porting_guide_2.0-1.html#id6" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#id6">Connection plugins</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="porting_guide_2.0-1.html#porting-custom-scripts" tppabs="http://docs.ansible.com/ansible/porting_guide_2.0.html#porting-custom-scripts">Porting custom scripts</a></li>
+</ul>
+
+        
+
+<!-- changeable widget -->
+<center>
+<br/>
+<a href="javascript:if(confirm('http://www.ansible.com/docs-left?utm_source=docs  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.ansible.com/docs-left?utm_source=docs'" tppabs="http://www.ansible.com/docs-left?utm_source=docs">
+    <img style="border-width:0px;" src="ASB-docs-left-rail.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-left-rail.png" />
+</a>
+</center>
+
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="javascript:if(confirm('http://docs.ansible.com/  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://docs.ansible.com/'" tppabs="http://docs.ansible.com/">Ansible Documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+
+          <!-- Banner ads -->
+          <div class="DocSiteBanner">
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-left.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-left.png">
+            </a>
+            <a class="DocSiteBanner-imgWrapper"
+                href="javascript:if(confirm('http://www.ansible.com/docs-top?utm_source=docs  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.ansible.com/docs-top?utm_source=docs'" tppabs="http://www.ansible.com/docs-top?utm_source=docs">
+                <img src="ASB-docs-top-right.png" tppabs="https://cdn2.hubspot.net/hubfs/330046/docs-graphics/ASB-docs-top-right.png">
+            </a>
+        </div>
+
+          <ul class="wy-breadcrumbs">
+  <li><a href="index-1.html" tppabs="http://docs.ansible.com/ansible/index.html">Docs</a> &raquo;</li>
+  <li><a href="">Jinja2 &#8216;ipaddr()&#8217; filter</a></li>
+  
+    <li class="wy-breadcrumbs-aside">
+      <a href="javascript:if(confirm('https://github.com/ansible/ansible/blob/devel/docsite/rst/playbooks_filters_ipaddr.rst  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='https://github.com/ansible/ansible/blob/devel/docsite/rst/playbooks_filters_ipaddr.rst'" tppabs="https://github.com/ansible/ansible/blob/devel/docsite/rst/playbooks_filters_ipaddr.rst" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  
+</ul>
+<hr/>
+
+          <div id="page-content">
+          
+  <div class="section" id="jinja2-ipaddr-filter">
+<h1>Jinja2 &#8216;ipaddr()&#8217; filter<a class="headerlink" href="#jinja2-ipaddr-filter" title="Permalink to this headline">Â¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.9.</span></p>
+</div>
+<p><code class="docutils literal"><span class="pre">ipaddr()</span></code> is a Jinja2 filter designed to provide an interface to <a class="reference external" href="javascript:if(confirm('https://pypi.python.org/pypi/netaddr  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='https://pypi.python.org/pypi/netaddr'" tppabs="https://pypi.python.org/pypi/netaddr">netaddr</a>
+Python package from within Ansible. It can operate on strings or lists of
+items, test various data to check if they are valid IP addresses and manipulate
+the input data to extract requested information. <code class="docutils literal"><span class="pre">ipaddr()</span></code> works both with
+IPv4 and IPv6 addresses in various forms, there are also additional functions
+available to manipulate IP subnets and MAC addresses.</p>
+<p>To use this filter in Ansible, you need to install <a class="reference external" href="javascript:if(confirm('https://pypi.python.org/pypi/netaddr  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='https://pypi.python.org/pypi/netaddr'" tppabs="https://pypi.python.org/pypi/netaddr">netaddr</a> Python library on
+a computer on which you use Ansible (it is not required on remote hosts).
+It can usually be installed either via your system package manager, or using
+<code class="docutils literal"><span class="pre">pip</span></code>:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">pip install netaddr</span>
+</pre></div>
+</div>
+<div class="contents local topic" id="topics">
+<p class="topic-title first">Topics</p>
+<ul class="simple">
+<li><a class="reference internal" href="#basic-tests" id="id1">Basic tests</a></li>
+<li><a class="reference internal" href="#filtering-lists" id="id2">Filtering lists</a></li>
+<li><a class="reference internal" href="#wrapping-ipv6-addresses-in-brackets" id="id3">Wrapping IPv6 addresses in [ ] brackets</a></li>
+<li><a class="reference internal" href="#basic-queries" id="id4">Basic queries</a></li>
+<li><a class="reference internal" href="#getting-information-about-hosts-and-networks" id="id5">Getting information about hosts and networks</a></li>
+<li><a class="reference internal" href="#getting-information-from-host-prefix-values" id="id6">Getting information from host/prefix values</a></li>
+<li><a class="reference internal" href="#converting-subnet-masks-to-cidr-notation" id="id7">Converting subnet masks to CIDR notation</a></li>
+<li><a class="reference internal" href="#ip-address-conversion" id="id8">IP address conversion</a></li>
+<li><a class="reference internal" href="#converting-ipv4-address-to-6to4-address" id="id9">Converting IPv4 address to 6to4 address</a></li>
+<li><a class="reference internal" href="#subnet-manipulation" id="id10">Subnet manipulation</a></li>
+<li><a class="reference internal" href="#mac-address-filter" id="id11">MAC address filter</a></li>
+</ul>
+</div>
+<div class="section" id="basic-tests">
+<h2><a class="toc-backref" href="#topics">Basic tests</a><a class="headerlink" href="#basic-tests" title="Permalink to this headline">Â¶</a></h2>
+<p><code class="docutils literal"><span class="pre">ipaddr()</span></code> is designed to return the input value if a query is True, and
+<code class="docutils literal"><span class="pre">False</span></code> if query is False. This way it can be very easily used in chained
+filters. To use the filter, pass a string to it:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span>{{ &#39;192.0.2.0&#39; | ipaddr }}
+</pre></div>
+</div>
+<p>You can also pass the values as variables:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">{{</span> <span class="nv">myvar | ipaddr</span> <span class="p p-Indicator">}}</span>
+</pre></div>
+</div>
+<p>Here are some example tests of various input strings:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># These values are valid IP addresses or network ranges</span>
+<span class="s">&#39;192.168.0.1&#39;</span>       <span class="l l-Scalar l-Scalar-Plain">-&gt; 192.168.0.1</span>
+<span class="l l-Scalar l-Scalar-Plain">&#39;192.168.32.0/24&#39;   -&gt; 192.168.32.0/24</span>
+<span class="l l-Scalar l-Scalar-Plain">&#39;fe80::100/10&#39;      -&gt; fe80::100/10</span>
+<span class="l l-Scalar l-Scalar-Plain">45443646733         -&gt; ::a:94a7:50d</span>
+<span class="l l-Scalar l-Scalar-Plain">&#39;523454/24&#39;         -&gt; 0.7.252.190/24</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># Values that are not valid IP addresses or network ranges</span><span class="p p-Indicator">:</span>
+<span class="s">&#39;localhost&#39;</span>         <span class="l l-Scalar l-Scalar-Plain">-&gt; False</span>
+<span class="l l-Scalar l-Scalar-Plain">True                -&gt; False</span>
+<span class="s">&#39;space</span><span class="nv"> </span><span class="s">bar&#39;</span>         <span class="l l-Scalar l-Scalar-Plain">-&gt; False</span>
+<span class="l l-Scalar l-Scalar-Plain">False               -&gt; False</span>
+<span class="s">&#39;&#39;</span>                  <span class="l l-Scalar l-Scalar-Plain">-&gt; False</span>
+<span class="s">&#39;:&#39;</span>                 <span class="l l-Scalar l-Scalar-Plain">-&gt; False</span>
+<span class="s">&#39;fe80:/10&#39;</span>          <span class="l l-Scalar l-Scalar-Plain">-&gt; False</span>
+</pre></div>
+</div>
+<p>Sometimes you need either IPv4 or IPv6 addresses. To filter only for particular
+type, <code class="docutils literal"><span class="pre">ipaddr()</span></code> filter has two &#8220;aliases&#8221;, <code class="docutils literal"><span class="pre">ipv4()</span></code> and <code class="docutils literal"><span class="pre">ipv6()</span></code>.</p>
+<p>Example us of an IPv4 filter:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">{{</span> <span class="nv">myvar | ipv4</span> <span class="p p-Indicator">}}</span>
+</pre></div>
+</div>
+<p>And similar example of an IPv6 filter:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="p p-Indicator">{{</span> <span class="nv">myvar | ipv6</span> <span class="p p-Indicator">}}</span>
+</pre></div>
+</div>
+<p>Here&#8217;s an example test to look for IPv4 addresses:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="s">&#39;192.168.0.1&#39;</span>       <span class="l l-Scalar l-Scalar-Plain">-&gt; 192.168.0.1</span>
+<span class="l l-Scalar l-Scalar-Plain">&#39;192.168.32.0/24&#39;   -&gt; 192.168.32.0/24</span>
+<span class="l l-Scalar l-Scalar-Plain">&#39;fe80::100/10&#39;      -&gt; False</span>
+<span class="l l-Scalar l-Scalar-Plain">45443646733         -&gt; False</span>
+<span class="l l-Scalar l-Scalar-Plain">&#39;523454/24&#39;         -&gt; 0.7.252.190/24</span>
+</pre></div>
+</div>
+<p>And the same data filtered for IPv6 addresses:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="s">&#39;192.168.0.1&#39;</span>       <span class="l l-Scalar l-Scalar-Plain">-&gt; False</span>
+<span class="l l-Scalar l-Scalar-Plain">&#39;192.168.32.0/24&#39;   -&gt; False</span>
+<span class="l l-Scalar l-Scalar-Plain">&#39;fe80::100/10&#39;      -&gt; fe80::100/10</span>
+<span class="l l-Scalar l-Scalar-Plain">45443646733         -&gt; ::a:94a7:50d</span>
+<span class="l l-Scalar l-Scalar-Plain">&#39;523454/24&#39;         -&gt; False</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="filtering-lists">
+<h2><a class="toc-backref" href="#topics">Filtering lists</a><a class="headerlink" href="#filtering-lists" title="Permalink to this headline">Â¶</a></h2>
+<p>You can filter entire lists - <code class="docutils literal"><span class="pre">ipaddr()</span></code> will return a list with values
+valid for a particular query:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># Example list of values</span>
+<span class="l l-Scalar l-Scalar-Plain">test_list = [&#39;192.24.2.1&#39;, &#39;host.fqdn&#39;, &#39;::1&#39;, &#39;192.168.32.0/24&#39;, &#39;fe80::100/10&#39;, True, &#39;&#39;, &#39;42540766412265424405338506004571095040/64&#39;]</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># {{ test_list | ipaddr }}</span>
+<span class="l l-Scalar l-Scalar-Plain">[&#39;192.24.2.1&#39;, &#39;::1&#39;, &#39;192.168.32.0/24&#39;, &#39;fe80::100/10&#39;, &#39;2001:db8:32c:faad::/64&#39;]</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># {{ test_list | ipv4 }}</span>
+<span class="l l-Scalar l-Scalar-Plain">[&#39;192.24.2.1&#39;, &#39;192.168.32.0/24&#39;]</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># {{ test_list | ipv6 }}</span>
+<span class="l l-Scalar l-Scalar-Plain">[&#39;::1&#39;, &#39;fe80::100/10&#39;, &#39;2001:db8:32c:faad::/64&#39;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="wrapping-ipv6-addresses-in-brackets">
+<h2><a class="toc-backref" href="#topics">Wrapping IPv6 addresses in [ ] brackets</a><a class="headerlink" href="#wrapping-ipv6-addresses-in-brackets" title="Permalink to this headline">Â¶</a></h2>
+<p>Some configuration files require IPv6 addresses to be &#8220;wrapped&#8221; in square
+brackets (<code class="docutils literal"><span class="pre">[</span> <span class="pre">]</span></code>). To accomplish that, you can use <code class="docutils literal"><span class="pre">ipwrap()</span></code> filter. It
+will wrap all IPv6 addresses and leave any other strings intact:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ test_list | ipwrap }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;192.24.2.1&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;host.fqdn&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;[::1]&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;192.168.32.0/24&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;[fe80::100]/10&#39;</span><span class="p p-Indicator">,</span> <span class="nv">True</span><span class="p p-Indicator">,</span> <span class="s">&#39;&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;[2001:db8:32c:faad::]/64&#39;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>As you can see, <code class="docutils literal"><span class="pre">ipwrap()</span></code> did not filter out non-IP address values, which is
+usually what you want when for example you are mixing IP addresses with
+hostnames. If you still want to filter out all non-IP address values, you can
+chain both filters together:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ test_list | ipaddr | ipwrap }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;192.24.2.1&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;[::1]&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;192.168.32.0/24&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;[fe80::100]/10&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;[2001:db8:32c:faad::]/64&#39;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="basic-queries">
+<h2><a class="toc-backref" href="#topics">Basic queries</a><a class="headerlink" href="#basic-queries" title="Permalink to this headline">Â¶</a></h2>
+<p>You can provide single argument to each <code class="docutils literal"><span class="pre">ipaddr()</span></code> filter. Filter will then
+treat it as a query and return values modified by that query. Lists will
+contain only values that you are querying for.</p>
+<p>Types of queries include:</p>
+<ul class="simple">
+<li>query by name: <code class="docutils literal"><span class="pre">ipaddr('address')</span></code>, <code class="docutils literal"><span class="pre">ipv4('network')</span></code>;</li>
+<li>query by CIDR range: <code class="docutils literal"><span class="pre">ipaddr('192.168.0.0/24')</span></code>, <code class="docutils literal"><span class="pre">ipv6('2001:db8::/32')</span></code>;</li>
+<li>query by index number: <code class="docutils literal"><span class="pre">ipaddr('1')</span></code>, <code class="docutils literal"><span class="pre">ipaddr('-1')</span></code>;</li>
+</ul>
+<p>If a query type is not recognized, Ansible will raise an error.</p>
+</div>
+<div class="section" id="getting-information-about-hosts-and-networks">
+<h2><a class="toc-backref" href="#topics">Getting information about hosts and networks</a><a class="headerlink" href="#getting-information-about-hosts-and-networks" title="Permalink to this headline">Â¶</a></h2>
+<p>Here&#8217;s our test list again:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># Example list of values</span>
+<span class="l l-Scalar l-Scalar-Plain">test_list = [&#39;192.24.2.1&#39;, &#39;host.fqdn&#39;, &#39;::1&#39;, &#39;192.168.32.0/24&#39;, &#39;fe80::100/10&#39;, True, &#39;&#39;, &#39;42540766412265424405338506004571095040/64&#39;]</span>
+</pre></div>
+</div>
+<p>Lets take above list and get only those elements that are host IP addresses,
+and not network ranges:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ test_list | ipaddr(&#39;address&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;192.24.2.1&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;::1&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;fe80::100&#39;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>As you can see, even though some values had a host address with a CIDR prefix,
+it was dropped by the filter. If you want host IP addresses with their correct
+CIDR prefixes (as is common with IPv6 addressing), you can use
+<code class="docutils literal"><span class="pre">ipaddr('host')</span></code> filter:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ test_list | ipaddr(&#39;host&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;192.24.2.1/32&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;::1/128&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;fe80::100/10&#39;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>Filtering by IP address types also works:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ test_list | ipv4(&#39;address&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;192.24.2.1&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="c1"># {{ test_list | ipv6(&#39;address&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;::1&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;fe80::100&#39;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>You can check if IP addresses or network ranges are accessible on a public
+Internet, or if they are in private networks:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ test_list | ipaddr(&#39;public&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;192.24.2.1&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;2001:db8:32c:faad::/64&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="c1"># {{ test_list | ipaddr(&#39;private&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;192.168.32.0/24&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;fe80::100/10&#39;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>You can check which values are specifically network ranges:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ test_list | ipaddr(&#39;net&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;192.168.32.0/24&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;2001:db8:32c:faad::/64&#39;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>You can also check how many IP addresses can be in a certain range:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ test_list | ipaddr(&#39;net&#39;) | ipaddr(&#39;size&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="nv">256</span><span class="p p-Indicator">,</span> <span class="nv">18446744073709551616L</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>By specifying a network range as a query, you can check if given value is in
+that range:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ test_list | ipaddr(&#39;192.0.0.0/8&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;192.24.2.1&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;192.168.32.0/24&#39;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>If you specify a positive or negative integer as a query, <code class="docutils literal"><span class="pre">ipaddr()</span></code> will
+treat this as an index and will return specific IP address from a network
+range, in the &#8216;host/prefix&#8217; format:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># First IP address (network address)</span>
+<span class="c1"># {{ test_list | ipaddr(&#39;net&#39;) | ipaddr(&#39;0&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;192.168.32.0/24&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;2001:db8:32c:faad::/64&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="c1"># Second IP address (usually gateway host)</span>
+<span class="c1"># {{ test_list | ipaddr(&#39;net&#39;) | ipaddr(&#39;1&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;192.168.32.1/24&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;2001:db8:32c:faad::1/64&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="c1"># Last IP address (broadcast in IPv4 networks)</span>
+<span class="c1"># {{ test_list | ipaddr(&#39;net&#39;) | ipaddr(&#39;-1&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;192.168.32.255/24&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;2001:db8:32c:faad:ffff:ffff:ffff:ffff/64&#39;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>You can also select IP addresses from a range by their index, from the start or
+end of the range:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ test_list | ipaddr(&#39;net&#39;) | ipaddr(&#39;200&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;192.168.32.200/24&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;2001:db8:32c:faad::c8/64&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="c1"># {{ test_list | ipaddr(&#39;net&#39;) | ipaddr(&#39;-200&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;192.168.32.56/24&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;2001:db8:32c:faad:ffff:ffff:ffff:ff38/64&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="c1"># {{ test_list | ipaddr(&#39;net&#39;) | ipaddr(&#39;400&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;2001:db8:32c:faad::190/64&#39;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-information-from-host-prefix-values">
+<h2><a class="toc-backref" href="#topics">Getting information from host/prefix values</a><a class="headerlink" href="#getting-information-from-host-prefix-values" title="Permalink to this headline">Â¶</a></h2>
+<p>Very frequently you use combination of IP addresses and subnet prefixes
+(&#8220;CIDR&#8221;), this is even more common with IPv6. <code class="docutils literal"><span class="pre">ipaddr()</span></code> filter can extract
+useful data from these prefixes.</p>
+<p>Here&#8217;s an example set of two host prefixes (with some &#8220;control&#8221; values):</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">host_prefix = [&#39;2001:db8:deaf:be11::ef3/64&#39;, &#39;192.0.2.48/24&#39;, &#39;127.0.0.1&#39;, &#39;192.168.0.0/16&#39;]</span>
+</pre></div>
+</div>
+<p>First, let&#8217;s make sure that we only work with correct host/prefix values, not
+just subnets or single IP addresses:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ test_list | ipaddr(&#39;host/prefix&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;2001:db8:deaf:be11::ef3/64&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;192.0.2.48/24&#39;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>In Debian-based systems, network configuration stored in <code class="docutils literal"><span class="pre">/etc/network/interfaces</span></code> file uses combination of IP address, network address, netmask and broadcast address to configure IPv4 network interface. We can get these values from single &#8216;host/prefix&#8217; combination:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span># Jinja2 template
+{% set ipv4_host = host_prefix | unique | ipv4(&#39;host/prefix&#39;) | first %}
+iface eth0 inet static
+    address   {{ ipv4_host | ipaddr(&#39;address&#39;) }}
+    network   {{ ipv4_host | ipaddr(&#39;network&#39;) }}
+    netmask   {{ ipv4_host | ipaddr(&#39;netmask&#39;) }}
+    broadcast {{ ipv4_host | ipaddr(&#39;broadcast&#39;) }}
+
+# Generated configuration file
+iface eth0 inet static
+    address   192.0.2.48
+    network   192.0.2.0
+    netmask   255.255.255.0
+    broadcast 192.0.2.255
+</pre></div>
+</div>
+<p>In above example, we needed to handle the fact that values were stored in
+a list, which is unusual in IPv4 networks, where only single IP address can be
+set on an interface. However, IPv6 networks can have multiple IP addresses set
+on an interface:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># Jinja2 template</span>
+<span class="l l-Scalar l-Scalar-Plain">iface eth0 inet6 static</span>
+  <span class="l l-Scalar l-Scalar-Plain">{% set ipv6_list = host_prefix | unique | ipv6(&#39;host/prefix&#39;) %}</span>
+  <span class="l l-Scalar l-Scalar-Plain">address {{ ipv6_list[0] }}</span>
+  <span class="l l-Scalar l-Scalar-Plain">{% if ipv6_list | length &gt; 1 %}</span>
+  <span class="l l-Scalar l-Scalar-Plain">{% for subnet in ipv6_list[1:] %}</span>
+  <span class="l l-Scalar l-Scalar-Plain">up   /sbin/ip address add {{ subnet }} dev eth0</span>
+  <span class="l l-Scalar l-Scalar-Plain">down /sbin/ip address del {{ subnet }} dev eth0</span>
+  <span class="l l-Scalar l-Scalar-Plain">{% endfor %}</span>
+  <span class="l l-Scalar l-Scalar-Plain">{% endif %}</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># Generated configuration file</span>
+<span class="l l-Scalar l-Scalar-Plain">iface eth0 inet6 static</span>
+  <span class="l l-Scalar l-Scalar-Plain">address 2001:db8:deaf:be11::ef3/64</span>
+</pre></div>
+</div>
+<p>If needed, you can extract subnet and prefix information from &#8216;host/prefix&#8217; value:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ host_prefix | ipaddr(&#39;host/prefix&#39;) | ipaddr(&#39;subnet&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;2001:db8:deaf:be11::/64&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;192.0.2.0/24&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="c1"># {{ host_prefix | ipaddr(&#39;host/prefix&#39;) | ipaddr(&#39;prefix&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="nv">64</span><span class="p p-Indicator">,</span> <span class="nv">24</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="converting-subnet-masks-to-cidr-notation">
+<h2><a class="toc-backref" href="#topics">Converting subnet masks to CIDR notation</a><a class="headerlink" href="#converting-subnet-masks-to-cidr-notation" title="Permalink to this headline">Â¶</a></h2>
+<p>Given a subnet in the form of network address and subnet mask, it can be converted into CIDR notation using <code class="docutils literal"><span class="pre">ipaddr()</span></code>.  This can be useful for converting Ansible facts gathered about network configuration from subnet masks into CIDR format:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">ansible_default_ipv4</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">{</span>
+    <span class="nv">address</span><span class="p p-Indicator">:</span> <span class="s">&quot;192.168.0.11&quot;</span><span class="p p-Indicator">,</span>
+    <span class="nv">alias</span><span class="p p-Indicator">:</span> <span class="s">&quot;eth0&quot;</span><span class="p p-Indicator">,</span>
+    <span class="nv">broadcast</span><span class="p p-Indicator">:</span> <span class="s">&quot;192.168.0.255&quot;</span><span class="p p-Indicator">,</span>
+    <span class="nv">gateway</span><span class="p p-Indicator">:</span> <span class="s">&quot;192.168.0.1&quot;</span><span class="p p-Indicator">,</span>
+    <span class="nv">interface</span><span class="p p-Indicator">:</span> <span class="s">&quot;eth0&quot;</span><span class="p p-Indicator">,</span>
+    <span class="nv">macaddress</span><span class="p p-Indicator">:</span> <span class="s">&quot;fa:16:3e:c4:bd:89&quot;</span><span class="p p-Indicator">,</span>
+    <span class="nv">mtu</span><span class="p p-Indicator">:</span> <span class="nv">1500</span><span class="p p-Indicator">,</span>
+    <span class="nv">netmask</span><span class="p p-Indicator">:</span> <span class="s">&quot;255.255.255.0&quot;</span><span class="p p-Indicator">,</span>
+    <span class="nv">network</span><span class="p p-Indicator">:</span> <span class="s">&quot;192.168.0.0&quot;</span><span class="p p-Indicator">,</span>
+    <span class="nv">type</span><span class="p p-Indicator">:</span> <span class="s">&quot;ether&quot;</span>
+<span class="p p-Indicator">}</span>
+</pre></div>
+</div>
+<p>First concatenate network and netmask:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">net_mask = &quot;{{ ansible_default_ipv4.network }}/{{ ansible_default_ipv4.netmask }}&quot;</span>
+<span class="l l-Scalar l-Scalar-Plain">&#39;192.168.0.0/255.255.255.0&#39;</span>
+</pre></div>
+</div>
+<p>This result can be canonicalised with <code class="docutils literal"><span class="pre">ipaddr()</span></code> to produce a subnet in CIDR format:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ net_mask | ipaddr(&#39;prefix&#39;) }}</span>
+<span class="s">&#39;24&#39;</span>
+
+<span class="c1"># {{ net_mask | ipaddr(&#39;net&#39;) }}</span>
+<span class="s">&#39;192.168.0.0/24&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ip-address-conversion">
+<h2><a class="toc-backref" href="#topics">IP address conversion</a><a class="headerlink" href="#ip-address-conversion" title="Permalink to this headline">Â¶</a></h2>
+<p>Here&#8217;s our test list again:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># Example list of values</span>
+<span class="l l-Scalar l-Scalar-Plain">test_list = [&#39;192.24.2.1&#39;, &#39;host.fqdn&#39;, &#39;::1&#39;, &#39;192.168.32.0/24&#39;, &#39;fe80::100/10&#39;, True, &#39;&#39;, &#39;42540766412265424405338506004571095040/64&#39;]</span>
+</pre></div>
+</div>
+<p>You can convert IPv4 addresses into IPv6 addresses:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ test_list | ipv4(&#39;ipv6&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;::ffff:192.24.2.1/128&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;::ffff:192.168.32.0/120&#39;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>Converting from IPv6 to IPv4 works very rarely:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ test_list | ipv6(&#39;ipv4&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;0.0.0.1/32&#39;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>But we can make double conversion if needed:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ test_list | ipaddr(&#39;ipv6&#39;) | ipaddr(&#39;ipv4&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="s">&#39;192.24.2.1/32&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;0.0.0.1/32&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;192.168.32.0/24&#39;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>You can convert IP addresses to integers, the same way that you can convert
+integers into IP addresses:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ test_list | ipaddr(&#39;address&#39;) | ipaddr(&#39;int&#39;) }}</span>
+<span class="p p-Indicator">[</span><span class="nv">3222798849</span><span class="p p-Indicator">,</span> <span class="nv">1</span><span class="p p-Indicator">,</span> <span class="s">&#39;3232243712/24&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;338288524927261089654018896841347694848/10&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;42540766412265424405338506004571095040/64&#39;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>You can convert IP addresses to PTR records:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {% for address in test_list | ipaddr %}</span>
+<span class="c1"># {{ address | ipaddr(&#39;revdns&#39;) }}</span>
+<span class="c1"># {% endfor %}</span>
+<span class="l l-Scalar l-Scalar-Plain">1.2.24.192.in-addr.arpa.</span>
+<span class="l l-Scalar l-Scalar-Plain">1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa.</span>
+<span class="l l-Scalar l-Scalar-Plain">0.32.168.192.in-addr.arpa.</span>
+<span class="l l-Scalar l-Scalar-Plain">0.0.1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa.</span>
+<span class="l l-Scalar l-Scalar-Plain">0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.d.a.a.f.c.2.3.0.8.b.d.0.1.0.0.2.ip6.arpa.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="converting-ipv4-address-to-6to4-address">
+<h2><a class="toc-backref" href="#topics">Converting IPv4 address to 6to4 address</a><a class="headerlink" href="#converting-ipv4-address-to-6to4-address" title="Permalink to this headline">Â¶</a></h2>
+<p><a class="reference external" href="javascript:if(confirm('https://en.wikipedia.org/wiki/6to4  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='https://en.wikipedia.org/wiki/6to4'" tppabs="https://en.wikipedia.org/wiki/6to4">6to4</a> tunnel is a way to access IPv6 Internet from IPv4-only network. If you
+have a public IPv4 address, you automatically can configure it&#8217;s IPv6
+equivalent in <code class="docutils literal"><span class="pre">2002::/16</span></code> network range - after conversion you will gain
+access to a <code class="docutils literal"><span class="pre">2002:xxxx:xxxx::/48</span></code> subnet which could be split into 65535
+<code class="docutils literal"><span class="pre">/64</span></code> subnets if needed.</p>
+<p>To convert your IPv4 address, just send it through <code class="docutils literal"><span class="pre">'6to4'</span></code> filter. It will
+be automatically converted to a router address (with <code class="docutils literal"><span class="pre">::1/48</span></code> host address):</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ &#39;193.0.2.0&#39; | ipaddr(&#39;6to4&#39;) }}</span>
+<span class="l l-Scalar l-Scalar-Plain">2002:c100:0200::1/48</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="subnet-manipulation">
+<h2><a class="toc-backref" href="#topics">Subnet manipulation</a><a class="headerlink" href="#subnet-manipulation" title="Permalink to this headline">Â¶</a></h2>
+<p><code class="docutils literal"><span class="pre">ipsubnet()</span></code> filter can be used to manipulate network subnets in several ways.</p>
+<p>Here is some example IP address and subnet:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">address = &#39;192.168.144.5&#39;</span>
+<span class="l l-Scalar l-Scalar-Plain">subnet  = &#39;192.168.0.0/16&#39;</span>
+</pre></div>
+</div>
+<p>To check if a given string is a subnet, pass it through the filter without any
+arguments. If given string is an IP address, it will be converted into
+a subnet:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ address | ipsubnet }}</span>
+<span class="l l-Scalar l-Scalar-Plain">192.168.144.5/32</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># {{ subnet | ipsubnet }}</span>
+<span class="l l-Scalar l-Scalar-Plain">192.168.0.0/16</span>
+</pre></div>
+</div>
+<p>If you specify a subnet size as first parameter of <code class="docutils literal"><span class="pre">ipsubnet()</span></code> filter, and
+subnet size is <strong>smaller than current one</strong>, you will get number of subnets
+a given subnet can be split into:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ subnet | ipsubnet(20) }}</span>
+<span class="l l-Scalar l-Scalar-Plain">16</span>
+</pre></div>
+</div>
+<p>Second argument of <code class="docutils literal"><span class="pre">ipsubnet()</span></code> filter is an index number; by specifying it
+you can get new subnet with specified size:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># First subnet</span>
+<span class="c1"># {{ subnet | ipsubnet(20, 0) }}</span>
+<span class="l l-Scalar l-Scalar-Plain">192.168.0.0/20</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># Last subnet</span>
+<span class="l l-Scalar l-Scalar-Plain"># {{ subnet | ipsubnet(20, -1) }}</span>
+<span class="l l-Scalar l-Scalar-Plain">192.168.240.0/20</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># Fifth subnet</span>
+<span class="l l-Scalar l-Scalar-Plain"># {{ subnet | ipsubnet(20, 5) }}</span>
+<span class="l l-Scalar l-Scalar-Plain">192.168.80.0/20</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># Fifth to last subnet</span>
+<span class="l l-Scalar l-Scalar-Plain"># {{ subnet | ipsubnet(20, -5) }}</span>
+<span class="l l-Scalar l-Scalar-Plain">192.168.176.0/20</span>
+</pre></div>
+</div>
+<p>If you specify an IP address instead of a subnet, and give a subnet size as
+a first argument, <code class="docutils literal"><span class="pre">ipsubnet()</span></code> filter will instead return biggest subnet that
+contains a given IP address:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ address | ipsubnet(20) }}</span>
+<span class="l l-Scalar l-Scalar-Plain">192.168.128.0/18</span>
+</pre></div>
+</div>
+<p>By specifying an index number as a second argument, you can select smaller and
+smaller subnets:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># First subnet</span>
+<span class="c1"># {{ subnet | ipsubnet(18, 0) }}</span>
+<span class="l l-Scalar l-Scalar-Plain">192.168.128.0/18</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># Last subnet</span>
+<span class="l l-Scalar l-Scalar-Plain"># {{ subnet | ipsubnet(18, -1) }}</span>
+<span class="l l-Scalar l-Scalar-Plain">192.168.144.4/31</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># Fifth subnet</span>
+<span class="l l-Scalar l-Scalar-Plain"># {{ subnet | ipsubnet(18, 5) }}</span>
+<span class="l l-Scalar l-Scalar-Plain">192.168.144.0/23</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># Fifth to last subnet</span>
+<span class="l l-Scalar l-Scalar-Plain"># {{ subnet | ipsubnet(18, -5) }}</span>
+<span class="l l-Scalar l-Scalar-Plain">192.168.144.0/27</span>
+</pre></div>
+</div>
+<p>You can use <code class="docutils literal"><span class="pre">ipsubnet()</span></code> filter with <code class="docutils literal"><span class="pre">ipaddr()</span></code> filter to for example split
+given <code class="docutils literal"><span class="pre">/48</span></code> prefix into smaller, <code class="docutils literal"><span class="pre">/64</span></code> subnets:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># {{ &#39;193.0.2.0&#39; | ipaddr(&#39;6to4&#39;) | ipsubnet(64, 58820) | ipaddr(&#39;1&#39;) }}</span>
+<span class="l l-Scalar l-Scalar-Plain">2002:c100:200:e5c4::1/64</span>
+</pre></div>
+</div>
+<p>Because of the size of IPv6 subnets, iteration over all of them to find the
+correct one may take some time on slower computers, depending on the size
+difference between subnets.</p>
+</div>
+<div class="section" id="mac-address-filter">
+<h2><a class="toc-backref" href="#topics">MAC address filter</a><a class="headerlink" href="#mac-address-filter" title="Permalink to this headline">Â¶</a></h2>
+<p>You can use <code class="docutils literal"><span class="pre">hwaddr()</span></code> filter to check if a given string is a MAC address or
+convert it between various formats. Examples:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="c1"># Example MAC address</span>
+<span class="l l-Scalar l-Scalar-Plain">macaddress = &#39;1a:2b:3c:4d:5e:6f&#39;</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># Check if given string is a MAC address</span>
+<span class="l l-Scalar l-Scalar-Plain"># {{ macaddress | hwaddr }}</span>
+<span class="l l-Scalar l-Scalar-Plain">1a:2b:3c:4d:5e:6f</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># Convert MAC address to PostgreSQL format</span>
+<span class="l l-Scalar l-Scalar-Plain"># {{ macaddress | hwaddr(&#39;pgsql&#39;) }}</span>
+<span class="l l-Scalar l-Scalar-Plain">1a2b3c:4d5e6f</span>
+
+<span class="l l-Scalar l-Scalar-Plain"># Convert MAC address to Cisco format</span>
+<span class="l l-Scalar l-Scalar-Plain"># {{ macaddress | hwaddr(&#39;cisco&#39;) }}</span>
+<span class="l l-Scalar l-Scalar-Plain">1a2b.3c4d.5e6f</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="playbooks-1.html" tppabs="http://docs.ansible.com/ansible/playbooks.html"><span class="doc">Playbooks</span></a></dt>
+<dd>An introduction to playbooks</dd>
+<dt><a class="reference internal" href="playbooks_filters-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_filters.html"><span class="doc">Jinja2 filters</span></a></dt>
+<dd>Introduction to Jinja2 filters and their uses</dd>
+<dt><a class="reference internal" href="playbooks_conditionals-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_conditionals.html"><span class="doc">Conditionals</span></a></dt>
+<dd>Conditional statements in playbooks</dd>
+<dt><a class="reference internal" href="playbooks_variables-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_variables.html"><span class="doc">Variables</span></a></dt>
+<dd>All about variables</dd>
+<dt><a class="reference internal" href="playbooks_loops-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_loops.html"><span class="doc">Loops</span></a></dt>
+<dd>Looping in playbooks</dd>
+<dt><a class="reference internal" href="playbooks_roles-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_roles.html"><span class="doc">Playbook Roles and Include Statements</span></a></dt>
+<dd>Playbook organization by roles</dd>
+<dt><a class="reference internal" href="playbooks_best_practices-1.html" tppabs="http://docs.ansible.com/ansible/playbooks_best_practices.html"><span class="doc">Best Practices</span></a></dt>
+<dd>Best practices in playbooks</dd>
+<dt><a class="reference external" href="javascript:if(confirm('http://groups.google.com/group/ansible-devel  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://groups.google.com/group/ansible-devel'" tppabs="http://groups.google.com/group/ansible-devel">User Mailing List</a></dt>
+<dd>Have a question?  Stop by the google group!</dd>
+<dt><a class="reference external" href="javascript:if(confirm('http://irc.freenode.net/  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://irc.freenode.net/'" tppabs="http://irc.freenode.net/">irc.freenode.net</a></dt>
+<dd>#ansible IRC chat channel</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div id="search-results"><gcse:searchresults-only></div>
+          <footer>
+  
+
+  <hr/>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','st-1.js'/*tpa=http://s.swiftypecdn.com/install/v2/st.js*/,'_st');
+
+  _st('install','yABGvz2N8PwcwBxyfzUc','2.0.0');
+</script>
+
+  <p>
+  Copyright Â© 2016 Red Hat, Inc.
+  <br>
+    Last updated on Jun 22, 2016.
+  </p>
+<p>
+Ansible docs are generated from <a href="javascript:if(confirm('https://github.com/ansible/ansible  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='https://github.com/ansible/ansible'" tppabs="https://github.com/ansible/ansible">GitHub sources</A> using <A HREF="javascript:if(confirm('http://sphinx-doc.org/  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://sphinx-doc.org/'" tppabs="http://sphinx-doc.org/">Sphinx</A> using a theme provided by <a href="javascript:if(confirm('http://readthedocs.org/  \n\n¸ÃÎÄ¼þÎÞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·þÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://readthedocs.org/'" tppabs="http://readthedocs.org/">Read the Docs</a>. 
+</p>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+<!-- begin analytics -->
+<script type="text/javascript">
+var _hsq = _hsq || [];
+_hsq.push(["setContentType", "standard-page"]);
+        (function(d,s,i,r) {
+        if (d.getElementById(i)){return;}
+        var n = d.createElement(s),e = document.getElementsByTagName(s)[0];
+        n.id=i;n.src = '//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/330046.js';
+        e.parentNode.insertBefore(n, e);
+        })(document, "script", "hs-analytics",300000);
+</script>
+<!-- end analytics -->
+
+</body>
+</html>

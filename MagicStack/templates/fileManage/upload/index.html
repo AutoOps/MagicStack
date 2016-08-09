@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+{% load mytags %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="btn-group">
+                                <button id="btn_upload" class="btn sbold green" data-toggle="modal">
+                                    上传文件
+                                    <i class="icon-cloud-upload"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-bordered table-hover table-checkable order-column"
+                       id="table_upload">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>上传时间</th>
+                        <th>上传目录</th>
+                        <th>上传结果</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal_upload" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">上传文件</h4>
+            </div>
+            <div class="modal-body">
+                <form enctype="multipart/form-data" action="{% url 'file_upload' %}" id="form1" class="form-horizontal" method="post">
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            You have some form errors. Please check below.
+                        </div>
+                        <div class="alert alert-success display-hide">
+                            <button class="close" data-close="alert"></button>
+                            Your form validation is successful!
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">选择主机</label>
+
+                            <div class="col-md-4">
+                                <select class="bs-select form-control" name="proxy">
+                                    <option></option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-5">
+                                <select name="proxy_host" class="form-control" multiple="multiple">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">上传目录</label>
+
+                            <div class="col-md-9">
+                                <input type="text" name="path" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">选择文件</label>
+
+                            <div class="col-md-9">
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="input-group input-large">
+                                        <div class="form-control uneditable-input input-fixed input-medium"
+                                             data-trigger="fileinput">
+                                            <i class="fa fa-file fileinput-exists"></i>&nbsp;
+                                            <span class="fileinput-filename"> </span>
+                                        </div>
+                                        <span class="input-group-addon btn default btn-file">
+                                            <span class="fileinput-new"> 选择文件 </span>
+                                            <span class="fileinput-exists"> 选择文件 </span>
+                                            <input type="file" name="file"> </span>
+                                        <a href="javascript:;" class="input-group-addon btn red fileinput-exists"
+                                           data-dismiss="fileinput"> 删除 </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn green" id="submit">上传</button>
+                <button type="button" class="btn dark btn-outline" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+{% endblock %}
+
+{% block self_head_css_js %}
+{% include 'fileManage/css.html' %}
+{% endblock %}
+
+{% block self_footer_js %}
+{% include 'fileManage/js.html' %}
+<script>
+    $(document).ready(function () {
+        $("#submit").click(function(){
+            $("#form1").submit();
+        });
+
+        $("#btn_upload").click(function () {
+            // 获取所有proxy，并获取当前proxy的host列表
+            $.ajax({
+                type: "get",
+                url: "{% url 'file_upload' %}",
+                datatype: "json",
+                data: { "once": "once" },
+                success: function (proxys) {
+                    proxys = $.parseJSON(proxys);
+                    $("select[name='proxy']").empty();
+                    $.each(proxys, function (idx, proxy) {
+                        $("select[name='proxy']").append("<option value=" +
+                                proxy.id + ">" +
+                                proxy.proxy_name + "</option>");
+                    });
+
+                    $("select[name='proxy']").trigger('change');
+
+                }
+            });
+            $('#modal_upload').modal({backdrop: 'static', keyboard: false});
+        });
+
+        $("select[name='proxy']").change(function (e, params) {
+            $.ajax({
+                type: "post",
+                url: "{% url 'get_host_for_proxy' %}",
+                dataType: "json",
+                data: {"proxy_id": $("select[name='proxy'] option:selected").val()},
+                success: function (hosts) {
+                    $("select[name='proxy_host']").empty();
+                    $.each(hosts, function (i, host) {
+                        $("select[name='proxy_host']").append("<option value=" + host.id + ">" + host.name + "</option>");
+                    });
+                }
+            });
+
+        });
+
+
+        <!-- 初始化首页表单数据 -->
+        var table_back = $("#table_upload").dataTable({
+            "destroy": true,                        //如果这个tab初始化过，将会先销毁再初始化
+            "bAutoWidth": false,                    //不自动计算列宽度
+            "aoColumns": [                          //设定各列宽度
+                {
+                    "mData": "id",           //指定列名，在后台程序回显时，根据名字查找
+                    "sWidth": "15%",
+                    "bSortable": false,
+                    "bSearchable": false
+                },
+                {
+                    "mData": "create_time",
+                    "sWidth": "15%",
+                    "bSortable": false,
+                    "bSearchable": false
+                },
+                {
+                    "mData": "path",
+                    "sWidth": "15%",
+                    "bSortable": false,
+                    "bSearchable": false
+                },
+                {
+                    "mData": "result",
+                    "sWidth": "55%",
+                    "bSortable": false,
+                    "bSearchable": false
+                },
+            ],
+            "aaSorting": [
+            ], //默认排序
+            "bProcessing": true,                    //加载数据时显示正在加载信息
+            "bServerSide": true,                    //指定从服务器端获取数据
+            "bFilter": true,                       //不使用过滤功能
+            "bLengthChange": true,                 //改变每页显示数量
+            "sAjaxSource": "{% url 'file_upload_list' %}",//获取数据的url
+            //获取数据的处理函数
+            "fnServerData": function (sSource, aoData, fnCallback, oSettings) {
+                $.ajax({
+                    type: 'POST',
+                    url: sSource,
+                    dataType: "json",
+                    data: aoData,
+                    success: function (resp) {
+                        fnCallback(resp);
+                    }
+                });
+            },
+            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                $('td:eq(0)', nRow).html(aData.id);
+                $('td:eq(1)', nRow).html(aData.create_time);
+                $('td:eq(2)', nRow).html(aData.path);
+                $('td:eq(3)', nRow).html(aData.result);
+            },
+
+            // 此处参考的是table-datables-managed.min.js
+            language: {
+                aria: {
+                    sortAscending: ": activate to sort column ascending",
+                    sortDescending: ": activate to sort column descending"
+                },
+                emptyTable: "No data available in table",
+                info: "Showing _START_ to _END_ of _TOTAL_ records",
+                infoEmpty: "No records found",
+                infoFiltered: "(filtered1 from _MAX_ total records)",
+                lengthMenu: "Show _MENU_",
+                search: "Search:",
+                zeroRecords: "No matching records found",
+                paginate: {
+                    previous: "Prev",
+                    next: "Next",
+                    last: "Last",
+                    first: "First"
+                }
+            },
+            pagingType: "bootstrap_full_number",
+            lengthMenu: [
+                [5, 15, 20, -1],
+                [5, 15, 20, "All"]
+            ],
+            pageLength: 5
+        });
+    });
+</script>
+{% endblock %}

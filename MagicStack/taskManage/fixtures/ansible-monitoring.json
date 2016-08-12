@@ -1,0 +1,338 @@
+[
+    {
+        "model": "taskManage.module",
+        "pk": 26,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"airbrake_deployment",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 27,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"bigpanda",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 28,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"boundary_meter",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 29,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"circonus_annotation",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 30,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"datadog_event",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 31,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"datadog_monitor",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 32,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"honeybadger_deployment",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 33,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"librato_annotation",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 34,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"logentries",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 35,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"logicmonitor",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 36,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"logicmonitor_facts",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 37,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"monit",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 38,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"nagios",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 39,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"newrelic_deployment",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 40,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"pagerduty",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 41,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"pagerduty_alert",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 42,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"pingdom",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 43,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"rollbar_deployment",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 44,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"sensu_check",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 45,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"sensu_subscription",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 46,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"stackdriver",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 47,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"statusio_maintenance",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 48,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"uptimerobot",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 49,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"zabbix_group",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 50,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"zabbix_host",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 51,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"zabbix_hostmacro",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 52,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"zabbix_maintenance",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 53,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "monitoring",
+            "module_name":"zabbix_screen",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    }
+]

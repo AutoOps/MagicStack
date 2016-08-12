@@ -1,0 +1,242 @@
+[
+    {
+        "model": "taskManage.module",
+        "pk": 132,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"campfire",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 134,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"flowdock",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 135,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"grove",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 136,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"hall",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 137,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"hipchat",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 138,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"irc",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 139,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"jabber",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 140,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"mail",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 144,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"mqtt",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 145,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"nexmo",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 146,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"osx_say",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 147,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"pushbullet",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 148,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"pushover",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 149,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"rocketchat",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 150,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"sendgrid",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 151,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"slack",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 152,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"sns",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 153,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"telegram",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 154,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"twilio",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 155,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "notification",
+            "module_name":"typetalk",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    }
+]

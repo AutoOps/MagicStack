@@ -1,0 +1,234 @@
+[
+    {
+        "model": "taskManage.module",
+        "pk": 1286,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database ", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"influxdb_database"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1287,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"influxdb_retention_policy"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1288,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"mongodb_parameter"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1289,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"mongodb_user"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1290,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"redis"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1291,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database ", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"riak"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1292,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"mssql_db"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1293,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"mysql_db"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1294,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"mysql_replication"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1295,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"mysql_user"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1296,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database ", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"mysql_variables"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1297,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"postgresql_db"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1298,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"postgresql_ext"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1299,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"postgresql_lang"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1300,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"postgresql_privs"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1301,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database ", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"postgresql_user"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1302,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vertica_configuration"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1303,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vertica_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1304,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vertica_role"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1305,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ipmi_boot"}
+    },
+    
+    {
+        "model": "taskManage.module",
+        "pk": 1306,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "database", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ipmi_power"}
+    }
+]

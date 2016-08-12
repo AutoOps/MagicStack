@@ -1,0 +1,68 @@
+[
+    {
+        "model": "taskManage.module",
+        "pk": 1275,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "clustering ", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"consul"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1276,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "clustering", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"consul_acl"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1277,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "clustering", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"consul_kv"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1278,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "clustering", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"consul_session"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1279,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "clustering", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"kubernetes"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1280,
+        "fields": {
+            "task_type": "ansible",
+             "group_name": "clustering", 
+           "module_statu": "00", 
+             "module_validation":"", 
+            "comment":"",  
+            "module_name":"znode"}
+    }
+]

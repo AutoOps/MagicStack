@@ -1,0 +1,57 @@
+[
+    {
+        "model": "taskManage.module",
+        "pk": 1281,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "command ", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"command"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1282,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "command", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"except"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1283,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "command", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"raw"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1284,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "command", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"script"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1285,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "command", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"shell"}
+    }
+]

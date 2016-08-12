@@ -1,0 +1,458 @@
+[
+    {
+        "model": "taskManage.module",
+        "pk": 279,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_acl",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 280,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_acl_inheritance",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 281,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_chocolatey",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 282,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_copy",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 283,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_dotnet_ngen",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 284,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_environment",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 285,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_feature",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 286,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_file",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 287,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_file_version",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 288,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_firewall_rule",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 289,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_get_url",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 290,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_group",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 291,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_iis_virtualdirectory",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 292,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_iis_webapplication",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 293,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_iis_webapppool",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 294,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_iis_webbinding",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 295,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_iis_website",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 296,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_lineinfile",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 297,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_msi",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 298,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_nssm",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 299,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_owner",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 300,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_package",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 301,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_ping",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 302,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_reboot",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 303,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_regedit",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 304,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_regmerge",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 305,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_robocopy",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 306,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_scheduled_task",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 307,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_service",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 308,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_share",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 309,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_stat",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 310,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_template",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 311,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_timezone",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 312,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_unzip",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 313,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_updates",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 314,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_uri",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 315,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_user",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 316,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "windows",
+            "module_name":"win_webpicmd",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    }
+]

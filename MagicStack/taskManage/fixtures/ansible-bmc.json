@@ -1,0 +1,24 @@
+[
+    {
+        "model": "taskManage.module",
+        "pk": 1307,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "bmc ", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"influxdb_database"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1308,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "bmc", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"influxdb_retention_policy"}
+    }
+]

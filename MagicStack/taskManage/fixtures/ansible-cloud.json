@@ -1,0 +1,3017 @@
+[
+    {
+        "model": "taskManage.module",
+        "pk": 1000,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"xenserver_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1001,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cloudformation"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1272,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cloudtrail"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1002,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"dynamodb_table"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1003,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1004,
+        "fields": {
+            "task_type": "ansible",
+             "group_name": "cloud", 
+           "module_statu": "00", 
+             "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_ami"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1005,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_ami_copy"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1006,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_ami_find"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1007,
+        "fields": {
+            "task_type": "ansible",
+             "group_name": "cloud", 
+           "module_statu": "00", 
+             "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_ami_search"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1008,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_asg"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1009,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_customer_gateway"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1010,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_eip"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1011,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_elb"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1012,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_elb_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1013,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_elb_lb"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1014,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_eni"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1015,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_eni_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1016,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1017,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_group"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1018,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_key"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1019,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_lc"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1020,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_metric_alarm"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1021,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_remote_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1022,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_scaling_policy"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1023,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_snapshot"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1024,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_snapshot_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1025,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_tag"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1026,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_vol"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1027,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_vol_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1028,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_vpc"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1029,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_vpc_dhcp_options"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1030,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_vpc_igw"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1031,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_vpc_nacl"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1032,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_vpc_nacl_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1033,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_vpc_nat_gateway"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1034,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_vpc_net"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1035,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_vpc_net_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1036,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_vpc_peer"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1037,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_vpc_route_table"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1038,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_vpc_route_table_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1039,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_vpc_subnet"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1040,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_vpc_subnet_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1041,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_vpc_vgw"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1042,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ec2_win_password"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1043,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ecs_cluster"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1044,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ecs_service"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1045,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ecs_service_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1046,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ecs_task"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1047,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ecs_taskdefinition"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1048,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"elasticache"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1049,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"elasticache_subnet_group"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1050,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"iam"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1051,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"iam_cert"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1052,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"iam_mfa_device_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1053,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"iam_policy"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1054,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"iam_server_certificate_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1055,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rds"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1056,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rds_param_group"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1057,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rds_subnet_group"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1058,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"route53"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1059,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"route53_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1060,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"route53_health_check"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1061,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"route53_zone"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1062,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"s3"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1063,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"s3_bucket"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1064,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"s3_lifecycle"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1065,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"s3_logging"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1066,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"sns_topic"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1067,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"sqs_queue"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1068,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"sts_assume_role"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1069,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"sts_session_token"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1070,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"azure"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1071,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"azure_rm_deployment"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1072,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"azure_rm_networkinterface"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1073,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"azure_rm_networkinterface_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1074,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"azure_rm_publicipaddress"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1075,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"azure_rm_publicipaddress_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1076,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"azure_rm_resourcegroup"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1077,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"azure_rm_resourcegroup_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1078,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"azure_rm_securitygroup"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1079,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"azure_rm_securitygroup_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1080,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"azure_rm_storageaccount"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1081,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"azure_rm_storageaccount_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1082,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"azure_rm_storageblob"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1083,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"azure_rm_subnet"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1084,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"azure_rm_virtualmachine"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1085,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"azure_rm_virtualmachineimage_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1086,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"azure_rm_virtualnetwork"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1087,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"azure_rm_virtualnetwork_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1088,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"clc_aa_policy"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1089,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"clc_alert_policy"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1090,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"clc_blueprint_package"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1091,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"clc_firewall_policy"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1092,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"clc_group"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1093,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"clc_loadbalancer"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1094,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"clc_modify_server"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1095,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"clc_publicip"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1096,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"clc_server"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1097,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"clc_server_snapshot"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1098,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_account"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1099,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_affinitygroup"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1100,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_cluster"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1101,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_configuration"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1102,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_domain"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1103,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1104,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_firewall"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1105,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_instance"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1106,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_instance_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1107,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_instancegroup"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1108,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_ip_address"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1109,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_iso"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1110,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_loadbalancer_rule"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1111,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_loadbalancer_rule_member"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1112,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_network"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1113,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_pod"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1114,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_portforward"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1115,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_project"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1116,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_resourcelimit"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1117,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_router"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1118,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_securitygroup"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1119,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_securitygroup_rule"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1120,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_snapshot_policy"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1121,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_sshkeypair"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1122,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_staticnat"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1123,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_template"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1124,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_user"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1125,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_vmsnapshot"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1126,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_volume"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1127,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_zone"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1128,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"cs_zone_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1129,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"digital_ocean"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1130,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"digital_ocean_domain"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1131,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"digital_ocean_sshkey"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1132,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"docker"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1133,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"docker_container"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1134,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"docker_image"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1135,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"docker_image_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1136,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"docker_login"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1137,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"docker_service"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1138,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"gc_storage"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1139,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"gcdns_record"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1140,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"gcdns_zone"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1141,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"gce"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1142,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"gce_img"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1143,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"gce_lb"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1144,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"gce_net"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1145,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"gce_pd"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1146,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"gce_tag"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1147,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"linode"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1148,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"lxc_container"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1149,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"lxd_container"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1150,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"lxd_profile"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1151,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ovirt"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1152,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"proxmox"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1153,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"proxmox_template"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1154,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"virt"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1155,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"virt_net"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1156,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"virt_pool"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1157,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"glance_image"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1158,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"keystone_user"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1159,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"nova_compute"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1160,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"nova_keypair"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1161,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_auth"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1162,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_client_config"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1163,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_flavor_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1164,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_floating_ip"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1165,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_group"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1166,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_image"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1167,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_image_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1168,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_ironic"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1273,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_ironic_inspect"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1169,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_ironic_node"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1170,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_keypair"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1171,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_keystone_domain"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1172,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_keystone_domain_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1173,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_keystone_role"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1174,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_keystone_service"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1175,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_network"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1176,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_networks_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1177,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_nova_flavor"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1178,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_object"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1179,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_port"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1180,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_port_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1181,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_project"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1182,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_project_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1183,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_recordset"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1184,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_router"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1185,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_security_group"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1186,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_security_group_rule"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1187,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_server"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1188,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_server_actions"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1189,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_server_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1190,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_server_volume"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1191,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_stack"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1192,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_subnet"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1193,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_subnets_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1194,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_user"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1195,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_user_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1196,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_user_group"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1197,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_user_role"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1198,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_volume"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1199,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"os_zone"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1201,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"quantum_floating_ip"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1202,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"quantum_floating_ip_associate"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1203,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"quantum_network"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1204,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"quantum_router"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1205,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"quantum_router_gateway"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1206,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"quantum_router_interface"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1207,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"quantum_subnet"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1208,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"ovh_ip_loadbalancing_backend"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1209,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"profitbricks"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1210,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"profitbricks_datacenter"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1211,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"profitbricks_nic"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1212,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"profitbricks_volume"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1213,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"profitbricks_volume_attachments"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1214,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1215,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_cbs"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1216,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_cbs_attachments"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1217,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_cdb"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1218,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_cdb_database"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1219,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_cdb_user"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1220,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_clb"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1274,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_clb_nodes"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1221,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_clb_ssl"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1222,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_dns"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1223,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_dns_record"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1224,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1225,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_files"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1226,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_files_objects"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1227,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_identity"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1228,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_keypair"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1229,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_meta"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1230,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_mon_alarm"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1231,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_mon_check"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1232,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_mon_entity"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1233,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_mon_notification"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1234,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_mon_notification_plan"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1235,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_network"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1236,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_queue"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1237,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_scaling_group"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1238,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"rax_scaling_policy"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1239,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"smartos_image_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1240,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"sl_vm"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1241,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vca_fw"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1242,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vca_nat"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1243,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vca_vapp"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1244,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_cluster"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1245,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_datacenter"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1246,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_dns_config"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1247,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_dvs_host"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1248,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_dvs_portgroup"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1249,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_dvswitch"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1250,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_guest"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1251,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_host"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1252,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_local_user_manager"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1253,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_maintenancemode"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1254,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_migrate_vmk"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1255,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_portgroup"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1256,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_target_canonical_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1257,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_vm_facts"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1258,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_vm_shell"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1259,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_vm_vss_dvs_migrate"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1260,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_vmkernel"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1261,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_vmkernel_ip_config"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1262,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_vmotion"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1263,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_vsan_cluster"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1264,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vmware_vswitch"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1265,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vsphere_copy"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1266,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"vsphere_guest"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1267,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"webfaction_app"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1268,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"webfaction_db"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1269,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"webfaction_domain"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1270,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "cloud", 
+            "module_statu": "00", 
+            "module_validation":"", 
+            "comment":"",  
+            "module_name":"webfaction_mailbox"}
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 1271,
+        "fields": {
+            "task_type": "ansible",
+             "group_name": "cloud", 
+           "module_statu": "00", 
+             "module_validation":"", 
+            "comment":"",  
+           "module_name":"webfaction_site"
+        }
+    }
+]

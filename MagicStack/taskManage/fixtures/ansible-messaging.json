@@ -1,0 +1,98 @@
+[
+    {
+        "model": "taskManage.module",
+        "pk": 18,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "messaging",
+            "module_name":"rabbitmq_binding",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 19,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "messaging",
+            "module_name":"rabbitmq_exchange",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 20,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "messaging",
+            "module_name":"rabbitmq_parameter",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 21,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "messaging",
+            "module_name":"rabbitmq_plugin",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 22,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "messaging",
+            "module_name":"rabbitmq_policy",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 23,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "messaging",
+            "module_name":"rabbitmq_queue",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 24,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "messaging",
+            "module_name":"rabbitmq_user",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 25,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "messaging",
+            "module_name":"rabbitmq_vhost",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    }
+]

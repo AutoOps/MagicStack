@@ -1,0 +1,122 @@
+[
+    {
+        "model": "taskManage.module",
+        "pk": 259,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "utilities",
+            "module_name":"accelerate",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 260,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "utilities",
+            "module_name":"fireball",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 261,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "utilities",
+            "module_name":"assert",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 262,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "utilities",
+            "module_name":"async_status",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 263,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "utilities",
+            "module_name":"debug",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 264,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "utilities",
+            "module_name":"fail",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 265,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "utilities",
+            "module_name":"include_vars",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 266,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "utilities",
+            "module_name":"pause",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 267,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "utilities",
+            "module_name":"set_fact",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 268,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "utilities",
+            "module_name":"wait_for",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    }
+]

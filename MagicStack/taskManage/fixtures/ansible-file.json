@@ -1,0 +1,183 @@
+[
+    {
+        "model": "taskManage.module",
+        "pk": 1,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "files",
+            "module_name": "acl",
+            "module_statu": "00",
+            "module_validation": "",
+            "comment": ""
+
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 2,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "files",
+            "module_name": "copy",
+            "module_statu": "00",
+            "module_validation": "",
+            "comment": ""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 3,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "files",
+            "module_name": "fetch",
+            "module_statu": "00",
+            "module_validation": "",
+            "comment": "<br>dest: 保存文件的目录。例如：dest的目录是/backup，而src的目录是/etc/profile。那么这个文件就会保存到/backup/host.example.com/etc/profile下。</br><br>src: 获取远程系统的文件。必须是文件，不能是一个目录。</br><br>fail_on_missing: 如果源文件不存在值设置为‘yes’时，这个任务会失败</br>"
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 4,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "files",
+            "module_name": "file",
+            "module_statu": "00",
+            "module_validation": "",
+            "comment": ""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 5,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "files",
+            "module_name": "archive",
+            "module_statu": "00",
+            "module_validation": "",
+            "comment": ""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 6,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "files",
+            "module_name": "assemble",
+            "module_statu": "00",
+            "module_validation": "",
+            "comment": ""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 7,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "files",
+            "module_name": "blockinfile",
+            "module_statu": "00",
+            "module_validation": "",
+            "comment": ""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 8,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "files",
+            "module_name": "find",
+            "module_statu": "00",
+            "module_validation": "",
+            "comment": ""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 9,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "files",
+            "module_name": "patch",
+            "module_statu": "00",
+            "module_validation": "",
+            "comment": ""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 10,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "files",
+            "module_name": "replace",
+            "module_statu": "00",
+            "module_validation": "",
+            "comment": ""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 11,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "files",
+            "module_name": "stat",
+            "module_statu": "00",
+            "module_validation": "",
+            "comment": ""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 12,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "files",
+            "module_name": "synchronize",
+            "module_statu": "00",
+            "module_validation": "",
+            "comment": ""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 13,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "files",
+            "module_name": "template",
+            "module_statu": "00",
+            "module_validation": "",
+            "comment": ""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 14,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "files",
+            "module_name": "unarchive",
+            "module_statu": "00",
+            "module_validation": "",
+            "comment": ""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 15,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "files",
+            "module_name": "xattr",
+            "module_statu": "00",
+            "module_validation": "",
+            "comment": ""
+        }
+    }
+]

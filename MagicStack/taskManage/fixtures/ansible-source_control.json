@@ -1,0 +1,134 @@
+[
+    {
+        "model": "taskManage.module",
+        "pk": 203,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "source control",
+            "module_name":"bzr",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 204,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "source control",
+            "module_name":"git",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 205,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "source control",
+            "module_name":"git_config",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 206,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "source control",
+            "module_name":"github_hooks",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 207,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "source control",
+            "module_name":"github_key",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 208,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "source control",
+            "module_name":"github_release",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 209,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "source control",
+            "module_name":"gitlab_group",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 210,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "source control",
+            "module_name":"gitlab_project",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 211,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "source control",
+            "module_name":"gitlab_user",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 212,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "source control",
+            "module_name":"hg",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 213,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "source control",
+            "module_name":"subversion",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    }
+]

@@ -1,0 +1,122 @@
+[
+    {
+        "model": "taskManage.module",
+        "pk": 269,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "Web Infrastructure",
+            "module_name":"apache2_module",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 270,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "Web Infrastructure",
+            "module_name":"deploy_helper",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 271,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "Web Infrastructure",
+            "module_name":"django_manage",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 272,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "Web Infrastructure",
+            "module_name":"ejabberd_user",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 273,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "Web Infrastructure",
+            "module_name":"htpasswd",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 274,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "Web Infrastructure",
+            "module_name":"jboss",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 275,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "Web Infrastructure",
+            "module_name":"jira",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 276,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "Web Infrastructure",
+            "module_name":"letsencrypt",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 277,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "Web Infrastructure",
+            "module_name":"supervisorctl",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 278,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "Web Infrastructure",
+            "module_name":"taiga_issue",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    }
+]

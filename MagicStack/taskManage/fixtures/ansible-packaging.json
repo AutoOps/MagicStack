@@ -1,0 +1,578 @@
+[
+    {
+        "model": "taskManage.module",
+        "pk": 156,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"dpkg_selections",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 157,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"elasticsearch_plugin",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 158,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"kibana_plugin",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 159,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"bower",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 160,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"bundler",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 161,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"composer",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 162,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"cpanm",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 163,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"easy_install",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 164,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"gem",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 165,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"maven_artifact",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 166,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"npm",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 167,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"pear",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 168,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"pip",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 169,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"apk",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 170,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"apk",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 171,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"apt",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 172,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"apt_key",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 173,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"apt_repository",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 174,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"apt_rpm",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 175,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"dnf",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 176,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"homebrew",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 177,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"homebrew_cask",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 178,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"homebrew_tap",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 179,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"layman",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 180,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"macports",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 181,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"openbsd_pkg",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 182,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"opkg",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 183,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"package",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 184,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"pacman",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 185,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"pkg5",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 186,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"pkg5_publisher",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 187,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"pkgin",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 188,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"pkgng",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 189,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"pkgutil",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 190,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"portage",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 191,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"portinstall",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 192,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"redhat_subscription",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 193,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"rhn_channel",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 194,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"rhn_register",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 195,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"rpm_key",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 196,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"slackpkg",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 197,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"svr4pkg",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 198,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"urpmi",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 199,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"yum",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 200,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"yum_repository",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 201,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"slackpkg",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 196,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"zypper",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 202,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "packaging",
+            "module_name":"zypper_repository",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    }
+]

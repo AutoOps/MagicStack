@@ -1,0 +1,937 @@
+[
+    {
+        "model": "taskManage.module",
+        "pk": 54,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"cloudflare_dns",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 55,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"dnsimple",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 56,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"dnsmadeeasy",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 57,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"haproxy",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 58,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"ipify_facts",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 59,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"lldp",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 60,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"nmcli",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 61,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"openvswitch_bridge",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 62,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"openvswitch_db",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 63,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"openvswitch_port",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 64,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"snmp_facts",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 65,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"wakeonlan",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 66,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"a10_server",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 67,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"a10_service_group",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 68,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"a10_virtual_server",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 69,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"asa_acl",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 70,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"asa_command",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 71,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"asa_config",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 72,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"asa_template",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 73,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"get_url",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 74,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"slurp",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 75,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"uri",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 76,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"netscaler",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 77,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"cl_bond",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 78,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"cl_bridge",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 79,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"cl_img_install",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 80,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"cl_interface",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 81,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"cl_interface_policy",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 82,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"cl_license",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 83,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"cl_ports",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 84,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"eos_command",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 85,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"eos_config",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 86,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"eos_eapi",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 87,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"eos_template",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 88,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"bigip_facts",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 89,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"bigip_gtm_virtual_server",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 90,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"bigip_gtm_wide_ip",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 91,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"bigip_monitor_http",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 92,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"bigip_monitor_tcp",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 93,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"bigip_node",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 94,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"bigip_pool",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 95,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"bigip_pool_member",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 96,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"bigip_virtual_server",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 97,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"ios_command",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },{
+        "model": "taskManage.module",
+        "pk": 98,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"ios_config",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 99,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"ios_facts",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 100,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"ios_template",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 101,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"iosxr_command",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 102,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"iosxr_config",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 103,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"iosxr_template",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 104,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"junos_command",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 105,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"junos_config",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 106,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"junos_facts",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 107,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"junos_netconf",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 108,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"junos_package",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 109,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"junos_template",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 110,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"netconf_config",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 111,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"nxos_command",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 112,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"nxos_config",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 113,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"nxos_facts",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 114,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"nxos_feature",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 115,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"nxos_interface",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 116,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"nxos_ip_interface",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 117,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"nxos_nxapi",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 118,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"nxos_ping",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 119,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"nxos_switchport",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 120,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"nxos_template",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 121,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"nxos_vlan",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 122,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"nxos_vrf",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 123,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"nxos_vrf_interface",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 124,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"nxos_vrrp",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 125,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"ops_command",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 126,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"ops_config",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 127,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"ops_facts",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 128,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"ops_template",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 129,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"vyos_command",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 130,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"vyos_config",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 131,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "network",
+            "module_name":"vyos_facts",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    }
+]

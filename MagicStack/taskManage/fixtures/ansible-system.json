@@ -1,0 +1,542 @@
+[
+    {
+        "model": "taskManage.module",
+        "pk": 214,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"alternatives",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 215,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"at",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 216,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"authorized_key",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 217,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"capabilities",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 218,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"cron",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 219,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"cronvar",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 220,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"crypttab",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 221,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"debconf",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 222,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"facter",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 223,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"filesystem",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 224,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"firewalld",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 225,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"getent",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 226,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"gluster_volume",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 227,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"group",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 228,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"hostname",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 229,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"iptables",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 230,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"kernel_blacklist",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 231,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"known_hosts",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 232,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"locale_gen",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 233,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"lvg",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 234,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"lvol",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 235,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"make",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 236,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"modprobe",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 237,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"mount",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 238,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"ohai",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 239,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"open_iscsi",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 240,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"osx_defaults",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 241,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"pam_limits",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 242,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"ping",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 243,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"puppet",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 244,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"seboolean",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 245,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"sefcontext",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 246,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"selinux",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 247,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"selinux_permissive",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 248,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"seport",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 249,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"service",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 250,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"setup",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 251,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"solaris_zone",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 252,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"svc",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 253,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"sysctl",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 254,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"systemd",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 255,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"timezone",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 256,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"ufw",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 257,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"user",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 258,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "system",
+            "module_name":"zfs",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    }
+]

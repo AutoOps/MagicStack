@@ -1,0 +1,26 @@
+[
+    {
+        "model": "taskManage.module",
+        "pk": 16,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "inventory",
+            "module_name":"add_host",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    },
+    {
+        "model": "taskManage.module",
+        "pk": 17,
+        "fields": {
+            "task_type": "ansible",
+            "group_name": "inventory",
+            "module_name":"group_by",
+            "module_statu": "00",
+            "module_validation":"",
+            "comment":""
+        }
+    }
+]

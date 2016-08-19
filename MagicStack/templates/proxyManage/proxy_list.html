@@ -382,11 +382,13 @@
             if ($("#submit_type").val() == 'edit') {
                 url = "{% url 'proxy_edit' %}";
             }
+            var form_data = $("#form_sample_1").serialize();
             $("#proxy").modal('hide');
+
             $.ajax({
                 type: 'POST',
                 url: url,
-                data: $("#form_sample_1").serialize(),
+                data: form_data,
                 success: function (result) {
                     result = $.parseJSON(result);
                     if (result.flag) {

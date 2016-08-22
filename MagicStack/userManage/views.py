@@ -229,7 +229,9 @@ def user_add(request, res, *args):
                     if not default_email:
                         error = u"没有邮件服务器信息,请先到告警管理配置邮件服务器,谢谢!"
                         return HttpResponse(error)
-                    user_add_mail(user, default_email, kwargs=locals())
+                    rest_send_mail = user_add_mail(user, default_email, kwargs=locals())
+                    if not rest_send_mail:
+                        response['error'] = u'发送邮件失败:请查找原因'
                 res['content'] = u'添加用户 %s' % username
                 res['emer_status'] = u"添加用户[{0}]成功".format(username)
                 response['success'] = True
@@ -506,7 +508,9 @@ def user_edit(request,res, *args):
                 if not default_email:
                     error = u"没有邮件服务器信息,请先到告警管理配置邮件服务器,谢谢!"
                     return HttpResponse(error)
-                send_email(default_email, u'您的信息已修改',[email], emsg)
+                rest_send_mail = send_email(default_email, u'您的信息已修改',[email], emsg)
+                if rest_send_mail['msgCode'] == 1:
+                    response['error'] = u"发送邮件失败:请查找原因"
         except Exception as e:
             logger.error(e)
             res['flag'] = 'false'

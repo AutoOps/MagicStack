@@ -171,7 +171,11 @@ def user_add_mail(user, default_email, kwargs):
         感谢您使用MagicStack,谢谢!
     """ % (user.name, user.username, user_role.get(user.role, u'普通用户'),
            kwargs.get('password'))
-    send_email(default_email, mail_title, [user.email], mail_msg)
+    rest_send_mail = send_email(default_email, mail_title, [user.email], mail_msg)
+    if rest_send_mail['msgCode'] == 1:
+        return False
+    return True
+
 
 
 def server_del_user(username):

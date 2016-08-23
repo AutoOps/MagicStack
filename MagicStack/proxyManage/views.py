@@ -172,28 +172,6 @@ def get_host_for_proxy(request):
         })
     return HttpResponse(json.dumps(res))
 
-@require_role('admin')
-@user_operator_record
-def upload_file(request, res):
-    if request.method == 'GET':
-        proxy_id = request.GET.get('id')
-        if not proxy_id:
-            return HttpResponse('ID为空')
-        try:
-            proxy = Proxy.objects.get(id=int(proxy_id))
-            proxy_asset = proxy.asset_set.all()
-            param = []
-            for item in proxy_asset:
-                rest = {}
-                rest['asset_id'] = item.id
-                rest['asset_name'] = item.name
-                param.append(rest)
-            return HttpResponse(json.dumps(param), content_type='application/json')
-        except Exception as e:
-            logger.error(e)
-    else:
-        pass
-
 
 def execute_commands(request):
     proxy_id = request.GET.get('id')

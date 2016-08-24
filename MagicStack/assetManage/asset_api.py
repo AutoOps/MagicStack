@@ -400,7 +400,7 @@ def get_disk_info(disk_info):
         else:
             disk_size = ''
     except Exception:
-        disk_size = disk_info
+        disk_size = ''
     return disk_size
 
 

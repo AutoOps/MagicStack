@@ -414,20 +414,21 @@ def update_asset_info(need_update_asset, name, proxy=None):
         proxy_asset = Asset.objects.filter(proxy__proxy_name=proxy.proxy_name)
         update_proxy_asset = list(set(proxy_asset) & set(need_update_asset))
         host_list = [asset.networking.all()[0].ip_address for asset in update_proxy_asset]
-        resource = gen_resource(update_proxy_asset)
-        data = {'mod_name': 'setup',
-                'resource': resource,
-                'hosts': host_list,
-                'mod_args': '',
-                'run_action': 'sync',
-                'run_type': 'ad-hoc'
-                }
-        data = json.dumps(data)
-        api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
-        result, code = api.req_post(data)
-        logger.debug(u'更新操作结果result:%s       code:%s' % (result,code))
-        if code == 200:
-            asset_ansible_update(update_proxy_asset, result, name)
+        if host_list:
+            resource = gen_resource(update_proxy_asset)
+            data = {'mod_name': 'setup',
+                    'resource': resource,
+                    'hosts': host_list,
+                    'mod_args': '',
+                    'run_action': 'sync',
+                    'run_type': 'ad-hoc'
+                    }
+            data = json.dumps(data)
+            api = APIRequest('{0}/v1.0/module'.format(proxy.url), proxy.username, CRYPTOR.decrypt(proxy.password))
+            result, code = api.req_post(data)
+            logger.debug(u'更新操作结果result:%s       code:%s' % (result,code))
+            if code == 200 and result['messege']['success']:
+                asset_ansible_update(update_proxy_asset, result, name)
     except Exception as e:
         raise ServerError(e)
     finally:

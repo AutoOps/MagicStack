@@ -118,7 +118,7 @@ class Asset(models.Model):
         ('4', 'acceptance'),
     )
 
-    id_unique = models.CharField(max_length=200, blank=True, unique=True, verbose_name=u"唯一标示")
+    id_unique = models.CharField(max_length=200, blank=True, unique=True, default='', verbose_name=u"唯一标示")
     ip = models.CharField(max_length=32, blank=True, default='', verbose_name=u"主机IP")
     other_ip = models.CharField(max_length=255, blank=True, default='', verbose_name=u"其他IP")
     name = models.CharField(max_length=100, blank=True, unique=True, verbose_name=u'名字')

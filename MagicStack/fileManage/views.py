@@ -78,7 +78,7 @@ def upload(request):
             trigger_kwargs['month'] = tnow.month
             trigger_kwargs['day'] = tnow.day
             trigger_kwargs['hour'] = tnow.hour
-            trigger_kwargs['minute'] = tnow.minute
+            trigger_kwargs['minute'] = tnow.minute+1
             trigger_kwargs['second'] = tnow.second
             params['trigger_kwargs'] = trigger_kwargs
             params['task_name'] = 'ansible'

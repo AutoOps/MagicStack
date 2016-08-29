@@ -42,8 +42,10 @@ class WorkManager(object):
         初始化工作队列
        """
         for item in self.proxys:
-            kwags['proxy'] = item
-            self.work_queue.put((func, args, kwags))
+            kwargs = {}
+            kwargs.update(kwags)
+            kwargs['proxy'] = item
+            self.work_queue.put((func, args, kwargs))
 
 
 class Work(threading.Thread):

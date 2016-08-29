@@ -590,8 +590,8 @@ def asset_list(request):
                 res = {}
                 ip_address = ' '.join([nt.ip_address for nt in item.networking.all()])
                 group_names = get_group_names(item.group.all())
-                cpu_core = item.cpu.split('* ')[1] if item.cpu and '*' in item.cpu else item.cpu
-                memory_info = item.memory + 'G' if item.memory else '0G'
+                cpu_core = item.cpu.split('* ')[1] if item.cpu and '*' in item.cpu else ''
+                memory_info = item.memory + 'G' if item.memory else ''
                 disk_info = get_disk_info(item.disk)
                 res['id'] = item.id
                 res['name'] = item.name
@@ -602,7 +602,7 @@ def asset_list(request):
                 res['system_type'] = item.system_type
                 res['cpu'] = cpu_core
                 res['memory'] = memory_info
-                res['disk'] = str(disk_info)+'G'
+                res['disk'] = str(disk_info)+'G' if disk_info else ''
                 data.append(res)
             rest['aaData'] = data
             return HttpResponse(json.dumps(rest), content_type='application/json')

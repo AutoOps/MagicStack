@@ -127,44 +127,6 @@
 </div>
 <!-- END MODAL DIV -->
 
-
-<!--upload file modal -->
-    <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel">上传文件</h4>
-            </div>
-            <div class="modal-body">
-                <form method="post" class="form-horizontal" enctype="multipart/form-data" name="uploadForm" id="uploadForm">
-                        <input type="text" name="upload_proxy_id"  class="form-control display-hide"  value=""  />
-                        <div class="form-group">
-                            <label for="multiple" class="col-md-3 control-label">目标主机</label>
-                            <div class="col-md-6">
-                                <select  name="asset" class="form-control select2-multiple" data-placeholder="请选择主机" id="selec_asset" multiple>
-                                        <option value="请选择主机" >请选择主机</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">文件</label>
-                            <div class="col-md-6">
-                                <input type="file" class="form-control" name="uploadfile">
-                            </div>
-                        </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn grey-salsa btn-outline" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn green">上传</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- modal end-->
 {% endblock %}
 
 {% block self_head_css_js %}
@@ -210,19 +172,6 @@
         });
     }
 
-    //上传文件
-    function upload_file(id){
-        var url = "{% url 'upload_file' %}?id=" + id ;
-        $.get(url, function(res){
-           $("#selec_asset").select2('destroy').empty().select2({data: [{id: 1, text: "new_item"}]});
-        });
-
-        var modal = $("#uploadModal");
-        modal.modal({
-             'keyboard': false,
-             'backdrop': 'static'
-        })
-    }
 
     //批量执行命令
     function execute_commands(id){
@@ -310,8 +259,6 @@
                 "fnRowCallback" : function(nRow, aData, iDisplayIndex) {
                     op_del = '<a class="del" name=\"/proxy/del/?id=' + aData.id + '\">删除</a> ';
                     op_edit = '<a href=\"#\" onclick=\"edit_proxy('+aData.id+')\">编辑</a>';
-                    op_upload = '<a href=\"#\" onclick=\"upload_file('+aData.id+')\">上传</a>';
-                    op_download = '<a href=\"#\" onclick=\"download_file('+aData.id+')\">下载</a>';
                     op_excute = '<a href=\"#\" onclick=\"execute_commands('+aData.id+')\">批量执行</a>';
                     op_html = '<div class="btn-group"> \
                             <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions\
@@ -320,8 +267,6 @@
                             <ul class="dropdown-menu" role="menu"> \
                                 <li>' + op_edit + '</li>\
                                 <li>' + op_del + '</li>\
-                                <li>' + op_upload + '</li>\
-                                <li>' + op_download + '</li>\
                                 <li>' + op_excute + '</li>\
                             </ul>\
                         </div>';
@@ -382,11 +327,13 @@
             if ($("#submit_type").val() == 'edit') {
                 url = "{% url 'proxy_edit' %}";
             }
+            var form_data = $("#form_sample_1").serialize();
             $("#proxy").modal('hide');
+
             $.ajax({
                 type: 'POST',
                 url: url,
-                data: $("#form_sample_1").serialize(),
+                data: form_data,
                 success: function (result) {
                     result = $.parseJSON(result);
                     if (result.flag) {

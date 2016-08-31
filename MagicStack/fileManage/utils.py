@@ -27,7 +27,7 @@ class API(object):
         passwd = hmac.new(password)
         passwd.update(message)
         hexdigest = passwd.hexdigest()
-        headers['X-Timestamp'] = int(timestamp)
+        headers['X-Timestamp'] = str(int(timestamp))
         headers['X-Username'] = username
         headers['X-Hexdigest'] = hexdigest
         return headers

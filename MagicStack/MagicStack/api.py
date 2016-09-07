@@ -39,7 +39,7 @@ def set_log(level, filename='magicstack.log'):
     logger_f.setLevel(logging.DEBUG)
     fh = logging.FileHandler(log_file)
     fh.setLevel(log_level_total.get(level, logging.DEBUG))
-    formatter = logging.Formatter('%(asctime)s - %(filename)s - %(levelname)s - %(message)s')
+    formatter = logging.Formatter('%(asctime)s - %(filename)s - %(levelname)s -%(func)s - %(message)s')
     fh.setFormatter(formatter)
     logger_f.addHandler(fh)
     return logger_f

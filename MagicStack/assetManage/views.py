@@ -230,6 +230,7 @@ def asset_add(request,res, *args):
                 "profile": request.POST.get('profile'),
                 "gateway": request.POST.get('gateway'),
                 "power_type": request.POST.get('power_type'),
+                "netboot_enabled": request.POST.get('netboot_enabled'),
                 "power_address": request.POST.get('power_address'),
                 "power_user": request.POST.get('power_username'),
                 "power_pass": request.POST.get('power_password'),
@@ -239,6 +240,7 @@ def asset_add(request,res, *args):
                         "ip_address": request.POST.get('ip_address'),
                         "if_gateway": request.POST.get('per_gateway'),
                         "mtu": request.POST.get('mtu'),
+                        "netmask": request.POST.get('subnet_mask'),
                         "static": 1,
                     },
                 }
@@ -500,6 +502,7 @@ def asset_edit(request, res, *args):
                 "hostname": request.POST.get('hostname'),
                 "profile": request.POST.get('profile'),
                 "gateway": request.POST.get('gateway'),
+                "netboot_enabled": request.POST.get('netboot_enabled'),
                 "power_type": request.POST.get('power_type'),
                 "power_address": request.POST.get('power_address'),
                 "power_user": request.POST.get('power_username'),
@@ -510,6 +513,7 @@ def asset_edit(request, res, *args):
                         "ip_address": request.POST.get('ip_address'),
                         "if_gateway": request.POST.get('per_gateway'),
                         "mtu": request.POST.get('mtu'),
+                        "netmask": request.POST.get('subnet_mask'),
                         "static": 1,
                     },
                 }

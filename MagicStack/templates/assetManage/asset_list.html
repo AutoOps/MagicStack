@@ -509,12 +509,7 @@
             $("#proxy").val(res.proxy_id);
 
             //设置profile的值
-            var sele_profile = document.getElementById("profile");
-            var sele_opt = document.createElement('option');
-            sele_opt.text = res.profile;
-            sele_opt.value = res.profile;
-            sele_profile.add(sele_opt);
-            $("#profile").val(res.profile);
+            $("#profile").find("option[value=" + res.profile + "]").attr("selected", true);
 
             document.getElementsByName('idc')[0].value = res.idc;
             document.getElementsByName('machine_status')[0].value = res.machine_status;

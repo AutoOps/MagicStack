@@ -473,6 +473,7 @@ def asset_edit(request, res, *args):
             is_enabled = True if request.POST.get('is_enabled', '1') == '1' else False
             asset_info.netboot_enabled = is_enabled
             asset_info.is_active = is_active
+            asset_info.save()
 
             net = asset_info.networking.all()[0]
             net.net_name = request.POST.get('net_name', 'eth0')
@@ -486,11 +487,14 @@ def asset_edit(request, res, *args):
             net.subnet_mask = request.POST.get('subnet_mask', '')
             net.save()
 
+            # 修改资产组
+            new_group = []
             group_id = request.POST.getlist('group')
             for item in group_id:
                 group = AssetGroup.objects.get(id=int(item))
-                asset_info.group.add(group)
-            asset_info.save()
+                new_group.append(group)
+            asset_info.group = new_group
+
         except Exception as e:
             res['flag'] = 'false'
             res['content'] = e.message

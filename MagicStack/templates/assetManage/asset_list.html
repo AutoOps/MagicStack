@@ -478,7 +478,7 @@
         $.get(url, function(res){
             //设置操作类型 add or edit
             $("input[name=operator_type]").val('edit');
-            $("input[name=name]").disabled = true;
+            $("input[name=name]").attr("disabled" ,true);
 
             //设置资产ID
             $("input[name=asset_id]").val(res.Id);
@@ -777,7 +777,7 @@
             }
 
             document.getElementById("form_asset").reset();
-            $("input[name=name]").disabled = false;
+            $("input[name=name]").attr("disabled", false);
             var modal = $("#myModal");
              modal.find(".modal-title").text("添加资产");
              modal.modal({

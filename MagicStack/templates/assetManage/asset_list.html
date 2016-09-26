@@ -441,7 +441,8 @@
     <script src="/static/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
     <script src="/static/pages/scripts/ui-toastr.min.js" type="text/javascript"></script>
 <script>
-    //获取一级菜单长度
+
+ //获取一级菜单长度
     var select1_len = document.assetForm.proxy.options.length;
     var select2 = new Array(select1_len);
     //把一级菜单都设为数组
@@ -463,14 +464,42 @@
         pcount += 1;
     {% endfor %}
 
-    //联动函数
-    function redirec(x) {
-        var temp = document.assetForm.profile;
-        for (var i=0; i < select2[x].length; i++) {
-            temp.options[i] = new Option(select2[x][i].text, select2[x][i].value);
-        }
-        temp.options[0].selected = true;
+ function gen_menu(){
+    var g_select2 = new Array(select1_len);
+    for (var i=0; i < select1_len; i++) {
+        g_select2[i] = new Array();
     }
+    g_select2[0][0] = new Option('请选择profile','');
+    var gcount = 1;
+    {% for proxy in proxys %}
+        var ncount = 0;
+        {% for k , v in proxy_profiles.items %}
+            {% ifequal k proxy.proxy_name %}
+                {% for item in v %}
+                    g_select2[gcount][ncount] = new Option('{{ item }}', '{{ item }}');
+                    ncount += 1;
+                {% endfor %}
+            {% endifequal %}
+        {% endfor %}
+        gcount += 1;
+    {% endfor %}
+    return g_select2
+ }
+
+
+//联动函数
+function redirec(x){
+    if (select2.length == 1){
+        select2 = gen_menu()
+        console.log("edit select2"+ select2)
+    }
+    var temp = document.assetForm.profile;
+    for (var i=0; i < select2[x].length; i++) {
+        temp.options[i] = new Option(select2[x][i].text, select2[x][i].value);
+    }
+    temp.options[0].selected = true;
+
+}
 
     //编辑资产
     function editAsset(id){

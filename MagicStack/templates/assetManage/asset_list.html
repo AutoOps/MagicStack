@@ -464,35 +464,8 @@
         pcount += 1;
     {% endfor %}
 
- function gen_menu(){
-    var g_select2 = new Array(select1_len);
-    for (var i=0; i < select1_len; i++) {
-        g_select2[i] = new Array();
-    }
-    g_select2[0][0] = new Option('请选择profile','');
-    var gcount = 1;
-    {% for proxy in proxys %}
-        var ncount = 0;
-        {% for k , v in proxy_profiles.items %}
-            {% ifequal k proxy.proxy_name %}
-                {% for item in v %}
-                    g_select2[gcount][ncount] = new Option('{{ item }}', '{{ item }}');
-                    ncount += 1;
-                {% endfor %}
-            {% endifequal %}
-        {% endfor %}
-        gcount += 1;
-    {% endfor %}
-    return g_select2
- }
-
-
 //联动函数
 function redirec(x){
-    if (select2.length == 1){
-        select2 = gen_menu()
-        console.log("edit select2"+ select2)
-    }
     var temp = document.assetForm.profile;
     for (var i=0; i < select2[x].length; i++) {
         temp.options[i] = new Option(select2[x][i].text, select2[x][i].value);
@@ -539,13 +512,12 @@ function redirec(x){
             $("#proxy").val(res.proxy_id);
 
             //设置profile的值
-            var sele_profile = document.getElementById("profile");
-            sele_profile.length=0
-            var sele_opt = document.createElement('option');
-            sele_opt.text = res.profile;
-            sele_opt.value = res.profile;
-            sele_profile.add(sele_opt);
-            $("#profile").val(res.profile);
+            //加载所有的选项
+            var profile_select = document.assetForm.profile;
+            for (var i=0; i < select2[x].length; i++) {
+                profile_select.options[i] = new Option(select2[x][i].text, select2[x][i].value);
+            }
+            $("#profile").find("option[value=" + res.profile + "]").attr("selected", true);
 
             document.getElementsByName('idc')[0].value = res.idc;
             document.getElementsByName('machine_status')[0].value = res.machine_status;

@@ -513,9 +513,10 @@ function redirec(x){
 
             //设置profile的值
             //加载所有的选项
+            var p = document.assetForm.proxy.options.selectedIndex;
             var profile_select = document.assetForm.profile;
-            for (var i=0; i < select2[x].length; i++) {
-                profile_select.options[i] = new Option(select2[x][i].text, select2[x][i].value);
+            for (var i=0; i < select2[p].length; i++) {
+                profile_select.options[i] = new Option(select2[p][i].text, select2[p][i].value);
             }
             $("#profile").find("option[value=" + res.profile + "]").attr("selected", true);
 

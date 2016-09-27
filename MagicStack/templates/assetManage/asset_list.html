@@ -463,10 +463,12 @@
         {% endfor %}
         pcount += 1;
     {% endfor %}
-
 //联动函数
 function redirec(x){
     var temp = document.assetForm.profile;
+
+    //清空select框 否则会一直追加
+    temp.length = 0;
     for (var i=0; i < select2[x].length; i++) {
         temp.options[i] = new Option(select2[x][i].text, select2[x][i].value);
     }

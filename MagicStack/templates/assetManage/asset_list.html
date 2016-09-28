@@ -520,7 +520,7 @@ function redirec(x){
             for (var i=0; i < select2[p].length; i++) {
                 profile_select.options[i] = new Option(select2[p][i].text, select2[p][i].value);
             }
-            $("#profile").find("option[value=" + res.profile + "]").attr("selected", true);
+            $("#profile").find('option[value=" '+ res.profile + ' "]').attr("selected", true);
 
             document.getElementsByName('idc')[0].value = res.idc;
             document.getElementsByName('machine_status')[0].value = res.machine_status;
